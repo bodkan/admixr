@@ -170,6 +170,7 @@ create_param_file <- function(param_file, pop_file,
 #' @param param_file Path to the parameter file.
 #' @param log_file Path to the output file. If NULL, output will be
 #'     printed to stdout.
+#' @export
 run_cmd <- function(cmd, param_file, log_file) {
     if (!cmd %in% c("qpDstat", "qpF4ratio")) {
         stop("ADMIXTOOLS command '", cmd, "' is not supported or does not exist")
@@ -192,6 +193,7 @@ run_cmd <- function(cmd, param_file, log_file) {
 #' @param modified_file Modified EIGENSTRAT ind filename.
 #' @param merge List of labels to merge. List names specified labels
 #'     to merge into.
+#' @export
 merge_pops <- function(file, modified_file, merge) {
     # merge=list(ancient_NearEast=merge_what, present_NearEast=c("Yemenite_Jew", "Jordan", "Samaritan", "Bedouin", "Palestinian"))
     lines <- readLines(file)
@@ -213,6 +215,7 @@ merge_pops <- function(file, modified_file, merge) {
 #'
 #' @return Data frame with the sample identifier, sex and label
 #'     columns.
+#' @export
 read_ind <- function(file) {
     read_table(file, col_names=c("id", "sex", "label"))
 }
@@ -224,6 +227,7 @@ read_ind <- function(file) {
 #'
 #' @return Data frame with columns containing "genotypes" of each
 #'     sample (0/1/9 as defined by the EIGENSTRAT format).
+#' @export
 read_geno <- function(file, inds=NULL) {
     # get the number of samples in the geno file
     n <- nchar(readLines(file, 1))
@@ -236,6 +240,7 @@ read_geno <- function(file, inds=NULL) {
 #' @param file Path to the file.
 #'
 #' @return Data frame with information about each SNP (columns defined by the EIGENSTRAT format).
+#' @export
 read_snp <- function(snp_file) {
     read_table(snp_file, col_names=c("id", "chrom", "gen", "pos", "alt", "ref"))
 
@@ -254,6 +259,7 @@ read_snp <- function(snp_file) {
 #'     instead.
 #'
 #' @return A named vector of counts or proportions.
+#' @export
 snps_present <- function(geno, prop=FALSE) {
     fn <- ifelse(prop, mean, sum)
     summarise_all(geno, funs(fn(. != 9)))
@@ -268,6 +274,7 @@ snps_present <- function(geno, prop=FALSE) {
 #'     instead.
 #'
 #' @return A named vector of counts or proportions.
+#' @export
 snps_missing <- function(geno, prop=FALSE) {
     fn <- ifelse(prop, mean, sum)
     summarise_all(geno, funs(fn(. == 9)))
