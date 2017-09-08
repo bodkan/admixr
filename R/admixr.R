@@ -13,14 +13,14 @@
 #' @param ind_file Path to the ind file.
 #' @param badsnp_file SNP file with information about ignored sites.
 #' @export
-f4_ratio <- function(X, A, B, C, O,
+qpF4ratio <- function(X, A, B, C, O,
                      eigenstrat_prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
                      dir_name=NULL) {
     # get the path to the population, parameter and log files
     prefix <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
     files <- get_files(dir_name, prefix)
 
-    create_qpF4ratio_pops(X=samples$name, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
+    create_qpF4ratio_pop_file(X=samples$name, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
     create_param_file(files[["par_file"]], files[["pop_file"]], eigenstrat_prefix,
                       geno, snp, ind, badsnp)
 
