@@ -20,7 +20,7 @@ Description: This package makes it possible to perform all the stages of ADMIXTO
     files, extracting only the useful information and returning a simple
     dataframe of all results for immediate plotting and statistical
     analysis.
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.1.0)
 Imports:
     tidyverse,
     stringr
