@@ -1,3 +1,57 @@
+# High level wrapper functions ====================================================
+
+
+get_dir <- function(dir) {
+    if (!is.null(dir)) {
+        dir.create(dir)
+    } else {
+        dir <- tempdir()
+    }
+
+    dir
+}
+
+# Generate paths to the population file, parameter file and log file
+# based on a specified directory.
+get_files <- function(dir_name, prefix) {
+    directory <- get_dir(dir_name)
+    list(
+        pop_file=file.path(directory, paste0(prefix, ".pop")),
+        par_file=file.path(directory, paste0(prefix, ".par")),
+        log_file=file.path(directory, paste0(prefix, ".log"))
+    )
+}
+
+
+#' Run an f4-ratio analysis and return the results as a data.frame.
+#'
+#' @param X, A, B, C, O Population names, using the terminology of
+#'     Patterson et al., 2012
+#' @param eigenstrat_prefix Prefix of the geno/snp/ind files (can
+#'     include the path). If specified, geno_file/snp_file/ind_file
+#'     will be ignored.
+#' @param geno_file Path to the genotype file.
+#' @param snp_file Path to the snp file.
+#' @param ind_file Path to the ind file.
+#' @param badsnp_file SNP file with information about ignored sites.
+#' @export
+f4_ratio <- function(X, A, B, C, O,
+                     eigenstrat_prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
+                     dir_name=NULL) {
+    # get the path to the population, parameter and log files
+    prefix <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
+    files <- get_files(dir_name, prefix)
+
+    create_qpF4ratio_pops(X=samples$name, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
+    create_param_file(files[["par_file"]], files[["pop_file"]], eigenstrat_prefix,
+                      geno, snp, ind, badsnp)
+
+    run_cmd("qpF4ratio", param_file=files[["param_file"]], log_file=files[["log_file"]])
+    
+    read_qpF4ratio(paste0(prefix, ".log")) %>% mutate(setup=prefix)
+}
+
+
 # Reading output log files ====================================================
 
 
