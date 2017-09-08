@@ -1,7 +1,5 @@
 # admixr
 
-## A set of convenient functions for working with ADMIXTOOLS
-
 This package makes it possible to perform all the stages of ADMIXTOOLS
 analysis without leaving R. A typical ADMIXTOOLS workflow usually
 involves using a combination of `sed`, `awk` and manual editing to
