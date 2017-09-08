@@ -3,6 +3,7 @@
 export(create_Dstats_pop_file)
 export(create_param_file)
 export(create_qpF4ratio_pop_file)
+export(f4_ratio)
 export(merge_pops)
 export(read_geno)
 export(read_ind)
