@@ -1,14 +1,14 @@
 # High level wrapper functions ====================================================
 
 
-get_dir <- function(dir) {
-    if (!is.null(dir)) {
-        dir.create(dir)
+get_dir <- function(dir_name=NULL) {
+    if (!is.null(dir_name)) {
+        dir.create(dir_name)
     } else {
-        dir <- tempdir()
+        dir_name <- tempdir()
     }
 
-    dir
+    dir_name
 }
 
 # Generate paths to the population file, parameter file and log file
@@ -29,7 +29,7 @@ get_files <- function(dir_name, prefix) {
 #'     Patterson et al., 2012
 #' @param eigenstrat_prefix Prefix of the geno/snp/ind files (can
 #'     include the path). If specified, geno_file/snp_file/ind_file
-#'     will be ignored.
+#'     have to be NULL and vice versa.
 #' @param geno_file Path to the genotype file.
 #' @param snp_file Path to the snp file.
 #' @param ind_file Path to the ind file.
