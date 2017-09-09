@@ -102,9 +102,7 @@ run_cmd <- function(cmd, param_file, log_file) {
         stop("ADMIXTOOLS command '", cmd, "' is not supported or does not exist")
     }
 
-    output <- paste("> ", log_file)
-
-    system(paste(cmd, "-p", param_file, output))
+    system(paste(cmd, "-p", param_file, ">", log_file))
 }
 
 
