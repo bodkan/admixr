@@ -5,7 +5,7 @@
 \title{Run an f4-ratio analysis and return the results as a data.frame.}
 \usage{
 qpF4ratio(X, A, B, C, O, eigenstrat = NULL, geno = NULL, snp = NULL,
-  ind = NULL, badsnp = NULL, dir_name = NULL)
+  ind = NULL, badsnp = NULL, dir_name = ".")
 }
 \arguments{
 \item{X, }{A, B, C, O Population names, using the terminology of

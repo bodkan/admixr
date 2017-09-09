@@ -15,7 +15,7 @@
 #' @export
 qpF4ratio <- function(X, A, B, C, O,
                      eigenstrat=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
-                     dir_name=NULL) {
+                     dir_name=".") {
     # get the path to the population, parameter and log files
     prefix <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
     files <- get_files(dir_name, prefix)
