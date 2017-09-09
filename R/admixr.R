@@ -21,10 +21,10 @@ qpF4ratio <- function(X, A, B, C, O,
     files <- get_files(dir_name, prefix)
 
     create_qpF4ratio_pop_file(X=samples$name, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
-    create_param_file(files[["par_file"]], files[["pop_file"]], eigenstrat_prefix,
-                      geno, snp, ind, badsnp)
+    create_par_file(files[["par_file"]], files[["pop_file"]], eigenstrat_prefix,
+                    geno, snp, ind, badsnp)
 
-    run_cmd("qpF4ratio", param_file=files[["param_file"]], log_file=files[["log_file"]])
+    run_cmd("qpF4ratio", par_file=files[["par_file"]], log_file=files[["log_file"]])
     
     read_qpF4ratio(paste0(prefix, ".log")) %>% mutate(setup=prefix)
 }
