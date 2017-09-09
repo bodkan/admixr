@@ -20,7 +20,7 @@ qpF4ratio <- function(X, A, B, C, O,
     prefix <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
     files <- get_files(dir_name, prefix)
 
-    create_qpF4ratio_pop_file(X=samples$name, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
+    create_qpF4ratio_pop_file(X=X, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
     create_par_file(files[["par_file"]], files[["pop_file"]], eigenstrat,
                     geno, snp, ind, badsnp)
 
