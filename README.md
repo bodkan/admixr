@@ -18,3 +18,12 @@ files. Finally, it provides a simple way to parse ADMIXTOOLS output
 files, extracting only the useful information and returning a simple
 dataframe of all results for immediate plotting and statistical
 analysis.
+
+## Installation instructions
+
+To install `admixr` from Github you need to install the package `devtools` first. After you have done that, it is simply a matter of:
+
+```
+devtools::install_github("bodkan/admixr")
+library(admixr)
+```
