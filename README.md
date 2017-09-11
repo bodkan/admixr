@@ -29,3 +29,9 @@ To install `admixr` from Github you need to install the package `devtools` first
 devtools::install_github("bodkan/admixr")
 library(admixr)
 ```
+
+## Warning!
+
+This package is not even in an alpha stage yet. It wraps around `qpDstat` and `qpF4ratio` only. More (and eventually all) ADMIXTOOLS commands will be supported.
+
+You probably shouldn't use it yet. :)
