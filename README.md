@@ -1,6 +1,6 @@
 # admixr
 
-_**Make ADMIXTOOLS fun again!**_
+_**Make ADMIXTOOLS great again!**_
 
 This package makes it possible to perform all the stages of ADMIXTOOLS
 analysis without leaving R. A typical ADMIXTOOLS workflow usually
@@ -32,6 +32,6 @@ library(admixr)
 
 ## Warning!
 
-This package is not even in an alpha stage yet. It wraps around `qpDstat` and `qpF4ratio` only. More (and eventually all) ADMIXTOOLS commands will be supported.
+This package is not even in an alpha stage yet and the API is still changing. It only supports `qpDstat` and `qpF4ratio` at this moment, although all ADMIXTOOLS commands will eventually be supported.
 
 You probably shouldn't use it yet. :)
