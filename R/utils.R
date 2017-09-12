@@ -128,3 +128,14 @@ get_files <- function(dir_name, prefix) {
         log_file=file.path(directory, paste0(prefix, ".log"))
     )
 }
+
+# Check for the presence of a given set of labels in an 'ind' file.
+# Fail if there a sample was not found.
+check_presence <- function(labels, eigenstrat, ind=paste0(eigenstrat, ".ind")) {
+    not_present <- setdiff(labels, suppressMessages(read_ind(ind)$label))
+
+    if (length(not_present) > 0) {
+        stop("The following samples are not present in the 'ind' file: ",
+             paste(not_present, collapse=", "))
+    }
+}

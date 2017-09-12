@@ -16,6 +16,8 @@
 qpF4ratio <- function(X, A, B, C, O,
                      eigenstrat=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
                      dir_name=NULL) {
+    check_presence(c(X, A, B, C, O), eigenstrat, ind)
+
     setup <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
 
     # get the path to the population, parameter and log files
