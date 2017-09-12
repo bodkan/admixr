@@ -4,24 +4,27 @@
 \alias{qpF4ratio}
 \title{Run an f4-ratio analysis and return the results as a data.frame.}
 \usage{
-qpF4ratio(X, A, B, C, O, eigenstrat = NULL, geno = NULL, snp = NULL,
+qpF4ratio(X, A, B, C, O, prefix = NULL, geno = NULL, snp = NULL,
   ind = NULL, badsnp = NULL, dir_name = NULL)
 }
 \arguments{
 \item{X, }{A, B, C, O Population names, using the terminology of
 Patterson et al., 2012}
 
-\item{eigenstrat_prefix}{Prefix of the geno/snp/ind files (can
-include the path). If specified, geno_file/snp_file/ind_file
-have to be NULL and vice versa.}
+\item{prefix}{Prefix of the geno/snp/ind files (can include the
+path). If specified, geno/snp/ind have to be NULL and vice
+versa.}
 
-\item{geno_file}{Path to the genotype file.}
+\item{geno}{Path to the genotype file.}
 
-\item{snp_file}{Path to the snp file.}
+\item{snp}{Path to the snp file.}
 
-\item{ind_file}{Path to the ind file.}
+\item{ind}{Path to the ind file.}
 
-\item{badsnp_file}{SNP file with information about ignored sites.}
+\item{badsnp}{SNP file with information about ignored sites.}
+
+\item{dir_name}{Where to put all generated files (temporary
+directory by default).}
 }
 \description{
 Run an f4-ratio analysis and return the results as a data.frame.

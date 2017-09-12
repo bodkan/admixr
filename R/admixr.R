@@ -5,28 +5,29 @@
 #'
 #' @param X, A, B, C, O Population names, using the terminology of
 #'     Patterson et al., 2012
-#' @param eigenstrat_prefix Prefix of the geno/snp/ind files (can
-#'     include the path). If specified, geno_file/snp_file/ind_file
-#'     have to be NULL and vice versa.
-#' @param geno_file Path to the genotype file.
-#' @param snp_file Path to the snp file.
-#' @param ind_file Path to the ind file.
-#' @param badsnp_file SNP file with information about ignored sites.
+#' @param prefix Prefix of the geno/snp/ind files (can include the
+#'     path). If specified, geno/snp/ind have to be NULL and vice
+#'     versa.
+#' @param geno Path to the genotype file.
+#' @param snp Path to the snp file.
+#' @param ind Path to the ind file.
+#' @param badsnp SNP file with information about ignored sites.
+#' @param dir_name Where to put all generated files (temporary
+#'     directory by default).
 #' @export
 qpF4ratio <- function(X, A, B, C, O,
-                     eigenstrat=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
+                     prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
                      dir_name=NULL) {
-    check_presence(c(X, A, B, C, O), eigenstrat, ind)
-
-    setup <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
+    check_presence(c(X, A, B, C, O), prefix, ind)
 
     # get the path to the population, parameter and log files
-    prefix <- paste0(setup, "_", as.integer(runif(1, 0, .Machine$integer.max)))
-    files <- get_files(dir_name, prefix)
+    setup <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
+    config_prefix <- paste0(setup, "_", as.integer(runif(1, 0, .Machine$integer.max)))
+    files <- get_files(dir_name, config_prefix)
 
     create_qpF4ratio_pop_file(X=X, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
-    create_par_file(files[["par_file"]], files[["pop_file"]], eigenstrat,
-                    geno, snp, ind, badsnp)
+    create_par_file(files[["par_file"]], files[["pop_file"]],
+                    prefix, geno, snp, ind, badsnp)
 
     run_cmd("qpF4ratio", par_file=files[["par_file"]], log_file=files[["log_file"]])
     
