@@ -15,9 +15,11 @@
 #' @export
 qpF4ratio <- function(X, A, B, C, O,
                      eigenstrat=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
-                     dir_name=".") {
+                     dir_name=NULL) {
+    setup <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
+
     # get the path to the population, parameter and log files
-    prefix <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
+    prefix <- paste0(setup, "_", as.integer(runif(1, 0, .Machine$integer.max)))
     files <- get_files(dir_name, prefix)
 
     create_qpF4ratio_pop_file(X=X, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
@@ -26,7 +28,7 @@ qpF4ratio <- function(X, A, B, C, O,
 
     run_cmd("qpF4ratio", par_file=files[["par_file"]], log_file=files[["log_file"]])
     
-    read_qpF4ratio(paste0(prefix, ".log")) %>% mutate(setup=prefix)
+    read_qpF4ratio(files[["log_file"]]) %>% mutate(setup=setup)
 }
 
 
