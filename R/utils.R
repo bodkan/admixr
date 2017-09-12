@@ -131,9 +131,9 @@ get_files <- function(dir_name, prefix) {
 
 # Check for the presence of a given set of labels in an 'ind' file.
 # Fail if there a sample was not found.
-check_presence <- function(labels, prefix, ind) {
-    path <- ifelse(prefix, paste0(prefix, ".ind"), ind)
-    not_present <- setdiff(labels, read_ind(path)$label)
+check_presence <- function(labels, prefix=NULL, ind=NULL) {
+    path <- ifelse(!is.null(prefix), paste0(prefix, ".ind"), ind)
+    not_present <- setdiff(labels, suppressMessages(read_ind(path)$label))
 
     if (length(not_present) > 0) {
         stop("The following samples are not present in the 'ind' file: ",
