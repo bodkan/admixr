@@ -1,5 +1,7 @@
 # admixr
 
+_**Make ADMIXTOOLS great again!**_
+
 This package makes it possible to perform all the stages of ADMIXTOOLS
 analysis without leaving R. A typical ADMIXTOOLS workflow usually
 involves using a combination of `sed`, `awk` and manual editing to
@@ -18,3 +20,18 @@ files. Finally, it provides a simple way to parse ADMIXTOOLS output
 files, extracting only the useful information and returning a simple
 dataframe of all results for immediate plotting and statistical
 analysis.
+
+## Installation instructions
+
+To install `admixr` from Github you need to install the package `devtools` first. After you have done that, it is simply a matter of:
+
+```
+devtools::install_github("bodkan/admixr")
+library(admixr)
+```
+
+## Warning!
+
+This package is not even in an alpha stage yet and the API is still changing. It only supports `qpDstat` and `qpF4ratio` at this moment, although all ADMIXTOOLS commands will eventually be supported.
+
+You probably shouldn't use it yet. :)
