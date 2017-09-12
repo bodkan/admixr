@@ -133,7 +133,7 @@ merge_pops <- function(file, modified_file, merge) {
 #'     columns.
 #' @export
 read_ind <- function(file) {
-    read_table(file, col_names=c("id", "sex", "label"))
+    read_table2(file, col_names=c("id", "sex", "label"))
 }
 
 
