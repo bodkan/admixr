@@ -11,15 +11,14 @@ qpF4ratio(X, A, B, C, O, prefix = NULL, geno = NULL, snp = NULL,
 \item{X, }{A, B, C, O Population names, using the terminology of
 Patterson et al., 2012}
 
-\item{prefix}{Prefix of the geno/snp/ind files (can include the
-path). If specified, geno/snp/ind have to be NULL and vice
-versa.}
+\item{prefix}{Prefix of the geno/snp/ind files (including the whole
+path).}
 
-\item{geno}{Path to the genotype file.}
+\item{geno}{Path to the genotype file. Overrides the 'prefix' argument.}
 
-\item{snp}{Path to the snp file.}
+\item{snp}{Path to the snp file. Overrides the 'prefix' argument.}
 
-\item{ind}{Path to the ind file.}
+\item{ind}{Path to the ind file. Overrides the 'prefix' argument.}
 
 \item{badsnp}{SNP file with information about ignored sites.}
 
