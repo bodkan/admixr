@@ -21,8 +21,8 @@ qpF4ratio <- function(X, A, B, C, O,
     check_presence(c(X, A, B, C, O), prefix, ind)
 
     # get the path to the population, parameter and log files
-    setup <- paste0("f4_ratio_", A, "_", B, "_", C, "_", O)
-    config_prefix <- paste0(setup, "_", as.integer(runif(1, 0, .Machine$integer.max)))
+    setup <- paste0("qpF4ratio__", A, "_", B, "_", C, "_", O)
+    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
     files <- get_files(dir_name, config_prefix)
 
     create_qpF4ratio_pop_file(X=X, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
@@ -33,6 +33,7 @@ qpF4ratio <- function(X, A, B, C, O,
     
     read_qpF4ratio(files[["log_file"]]) %>% mutate(setup=setup)
 }
+
 
 
 # Reading output log files --------------------------------------------------
