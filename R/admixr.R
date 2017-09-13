@@ -5,12 +5,11 @@
 #'
 #' @param X, A, B, C, O Population names, using the terminology of
 #'     Patterson et al., 2012
-#' @param prefix Prefix of the geno/snp/ind files (can include the
-#'     path). If specified, geno/snp/ind have to be NULL and vice
-#'     versa.
-#' @param geno Path to the genotype file.
-#' @param snp Path to the snp file.
-#' @param ind Path to the ind file.
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param geno Path to the genotype file. Overrides the 'prefix' argument.
+#' @param snp Path to the snp file. Overrides the 'prefix' argument.
+#' @param ind Path to the ind file. Overrides the 'prefix' argument.
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
@@ -30,10 +29,43 @@ qpF4ratio <- function(X, A, B, C, O,
                     prefix, geno, snp, ind, badsnp)
 
     run_cmd("qpF4ratio", par_file=files[["par_file"]], log_file=files[["log_file"]])
-    
+
     read_qpF4ratio(files[["log_file"]]) %>% mutate(setup=setup)
 }
 
+
+#' Calculate D statistics or F4 statistics (which is just the
+#' numerator of a D statistic) and return the results as a data.frame.
+#'
+#' @param W, X, Y, Z Population names, using the terminology of
+#'     Patterson et al., 2012
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param geno Path to the genotype file. Overrides the 'prefix' argument.
+#' @param snp Path to the snp file. Overrides the 'prefix' argument.
+#' @param ind Path to the ind file. Overrides the 'prefix' argument.
+#' @param badsnp SNP file with information about ignored sites.
+#' @param dir_name Where to put all generated files (temporary
+#'     directory by default).
+#' @export
+qpDstat <- function(W, X, Y, Z, poplist,
+                    prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
+                    dir_name=NULL, f4mode=FALSE) {
+    check_presence(c(W, X, Y, Z), prefix, ind)
+
+    # get the path to the population, parameter and log files
+    setup <- paste0("qpDstat__", W, "_", X, "_", Y, "_", Z)
+    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+    files <- get_files(dir_name, config_prefix)
+
+    create_qpDstat_pop_file(W, X, Y, Z, poplist, file=files[["pop_file"]])
+    create_par_file(files[["par_file"]], files[["pop_file"]],
+                    prefix, geno, snp, ind, badsnp, f4mode)
+
+    run_cmd("qpDstat", par_file=files[["par_file"]], log_file=files[["log_file"]])
+
+    read_qpF4ratio(files[["log_file"]])
+}
 
 
 # Reading output log files --------------------------------------------------
