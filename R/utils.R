@@ -114,7 +114,7 @@ get_dir <- function(dir_name=NULL) {
         dir_name <- tempdir()
     }
 
-    dir_name
+    path.expand(dir_name)
 }
 
 
