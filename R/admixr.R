@@ -48,7 +48,7 @@ qpF4ratio <- function(X, A, B, C, O,
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
 #' @export
-qpDstat <- function(W, X, Y, Z, poplist,
+qpDstat <- function(W, X, Y, Z,
                     prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
                     dir_name=NULL, f4mode=FALSE) {
     check_presence(c(W, X, Y, Z), prefix, ind)
@@ -58,7 +58,7 @@ qpDstat <- function(W, X, Y, Z, poplist,
     config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
     files <- get_files(dir_name, config_prefix)
 
-    create_qpDstat_pop_file(W, X, Y, Z, poplist, file=files[["pop_file"]])
+    create_qpDstat_pop_file(W, X, Y, Z, file=files[["pop_file"]])
     create_par_file(files[["par_file"]], files[["pop_file"]],
                     prefix, geno, snp, ind, badsnp, f4mode)
 
