@@ -54,7 +54,7 @@ qpDstat <- function(W, X, Y, Z,
     check_presence(c(W, X, Y, Z), prefix, ind)
 
     # get the path to the population, parameter and log files
-    setup <- paste0("qpDstat__", W, "_", X, "_", Y, "_", Z)
+    setup <- paste0("qpDstat")
     config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
     files <- get_files(dir_name, config_prefix)
 
@@ -64,7 +64,7 @@ qpDstat <- function(W, X, Y, Z,
 
     run_cmd("qpDstat", par_file=files[["par_file"]], log_file=files[["log_file"]])
 
-    read_qpF4ratio(files[["log_file"]])
+    read_qpDstat(files[["log_file"]])
 }
 
 
