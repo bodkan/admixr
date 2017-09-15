@@ -77,6 +77,8 @@ qpDstat <- function(W, X, Y, Z,
 #'
 #' @return Tibble object with the parsed results.
 #' @export
+#'
+#' @import stringr readr
 read_qpF4ratio <- function(file) {
     log_lines <- readLines(file) %>% .[!str_detect(., "warning")]
 
@@ -111,6 +113,8 @@ read_qpF4ratio <- function(file) {
 #'
 #' @return Tibble object with the parsed results.
 #' @export
+#'
+#' @import stringr readr
 read_qpDstat <- function(file) {
     log_lines <- readLines(file) %>% .[!str_detect(., "warning")]
 
@@ -146,6 +150,8 @@ read_qpDstat <- function(file) {
 #' @param merge List of labels to merge. List names specified labels
 #'     to merge into.
 #' @export
+#'
+#' @import stringr
 merge_pops <- function(file, modified_file, merge) {
     # merge=list(ancient_NearEast=merge_what, present_NearEast=c("Yemenite_Jew", "Jordan", "Samaritan", "Bedouin", "Palestinian"))
     lines <- readLines(file)
@@ -168,6 +174,8 @@ merge_pops <- function(file, modified_file, merge) {
 #' @return Data frame with the sample identifier, sex and label
 #'     columns.
 #' @export
+#'
+#' @import readr
 read_ind <- function(file) {
     read_table2(file, col_names=c("id", "sex", "label"))
 }
@@ -180,6 +188,8 @@ read_ind <- function(file) {
 #' @return Data frame with columns containing "genotypes" of each
 #'     sample (0/1/9 as defined by the EIGENSTRAT format).
 #' @export
+#'
+#' @import readr
 read_geno <- function(file, inds=NULL) {
     # get the number of samples in the geno file
     n <- nchar(readLines(file, 1))
@@ -193,6 +203,8 @@ read_geno <- function(file, inds=NULL) {
 #'
 #' @return Data frame with information about each SNP (columns defined by the EIGENSTRAT format).
 #' @export
+#'
+#' @import readr
 read_snp <- function(snp_file) {
     read_table(snp_file, col_names=c("id", "chrom", "gen", "pos", "alt", "ref"))
 
@@ -212,6 +224,8 @@ read_snp <- function(snp_file) {
 #'
 #' @return A named vector of counts or proportions.
 #' @export
+#'
+#' @import dplyr
 snps_present <- function(geno, prop=FALSE) {
     fn <- ifelse(prop, mean, sum)
     summarise_all(geno, funs(fn(. != 9)))
@@ -227,6 +241,8 @@ snps_present <- function(geno, prop=FALSE) {
 #'
 #' @return A named vector of counts or proportions.
 #' @export
+#'
+#' @import dplyr
 snps_missing <- function(geno, prop=FALSE) {
     fn <- ifelse(prop, mean, sum)
     summarise_all(geno, funs(fn(. == 9)))
