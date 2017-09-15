@@ -13,12 +13,12 @@ create_qpF4ratio_pop_file <- function(X, A, B, C, O, file) {
 }
 
 
-#' Generate a file with populations for a qpF4ratio run.
+#' Generate a file with populations for a qpDstat run.
 #'
 #' @description For details about the format of the population list
 #'     file see documentation of the ADMIXTOOLS package.
 #'
-#' @param X, A, B, C, O Population names, using the terminology of
+#' @param W, X, Y, Z Population names, using the terminology of
 #'     Patterson et al., 2012. It is possible to specify vectors of
 #'     population identifiers as W, X, etc. That way, all possible
 #'     combinations of specified W, X, Y and Z quadruples will be
@@ -27,18 +27,11 @@ create_qpF4ratio_pop_file <- function(X, A, B, C, O, file) {
 #'     population per line.
 #' @param file Path to the poplist file that will be generated.
 #' @export
-create_Dstats_pop_file <- function(W=NULL, X=NULL, Y=NULL, Z=NULL, poplist=NULL, file) {
-    if (all(!is.null(c(W, X, Y, Z)))) { # individual populations were specified
-        lines <- c()
-        for (w in W) for (x in X) for (y in Y) for (z in Z) {
-            lines <- c(lines, sprintf("%s %s %s %s", w, x, y, z))
-        }
-    } else if (!is.null(poplist)) { # a simple list of populations was specified
-        lines <- poplist
-    } else { # missing population information
-        stop("Population identifiers must be specified")
+create_qpDstat_pop_file <- function(W=NULL, X=NULL, Y=NULL, Z=NULL, file) {
+    lines <- c()
+    for (w in W) for (x in X) for (y in Y) for (z in Z) {
+        lines <- c(lines, sprintf("%s %s %s %s", w, x, y, z))
     }
-
     writeLines(lines, file)
 }
 

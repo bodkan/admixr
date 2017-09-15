@@ -5,12 +5,11 @@
 #'
 #' @param X, A, B, C, O Population names, using the terminology of
 #'     Patterson et al., 2012
-#' @param prefix Prefix of the geno/snp/ind files (can include the
-#'     path). If specified, geno/snp/ind have to be NULL and vice
-#'     versa.
-#' @param geno Path to the genotype file.
-#' @param snp Path to the snp file.
-#' @param ind Path to the ind file.
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param geno Path to the genotype file. Overrides the 'prefix' argument.
+#' @param snp Path to the snp file. Overrides the 'prefix' argument.
+#' @param ind Path to the ind file. Overrides the 'prefix' argument.
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
@@ -30,10 +29,43 @@ qpF4ratio <- function(X, A, B, C, O,
                     prefix, geno, snp, ind, badsnp)
 
     run_cmd("qpF4ratio", par_file=files[["par_file"]], log_file=files[["log_file"]])
-    
+
     read_qpF4ratio(files[["log_file"]]) %>% mutate(setup=setup)
 }
 
+
+#' Calculate D statistics or F4 statistics (which is just the
+#' numerator of a D statistic) and return the results as a data.frame.
+#'
+#' @param W, X, Y, Z Population names, using the terminology of
+#'     Patterson et al., 2012
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param geno Path to the genotype file. Overrides the 'prefix' argument.
+#' @param snp Path to the snp file. Overrides the 'prefix' argument.
+#' @param ind Path to the ind file. Overrides the 'prefix' argument.
+#' @param badsnp SNP file with information about ignored sites.
+#' @param dir_name Where to put all generated files (temporary
+#'     directory by default).
+#' @export
+qpDstat <- function(W, X, Y, Z,
+                    prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
+                    dir_name=NULL, f4mode=FALSE) {
+    check_presence(c(W, X, Y, Z), prefix, ind)
+
+    # get the path to the population, parameter and log files
+    setup <- paste0("qpDstat")
+    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+    files <- get_files(dir_name, config_prefix)
+
+    create_qpDstat_pop_file(W, X, Y, Z, file=files[["pop_file"]])
+    create_par_file(files[["par_file"]], files[["pop_file"]],
+                    prefix, geno, snp, ind, badsnp, f4mode)
+
+    run_cmd("qpDstat", par_file=files[["par_file"]], log_file=files[["log_file"]])
+
+    read_qpDstat(files[["log_file"]])
+}
 
 
 # Reading output log files --------------------------------------------------
@@ -45,6 +77,8 @@ qpF4ratio <- function(X, A, B, C, O,
 #'
 #' @return Tibble object with the parsed results.
 #' @export
+#'
+#' @import stringr readr
 read_qpF4ratio <- function(file) {
     log_lines <- readLines(file) %>% .[!str_detect(., "warning")]
 
@@ -79,6 +113,8 @@ read_qpF4ratio <- function(file) {
 #'
 #' @return Tibble object with the parsed results.
 #' @export
+#'
+#' @import stringr readr
 read_qpDstat <- function(file) {
     log_lines <- readLines(file) %>% .[!str_detect(., "warning")]
 
@@ -114,6 +150,8 @@ read_qpDstat <- function(file) {
 #' @param merge List of labels to merge. List names specified labels
 #'     to merge into.
 #' @export
+#'
+#' @import stringr
 merge_pops <- function(file, modified_file, merge) {
     # merge=list(ancient_NearEast=merge_what, present_NearEast=c("Yemenite_Jew", "Jordan", "Samaritan", "Bedouin", "Palestinian"))
     lines <- readLines(file)
@@ -136,6 +174,8 @@ merge_pops <- function(file, modified_file, merge) {
 #' @return Data frame with the sample identifier, sex and label
 #'     columns.
 #' @export
+#'
+#' @import readr
 read_ind <- function(file) {
     read_table2(file, col_names=c("id", "sex", "label"))
 }
@@ -148,6 +188,8 @@ read_ind <- function(file) {
 #' @return Data frame with columns containing "genotypes" of each
 #'     sample (0/1/9 as defined by the EIGENSTRAT format).
 #' @export
+#'
+#' @import readr
 read_geno <- function(file, inds=NULL) {
     # get the number of samples in the geno file
     n <- nchar(readLines(file, 1))
@@ -161,6 +203,8 @@ read_geno <- function(file, inds=NULL) {
 #'
 #' @return Data frame with information about each SNP (columns defined by the EIGENSTRAT format).
 #' @export
+#'
+#' @import readr
 read_snp <- function(snp_file) {
     read_table(snp_file, col_names=c("id", "chrom", "gen", "pos", "alt", "ref"))
 
@@ -180,6 +224,8 @@ read_snp <- function(snp_file) {
 #'
 #' @return A named vector of counts or proportions.
 #' @export
+#'
+#' @import dplyr
 snps_present <- function(geno, prop=FALSE) {
     fn <- ifelse(prop, mean, sum)
     summarise_all(geno, funs(fn(. != 9)))
@@ -195,6 +241,8 @@ snps_present <- function(geno, prop=FALSE) {
 #'
 #' @return A named vector of counts or proportions.
 #' @export
+#'
+#' @import dplyr
 snps_missing <- function(geno, prop=FALSE) {
     fn <- ifelse(prop, mean, sum)
     summarise_all(geno, funs(fn(. == 9)))
