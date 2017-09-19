@@ -206,8 +206,7 @@ read_geno <- function(file, inds=NULL) {
 #'
 #' @import readr
 read_snp <- function(snp_file) {
-    read_table(snp_file, col_names=c("id", "chrom", "gen", "pos", "alt", "ref"))
-
+    read_table2(snp_file, col_names=c("id", "chrom", "gen", "pos", "alt", "ref"))
 }
 
 
