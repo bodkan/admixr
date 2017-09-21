@@ -247,3 +247,41 @@ snps_missing <- function(geno, prop=FALSE) {
     summarise_all(geno, funs(fn(. == 9)))
 }
 
+
+
+#' Create a new set of EIGENSTRAT files by intersecting the original
+#' data with a given set of coordinates.
+#'
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param out_prefix Prefix of the generated EIGENSTRAT files with the
+#'     subset of the data.
+#' @param bed_file Path to the 3 column BED file to intersect with.
+#' @param pos_file Path to the 2 column position file to intersect with.
+#' @param complement Perform an intersect or a complement operation?
+#'
+#' @import readr dplyr
+#' @export
+subset_sites <- function(prefix, out_prefix, bed_file=NULL, pos_file=NULL, complement=FALSE) {
+    if (!is.null(bed_file)) {
+        coords <- read_table2(bed_file, col_names=c("chrom", "start", "end")) %>% select(chrom, end)
+    } else if(!is.null(pos_file)) {
+        coords <- read_table2(pos_file, col_names=c("chrom", "pos"))
+    }
+
+    geno <- read_geno(paste0(prefix, ".geno"))
+    snp <- read_snp(paste0(prefix, ".snp"))
+    combined <- bind_cols(snp, geno)
+
+    # determine which function to call on the coordinates
+    fun <- ifelse(complement, anti_join, inner_join)
+    combined_subset <- fun(combined, coords)
+
+    # write the new snp file
+    write_tsv(select(combined_subset, id:ref), path=paste0(out_prefix, ".snp"), col_names=FALSE)
+    # write the new geno file
+    writeLines(apply(select(combined_subset, -(id:ref)), 1, paste, collapse=""),
+               con=paste0(out_prefix, ".geno"))
+    # write the new ind file
+    file.copy(from=paste0(prefix, ".ind"), to=paste0(out_prefix, ".ind"))
+}
