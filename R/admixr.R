@@ -129,11 +129,13 @@ read_qpDstat <- function(file) {
         str_replace_all(" +", " ") %>%
         str_replace_all("^ | $", "")
 
+    result_col <- ifelse(any(str_detect(log_lines, "f4mode: YES")), "f4", "D")
+
     res_df <- res_lines %>%
         paste0("\n", collapse="\n") %>%
         read_delim(delim=" ", col_names=FALSE) %>%
         .[c(1:6, ncol(.) - 2, ncol(.) - 1, ncol(.))] %>% # remove column with "best" if present
-        setNames(c("W", "X", "Y", "Z", "Dstat", "Zscore", "BABA", "ABBA", "n_snps"))
+        setNames(c("W", "X", "Y", "Z", result_col, "Zscore", "BABA", "ABBA", "n_snps"))
 
     res_df
 }
