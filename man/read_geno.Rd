@@ -4,10 +4,12 @@
 \alias{read_geno}
 \title{Read an EIGENSTRAT 'geno' file.}
 \usage{
-read_geno(file, inds = NULL)
+read_geno(file, ind_file = NULL)
 }
 \arguments{
-\item{file}{Path to the file.}
+\item{file}{Path to the geno file.}
+
+\item{ind_file}{Path to the ind file to read sample names from.}
 }
 \value{
 Data frame with columns containing "genotypes" of each

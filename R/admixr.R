@@ -183,14 +183,21 @@ read_ind <- function(file) {
 
 #' Read an EIGENSTRAT 'geno' file.
 #'
-#' @param file Path to the file.
+#' @param file Path to the geno file.
+#' @param ind_file Path to the ind file to read sample names from.
 #'
 #' @return Data frame with columns containing "genotypes" of each
 #'     sample (0/1/9 as defined by the EIGENSTRAT format).
 #' @export
 #'
 #' @import readr
-read_geno <- function(file, inds=NULL) {
+read_geno <- function(file, ind_file=NULL) {
+    if (!is.null(ind_file)) {
+        inds <- read_ind(ind_file)$id
+    } else {
+        inds <- NULL
+    }
+
     # get the number of samples in the geno file
     n <- nchar(readLines(file, 1))
     read_fwf(file, col_positions=fwf_widths(rep(1, n), inds))
