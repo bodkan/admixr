@@ -101,7 +101,7 @@ read_qpF4ratio <- function(file) {
         paste0("\n", collapse="\n") %>%
         read_delim(delim=" ", col_names=FALSE) %>%
         setNames(c("A", "O", "X", "C", "A", "O", "B", "C", "alpha", "stderr", "z")) %>%
-        .[c("A", "B", "X", "C", "O", "alpha", "stderr", "z")]
+        .[c("A", "B", "X", "C", "O", "alpha", "stderr", "Zscore")]
 
     res_df
 }
