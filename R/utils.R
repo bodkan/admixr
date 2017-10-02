@@ -141,7 +141,6 @@ check_presence <- function(labels, prefix=NULL, ind=NULL) {
 
 # Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
 # gt_to_eigenstrat(c(".|.", "./.", ".", "0|0", "0/0", "0", "0|1", "1|0", "0/1", "1|1", "1/1", "1"))
-#' @export
 gt_to_eigenstrat <- function(gts) {
     eigen_gts <- gts %>%
         str_replace("^0$",   "2") %>%
@@ -158,4 +157,17 @@ gt_to_eigenstrat <- function(gts) {
         str_replace("^1/1$", "0")
 
     eigen_gts
+}
+
+# Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
+# eigenstrat_to_gt(c(0, 1, 2, 9, 9, 2, 1, 0))
+eigenstrat_to_gt <- function(eigenstrat_gts) {
+    vcf_gts <- sapply(eigenstrat_gts, function(i) {
+        if      (i == 0) "1/1"
+        else if (i == 1) "0/1"
+        else if (i == 2) "0/0"
+        else             "./."
+    })
+
+    vcf_gts
 }

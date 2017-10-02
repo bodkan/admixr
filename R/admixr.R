@@ -294,3 +294,46 @@ subset_sites <- function(prefix, out_prefix, bed_file=NULL, pos_file=NULL, compl
     # write the new ind file
     file.copy(from=paste0(prefix, ".ind"), to=paste0(out_prefix, ".ind"))
 }
+
+
+#' Convert EIGENSTRAT files into a VCF file.
+#'
+#' This function reads the genotypes from a 'geno' file, their
+#' coordinates and reference/alternative alleles and the individuals'
+#' names from an 'ind' file and generates a minimalistic VCF file.
+#'
+#' Compressing and indexing requires having "bgzip" and "tabix"
+#' commands in $PATH.
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param vcf_file Path to the VCF file.
+#' @param pos_file Path to the 2 column position file to intersect
+#'     with.
+#' @param complement Perform an intersect or a complement operation?
+#'
+#' @import readr
+#' @export
+to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
+    geno <- read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind"))
+    snp <- read_snp(paste0(prefix, ".snp"))
+    ind <- read_ind(paste0(prefix, ".ind"))
+
+    # construct a minimal VCF header
+    header <- c("##fileformat=VCFv4.1",
+                "##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">",
+                sapply(unique(snp$chrom), function(chrom) {
+                    paste0("##contig=<ID=", chrom, ">")
+                }))
+
+    # generate a dataframe with the "body" of the VCF file (info and GT columns)
+    info_cols <- mutate(snp, ID=".", QUAL="0", FILTER=".", INFO=".", FORMAT="GT") %>%
+        select(`#CHROM`=chrom, POS=pos, REF=ref, ALT=alt, QUAL, FILTER, INFO, FORMAT)
+    gt_cols <- mutate_all(geno, eigenstrat_to_gt)
+    body_cols <- bind_cols(info_cols, gt_cols)
+
+    writeLines(header, vcf_file)
+    write_tsv(body_cols, vcf_file, col_names=TRUE, append=TRUE)
+
+    if (compress) system(paste("bgzip", vcf_file))
+    if (index)    system(paste("tabix", paste0(vcf_file, ".gz")))
+}
