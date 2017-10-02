@@ -327,7 +327,7 @@ to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
 
     # generate a dataframe with the "body" of the VCF file (info and GT columns)
     info_cols <- mutate(snp, ID=".", QUAL="0", FILTER=".", INFO=".", FORMAT="GT") %>%
-        select(`#CHROM`=chrom, POS=pos, REF=ref, ALT=alt, QUAL, FILTER, INFO, FORMAT)
+        select(`#CHROM`=chrom, POS=pos, ID, REF=ref, ALT=alt, QUAL, FILTER, INFO, FORMAT)
     gt_cols <- mutate_all(geno, eigenstrat_to_gt)
     body_cols <- bind_cols(info_cols, gt_cols)
 
