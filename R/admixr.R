@@ -307,7 +307,7 @@ subset_sites <- function(prefix, out_prefix, bed_file=NULL, pos_file=NULL, compl
 #'
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
-#' @param vcf_file Path to the VCF file.
+#' @param vcf_file Path to the VCF file that will be generated.
 #' @param compress Compress the VCF with bgzip?
 #' @param index Index the VCF with tabix?
 #'
@@ -336,4 +336,36 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
 
     if (compress) system(paste("bgzip", vcf_file))
     if (index)    system(paste("tabix", paste0(vcf_file, ".gz")))
+}
+
+
+#' Convert VCF file into three-file EIGENSTRAT format.
+#'
+#' @param vcf_file Path to the VCF file.
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path) that will be generated.
+#'
+#' @import readr
+#' @export
+vcf_to_eigenstrat <- function(vcf_file, prefix) {
+    vcf <- read_tsv(vcf_file, comment="##") %>%
+        rename(chrom=`#CHROM`, pos=POS, ref=REF, alt=ALT) %>%
+        select(-c(ID, QUAL, FILTER, INFO, FORMAT))
+
+    # generate dataframes with the 3 EIGENSTRAT info tables
+    snp <- select(vcf, chrom, pos, ref, alt) %>%
+        mutate(snp_id=paste(chrom, pos, sep="_"), gen_dist="0.0") %>%
+        select(snp_id, chrom, gen_dist, pos, ref, alt)
+    ind <- tibble(
+        sample_id=select(vcf, -c(chrom, pos, ref, alt)) %>% names,
+        sex="U",
+        label=sample_id
+    )
+    geno <- select(vcf, -c(chrom, pos, ref, alt)) %>%
+        mutate_all(gt_to_eigenstrat)
+
+    # write all three EIGENSTRAT files
+    write_tsv(snp, paste0(prefix, ".snp"), col_names=FALSE)
+    write_tsv(ind, paste0(prefix, ".ind"), col_names=FALSE)
+    writeLines(apply(geno, 1, paste, collapse=""), paste0(prefix, ".geno"))
 }

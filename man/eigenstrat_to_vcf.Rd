@@ -10,7 +10,7 @@ eigenstrat_to_vcf(prefix, vcf_file, compress = TRUE, index = TRUE)
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}
 
-\item{vcf_file}{Path to the VCF file.}
+\item{vcf_file}{Path to the VCF file that will be generated.}
 
 \item{compress}{Compress the VCF with bgzip?}
 
