@@ -304,16 +304,16 @@ subset_sites <- function(prefix, out_prefix, bed_file=NULL, pos_file=NULL, compl
 #'
 #' Compressing and indexing requires having "bgzip" and "tabix"
 #' commands in $PATH.
+#'
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param vcf_file Path to the VCF file.
-#' @param pos_file Path to the 2 column position file to intersect
-#'     with.
-#' @param complement Perform an intersect or a complement operation?
+#' @param compress Compress the VCF with bgzip?
+#' @param index Index the VCF with tabix?
 #'
 #' @import readr
 #' @export
-to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
+eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
     geno <- read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind"))
     snp <- read_snp(paste0(prefix, ".snp"))
     ind <- read_ind(paste0(prefix, ".ind"))
