@@ -169,6 +169,10 @@ merge_pops <- function(file, modified_file, merge) {
 }
 
 
+
+# Reading EIGENSTRAT files --------------------------------------------------
+
+
 #' Read an EIGENSTRAT 'ind' file.
 #'
 #' @param file Path to the file.
@@ -242,6 +246,74 @@ read_eigenstrat <- function(prefix=NULL, snp_file=NULL, geno_file=NULL, ind_file
         ind=read_ind(ind_file)
     )
 }
+
+
+
+# Writing EIGENSTRAT files --------------------------------------------------
+
+
+#' Write an EIGENSTRAT 'ind' file.
+#'
+#' @param file Path to the file.
+#' @param ind data.frame with data in an 'ind' format
+#' @export
+#'
+#' @import readr
+write_ind <- function(ind_file, df) {
+    write_tsv(df, ind_file, col_names=FALSE)
+}
+
+
+#' Write an EIGENSTRAT 'snp' file.
+#'
+#' @param file Path to the file.
+#' @param snp data.frame with data in a 'snp' format
+#' @export
+#'
+#' @import readr
+write_snp <- function(snp_file, df) {
+    write_tsv(df, snp_file, col_names=FALSE)
+}
+
+
+#' Write an EIGENSTRAT 'geno' file.
+#'
+#' @param file Path to the file.
+#' @param geno data.frame with data in a 'geno' format
+#' @export
+#'
+#' @import readr
+write_geno <- function(geno_file, df) {
+    writeLines(apply(df, 1, paste, collapse=""), con=geno_file)
+}
+
+
+#' Write a tripplet of EIGENSTRAT (geno/snp/ind files) files.
+#'
+#' @param prefix Prefix of the geno/snp/ind files (can
+#'     include the path).
+#' @param ind data.frame with data in a 'ind' format
+#' @param snp data.frame with data in a 'snp' format
+#' @param geno data.frame with data in a 'geno' format
+#'
+#' @return List of three data frames (one element for geno/snp/ind).
+write_eigenstrat <- function(prefix=NULL, ind, snp, geno) {
+    if (all(is.null(c(prefix, geno_file, snp_file, ind_file)))) {
+        stop("Prefix of EIGENSTRAT files or the paths to individual geno/snp/ind files must be specified")
+    }
+
+    # if the user specified EIGENSTRAT prefix, set only paths to unspecified geno/snp/ind files
+    if (!is.null(prefix)) {
+        if (is.null(ind_file)) ind_file <- paste0(prefix, ".ind")
+        if (is.null(snp_file)) snp_file <- paste0(prefix, ".snp")
+        if (is.null(geno_file)) geno_file <- paste0(prefix, ".geno")
+    }
+
+    write_ind(ind_file, ind)
+    write_snp(snp_file, snp)
+    write_geno(geno_file, geno)
+}
+
 
 
 
