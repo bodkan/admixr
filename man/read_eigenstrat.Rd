@@ -4,8 +4,7 @@
 \alias{read_eigenstrat}
 \title{Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.}
 \usage{
-read_eigenstrat(prefix = NULL, snp_file = NULL, geno_file = NULL,
-  ind_file = NULL)
+read_eigenstrat(prefix = NULL)
 }
 \arguments{
 \item{file}{Path to the file.}

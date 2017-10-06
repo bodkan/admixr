@@ -4,7 +4,7 @@
 \alias{write_eigenstrat}
 \title{Write a tripplet of EIGENSTRAT (geno/snp/ind files) files.}
 \usage{
-write_eigenstrat(prefix = NULL, ind, snp, geno)
+write_eigenstrat(prefix, ind, snp, geno)
 }
 \arguments{
 \item{prefix}{Prefix of the geno/snp/ind files (can
