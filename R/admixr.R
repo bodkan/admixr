@@ -219,6 +219,31 @@ read_snp <- function(snp_file) {
 }
 
 
+#' Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.
+#'
+#' @param file Path to the file.
+#'
+#' @return List of three data frames (one element for geno/snp/ind).
+read_eigenstrat <- function(prefix=NULL, snp_file=NULL, geno_file=NULL, ind_file=NULL) {
+    if (all(is.null(c(prefix, geno_file, snp_file, ind_file)))) {
+        stop("Prefix of EIGENSTRAT files or the paths to individual geno/snp/ind files must be specified")
+    }
+
+    # if the user specified EIGENSTRAT prefix, set only paths to unspecified geno/snp/ind files
+    if (!is.null(prefix)) {
+        if (is.null(geno_file)) geno_file <- paste0(prefix, ".geno")
+        if (is.null(snp_file)) snp_file <- paste0(prefix, ".snp")
+        if (is.null(ind_file)) ind_file <- paste0(prefix, ".ind")
+    }
+
+    list(
+        geno=read_geno(geno_file, ind_file),
+        snp=read_snp(snp_file),
+        ind=read_ind(ind_file)
+    )
+}
+
+
 
 # Filtering functions  --------------------------------------------------
 
