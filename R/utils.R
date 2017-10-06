@@ -42,7 +42,7 @@ create_qpDstat_pop_file <- function(W=NULL, X=NULL, Y=NULL, Z=NULL, file) {
 #'     function.
 #' @param pop_file Populations file (qpDstat quadruples, Dstats
 #'     population list, qpF4ratio populations, etc.).
-#' @param eigenstrat_prefix Prefix of the geno/snp/ind files (can
+#' @param prefix Prefix of the geno/snp/ind files (can
 #'     include the path). If specified, geno_file/snp_file/ind_file
 #'     will be ignored.
 #' @param geno_file Path to the genotype file.
@@ -53,19 +53,19 @@ create_qpDstat_pop_file <- function(W=NULL, X=NULL, Y=NULL, Z=NULL, file) {
 #'     just the f4?
 #' @export
 create_par_file <- function(par_file, pop_file,
-                            eigenstrat_prefix=NULL,
+                            prefix=NULL,
                             geno_file=NULL, snp_file=NULL, ind_file= NULL,
                             badsnp_file=NULL,
                             f4mode=FALSE) {
-    if (all(is.null(c(eigenstrat_prefix, geno_file, snp_file, ind_file)))) {
+    if (all(is.null(c(prefix, geno_file, snp_file, ind_file)))) {
         stop("Prefix of EIGENSTRAT files or the paths to individual geno/snp/ind files must be specified")
     }
 
     # if the user specified EIGENSTRAT prefix, set only paths to unspecified geno/snp/ind files
-    if (!is.null(eigenstrat_prefix)) {
-        if (is.null(geno_file)) geno_file <- paste0(eigenstrat_prefix, ".geno")
-        if (is.null(snp_file)) snp_file <- paste0(eigenstrat_prefix, ".snp")
-        if (is.null(ind_file)) ind_file <- paste0(eigenstrat_prefix, ".ind")
+    if (!is.null(prefix)) {
+        if (is.null(geno_file)) geno_file <- paste0(prefix, ".geno")
+        if (is.null(snp_file)) snp_file <- paste0(prefix, ".snp")
+        if (is.null(ind_file)) ind_file <- paste0(prefix, ".ind")
     }
 
     writeLines(sprintf("genotypename: %s\nsnpname: %s\nindivname: %s\npopfilename: %s",
