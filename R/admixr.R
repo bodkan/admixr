@@ -178,8 +178,8 @@ merge_pops <- function(file, modified_file, merge) {
 #' @param file Path to the file.
 #'
 #' @return Data frame with the sample identifier, sex and label
-#'     columns.
-#' 
+#'     columns (columns defined by the EIGENSTRAT format).
+#'
 #' @export
 #' @import readr
 read_ind <- function(file) {
@@ -191,8 +191,9 @@ read_ind <- function(file) {
 #'
 #' @param file Path to the file.
 #'
-#' @return Data frame with information about each SNP (columns defined by the EIGENSTRAT format).
-#' 
+#' @return Data frame with information about each SNP (columns defined
+#'     by the EIGENSTRAT format).
+#'
 #' @export
 #' @import readr
 read_snp <- function(snp_file) {
@@ -207,7 +208,7 @@ read_snp <- function(snp_file) {
 #'
 #' @return Data frame with columns containing "genotypes" of each
 #'     sample (0/1/9 as defined by the EIGENSTRAT format).
-#' 
+#'
 #' @export
 #' @import readr
 read_geno <- function(file, ind_file=NULL) {
@@ -232,7 +233,7 @@ read_geno <- function(file, ind_file=NULL) {
 #' @export
 read_eigenstrat <- function(prefix=NULL) {
     list(
-        geno=read_geno( paste0(prefix, ".geno"), paste0(prefix, ".ind")),
+        geno=read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind")),
         snp=read_snp(paste0(prefix, ".snp")),
         ind=read_ind(paste0(prefix, ".ind"))
     )
@@ -246,8 +247,9 @@ read_eigenstrat <- function(prefix=NULL) {
 #' Write an EIGENSTRAT 'ind' file.
 #'
 #' @param file Path to the file.
-#' @param ind data.frame with data in an 'ind' format
-#' 
+#' @param ind Data frame with the sample identifier, sex and label
+#'     columns (columns defined by the EIGENSTRAT format).
+#'
 #' @export
 #' @import readr
 write_ind <- function(ind_file, df) {
@@ -258,8 +260,9 @@ write_ind <- function(ind_file, df) {
 #' Write an EIGENSTRAT 'snp' file.
 #'
 #' @param file Path to the file.
-#' @param snp data.frame with data in a 'snp' format
-#' 
+#' @param snp Data frame with information about each SNP (columns
+#'     defined by the EIGENSTRAT format).
+#'
 #' @export
 #' @import readr
 write_snp <- function(snp_file, df) {
@@ -270,7 +273,8 @@ write_snp <- function(snp_file, df) {
 #' Write an EIGENSTRAT 'geno' file.
 #'
 #' @param file Path to the file.
-#' @param geno data.frame with data in a 'geno' format
+#' @param geno Data frame with columns containing "genotypes" of each
+#'     sample (0/1/9 as defined by the EIGENSTRAT format).
 #'
 #' @export
 #' @import readr

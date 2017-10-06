@@ -9,7 +9,8 @@ write_geno(geno_file, df)
 \arguments{
 \item{file}{Path to the file.}
 
-\item{geno}{data.frame with data in a 'geno' format}
+\item{geno}{Data frame with columns containing "genotypes" of each
+sample (0/1/9 as defined by the EIGENSTRAT format).}
 }
 \description{
 Write an EIGENSTRAT 'geno' file.

@@ -9,7 +9,8 @@ write_snp(snp_file, df)
 \arguments{
 \item{file}{Path to the file.}
 
-\item{snp}{data.frame with data in a 'snp' format}
+\item{snp}{Data frame with information about each SNP (columns
+defined by the EIGENSTRAT format).}
 }
 \description{
 Write an EIGENSTRAT 'snp' file.

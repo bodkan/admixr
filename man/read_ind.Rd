@@ -11,7 +11,7 @@ read_ind(file)
 }
 \value{
 Data frame with the sample identifier, sex and label
-    columns.
+    columns (columns defined by the EIGENSTRAT format).
 }
 \description{
 Read an EIGENSTRAT 'ind' file.

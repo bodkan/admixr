@@ -9,7 +9,8 @@ write_ind(ind_file, df)
 \arguments{
 \item{file}{Path to the file.}
 
-\item{ind}{data.frame with data in an 'ind' format}
+\item{ind}{Data frame with the sample identifier, sex and label
+columns (columns defined by the EIGENSTRAT format).}
 }
 \description{
 Write an EIGENSTRAT 'ind' file.
