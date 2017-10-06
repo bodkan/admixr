@@ -452,38 +452,3 @@ vcf_to_eigenstrat <- function(vcf_file, prefix) {
     write_tsv(ind, paste0(prefix, ".ind"), col_names=FALSE)
     writeLines(apply(geno, 1, paste, collapse=""), paste0(prefix, ".geno"))
 }
-
-
-#' Merge a set of EIGENSTRAT files (one EIGENSTRAT "tripplet" per
-#' chromosome, for example) into a single EIGENSTRAT dataset.
-#'
-#' This function will merge files "vertically", not "horizontally"
-#' (i.e. merging the same set of SNPs for different samples, for
-#' example - what Admixtools' mergeit command does). Therefore, all
-#' specified EIGENSTRAT files must contain the same set of samples. If
-#' they don't, this function will fail and throw an exception.
-#'
-#' @param prefixes A vector of prefixes of a set of EIGENSTRAT files.
-#' @param output_prefix What prefix to use for the final merged
-#'     EIGENSTRAT dataset.
-#'
-merge_snps <- function(prefixes, output_prefix) {
-    all_geno <- all_snps <- all_ind <- list()
-
-    for (prefix in prefixes) {
-        all_geno[[prefix]] <- read_geno(paste0(prefix, ".geno"))
-        all_geno[[snp]] <- read_snp(paste0(prefix, ".snp"))
-        all_geno[[ind]] <- read_ind(paste0(prefix, ".ind"))
-    }
-
-    if (length(unique(all_ind)) ==  1) {
-        stop("Specified 'ind' files do not contain the same set of samples!")
-    }
-
-    merged_geno <- bind_rows(all_geno)
-    merged_snp <- bind_rows(all_snps)
-
-    write_tsv(merged_snp, paste0(output_prefix, ".snp"), col_names=FALSE)
-    write_tsv(all_ind[[1]], paste0(output_prefix, ".ind"), col_names=FALSE)
-    writeLines(apply(merged_geno, 1, paste, collapse=""), paste0(output_prefix, ".geno"))
-}
