@@ -349,17 +349,12 @@ snps_missing <- function(geno, prop=FALSE) {
 #' @param out_prefix Prefix of the generated EIGENSTRAT files with the
 #'     subset of the data.
 #' @param bed_file Path to the 3 column BED file to intersect with.
-#' @param pos_file Path to the 2 column position file to intersect with.
 #' @param complement Perform an intersect or a complement operation?
 #'
 #' @import readr dplyr
 #' @export
-subset_sites <- function(prefix, out_prefix, bed_file=NULL, pos_file=NULL, complement=FALSE) {
-    if (!is.null(bed_file)) {
-        coords <- read_table2(bed_file, col_names=c("chrom", "start", "end")) %>% select(chrom, end)
-    } else if(!is.null(pos_file)) {
-        coords <- read_table2(pos_file, col_names=c("chrom", "pos"))
-    }
+subset_sites <- function(prefix, out_prefix, bed_file=NULL, complement=FALSE) {
+    coords <- read_table2(bed_file, col_names=c("chrom", "start", "end")) %>% select(chrom, end)
 
     geno <- read_geno(paste0(prefix, ".geno"))
     snp <- read_snp(paste0(prefix, ".snp"))

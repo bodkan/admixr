@@ -5,8 +5,7 @@
 \title{Create a new set of EIGENSTRAT files by intersecting the original
 data with a given set of coordinates.}
 \usage{
-subset_sites(prefix, out_prefix, bed_file = NULL, pos_file = NULL,
-  complement = FALSE)
+subset_sites(prefix, out_prefix, bed_file = NULL, complement = FALSE)
 }
 \arguments{
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
@@ -16,8 +15,6 @@ path).}
 subset of the data.}
 
 \item{bed_file}{Path to the 3 column BED file to intersect with.}
-
-\item{pos_file}{Path to the 2 column position file to intersect with.}
 
 \item{complement}{Perform an intersect or a complement operation?}
 }
