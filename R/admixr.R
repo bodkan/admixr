@@ -183,7 +183,7 @@ merge_pops <- function(file, modified_file, merge) {
 #' @export
 #' @import readr
 read_ind <- function(file) {
-    read_table2(file, col_names=c("id", "sex", "label"))
+    read_table2(file, col_names=c("id", "sex", "label"), col_types="ccc")
 }
 
 
@@ -197,7 +197,8 @@ read_ind <- function(file) {
 #' @export
 #' @import readr
 read_snp <- function(snp_file) {
-    read_table2(snp_file, col_names=c("id", "chrom", "gen", "pos", "ref", "alt"))
+    read_table2(snp_file, col_names=c("id", "chrom", "gen", "pos", "ref", "alt"),
+                col_types="ccdicc", progress=FALSE)
 }
 
 
@@ -220,7 +221,8 @@ read_geno <- function(file, ind_file=NULL) {
 
     # get the number of samples in the geno file
     n <- nchar(readLines(file, 1))
-    read_fwf(file, col_positions=fwf_widths(rep(1, n), inds))
+    read_fwf(file, col_positions=fwf_widths(rep(1, n), inds),
+             col_types=cols(.default="i"), progress=FALSE)
 }
 
 
