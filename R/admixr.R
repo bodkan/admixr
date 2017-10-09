@@ -356,7 +356,8 @@ snps_missing <- function(geno, prop=FALSE) {
 #' @import readr dplyr
 #' @export
 subset_sites <- function(prefix, out_prefix, bed_file=NULL, complement=FALSE) {
-    coords <- read_table2(bed_file, col_names=c("chrom", "start", "pos")) %>% select(-start)
+    coords <- read_table2(bed_file, col_names=c("chrom", "start", "pos"),
+                          col_types="cii", progress=FALSE) %>% select(-start)
 
     geno <- read_geno(paste0(prefix, ".geno"))
     snp <- read_snp(paste0(prefix, ".snp"))
