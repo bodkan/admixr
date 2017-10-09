@@ -365,7 +365,7 @@ subset_sites <- function(prefix, out_prefix, bed_file=NULL, complement=FALSE) {
 
     # determine which function to call on the coordinates
     fun <- ifelse(complement, anti_join, inner_join)
-    combined_subset <- fun(combined, coords)
+    combined_subset <- fun(combined, coords, by=c("chrom", "pos"))
 
     # write the new snp file
     write_tsv(select(combined_subset, id:ref), path=paste0(out_prefix, ".snp"), col_names=FALSE)
@@ -373,7 +373,7 @@ subset_sites <- function(prefix, out_prefix, bed_file=NULL, complement=FALSE) {
     writeLines(apply(select(combined_subset, -(id:ref)), 1, paste, collapse=""),
                con=paste0(out_prefix, ".geno"))
     # write the new ind file
-    file.copy(from=paste0(prefix, ".ind"), to=paste0(out_prefix, ".ind"))
+    invisible(file.copy(from=paste0(prefix, ".ind"), to=paste0(out_prefix, ".ind")))
 }
 
 
