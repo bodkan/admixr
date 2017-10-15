@@ -68,6 +68,42 @@ qpDstat <- function(W, X, Y, Z,
 }
 
 
+
+#' Calculate the 3-population statistic and return the results as a data.frame.
+#'
+#' @param A, B, C Population names, using the terminology of Patterson
+#'     et al., 2012
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param geno Path to the genotype file. Overrides the 'prefix'
+#'     argument.
+#' @param snp Path to the snp file. Overrides the 'prefix' argument.
+#' @param ind Path to the ind file. Overrides the 'prefix' argument.
+#' @param badsnp SNP file with information about ignored sites.
+#' @param dir_name Where to put all generated files (temporary
+#'     directory by default).
+#' @export
+qp3Pop <- function(A, B, C,
+                   prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
+                   dir_name=NULL, inbreed=FALSE) {
+    check_presence(c(A, B, C), prefix, ind)
+
+    # get the path to the population, parameter and log files
+    setup <- paste0("qp3Pop")
+    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+    files <- get_files(dir_name, config_prefix)
+
+    create_qp3Pop_pop_file(A, B, C, file=files[["pop_file"]])
+    create_par_file(files[["par_file"]], files[["pop_file"]],
+                    prefix, geno, snp, ind, badsnp, f4mode=FALSE, inbreed)
+
+    run_cmd("qp3Pop", par_file=files[["par_file"]], log_file=files[["log_file"]])
+
+    read_qp3Pop(files[["log_file"]])
+}
+
+
+
 # Reading output log files --------------------------------------------------
 
 
@@ -141,6 +177,37 @@ read_qpDstat <- function(file) {
 }
 
 
+#' Read output log file from a qp3Pop run.
+#'
+#' @param file Name of the output log file.
+#'
+#' @return Tibble object with parsed results.
+#' @export
+#'
+#' @import stringr readr
+read_qp3Pop <- function(file) {
+    log_lines <- readLines(file)
+
+    # extract the number of analyzed population quadruples
+    n_quads <- length(log_lines) - (which(str_detect(log_lines, "^nrows, ncols:"))) - 1
+
+    # parse the lines of the results section and extract the names of
+    # tested populations/individuals, estimated admixture proportions
+    # alpha, std. errors and Z-score
+    res_lines <- log_lines[str_detect(log_lines, "result:")] %>%
+        str_replace("result: ", "") %>%
+        str_replace_all(" +", " ") %>%
+        str_replace_all("^ | $", "")
+
+    res_df <- res_lines %>%
+        paste0("\n", collapse="\n") %>%
+        read_delim(delim=" ", col_names=FALSE) %>%
+        setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "n_snps"))
+
+    res_df
+}
+
+
 # EIGENSTRAT manipulation utilities --------------------------------------------------
 
 
@@ -167,141 +234,6 @@ merge_pops <- function(file, modified_file, merge) {
 
     writeLines(lines, modified_file)
 }
-
-
-
-# Reading EIGENSTRAT files --------------------------------------------------
-
-
-#' Read an EIGENSTRAT 'ind' file.
-#'
-#' @param file Path to the file.
-#'
-#' @return Data frame with the sample identifier, sex and label
-#'     columns (columns defined by the EIGENSTRAT format).
-#'
-#' @export
-#' @import readr
-read_ind <- function(file) {
-    read_table2(file, col_names=c("id", "sex", "label"), col_types="ccc")
-}
-
-
-#' Read an EIGENSTRAT 'snp' file.
-#'
-#' @param file Path to the file.
-#'
-#' @return Data frame with information about each SNP (columns defined
-#'     by the EIGENSTRAT format).
-#'
-#' @export
-#' @import readr
-read_snp <- function(snp_file) {
-    read_table2(snp_file, col_names=c("id", "chrom", "gen", "pos", "ref", "alt"),
-                col_types="ccdicc", progress=FALSE)
-}
-
-
-#' Read an EIGENSTRAT 'geno' file.
-#'
-#' @param file Path to the geno file.
-#' @param ind_file Path to the ind file to read sample names from.
-#'
-#' @return Data frame with columns containing "genotypes" of each
-#'     sample (0/1/9 as defined by the EIGENSTRAT format).
-#'
-#' @export
-#' @import readr
-read_geno <- function(file, ind_file=NULL) {
-    if (!is.null(ind_file)) {
-        inds <- read_ind(ind_file)$id
-    } else {
-        inds <- NULL
-    }
-
-    # get the number of samples in the geno file
-    n <- nchar(readLines(file, 1))
-    read_fwf(file, col_positions=fwf_widths(rep(1, n), inds),
-             col_types=cols(.default="i"), progress=FALSE)
-}
-
-
-#' Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.
-#'
-#' @param file Path to the file.
-#'
-#' @return List of three data frames (one element for geno/snp/ind).
-#'
-#' @export
-read_eigenstrat <- function(prefix=NULL) {
-    list(
-        geno=read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind")),
-        snp=read_snp(paste0(prefix, ".snp")),
-        ind=read_ind(paste0(prefix, ".ind"))
-    )
-}
-
-
-
-# Writing EIGENSTRAT files --------------------------------------------------
-
-
-#' Write an EIGENSTRAT 'ind' file.
-#'
-#' @param file Path to the file.
-#' @param ind Data frame with the sample identifier, sex and label
-#'     columns (columns defined by the EIGENSTRAT format).
-#'
-#' @export
-#' @import readr
-write_ind <- function(ind_file, df) {
-    write_tsv(df, ind_file, col_names=FALSE)
-}
-
-
-#' Write an EIGENSTRAT 'snp' file.
-#'
-#' @param file Path to the file.
-#' @param snp Data frame with information about each SNP (columns
-#'     defined by the EIGENSTRAT format).
-#'
-#' @export
-#' @import readr
-write_snp <- function(snp_file, df) {
-    write_tsv(df, snp_file, col_names=FALSE)
-}
-
-
-#' Write an EIGENSTRAT 'geno' file.
-#'
-#' @param file Path to the file.
-#' @param geno Data frame with columns containing "genotypes" of each
-#'     sample (0/1/9 as defined by the EIGENSTRAT format).
-#'
-#' @export
-#' @import readr
-write_geno <- function(geno_file, df) {
-    writeLines(apply(df, 1, paste, collapse=""), con=geno_file)
-}
-
-
-#' Write a tripplet of EIGENSTRAT (geno/snp/ind files) files.
-#'
-#' @param prefix Prefix of the geno/snp/ind files (can
-#'     include the path).
-#' @param ind data.frame with data in a 'ind' format
-#' @param snp data.frame with data in a 'snp' format
-#' @param geno data.frame with data in a 'geno' format
-#'
-#' @return List of three data frames (one element for geno/snp/ind).
-#'
-#' @export
-write_eigenstrat <- function(prefix, ind, snp, geno) {
-    write_ind(paste0(prefix, ".ind"), ind)
-    write_snp(paste0(prefix, ".snp"), snp)
-    write_geno(paste0(prefix, ".geno"), geno)
-}
-
 
 
 
