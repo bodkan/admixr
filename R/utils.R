@@ -118,7 +118,7 @@ create_par_file <- function(par_file, pop_file,
 #'     printed to stdout.
 #' @export
 run_cmd <- function(cmd, par_file, log_file) {
-    if (!cmd %in% c("qpDstat", "qpF4ratio", "qp3Pop)) {
+    if (!cmd %in% c("qpDstat", "qpF4ratio", "qp3Pop")) {
         stop("ADMIXTOOLS command '", cmd, "' is not supported or does not exist")
     }
 
