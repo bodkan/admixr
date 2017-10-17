@@ -109,3 +109,39 @@ qp3Pop <- function(A, B, C,
 
     read_qp3Pop(files[["log_file"]])
 }
+
+
+
+#' Run the qpAdm analysis.
+#'
+#' @param L, R Sets of left (U) and right (R) populations using the
+#'     terminology of Haak et al., 2012 (Supplementary Information 10
+#'     on page 128).
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param geno Path to the genotype file. Overrides the 'prefix'
+#'     argument.
+#' @param snp Path to the snp file. Overrides the 'prefix' argument.
+#' @param ind Path to the ind file. Overrides the 'prefix' argument.
+#' @param badsnp SNP file with information about ignored sites.
+#' @param dir_name Where to put all generated files (temporary
+#'     directory by default).
+#' @export
+qpAdm <- function(L, R,
+                  prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
+                  dir_name=NULL) {
+    check_presence(c(L, R), prefix, ind)
+
+    # get the path to the population, parameter and log files
+    setup <- paste0("qpAdm")
+    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+    files <- get_files(dir_name, config_prefix)
+
+    create_qpAdm_pop_files(L, R, config_prefix)
+    create_par_file(files[["par_file"]], files[["pop_file"]],
+                    prefix, geno, snp, ind, badsnp)
+
+    run_cmd("qpAdm", par_file=files[["par_file"]], log_file=files[["log_file"]])
+
+#    read_qp3Pop(files[["log_file"]])
+}
