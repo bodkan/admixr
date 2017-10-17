@@ -77,9 +77,7 @@ create_qp3Pop_pop_file <- function(A, B, C, file) {
 create_par_file <- function(par_file, pop_file,
                             prefix=NULL,
                             geno_file=NULL, snp_file=NULL, ind_file= NULL,
-                            badsnp_file=NULL,
-                            f4mode=FALSE,
-                            inbreed=FALSE) {
+                            badsnp_file=NULL) {
     if (all(is.null(c(prefix, geno_file, snp_file, ind_file)))) {
         stop("Prefix of EIGENSTRAT files or the paths to individual geno/snp/ind files must be specified")
     }
@@ -97,14 +95,6 @@ create_par_file <- function(par_file, pop_file,
 
     if (!is.null(badsnp_file)) {
         write(sprintf("badsnpname: %s", badsnp_file), file=par_file, append=TRUE)
-    }
-
-    if (f4mode) {
-        write("f4mode: YES", file=par_file, append=TRUE)
-    }
-
-    if (inbreed) {
-        write("inbreed: YES", file=par_file, append=TRUE)
     }
 }
 

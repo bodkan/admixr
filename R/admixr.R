@@ -62,6 +62,10 @@ qpDstat <- function(W, X, Y, Z,
     create_par_file(files[["par_file"]], files[["pop_file"]],
                     prefix, geno, snp, ind, badsnp, f4mode)
 
+    if (f4mode) {
+        write("f4mode: YES", file=files[["par_file"]], append=TRUE)
+    }
+
     run_cmd("qpDstat", par_file=files[["par_file"]], log_file=files[["log_file"]])
 
     read_qpDstat(files[["log_file"]])
@@ -96,6 +100,10 @@ qp3Pop <- function(A, B, C,
     create_qp3Pop_pop_file(A, B, C, file=files[["pop_file"]])
     create_par_file(files[["par_file"]], files[["pop_file"]],
                     prefix, geno, snp, ind, badsnp, f4mode=FALSE, inbreed)
+
+    if (inbreed) {
+        write("inbreed: YES", file=files[["par_file"]], append=TRUE)
+    }
 
     run_cmd("qp3Pop", par_file=files[["par_file"]], log_file=files[["log_file"]])
 
