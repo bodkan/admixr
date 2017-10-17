@@ -2,11 +2,13 @@
 
 export(create_par_file)
 export(create_qp3Pop_pop_file)
+export(create_qpAdm_pop_files)
 export(create_qpDstat_pop_file)
 export(create_qpF4ratio_pop_file)
 export(eigenstrat_to_vcf)
 export(merge_pops)
 export(qp3Pop)
+export(qpAdm)
 export(qpDstat)
 export(qpF4ratio)
 export(read_eigenstrat)

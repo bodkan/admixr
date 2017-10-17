@@ -25,8 +25,7 @@ qpF4ratio <- function(X, A, B, C, O,
     files <- get_files(dir_name, config_prefix)
 
     create_qpF4ratio_pop_file(X=X, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
-    create_par_file(files[["par_file"]], files[["pop_file"]],
-                    prefix, geno, snp, ind, badsnp)
+    create_par_file(files, prefix, geno, snp, ind, badsnp)
 
     run_cmd("qpF4ratio", par_file=files[["par_file"]], log_file=files[["log_file"]])
 
@@ -59,8 +58,7 @@ qpDstat <- function(W, X, Y, Z,
     files <- get_files(dir_name, config_prefix)
 
     create_qpDstat_pop_file(W, X, Y, Z, file=files[["pop_file"]])
-    create_par_file(files[["par_file"]], files[["pop_file"]],
-                    prefix, geno, snp, ind, badsnp, f4mode)
+    create_par_file(files, prefix, geno, snp, ind, badsnp)
 
     if (f4mode) {
         write("f4mode: YES", file=files[["par_file"]], append=TRUE)
@@ -98,8 +96,7 @@ qp3Pop <- function(A, B, C,
     files <- get_files(dir_name, config_prefix)
 
     create_qp3Pop_pop_file(A, B, C, file=files[["pop_file"]])
-    create_par_file(files[["par_file"]], files[["pop_file"]],
-                    prefix, geno, snp, ind, badsnp, f4mode=FALSE, inbreed)
+    create_par_file(files, prefix, geno, snp, ind, badsnp)
 
     if (inbreed) {
         write("inbreed: YES", file=files[["par_file"]], append=TRUE)
@@ -137,9 +134,13 @@ qpAdm <- function(L, R,
     config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
     files <- get_files(dir_name, config_prefix)
 
-    create_qpAdm_pop_files(L, R, config_prefix)
-    create_par_file(files[["par_file"]], files[["pop_file"]],
-                    prefix, geno, snp, ind, badsnp)
+    # ugh... fix this! also - rename this "files" thing, doesn't make any sense...
+    files[["pop_file"]] <- NULL
+    files[["popleft"]] <-  paste0(config_prefix, "__left")
+    files[["popright"]] <-  paste0(config_prefix, "__right")
+
+    create_qpAdm_pop_files(L, R, files)
+    create_par_file(files, prefix, geno, snp, ind, badsnp)
 
     run_cmd("qpAdm", par_file=files[["par_file"]], log_file=files[["log_file"]])
 
