@@ -112,7 +112,7 @@ create_par_file <- function(files,
     }
 
     if (!is.null(badsnp_file)) {
-        write(sprintf("badsnpname: %s", badsnp_file), file=par_file, append=TRUE)
+        write(sprintf("badsnpname: %s", badsnp_file), file=files$par_file, append=TRUE)
     }
 }
 
