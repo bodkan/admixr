@@ -181,7 +181,7 @@ snps_missing <- function(geno, prop=FALSE) {
 #'
 #' @import readr dplyr
 #' @export
-subset_sites <- function(prefix, out_prefix, bed_file=NULL, complement=FALSE) {
+subset_sites <- function(prefix, out_prefix, bed_file, complement=FALSE) {
     coords <- read_table2(bed_file, col_names=c("chrom", "start", "pos"),
                           col_types="cii", progress=FALSE) %>% select(-start)
 
