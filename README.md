@@ -2,7 +2,7 @@
 
 _**"Make ADMIXTOOLS fun again!"**_
 
-[ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is popular
+[ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a popular
 and widely used software package for calculating various population
 genetic statistics and hypotheses testing. However, although incredibly
 powerful and comprehensive, from an ease of use and user experience
