@@ -5,8 +5,8 @@ _**"Make ADMIXTOOLS fun again!"**_
 [ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a popular
 and widely used software package for calculating various population
 genetic statistics and hypotheses testing. However, although incredibly
-powerful and comprehensive, from an ease of use and user experience
-perspective it leaves a lot to be desired.
+powerful and comprehensive, in the user experience department it leaves
+a lot to be desired.
 
 This R package aims to allow to perform all stages of ADMIXTOOLS
 analysis without leaving R. A typical ADMIXTOOLS workflow usually
