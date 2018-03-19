@@ -1,6 +1,6 @@
-# admixr
-
 [![Travis-CI Build Status](https://travis-ci.org/bodkan/admixr.svg?branch=master)](https://travis-ci.org/bodkan/admixr)
+
+# admixr
 
 _**"Make ADMIXTOOLS fun again!"**_
 
