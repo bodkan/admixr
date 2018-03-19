@@ -1,5 +1,7 @@
 # admixr
 
+[![Travis-CI Build Status](https://travis-ci.org/bodkan/admixr.svg?branch=master)](https://travis-ci.org/bodkan/admixr)
+
 _**"Make ADMIXTOOLS fun again!"**_
 
 [ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a popular
