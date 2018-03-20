@@ -76,7 +76,13 @@ vcf_to_eigenstrat <- function(vcf_file, prefix) {
 }
 
 
-# Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
+#' Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
+#'
+#' @param gts Vector of genotypes ("0/0", "0/1", etc.).
+#' 
+#' @return Vector of EIGENSTRAT-like genotypes (0, 1, 2, 9).
+#'
+#' @importFrom magrittr "%>%"
 # gt_to_eigenstrat(c(".|.", "./.", ".", "0|0", "0/0", "0", "0|1", "1|0", "0/1", "1|1", "1/1", "1"))
 gt_to_eigenstrat <- function(gts) {
     eigen_gts <- gts %>%
@@ -96,7 +102,11 @@ gt_to_eigenstrat <- function(gts) {
     eigen_gts
 }
 
-# Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
+#' Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
+#'
+#' @param eigenstrat_gts Vector of EIGENSTRAT-like genotypes (0, 1, 2, 9).
+#'
+#' @return gts Vector of genotypes ("0/0", "0/1", etc.).
 # eigenstrat_to_gt(c(0, 1, 2, 9, 9, 2, 1, 0))
 eigenstrat_to_gt <- function(eigenstrat_gts) {
     vcf_gts <- sapply(eigenstrat_gts, function(i) {

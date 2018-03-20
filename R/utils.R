@@ -5,6 +5,7 @@
 #' @param modified_file Modified EIGENSTRAT ind filename.
 #' @param merge List of labels to merge. List names specified labels
 #'     to merge into.
+#'
 #' @export
 merge_pops <- function(file, modified_file, merge) {
   # merge=list(ancient_NearEast=merge_what, present_NearEast=c("Yemenite_Jew", "Jordan", "Samaritan", "Bedouin", "Palestinian"))
@@ -33,6 +34,7 @@ merge_pops <- function(file, modified_file, merge) {
 #'     instead.
 #'
 #' @return A named vector of counts or proportions.
+#'
 #' @export
 snps_present <- function(geno, prop=FALSE) {
   fn <- ifelse(prop, mean, sum)
@@ -48,6 +50,7 @@ snps_present <- function(geno, prop=FALSE) {
 #'     instead.
 #'
 #' @return A named vector of counts or proportions.
+#'
 #' @export
 snps_missing <- function(geno, prop=FALSE) {
   fn <- ifelse(prop, mean, sum)
