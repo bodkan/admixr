@@ -4,12 +4,12 @@
 \alias{write_snp}
 \title{Write an EIGENSTRAT 'snp' file.}
 \usage{
-write_snp(snp_file, df)
+write_snp(file, df)
 }
 \arguments{
 \item{file}{Path to the file.}
 
-\item{snp}{Data frame with information about each SNP (columns
+\item{df}{Data frame with information about each SNP (columns
 defined by the EIGENSTRAT format).}
 }
 \description{

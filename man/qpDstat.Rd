@@ -9,8 +9,13 @@ qpDstat(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL, f4mode = FALSE)
 }
 \arguments{
-\item{W, }{X, Y, Z Population names, using the terminology of
-Patterson et al., 2012}
+\item{W}{Population names, using the terminology of Patterson (2012).}
+
+\item{X}{Population names, using the terminology of Patterson (2012).}
+
+\item{Y}{Population names, using the terminology of Patterson (2012).}
+
+\item{Z}{Population names, using the terminology of Patterson (2012).}
 
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}
@@ -25,6 +30,8 @@ path).}
 
 \item{dir_name}{Where to put all generated files (temporary
 directory by default).}
+
+\item{f4mode}{Calculate f4 statistics instead of D statistic.}
 }
 \description{
 Calculate D statistics or F4 statistics (which is just the

@@ -3,8 +3,11 @@
 
 #' Run an f4-ratio analysis and return the results as a data.frame.
 #'
-#' @param X, A, B, C, O Population names, using the terminology of
-#'     Patterson et al., 2012
+#' @param X Population names, using the terminology of Patterson (2012).
+#' @param A Population names, using the terminology of Patterson (2012).
+#' @param B Population names, using the terminology of Patterson (2012).
+#' @param C Population names, using the terminology of Patterson (2012).
+#' @param O Population names, using the terminology of Patterson (2012).
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno Path to the genotype file. Overrides the 'prefix' argument.
@@ -36,8 +39,10 @@ qpF4ratio <- function(X, A, B, C, O,
 #' Calculate D statistics or F4 statistics (which is just the
 #' numerator of a D statistic) and return the results as a data.frame.
 #'
-#' @param W, X, Y, Z Population names, using the terminology of
-#'     Patterson et al., 2012
+#' @param W Population names, using the terminology of Patterson (2012).
+#' @param X Population names, using the terminology of Patterson (2012).
+#' @param Y Population names, using the terminology of Patterson (2012).
+#' @param Z Population names, using the terminology of Patterson (2012).
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno Path to the genotype file. Overrides the 'prefix' argument.
@@ -46,6 +51,7 @@ qpF4ratio <- function(X, A, B, C, O,
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
+#' @param f4mode Calculate f4 statistics instead of D statistic.
 #' @export
 qpDstat <- function(W, X, Y, Z,
                     prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
@@ -73,8 +79,9 @@ qpDstat <- function(W, X, Y, Z,
 
 #' Calculate the 3-population statistic and return the results as a data.frame.
 #'
-#' @param A, B, C Population names, using the terminology of Patterson
-#'     et al., 2012
+#' @param A Population names, using the terminology of Patterson (2012).
+#' @param B Population names, using the terminology of Patterson (2012).
+#' @param C Population names, using the terminology of Patterson (2012).
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno Path to the genotype file. Overrides the 'prefix'
@@ -84,6 +91,7 @@ qpDstat <- function(W, X, Y, Z,
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
+#' @param inbreed See README.3PopTest in ADMIXTOOLS.
 #' @export
 qp3Pop <- function(A, B, C,
                    prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
@@ -111,9 +119,10 @@ qp3Pop <- function(A, B, C,
 
 #' Run the qpAdm analysis.
 #'
-#' @param L, R Sets of left (U) and right (R) populations using the
-#'     terminology of Haak et al., 2012 (Supplementary Information 10
-#'     on page 128).
+#' @param L Sets of "left" populations using the terminology of Haak (2012,
+#'     Supplementary Information 10 on page 128).
+#' @param R Sets of "right" populations using the terminology of Haak (2012,
+#'     Supplementary Information 10 on page 128).
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno Path to the genotype file. Overrides the 'prefix'

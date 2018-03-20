@@ -1,78 +1,3 @@
-#' Generate a file with populations for a qpF4ratio run.
-#'
-#' @description For details about the format of the population list
-#'     file see documentation of the ADMIXTOOLS package.
-#' 
-#' @param X, A, B, C, O Population names, using the terminology of
-#'     Patterson et al., 2012
-#' @param file Path to the poplist file that will be generated.
-#' @export
-create_qpF4ratio_pop_file <- function(X, A, B, C, O, file) {
-    lines <- sprintf("%s %s : %s %s :: %s %s : %s %s", A, O, X, C, A, O, B, C)
-    writeLines(lines, file)
-}
-
-
-#' Generate a file with populations for a qpDstat run.
-#'
-#' @description For details about the format of the population list
-#'     file see documentation of the ADMIXTOOLS package.
-#'
-#' @param W, X, Y, Z Population names, using the terminology of
-#'     Patterson et al., 2012. It is possible to specify vectors of
-#'     population identifiers as W, X, etc. That way, all possible
-#'     combinations of specified W, X, Y and Z quadruples will be
-#'     generated.
-#' @param poplist List of populations. It will be saved as a file, one
-#'     population per line.
-#' @param file Path to the poplist file that will be generated.
-#' @export
-create_qpDstat_pop_file <- function(W=NULL, X=NULL, Y=NULL, Z=NULL, file) {
-    lines <- c()
-    for (w in W) for (x in X) for (y in Y) for (z in Z) {
-        lines <- c(lines, sprintf("%s %s %s %s", w, x, y, z))
-    }
-    writeLines(lines, file)
-}
-
-
-#' Generate a file with populations for a qp3Pop run.
-#'
-#' @description For details about the format of the population list
-#'     file see documentation of the ADMIXTOOLS package.
-#'
-#' @param A, B, C Population names, using the terminology of Patterson
-#'     et al., 2012. It is possible to specify vectors of population
-#'     identifiers as A, B, C. That way, all possible triplets of
-#'     populations will be generated.
-#' @param file Path to the poplist file that will be generated.
-#' @export
-create_qp3Pop_pop_file <- function(A, B, C, file) {
-    lines <- c()
-    for (a in A) for (b in B) for (c in C) {
-        lines <- c(lines, sprintf("%s %s %s", a, b, c))
-    }
-    writeLines(lines, file)
-}
-
-
-#' Generate a file with populations for a qpAdm run.
-#'
-#' @description For details about the format of the population list
-#'     file see documentation of the ADMIXTOOLS package.
-#'
-#' @param L, R Sets of left (U) and right (R) populations using the
-#'     terminology of Haak et al., 2012 (Supplementary Information 10
-#'     on page 128).
-#' @param files A list that must contain "popleft" and "popright" elements, which describe the paths to files containing "left" and "right" populations (one population per line).
-#'
-#' @export
-create_qpAdm_pop_files <- function(L, R, files) {
-    writeLines(L, con=files[["popleft"]])
-    writeLines(R, con=files[["popright"]])
-}
-
-
 #' Generate a parameter file.
 #'
 #' @param files List of filenames of the population file, parameter
@@ -117,14 +42,48 @@ create_par_file <- function(files,
 }
 
 
-#' Run a given ADMIXTOOLS command.
-#'
-#' @param tool Which ADMIXTOOLS command to run. At the moment, only
-#'     qpDstat and qpF4ratio are supported.
-#' @param par_file Path to the parameter file.
-#' @param log_file Path to the output file. If NULL, output will be
-#'     printed to stdout.
-#' @export
+# Generate a file with populations for a qpF4ratio run.
+create_qpF4ratio_pop_file <- function(X, A, B, C, O, file) {
+    lines <- sprintf("%s %s : %s %s :: %s %s : %s %s", A, O, X, C, A, O, B, C)
+    writeLines(lines, file)
+}
+
+
+# Generate a file with populations for a qpDstat run.
+create_qpDstat_pop_file <- function(W=NULL, X=NULL, Y=NULL, Z=NULL, file) {
+    lines <- c()
+    for (w in W) for (x in X) for (y in Y) for (z in Z) {
+        lines <- c(lines, sprintf("%s %s %s %s", w, x, y, z))
+    }
+    writeLines(lines, file)
+}
+
+
+# Generate a file with populations for a qp3Pop run.
+create_qp3Pop_pop_file <- function(A, B, C, file) {
+    lines <- c()
+    for (a in A) for (b in B) for (c in C) {
+        lines <- c(lines, sprintf("%s %s %s", a, b, c))
+    }
+    writeLines(lines, file)
+}
+
+
+# Generate a file with populations for a qpAdm run.
+#
+# L, R - Sets of left (U) and right (R) populations using the
+#   terminology of Haak et al., 2012 (Supplementary Information 10 on
+#   page 128).
+# files - A list that must contain "popleft" and "popright" elements,
+#   which describe the paths to files containing "left" and "right"
+#   populations (one population per line).
+create_qpAdm_pop_files <- function(L, R, files) {
+    writeLines(L, con=files[["popleft"]])
+    writeLines(R, con=files[["popright"]])
+}
+
+
+# Run a specified ADMIXTOOLS command.
 run_cmd <- function(cmd, par_file, log_file) {
     if (!cmd %in% c("qpDstat", "qpF4ratio", "qp3Pop", "qpAdm")) {
         stop("ADMIXTOOLS command '", cmd, "' is not supported or does not exist")

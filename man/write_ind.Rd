@@ -4,12 +4,12 @@
 \alias{write_ind}
 \title{Write an EIGENSTRAT 'ind' file.}
 \usage{
-write_ind(ind_file, df)
+write_ind(file, df)
 }
 \arguments{
 \item{file}{Path to the file.}
 
-\item{ind}{Data frame with the sample identifier, sex and label
+\item{df}{Data frame with the sample identifier, sex and label
 columns (columns defined by the EIGENSTRAT format).}
 }
 \description{

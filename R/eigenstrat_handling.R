@@ -22,9 +22,9 @@ read_ind <- function(file) {
 #'     by the EIGENSTRAT format).
 #'
 #' @export
-read_snp <- function(snp_file) {
+read_snp <- function(file) {
     readr::read_table2(
-      snp_file,
+      file,
       col_names=c("id", "chrom", "gen", "pos", "ref", "alt"),
       col_types="ccdicc",
       progress=FALSE
@@ -61,7 +61,7 @@ read_geno <- function(file, ind_file=NULL) {
 
 #' Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.
 #'
-#' @param file Path to the file.
+#' @param prefix EIGENSTRAT prefix of geno/snp/ind files.
 #'
 #' @return List of three data frames (one element for geno/snp/ind).
 #'
@@ -82,39 +82,36 @@ read_eigenstrat <- function(prefix=NULL) {
 #' Write an EIGENSTRAT 'ind' file.
 #'
 #' @param file Path to the file.
-#' @param ind Data frame with the sample identifier, sex and label
+#' @param df Data frame with the sample identifier, sex and label
 #'     columns (columns defined by the EIGENSTRAT format).
 #'
 #' @export
-#' @import readr
-write_ind <- function(ind_file, df) {
-    readr::write_tsv(df, ind_file, col_names=FALSE)
+write_ind <- function(file, df) {
+    readr::write_tsv(df, file, col_names=FALSE)
 }
 
 
 #' Write an EIGENSTRAT 'snp' file.
 #'
 #' @param file Path to the file.
-#' @param snp Data frame with information about each SNP (columns
+#' @param df Data frame with information about each SNP (columns
 #'     defined by the EIGENSTRAT format).
 #'
 #' @export
-#' @import readr
-write_snp <- function(snp_file, df) {
-    readr::write_tsv(df, snp_file, col_names=FALSE)
+write_snp <- function(file, df) {
+    readr::write_tsv(df, file, col_names=FALSE)
 }
 
 
 #' Write an EIGENSTRAT 'geno' file.
 #'
 #' @param file Path to the file.
-#' @param geno Data frame with columns containing "genotypes" of each
+#' @param df Data frame with columns containing "genotypes" of each
 #'     sample (0/1/9 as defined by the EIGENSTRAT format).
 #'
 #' @export
-#' @import readr
-write_geno <- function(geno_file, df) {
-    writeLines(apply(df, 1, paste, collapse=""), con=geno_file)
+write_geno <- function(file, df) {
+    writeLines(apply(df, 1, paste, collapse=""), con=file)
 }
 
 

@@ -8,8 +8,11 @@ qp3Pop(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL, inbreed = FALSE)
 }
 \arguments{
-\item{A, }{B, C Population names, using the terminology of Patterson
-et al., 2012}
+\item{A}{Population names, using the terminology of Patterson (2012).}
+
+\item{B}{Population names, using the terminology of Patterson (2012).}
+
+\item{C}{Population names, using the terminology of Patterson (2012).}
 
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}
@@ -25,6 +28,8 @@ argument.}
 
 \item{dir_name}{Where to put all generated files (temporary
 directory by default).}
+
+\item{inbreed}{See README.3PopTest in ADMIXTOOLS.}
 }
 \description{
 Calculate the 3-population statistic and return the results as a data.frame.

@@ -8,9 +8,11 @@ qpAdm(L, R, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL)
 }
 \arguments{
-\item{L, }{R Sets of left (U) and right (R) populations using the
-terminology of Haak et al., 2012 (Supplementary Information 10
-on page 128).}
+\item{L}{Sets of "left" populations using the terminology of Haak (2012,
+Supplementary Information 10 on page 128).}
+
+\item{R}{Sets of "right" populations using the terminology of Haak (2012,
+Supplementary Information 10 on page 128).}
 
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}

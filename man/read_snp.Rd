@@ -4,7 +4,7 @@
 \alias{read_snp}
 \title{Read an EIGENSTRAT 'snp' file.}
 \usage{
-read_snp(snp_file)
+read_snp(file)
 }
 \arguments{
 \item{file}{Path to the file.}

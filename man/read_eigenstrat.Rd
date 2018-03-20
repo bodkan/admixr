@@ -7,7 +7,7 @@
 read_eigenstrat(prefix = NULL)
 }
 \arguments{
-\item{file}{Path to the file.}
+\item{prefix}{EIGENSTRAT prefix of geno/snp/ind files.}
 }
 \value{
 List of three data frames (one element for geno/snp/ind).
