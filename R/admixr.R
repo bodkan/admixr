@@ -7,8 +7,6 @@
 #'
 #' @return Tibble object with the parsed results.
 #' @export
-#'
-#' @import readr
 read_qpF4ratio <- function(file) {
     log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
@@ -29,7 +27,7 @@ read_qpF4ratio <- function(file) {
 
     res_df <- res_lines %>%
         paste0("\n", collapse="\n") %>%
-        read_delim(delim=" ", col_names=FALSE) %>%
+        readr::read_delim(delim=" ", col_names=FALSE) %>%
         setNames(c("A", "O", "X", "C", "A", "O", "B", "C", "alpha", "stderr", "Zscore")) %>%
         .[c("A", "B", "X", "C", "O", "alpha", "stderr", "Zscore")]
 
@@ -43,8 +41,6 @@ read_qpF4ratio <- function(file) {
 #'
 #' @return Tibble object with the parsed results.
 #' @export
-#'
-#' @import readr
 read_qpDstat <- function(file) {
     log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
@@ -63,7 +59,7 @@ read_qpDstat <- function(file) {
 
     res_df <- res_lines %>%
         paste0("\n", collapse="\n") %>%
-        read_delim(delim=" ", col_names=FALSE) %>%
+        readr::read_delim(delim=" ", col_names=FALSE) %>%
         .[c(1:6, ncol(.) - 2, ncol(.) - 1, ncol(.))] %>% # remove column with "best" if present
         setNames(c("W", "X", "Y", "Z", result_col, "Zscore", "BABA", "ABBA", "n_snps"))
 
@@ -77,8 +73,6 @@ read_qpDstat <- function(file) {
 #'
 #' @return Tibble object with parsed results.
 #' @export
-#'
-#' @import readr
 read_qp3Pop <- function(file) {
     log_lines <- readLines(file)
 
@@ -95,7 +89,7 @@ read_qp3Pop <- function(file) {
 
     res_df <- res_lines %>%
         paste0("\n", collapse="\n") %>%
-        read_delim(delim=" ", col_names=FALSE) %>%
+        readr::read_delim(delim=" ", col_names=FALSE) %>%
         setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "n_snps"))
 
     res_df
@@ -113,8 +107,6 @@ read_qp3Pop <- function(file) {
 #' @param merge List of labels to merge. List names specified labels
 #'     to merge into.
 #' @export
-#'
-#' @import stringr
 merge_pops <- function(file, modified_file, merge) {
     # merge=list(ancient_NearEast=merge_what, present_NearEast=c("Yemenite_Jew", "Jordan", "Samaritan", "Bedouin", "Palestinian"))
     lines <- readLines(file)
@@ -179,10 +171,10 @@ snps_missing <- function(geno, prop=FALSE) {
 #' @param bed_file Path to the 3 column BED file to intersect with.
 #' @param complement Perform an intersect or a complement operation?
 #'
-#' @import readr dplyr
+#' @import dplyr
 #' @export
 subset_sites <- function(prefix, out_prefix, bed_file, complement=FALSE) {
-    coords <- read_table2(bed_file, col_names=c("chrom", "start", "pos"),
+    coords <- readr::read_table2(bed_file, col_names=c("chrom", "start", "pos"),
                           col_types="cii", progress=FALSE) %>% select(-start)
 
     geno <- read_geno(paste0(prefix, ".geno"))
@@ -218,7 +210,6 @@ subset_sites <- function(prefix, out_prefix, bed_file, complement=FALSE) {
 #' @param compress Compress the VCF with bgzip?
 #' @param index Index the VCF with tabix?
 #'
-#' @import readr
 #' @export
 eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
     geno <- read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind"))
@@ -252,10 +243,9 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path) that will be generated.
 #'
-#' @import readr
 #' @export
 vcf_to_eigenstrat <- function(vcf_file, prefix) {
-    vcf <- read_tsv(vcf_file, comment="##") %>%
+    vcf <- readr::read_tsv(vcf_file, comment="##") %>%
         rename(chrom=`#CHROM`, pos=POS, ref=REF, alt=ALT) %>%
         select(-c(ID, QUAL, FILTER, INFO, FORMAT))
 

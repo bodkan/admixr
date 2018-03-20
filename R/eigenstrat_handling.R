@@ -9,9 +9,8 @@
 #'     columns (columns defined by the EIGENSTRAT format).
 #'
 #' @export
-#' @import readr
 read_ind <- function(file) {
-    read_table2(file, col_names=c("id", "sex", "label"), col_types="ccc")
+    readr::read_table2(file, col_names=c("id", "sex", "label"), col_types="ccc")
 }
 
 
@@ -23,10 +22,13 @@ read_ind <- function(file) {
 #'     by the EIGENSTRAT format).
 #'
 #' @export
-#' @import readr
 read_snp <- function(snp_file) {
-    read_table2(snp_file, col_names=c("id", "chrom", "gen", "pos", "ref", "alt"),
-                col_types="ccdicc", progress=FALSE)
+    readr::read_table2(
+      snp_file,
+      col_names=c("id", "chrom", "gen", "pos", "ref", "alt"),
+      col_types="ccdicc",
+      progress=FALSE
+    )
 }
 
 
@@ -39,7 +41,6 @@ read_snp <- function(snp_file) {
 #'     sample (0/1/9 as defined by the EIGENSTRAT format).
 #'
 #' @export
-#' @import readr
 read_geno <- function(file, ind_file=NULL) {
     if (!is.null(ind_file)) {
         inds <- read_ind(ind_file)$id
@@ -49,8 +50,12 @@ read_geno <- function(file, ind_file=NULL) {
 
     # get the number of samples in the geno file
     n <- nchar(readLines(file, 1))
-    read_fwf(file, col_positions=fwf_widths(rep(1, n), inds),
-             col_types=cols(.default="i"), progress=FALSE)
+    readr::read_fwf(
+      file,
+      col_positions=readr::fwf_widths(rep(1, n), inds),
+      col_types=cols(.default="i"),
+      progress=FALSE
+    )
 }
 
 
@@ -83,7 +88,7 @@ read_eigenstrat <- function(prefix=NULL) {
 #' @export
 #' @import readr
 write_ind <- function(ind_file, df) {
-    write_tsv(df, ind_file, col_names=FALSE)
+    readr::write_tsv(df, ind_file, col_names=FALSE)
 }
 
 
@@ -96,7 +101,7 @@ write_ind <- function(ind_file, df) {
 #' @export
 #' @import readr
 write_snp <- function(snp_file, df) {
-    write_tsv(df, snp_file, col_names=FALSE)
+    readr::write_tsv(df, snp_file, col_names=FALSE)
 }
 
 

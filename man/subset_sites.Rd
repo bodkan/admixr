@@ -5,7 +5,7 @@
 \title{Create a new set of EIGENSTRAT files by intersecting the original
 data with a given set of coordinates.}
 \usage{
-subset_sites(prefix, out_prefix, bed_file = NULL, complement = FALSE)
+subset_sites(prefix, out_prefix, bed_file, complement = FALSE)
 }
 \arguments{
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
