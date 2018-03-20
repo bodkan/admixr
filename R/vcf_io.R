@@ -53,7 +53,7 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
 #'
 #' @importFrom magrittr "%>%"
 vcf_to_eigenstrat <- function(vcf_file, prefix) {
-    vcf <- readr::read_tsv(vcf_file, comment="##") %>%
+    vcf <- readr::read_tsv(vcf_file, comment="##", progress = FALSE) %>%
         dplyr::rename(chrom=`#CHROM`, pos=POS, ref=REF, alt=ALT) %>%
         dplyr::select(-c(ID, QUAL, FILTER, INFO, FORMAT))
 
@@ -62,7 +62,7 @@ vcf_to_eigenstrat <- function(vcf_file, prefix) {
         dplyr::mutate(snp_id=paste(chrom, pos, sep="_"), gen_dist="0.0") %>%
         dplyr::select(snp_id, chrom, gen_dist, pos, ref, alt)
     ind <- tibble::tibble(
-        sample_id=select(vcf, -c(chrom, pos, ref, alt)) %>% names,
+        sample_id=dplyr::select(vcf, -c(chrom, pos, ref, alt)) %>% names,
         sex="U",
         label=sample_id
     )
