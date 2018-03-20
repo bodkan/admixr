@@ -1,85 +1,98 @@
-#' Generate a parameter file.
+#' Merge populations from an EIGENSTRAT "ind" file under a single
+#' population label.
 #'
-#' @param files List of filenames of the population file, parameter
-#'     file and log file.
-#' @param prefix Prefix of the geno/snp/ind files (can include the
-#'     path). If specified, geno_file/snp_file/ind_file will be
-#'     ignored.
-#' @param geno_file Path to the genotype file.
-#' @param snp_file Path to the snp file.
-#' @param ind_file Path to the ind file.
-#' @param badsnp_file SNP file with information about ignored sites.
+#' @param file EIGENSTRAT ind file to modify.
+#' @param modified_file Modified EIGENSTRAT ind filename.
+#' @param merge List of labels to merge. List names specified labels
+#'     to merge into.
 #' @export
-create_par_file <- function(files,
-                            prefix=NULL,
-                            geno_file=NULL, snp_file=NULL, ind_file= NULL,
-                            badsnp_file=NULL) {
-    if (all(is.null(c(prefix, geno_file, snp_file, ind_file)))) {
-        stop("Prefix of EIGENSTRAT files or the paths to individual geno/snp/ind files must be specified")
-    }
-
-    # if the user specified EIGENSTRAT prefix, set only paths to unspecified geno/snp/ind files
-    if (!is.null(prefix)) {
-        if (is.null(geno_file)) geno_file <- paste0(prefix, ".geno")
-        if (is.null(snp_file)) snp_file <- paste0(prefix, ".snp")
-        if (is.null(ind_file)) ind_file <- paste0(prefix, ".ind")
-    }
-
-    writeLines(sprintf("genotypename: %s\nsnpname: %s\nindivname: %s\n",
-                       geno_file, snp_file, ind_file),
-               con=files$par_file)
-
-    if (!is.null(files[["pop_file"]])) {
-        write(sprintf("popfilename: %s\n", files$pop_file), file=files$par_file, append=TRUE)
-    } else if (!is.null(files$popleft) & !is.null(files$popright)) {
-        write(sprintf("popleft: %s", files$popleft), file=files$par_file, append=TRUE)
-        write(sprintf("popright: %s", files$popright), file=files$par_file, append=TRUE)
-    }
-
-    if (!is.null(badsnp_file)) {
-        write(sprintf("badsnpname: %s", badsnp_file), file=files$par_file, append=TRUE)
-    }
+merge_pops <- function(file, modified_file, merge) {
+  # merge=list(ancient_NearEast=merge_what, present_NearEast=c("Yemenite_Jew", "Jordan", "Samaritan", "Bedouin", "Palestinian"))
+  lines <- readLines(file)
+  
+  # iterate over the lines in the "ind" file, replacing population
+  # labels with their substitutes
+  for (merge_into in names(merge)) {
+    regex <- paste0("(", paste(merge[[merge_into]], collapse="|"), ")$")
+    lines <- stringr::str_replace(lines, regex, merge_into)
+  }
+  
+  writeLines(lines, modified_file)
 }
 
 
-# Generate a file with populations for a qpF4ratio run.
-create_qpF4ratio_pop_file <- function(X, A, B, C, O, file) {
-    lines <- sprintf("%s %s : %s %s :: %s %s : %s %s", A, O, X, C, A, O, B, C)
-    writeLines(lines, file)
+
+# Filtering functions  --------------------------------------------------
+
+
+#' Calculate the number (or proportion) of sites with an allele
+#' present (i.e. not 9) for each sample.
+#'
+#' @param geno EIGENSTRAT geno dataframe.
+#' @param prop Calculate the proportion of non-missing alleles
+#'     instead.
+#'
+#' @return A named vector of counts or proportions.
+#' @export
+snps_present <- function(geno, prop=FALSE) {
+  fn <- ifelse(prop, mean, sum)
+  dplyr::summarise_all(geno, funs(fn(. != 9)))
 }
 
 
-# Generate a file with populations for a qpDstat run.
-create_qpDstat_pop_file <- function(W=NULL, X=NULL, Y=NULL, Z=NULL, file) {
-    lines <- c()
-    for (w in W) for (x in X) for (y in Y) for (z in Z) {
-        lines <- c(lines, sprintf("%s %s %s %s", w, x, y, z))
-    }
-    writeLines(lines, file)
+#' Calculate the number (or proportion) of sites with an allele
+#' missing for each sample.
+#'
+#' @param geno EIGENSTRAT geno dataframe.
+#' @param prop Calculate the proportion of missing alleles
+#'     instead.
+#'
+#' @return A named vector of counts or proportions.
+#' @export
+snps_missing <- function(geno, prop=FALSE) {
+  fn <- ifelse(prop, mean, sum)
+  dplyr::summarise_all(geno, funs(fn(. == 9)))
 }
 
 
-# Generate a file with populations for a qp3Pop run.
-create_qp3Pop_pop_file <- function(A, B, C, file) {
-    lines <- c()
-    for (a in A) for (b in B) for (c in C) {
-        lines <- c(lines, sprintf("%s %s %s", a, b, c))
-    }
-    writeLines(lines, file)
-}
-
-
-# Generate a file with populations for a qpAdm run.
-#
-# L, R - Sets of left (U) and right (R) populations using the
-#   terminology of Haak et al., 2012 (Supplementary Information 10 on
-#   page 128).
-# files - A list that must contain "popleft" and "popright" elements,
-#   which describe the paths to files containing "left" and "right"
-#   populations (one population per line).
-create_qpAdm_pop_files <- function(L, R, files) {
-    writeLines(L, con=files[["popleft"]])
-    writeLines(R, con=files[["popright"]])
+#' Create a new set of EIGENSTRAT files by intersecting the original
+#' data with a given set of coordinates.
+#'
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param out_prefix Prefix of the generated EIGENSTRAT files with the
+#'     subset of the data.
+#' @param bed_file Path to the 3 column BED file to intersect with.
+#' @param complement Perform an intersect or a complement operation?
+#'
+#' @export
+subset_sites <- function(prefix, out_prefix, bed_file, complement=FALSE) {
+  coords <- readr::read_table2(
+    bed_file,
+    col_names=c("chrom", "start", "pos"),
+    col_types="cii",
+    progress=FALSE
+  ) %>%
+    dplyr::select(-start)
+  
+  geno <- read_geno(paste0(prefix, ".geno"))
+  snp <- read_snp(paste0(prefix, ".snp"))
+  combined <- dplyr::bind_cols(snp, geno)
+  
+  # determine which function to call on the coordinates
+  fun <- ifelse(complement, dplyr::anti_join, dplyr::inner_join)
+  combined_subset <- fun(combined, coords, by=c("chrom", "pos"))
+  
+  # write the new snp file
+  dplyr::select(combined_subset, id:alt) %>%  
+    readr::write_tsv(path=paste0(out_prefix, ".snp"), col_names=FALSE)
+  # write the new geno file
+  dplyr::select(combined_subset, -(id:alt)) %>% 
+    apply(1, paste, collapse="") %>%
+    writeLines(con=paste0(out_prefix, ".geno"))
+  # write the new ind file
+  invisible(file.copy(from=paste0(prefix, ".ind"),
+                      to=paste0(out_prefix, ".ind")))
 }
 
 
@@ -130,38 +143,4 @@ check_presence <- function(labels, prefix=NULL, ind=NULL) {
         stop("The following samples are not present in '", ind, "': ",
              paste(not_present, collapse=", "))
     }
-}
-
-
-# Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
-# gt_to_eigenstrat(c(".|.", "./.", ".", "0|0", "0/0", "0", "0|1", "1|0", "0/1", "1|1", "1/1", "1"))
-gt_to_eigenstrat <- function(gts) {
-    eigen_gts <- gts %>%
-        stringr::str_replace("^0$",   "2") %>%
-        stringr::str_replace("^1$",   "0") %>%
-        stringr::str_replace("^\\.\\|\\.$", "9") %>%
-        stringr::str_replace("^\\./\\.$", "9") %>%
-        stringr::str_replace("^\\.$",   "9") %>%
-        stringr::str_replace("^0\\|0$", "2") %>%
-        stringr::str_replace("^0/0$", "2") %>%
-        stringr::str_replace("^0\\|1$", "1") %>%
-        stringr::str_replace("^1\\|0$", "1") %>%
-        stringr::str_replace("^0/1$", "1") %>%
-        stringr::str_replace("^1\\|1$", "0") %>%
-        stringr::str_replace("^1/1$", "0")
-
-    eigen_gts
-}
-
-# Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
-# eigenstrat_to_gt(c(0, 1, 2, 9, 9, 2, 1, 0))
-eigenstrat_to_gt <- function(eigenstrat_gts) {
-    vcf_gts <- sapply(eigenstrat_gts, function(i) {
-        if      (i == 0) "1/1"
-        else if (i == 1) "0/1"
-        else if (i == 2) "0/0"
-        else             "./."
-    })
-
-    vcf_gts
 }

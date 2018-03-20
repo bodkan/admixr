@@ -70,3 +70,37 @@ vcf_to_eigenstrat <- function(vcf_file, prefix) {
     readr::write_tsv(ind, paste0(prefix, ".ind"), col_names=FALSE)
     writeLines(apply(geno, 1, paste, collapse=""), paste0(prefix, ".geno"))
 }
+
+
+# Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
+# gt_to_eigenstrat(c(".|.", "./.", ".", "0|0", "0/0", "0", "0|1", "1|0", "0/1", "1|1", "1/1", "1"))
+gt_to_eigenstrat <- function(gts) {
+    eigen_gts <- gts %>%
+        stringr::str_replace("^0$",   "2") %>%
+        stringr::str_replace("^1$",   "0") %>%
+        stringr::str_replace("^\\.\\|\\.$", "9") %>%
+        stringr::str_replace("^\\./\\.$", "9") %>%
+        stringr::str_replace("^\\.$",   "9") %>%
+        stringr::str_replace("^0\\|0$", "2") %>%
+        stringr::str_replace("^0/0$", "2") %>%
+        stringr::str_replace("^0\\|1$", "1") %>%
+        stringr::str_replace("^1\\|0$", "1") %>%
+        stringr::str_replace("^0/1$", "1") %>%
+        stringr::str_replace("^1\\|1$", "0") %>%
+        stringr::str_replace("^1/1$", "0")
+
+    eigen_gts
+}
+
+# Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
+# eigenstrat_to_gt(c(0, 1, 2, 9, 9, 2, 1, 0))
+eigenstrat_to_gt <- function(eigenstrat_gts) {
+    vcf_gts <- sapply(eigenstrat_gts, function(i) {
+        if      (i == 0) "1/1"
+        else if (i == 1) "0/1"
+        else if (i == 2) "0/0"
+        else             "./."
+    })
+
+    vcf_gts
+}

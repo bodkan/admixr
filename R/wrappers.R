@@ -1,6 +1,3 @@
-# High level wrapper functions --------------------------------------------------
-
-
 #' Run an f4-ratio analysis and return the results as a data.frame.
 #'
 #' @param X Population names, using the terminology of Patterson (2012).
@@ -76,7 +73,6 @@ qpDstat <- function(W, X, Y, Z,
 }
 
 
-
 #' Calculate the 3-population statistic and return the results as a data.frame.
 #'
 #' @param A Population names, using the terminology of Patterson (2012).
@@ -114,7 +110,6 @@ qp3Pop <- function(A, B, C,
 
     read_qp3Pop(files[["log_file"]])
 }
-
 
 
 #' Run the qpAdm analysis.
