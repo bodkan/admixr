@@ -22,8 +22,10 @@ Description: This package makes it possible to perform all the stages of ADMIXTO
     analysis.
 Depends: R (>= 3.1.0)
 Imports:
-    tidyverse,
-    stringr
+    stringr,
+    tibble,
+    dplyr,
+    readr
 License: MIT
 Encoding: UTF-8
 RoxygenNote: 6.0.1

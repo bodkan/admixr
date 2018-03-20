@@ -135,11 +135,9 @@ merge_pops <- function(file, modified_file, merge) {
 #'
 #' @return A named vector of counts or proportions.
 #' @export
-#'
-#' @import dplyr
 snps_present <- function(geno, prop=FALSE) {
     fn <- ifelse(prop, mean, sum)
-    summarise_all(geno, funs(fn(. != 9)))
+    dplyr::summarise_all(geno, funs(fn(. != 9)))
 }
 
 
@@ -152,11 +150,9 @@ snps_present <- function(geno, prop=FALSE) {
 #'
 #' @return A named vector of counts or proportions.
 #' @export
-#'
-#' @import dplyr
 snps_missing <- function(geno, prop=FALSE) {
     fn <- ifelse(prop, mean, sum)
-    summarise_all(geno, funs(fn(. == 9)))
+    dplyr::summarise_all(geno, funs(fn(. == 9)))
 }
 
 
@@ -171,27 +167,34 @@ snps_missing <- function(geno, prop=FALSE) {
 #' @param bed_file Path to the 3 column BED file to intersect with.
 #' @param complement Perform an intersect or a complement operation?
 #'
-#' @import dplyr
 #' @export
 subset_sites <- function(prefix, out_prefix, bed_file, complement=FALSE) {
-    coords <- readr::read_table2(bed_file, col_names=c("chrom", "start", "pos"),
-                          col_types="cii", progress=FALSE) %>% select(-start)
+    coords <- readr::read_table2(
+      bed_file,
+      col_names=c("chrom", "start", "pos"),
+      col_types="cii",
+      progress=FALSE
+    ) %>%
+      dplyr::select(-start)
 
     geno <- read_geno(paste0(prefix, ".geno"))
     snp <- read_snp(paste0(prefix, ".snp"))
-    combined <- bind_cols(snp, geno)
+    combined <- dplyr::bind_cols(snp, geno)
 
     # determine which function to call on the coordinates
-    fun <- ifelse(complement, anti_join, inner_join)
+    fun <- ifelse(complement, dplyr::anti_join, dplyr::inner_join)
     combined_subset <- fun(combined, coords, by=c("chrom", "pos"))
 
     # write the new snp file
-    write_tsv(select(combined_subset, id:alt), path=paste0(out_prefix, ".snp"), col_names=FALSE)
+    dplyr::select(combined_subset, id:alt) %>%  
+      readr::write_tsv(path=paste0(out_prefix, ".snp"), col_names=FALSE)
     # write the new geno file
-    writeLines(apply(select(combined_subset, -(id:alt)), 1, paste, collapse=""),
-               con=paste0(out_prefix, ".geno"))
+    dplyr::select(combined_subset, -(id:alt)) %>% 
+      apply(1, paste, collapse="") %>%
+      writeLines(con=paste0(out_prefix, ".geno"))
     # write the new ind file
-    invisible(file.copy(from=paste0(prefix, ".ind"), to=paste0(out_prefix, ".ind")))
+    invisible(file.copy(from=paste0(prefix, ".ind"),
+                        to=paste0(out_prefix, ".ind")))
 }
 
 
@@ -224,16 +227,17 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
                 }))
 
     # generate a dataframe with the "body" of the VCF file (info and GT columns)
-    info_cols <- mutate(snp, ID=".", QUAL="0", FILTER=".", INFO=".", FORMAT="GT") %>%
-        select(`#CHROM`=chrom, POS=pos, ID, REF=ref, ALT=alt, QUAL, FILTER, INFO, FORMAT)
+    info_cols <-
+      dplyr::mutate(snp, ID=".", QUAL="0", FILTER=".", INFO=".", FORMAT="GT") %>%
+      dplyr::select(`#CHROM`=chrom, POS=pos, ID, REF=ref, ALT=alt, QUAL, FILTER, INFO, FORMAT)
     gt_cols <- mutate_all(geno, eigenstrat_to_gt)
     body_cols <- bind_cols(info_cols, gt_cols)
 
     writeLines(header, vcf_file)
-    write_tsv(body_cols, vcf_file, col_names=TRUE, append=TRUE)
+    readr::write_tsv(body_cols, vcf_file, col_names=TRUE, append=TRUE)
 
     if (compress) system(paste("bgzip", vcf_file))
-    if (index)    system(paste("tabix", paste0(vcf_file, ".gz")))
+    if (index) system(paste("tabix", paste0(vcf_file, ".gz")))
 }
 
 
@@ -246,23 +250,23 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
 #' @export
 vcf_to_eigenstrat <- function(vcf_file, prefix) {
     vcf <- readr::read_tsv(vcf_file, comment="##") %>%
-        rename(chrom=`#CHROM`, pos=POS, ref=REF, alt=ALT) %>%
-        select(-c(ID, QUAL, FILTER, INFO, FORMAT))
+        dplyr::rename(chrom=`#CHROM`, pos=POS, ref=REF, alt=ALT) %>%
+        dplyr::select(-c(ID, QUAL, FILTER, INFO, FORMAT))
 
     # generate dataframes with the 3 EIGENSTRAT info tables
-    snp <- select(vcf, chrom, pos, ref, alt) %>%
-        mutate(snp_id=paste(chrom, pos, sep="_"), gen_dist="0.0") %>%
-        select(snp_id, chrom, gen_dist, pos, ref, alt)
-    ind <- tibble(
+    snp <- dplyr::select(vcf, chrom, pos, ref, alt) %>%
+        dplyr::mutate(snp_id=paste(chrom, pos, sep="_"), gen_dist="0.0") %>%
+        dplyr::select(snp_id, chrom, gen_dist, pos, ref, alt)
+    ind <- tibble::tibble(
         sample_id=select(vcf, -c(chrom, pos, ref, alt)) %>% names,
         sex="U",
         label=sample_id
     )
-    geno <- select(vcf, -c(chrom, pos, ref, alt)) %>%
-        mutate_all(gt_to_eigenstrat)
+    geno <- dplyr::select(vcf, -c(chrom, pos, ref, alt)) %>%
+        dplyr::mutate_all(gt_to_eigenstrat)
 
     # write all three EIGENSTRAT files
-    write_tsv(snp, paste0(prefix, ".snp"), col_names=FALSE)
-    write_tsv(ind, paste0(prefix, ".ind"), col_names=FALSE)
+    readr::write_tsv(snp, paste0(prefix, ".snp"), col_names=FALSE)
+    readr::write_tsv(ind, paste0(prefix, ".ind"), col_names=FALSE)
     writeLines(apply(geno, 1, paste, collapse=""), paste0(prefix, ".geno"))
 }
