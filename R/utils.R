@@ -178,18 +178,18 @@ check_presence <- function(labels, prefix=NULL, ind=NULL) {
 # gt_to_eigenstrat(c(".|.", "./.", ".", "0|0", "0/0", "0", "0|1", "1|0", "0/1", "1|1", "1/1", "1"))
 gt_to_eigenstrat <- function(gts) {
     eigen_gts <- gts %>%
-        str_replace("^0$",   "2") %>%
-        str_replace("^1$",   "0") %>%
-        str_replace("^\\.\\|\\.$", "9") %>%
-        str_replace("^\\./\\.$", "9") %>%
-        str_replace("^\\.$",   "9") %>%
-        str_replace("^0\\|0$", "2") %>%
-        str_replace("^0/0$", "2") %>%
-        str_replace("^0\\|1$", "1") %>%
-        str_replace("^1\\|0$", "1") %>%
-        str_replace("^0/1$", "1") %>%
-        str_replace("^1\\|1$", "0") %>%
-        str_replace("^1/1$", "0")
+        stringr::str_replace("^0$",   "2") %>%
+        stringr::str_replace("^1$",   "0") %>%
+        stringr::str_replace("^\\.\\|\\.$", "9") %>%
+        stringr::str_replace("^\\./\\.$", "9") %>%
+        stringr::str_replace("^\\.$",   "9") %>%
+        stringr::str_replace("^0\\|0$", "2") %>%
+        stringr::str_replace("^0/0$", "2") %>%
+        stringr::str_replace("^0\\|1$", "1") %>%
+        stringr::str_replace("^1\\|0$", "1") %>%
+        stringr::str_replace("^0/1$", "1") %>%
+        stringr::str_replace("^1\\|1$", "0") %>%
+        stringr::str_replace("^1/1$", "0")
 
     eigen_gts
 }

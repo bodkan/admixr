@@ -8,24 +8,24 @@
 #' @return Tibble object with the parsed results.
 #' @export
 #'
-#' @import stringr readr
+#' @import readr
 read_qpF4ratio <- function(file) {
-    log_lines <- readLines(file) %>% .[!str_detect(., "warning")]
+    log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
     # extract the number of analyzed test populations/individuals
     # (corresponding to the number of rows of the results table)
-    n_pops <- log_lines[which(str_detect(log_lines, "^nplist:"))] %>%
-        str_extract("[0-9]+$") %>%
+    n_pops <- log_lines[which(stringr::str_detect(log_lines, "^nplist:"))] %>%
+        stringr::str_extract("[0-9]+$") %>%
         as.integer
 
     # parse the lines of the results section and extract the names of
     # tested populations/individuals, estimated admixture proportions
     # alpha, std. errors and Z-score
     res_lines <- log_lines[(length(log_lines) - n_pops) : (length(log_lines) - 1)] %>%
-        str_replace("result: ", "") %>%
-        str_replace_all(":", "") %>%
-        str_replace_all(" +", " ") %>%
-        str_replace("^ ", "")
+        stringr::str_replace("result: ", "") %>%
+        stringr::str_replace_all(":", "") %>%
+        stringr::str_replace_all(" +", " ") %>%
+        stringr::str_replace("^ ", "")
 
     res_df <- res_lines %>%
         paste0("\n", collapse="\n") %>%
@@ -44,22 +44,22 @@ read_qpF4ratio <- function(file) {
 #' @return Tibble object with the parsed results.
 #' @export
 #'
-#' @import stringr readr
+#' @import readr
 read_qpDstat <- function(file) {
-    log_lines <- readLines(file) %>% .[!str_detect(., "warning")]
+    log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
     # extract the number of analyzed population quadruples
-    n_quads <- length(log_lines) - (which(str_detect(log_lines, "^nrows, ncols:"))) - 1
+    n_quads <- length(log_lines) - (which(stringr::str_detect(log_lines, "^nrows, ncols:"))) - 1
 
     # parse the lines of the results section and extract the names of
     # tested populations/individuals, estimated admixture proportions
     # alpha, std. errors and Z-score
     res_lines <- log_lines[(length(log_lines) - n_quads) : (length(log_lines) - 1)] %>%
-        str_replace("result: ", "") %>%
-        str_replace_all(" +", " ") %>%
-        str_replace_all("^ | $", "")
+        stringr::str_replace("result: ", "") %>%
+        stringr::str_replace_all(" +", " ") %>%
+        stringr::str_replace_all("^ | $", "")
 
-    result_col <- ifelse(any(str_detect(log_lines, "f4mode: YES")), "f4", "D")
+    result_col <- ifelse(any(stringr::str_detect(log_lines, "f4mode: YES")), "f4", "D")
 
     res_df <- res_lines %>%
         paste0("\n", collapse="\n") %>%
@@ -78,20 +78,20 @@ read_qpDstat <- function(file) {
 #' @return Tibble object with parsed results.
 #' @export
 #'
-#' @import stringr readr
+#' @import readr
 read_qp3Pop <- function(file) {
     log_lines <- readLines(file)
 
     # extract the number of analyzed population quadruples
-    n_quads <- length(log_lines) - (which(str_detect(log_lines, "^nrows, ncols:"))) - 1
+    n_quads <- length(log_lines) - (which(stringr::str_detect(log_lines, "^nrows, ncols:"))) - 1
 
     # parse the lines of the results section and extract the names of
     # tested populations/individuals, estimated admixture proportions
     # alpha, std. errors and Z-score
-    res_lines <- log_lines[str_detect(log_lines, "result:")] %>%
-        str_replace("result: ", "") %>%
-        str_replace_all(" +", " ") %>%
-        str_replace_all("^ | $", "")
+    res_lines <- log_lines[stringr::str_detect(log_lines, "result:")] %>%
+        stringr::str_replace("result: ", "") %>%
+        stringr::str_replace_all(" +", " ") %>%
+        stringr::str_replace_all("^ | $", "")
 
     res_df <- res_lines %>%
         paste0("\n", collapse="\n") %>%
@@ -123,7 +123,7 @@ merge_pops <- function(file, modified_file, merge) {
     # labels with their substitutes
     for (merge_into in names(merge)) {
         regex <- paste0("(", paste(merge[[merge_into]], collapse="|"), ")$")
-        lines <- str_replace(lines, regex, merge_into)
+        lines <- stringr::str_replace(lines, regex, merge_into)
     }
 
     writeLines(lines, modified_file)
