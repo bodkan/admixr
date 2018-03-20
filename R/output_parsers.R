@@ -3,7 +3,10 @@
 #' @param file Name of the output log file.
 #'
 #' @return Tibble object with the parsed results.
+#'
 #' @export
+#'
+#' @importFrom magrittr "%>%"
 read_qpF4ratio <- function(file) {
     log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
@@ -37,7 +40,10 @@ read_qpF4ratio <- function(file) {
 #' @param file Name of the output log file.
 #'
 #' @return Tibble object with the parsed results.
+#'
 #' @export
+#'
+#' @importFrom magrittr "%>%"
 read_qpDstat <- function(file) {
     log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
@@ -69,7 +75,10 @@ read_qpDstat <- function(file) {
 #' @param file Name of the output log file.
 #'
 #' @return Tibble object with parsed results.
+#'
 #' @export
+#'
+#' @importFrom magrittr "%>%"
 read_qp3Pop <- function(file) {
     log_lines <- readLines(file)
 

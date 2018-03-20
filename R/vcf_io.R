@@ -14,6 +14,8 @@
 #' @param index Index the VCF with tabix?
 #'
 #' @export
+#' 
+#' @importFrom magrittr "%>%"
 eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
     geno <- read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind"))
     snp <- read_snp(paste0(prefix, ".snp"))
@@ -30,8 +32,8 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
     info_cols <-
       dplyr::mutate(snp, ID=".", QUAL="0", FILTER=".", INFO=".", FORMAT="GT") %>%
       dplyr::select(`#CHROM`=chrom, POS=pos, ID, REF=ref, ALT=alt, QUAL, FILTER, INFO, FORMAT)
-    gt_cols <- mutate_all(geno, eigenstrat_to_gt)
-    body_cols <- bind_cols(info_cols, gt_cols)
+    gt_cols <- dplyr::mutate_all(geno, eigenstrat_to_gt)
+    body_cols <- dplyr::bind_cols(info_cols, gt_cols)
 
     writeLines(header, vcf_file)
     readr::write_tsv(body_cols, vcf_file, col_names=TRUE, append=TRUE)
@@ -48,6 +50,8 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress=TRUE, index=TRUE) {
 #'     path) that will be generated.
 #'
 #' @export
+#'
+#' @importFrom magrittr "%>%"
 vcf_to_eigenstrat <- function(vcf_file, prefix) {
     vcf <- readr::read_tsv(vcf_file, comment="##") %>%
         dplyr::rename(chrom=`#CHROM`, pos=POS, ref=REF, alt=ALT) %>%

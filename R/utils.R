@@ -66,6 +66,9 @@ snps_missing <- function(geno, prop=FALSE) {
 #' @param complement Perform an intersect or a complement operation?
 #'
 #' @export
+#'
+#' @importFrom magrittr "%>%"
+
 subset_sites <- function(prefix, out_prefix, bed_file, complement=FALSE) {
   coords <- readr::read_table2(
     bed_file,

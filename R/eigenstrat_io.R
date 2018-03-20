@@ -53,7 +53,7 @@ read_geno <- function(file, ind_file=NULL) {
     readr::read_fwf(
       file,
       col_positions=readr::fwf_widths(rep(1, n), inds),
-      col_types=cols(.default="i"),
+      col_types=readr::cols(.default="i"),
       progress=FALSE
     )
 }
