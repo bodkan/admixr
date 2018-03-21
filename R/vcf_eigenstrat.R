@@ -1,3 +1,6 @@
+# Conversion between EIGENSTRAT and VCF -----------------------------------
+
+
 #' Convert EIGENSTRAT files into a VCF file.
 #'
 #' This function reads the genotypes from a 'geno' file, their
@@ -74,6 +77,9 @@ vcf_to_eigenstrat <- function(vcf_file, prefix) {
     readr::write_tsv(ind, paste0(prefix, ".ind"), col_names=FALSE)
     writeLines(apply(geno, 1, paste, collapse=""), paste0(prefix, ".geno"))
 }
+
+
+# Genotype conversion utility functions -----------------------------------
 
 
 # Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
