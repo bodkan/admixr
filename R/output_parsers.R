@@ -60,11 +60,18 @@ read_qpDstat <- function(file) {
 
     result_col <- ifelse(any(stringr::str_detect(log_lines, "f4mode: YES")), "f4", "D")
 
-    res_df <- res_lines %>%
+    raw_cols <- res_lines %>%
         paste0("\n", collapse="\n") %>%
-        readr::read_delim(delim=" ", col_names=FALSE) %>%
-        .[c(1:6, ncol(.) - 2, ncol(.) - 1, ncol(.))] %>% # remove column with "best" if present
-        setNames(c("W", "X", "Y", "Z", result_col, "Zscore", "BABA", "ABBA", "n_snps"))
+        readr::read_delim(delim=" ", col_names=FALSE)
+
+    # remove the weird "best" column first, then add an optional stderr column
+    # (if it's present)
+    res_df <- raw_cols[, !purrr::map_lgl(raw_cols, ~ any(stringr::str_detect(., "best")))] %>%
+      {
+        setNames(., c("W", "X", "Y", "Z", result_col,
+                      if (ncol(.) > 9) { "stderr" } else{ NULL },
+                     "Zscore", "BABA", "ABBA", "n_snps"))
+      }
 
     res_df
 }

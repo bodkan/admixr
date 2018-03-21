@@ -21,12 +21,13 @@ Description: This package makes it possible to perform all the stages of ADMIXTO
     dataframe of all results for immediate plotting and statistical
     analysis.
 Depends: R (>= 3.1.0)
-Imports:
+Imports: 
     stringr,
     tibble,
     dplyr,
     readr,
-    magrittr
+    magrittr,
+    purrr
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 6.0.1

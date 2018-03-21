@@ -69,6 +69,9 @@ qpDstat <- function(W, X, Y, Z,
         write("f4mode: YES", file=files[["par_file"]], append=TRUE)
     }
 
+    # automatically calculate standard errors
+    write("printsd: YES", file = files[["par_file"]], append = TRUE)
+
     run_cmd("qpDstat", par_file=files[["par_file"]], log_file=files[["log_file"]])
 
     read_qpDstat(files[["log_file"]])
