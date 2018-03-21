@@ -1,4 +1,4 @@
-#' Run an f4-ratio analysis and return the results as a data.frame.
+#' Perform an f4-ratio calculation and return its result as a data.frame.
 #'
 #' @param X Population names, using the terminology of Patterson (2012).
 #' @param A Population names, using the terminology of Patterson (2012).
@@ -35,7 +35,7 @@ qpF4ratio <- function(X, A, B, C, O,
 
 
 #' Calculate D statistics or F4 statistics (which is just the
-#' numerator of a D statistic) and return the results as a data.frame.
+#' numerator of a D statistic) and return results as a data.frame.
 #'
 #' @param W Population names, using the terminology of Patterson (2012).
 #' @param X Population names, using the terminology of Patterson (2012).
@@ -75,7 +75,7 @@ qpDstat <- function(W, X, Y, Z,
 }
 
 
-#' Calculate the 3-population statistic and return the results as a data.frame.
+#' Calculate a 3-population statistic and return results as a data.frame.
 #'
 #' @param A Population names, using the terminology of Patterson (2012).
 #' @param B Population names, using the terminology of Patterson (2012).
@@ -115,7 +115,7 @@ qp3Pop <- function(A, B, C,
 }
 
 
-#' Run the qpAdm analysis.
+#' Run a qpAdm analysis.
 #'
 #' @param L Sets of "left" populations using the terminology of Haak (2012,
 #'     Supplementary Information 10 on page 128).

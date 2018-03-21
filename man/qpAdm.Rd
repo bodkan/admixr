@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{qpAdm}
 \alias{qpAdm}
-\title{Run the qpAdm analysis.}
+\title{Run a qpAdm analysis.}
 \usage{
 qpAdm(L, R, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL)
@@ -30,5 +30,5 @@ argument.}
 directory by default).}
 }
 \description{
-Run the qpAdm analysis.
+Run a qpAdm analysis.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{qpF4ratio}
 \alias{qpF4ratio}
-\title{Run an f4-ratio analysis and return the results as a data.frame.}
+\title{Perform an f4-ratio calculation and return its result as a data.frame.}
 \usage{
 qpF4ratio(X, A, B, C, O, prefix = NULL, geno = NULL, snp = NULL,
   ind = NULL, badsnp = NULL, dir_name = NULL)
@@ -33,5 +33,5 @@ path).}
 directory by default).}
 }
 \description{
-Run an f4-ratio analysis and return the results as a data.frame.
+Perform an f4-ratio calculation and return its result as a data.frame.
 }

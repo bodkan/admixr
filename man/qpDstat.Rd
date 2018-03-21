@@ -3,7 +3,7 @@
 \name{qpDstat}
 \alias{qpDstat}
 \title{Calculate D statistics or F4 statistics (which is just the
-numerator of a D statistic) and return the results as a data.frame.}
+numerator of a D statistic) and return results as a data.frame.}
 \usage{
 qpDstat(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL, f4mode = FALSE)
@@ -35,5 +35,5 @@ directory by default).}
 }
 \description{
 Calculate D statistics or F4 statistics (which is just the
-numerator of a D statistic) and return the results as a data.frame.
+numerator of a D statistic) and return results as a data.frame.
 }

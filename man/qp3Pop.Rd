@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{qp3Pop}
 \alias{qp3Pop}
-\title{Calculate the 3-population statistic and return the results as a data.frame.}
+\title{Calculate a 3-population statistic and return results as a data.frame.}
 \usage{
 qp3Pop(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL, inbreed = FALSE)
@@ -32,5 +32,5 @@ directory by default).}
 \item{inbreed}{See README.3PopTest in ADMIXTOOLS.}
 }
 \description{
-Calculate the 3-population statistic and return the results as a data.frame.
+Calculate a 3-population statistic and return results as a data.frame.
 }
