@@ -9,8 +9,8 @@ write_ind(file, df)
 \arguments{
 \item{file}{Path to the file.}
 
-\item{df}{Data frame with the sample identifier, sex and label
-columns (columns defined by the EIGENSTRAT format).}
+\item{df}{A data.frame object with genotypes of each sample (0/1/9 as defined
+by the EIGENSTRAT format).}
 }
 \description{
 Write an EIGENSTRAT 'ind' file.

@@ -12,8 +12,8 @@ read_geno(file, ind_file = NULL)
 \item{ind_file}{Path to the ind file to read sample names from.}
 }
 \value{
-Data frame with columns containing "genotypes" of each
-    sample (0/1/9 as defined by the EIGENSTRAT format).
+A data.frame object with genotypes of each sample (0/1/9 as defined
+    by the EIGENSTRAT format).
 }
 \description{
 Read an EIGENSTRAT 'geno' file.

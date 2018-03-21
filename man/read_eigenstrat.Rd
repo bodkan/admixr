@@ -10,7 +10,7 @@ read_eigenstrat(prefix = NULL)
 \item{prefix}{EIGENSTRAT prefix of geno/snp/ind files.}
 }
 \value{
-List of three data frames (one element for geno/snp/ind).
+List of three data.frame objects (one for geno/snp/ind data).
 }
 \description{
 Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.

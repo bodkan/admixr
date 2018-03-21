@@ -10,14 +10,11 @@ write_eigenstrat(prefix, ind, snp, geno)
 \item{prefix}{Prefix of the geno/snp/ind files (can
 include the path).}
 
-\item{ind}{data.frame with data in a 'ind' format}
+\item{ind}{data.frame object with data in a 'ind' format}
 
-\item{snp}{data.frame with data in a 'snp' format}
+\item{snp}{data.frame object with data in a 'snp' format}
 
-\item{geno}{data.frame with data in a 'geno' format}
-}
-\value{
-List of three data frames (one element for geno/snp/ind).
+\item{geno}{data.frame object with data in a 'geno' format}
 }
 \description{
 Write a tripplet of EIGENSTRAT (geno/snp/ind files) files.

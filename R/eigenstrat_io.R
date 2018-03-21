@@ -5,8 +5,8 @@
 #'
 #' @param file Path to the file.
 #'
-#' @return Data frame with the sample identifier, sex and label
-#'     columns (columns defined by the EIGENSTRAT format).
+#' @return A data.frame object with sample identifier, sex and label columns
+#'     (as defined by the EIGENSTRAT format).
 #'
 #' @export
 read_ind <- function(file) {
@@ -18,8 +18,8 @@ read_ind <- function(file) {
 #'
 #' @param file Path to the file.
 #'
-#' @return Data frame with information about each SNP (columns defined
-#'     by the EIGENSTRAT format).
+#' @return A data.frame object with SNP data (columns defined by the
+#'     EIGENSTRAT format).
 #'
 #' @export
 read_snp <- function(file) {
@@ -37,8 +37,8 @@ read_snp <- function(file) {
 #' @param file Path to the geno file.
 #' @param ind_file Path to the ind file to read sample names from.
 #'
-#' @return Data frame with columns containing "genotypes" of each
-#'     sample (0/1/9 as defined by the EIGENSTRAT format).
+#' @return A data.frame object with genotypes of each sample (0/1/9 as defined
+#'     by the EIGENSTRAT format).
 #'
 #' @export
 read_geno <- function(file, ind_file=NULL) {
@@ -63,7 +63,7 @@ read_geno <- function(file, ind_file=NULL) {
 #'
 #' @param prefix EIGENSTRAT prefix of geno/snp/ind files.
 #'
-#' @return List of three data frames (one element for geno/snp/ind).
+#' @return List of three data.frame objects (one for geno/snp/ind data).
 #'
 #' @export
 read_eigenstrat <- function(prefix=NULL) {
@@ -82,8 +82,8 @@ read_eigenstrat <- function(prefix=NULL) {
 #' Write an EIGENSTRAT 'ind' file.
 #'
 #' @param file Path to the file.
-#' @param df Data frame with the sample identifier, sex and label
-#'     columns (columns defined by the EIGENSTRAT format).
+#' @param df A data.frame object with genotypes of each sample (0/1/9 as defined
+#'     by the EIGENSTRAT format).
 #'
 #' @export
 write_ind <- function(file, df) {
@@ -94,8 +94,8 @@ write_ind <- function(file, df) {
 #' Write an EIGENSTRAT 'snp' file.
 #'
 #' @param file Path to the file.
-#' @param df Data frame with information about each SNP (columns
-#'     defined by the EIGENSTRAT format).
+#' @param df A data.frame object with SNP data (columns defined by the
+#'     EIGENSTRAT format).
 #'
 #' @export
 write_snp <- function(file, df) {
@@ -119,11 +119,9 @@ write_geno <- function(file, df) {
 #'
 #' @param prefix Prefix of the geno/snp/ind files (can
 #'     include the path).
-#' @param ind data.frame with data in a 'ind' format
-#' @param snp data.frame with data in a 'snp' format
-#' @param geno data.frame with data in a 'geno' format
-#'
-#' @return List of three data frames (one element for geno/snp/ind).
+#' @param ind data.frame object with data in a 'ind' format
+#' @param snp data.frame object with data in a 'snp' format
+#' @param geno data.frame object with data in a 'geno' format
 #'
 #' @export
 write_eigenstrat <- function(prefix, ind, snp, geno) {

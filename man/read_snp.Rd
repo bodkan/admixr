@@ -10,8 +10,8 @@ read_snp(file)
 \item{file}{Path to the file.}
 }
 \value{
-Data frame with information about each SNP (columns defined
-    by the EIGENSTRAT format).
+A data.frame object with SNP data (columns defined by the
+    EIGENSTRAT format).
 }
 \description{
 Read an EIGENSTRAT 'snp' file.
