@@ -67,17 +67,3 @@ create_qp3Pop_pop_file <- function(A, B, C, file) {
     }
     writeLines(lines, file)
 }
-
-
-# Generate a file with populations for a qpAdm run.
-#
-# L, R - Sets of left (U) and right (R) populations using the
-#   terminology of Haak et al., 2012 (Supplementary Information 10 on
-#   page 128).
-# files - A list that must contain "popleft" and "popright" elements,
-#   which describe the paths to files containing "left" and "right"
-#   populations (one population per line).
-create_qpAdm_pop_files <- function(L, R, files) {
-    writeLines(L, con=files[["popleft"]])
-    writeLines(R, con=files[["popright"]])
-}

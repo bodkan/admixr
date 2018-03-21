@@ -104,7 +104,7 @@ subset_sites <- function(prefix, out_prefix, bed_file, complement=FALSE) {
 
 # Run a specified ADMIXTOOLS command.
 run_cmd <- function(cmd, par_file, log_file) {
-    if (!cmd %in% c("qpDstat", "qpF4ratio", "qp3Pop", "qpAdm")) {
+    if (!cmd %in% c("qpDstat", "qpF4ratio", "qp3Pop")) {
         stop("ADMIXTOOLS command '", cmd, "' is not supported or does not exist")
     }
 
