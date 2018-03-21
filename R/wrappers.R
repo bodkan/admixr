@@ -13,6 +13,7 @@
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
+#'
 #' @export
 qpF4ratio <- function(X, A, B, C, O,
                      prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
@@ -29,7 +30,7 @@ qpF4ratio <- function(X, A, B, C, O,
 
     run_cmd("qpF4ratio", par_file=files[["par_file"]], log_file=files[["log_file"]])
 
-    read_qpF4ratio(files[["log_file"]]) %>% mutate(setup=setup)
+    read_qpF4ratio(files[["log_file"]]) %>% dplyr::mutate(setup=setup)
 }
 
 
@@ -49,6 +50,7 @@ qpF4ratio <- function(X, A, B, C, O,
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
 #' @param f4mode Calculate f4 statistics instead of D statistic.
+#'
 #' @export
 qpDstat <- function(W, X, Y, Z,
                     prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
@@ -88,6 +90,7 @@ qpDstat <- function(W, X, Y, Z,
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
 #' @param inbreed See README.3PopTest in ADMIXTOOLS.
+#'
 #' @export
 qp3Pop <- function(A, B, C,
                    prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
@@ -127,6 +130,7 @@ qp3Pop <- function(A, B, C,
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
+#'
 #' @export
 qpAdm <- function(L, R,
                   prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
