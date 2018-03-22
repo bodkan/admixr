@@ -19,4 +19,4 @@ emh <- readr::read_delim("~/projects/nea-over-time/data/emh_ages.txt", delim = "
                          col_names = c("name", "age")) %>%
   dplyr::mutate(pop = "EMH")
 
-dplyr::bind_rows(sgdp, emh) %>% readr::write_tsv("inst/extdata/popinfo.tsv")
+dplyr::bind_rows(sgdp, emh) %>% readr::write_tsv("popinfo.tsv")
