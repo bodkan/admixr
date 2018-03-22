@@ -2,7 +2,7 @@
 #'
 #' @param file Name of the output log file.
 #'
-#' @return Tibble object with the parsed results.
+#' @return Tibble object with parsed results.
 #'
 #' @export
 #'
@@ -39,7 +39,7 @@ read_qpF4ratio <- function(file) {
 #'
 #' @param file Name of the output log file.
 #'
-#' @return Tibble object with the parsed results.
+#' @return Tibble object with parsed results.
 #'
 #' @export
 #'
