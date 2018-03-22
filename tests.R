@@ -11,7 +11,7 @@ GENO_FILE <- paste0(EIGENSTRAT_DIR, "all.geno")
 IND_FILE <- paste0(EIGENSTRAT_DIR, "all.ind")
 
 
-samples <- readr::read_tsv("popinfo.tsv")
+samples <- readr::read_tsv("tmp/popinfo.tsv")
 
 present_day_Y <- list(
   "NearEast"=filter(samples, pop == "WestEurasia", str_detect(name, "Jew|Jordanian|Samaritan|BedouinB|Palestinian"))$name,
@@ -31,7 +31,7 @@ modern_X <- filter(samples, pop == "WestEurasia", !str_detect(name, "Iran|Jew|Jo
 
 # calculate the affinities of a set of ancient and modern Europeans to
 # various present-day populations
-pop <- "NearEast"
+pop <- "WestAfrica"
 
 # calculate D statistics on the ancient individuals
 ancient <- qpDstat(W="UstIshim", X=ancient_X, Y=pop, Z="Chimp",
