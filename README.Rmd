@@ -84,15 +84,3 @@ res <- qpDstat(
 
 res
 ```
-  
-We can make sure that we got the same results as we would by manually running
-ADMIXTOOLS from the shell using the configuration files in ADMIXTOOLS testing
-suite:
-
-```{bash}
-cd ~/local/Admixtools/examples
-
-qpDstat -p parqpDstat1 > qpDstat1.log
-
-less /Users/martin_petr/local/AdmixTools/examples/qpDstat1.log
-```
