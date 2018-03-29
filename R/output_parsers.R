@@ -45,7 +45,9 @@ read_qpF4ratio <- function(file) {
 #'
 #' @importFrom magrittr "%>%"
 read_qpDstat <- function(file) {
-    log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
+    log_lines <- readLines(file) %>%
+      .[!stringr::str_detect(., "warning")] %>%
+      .[!stringr::str_detect(., "nodata")]
 
     # extract the number of analyzed population quadruples
     n_quads <- length(log_lines) - (which(stringr::str_detect(log_lines, "^nrows, ncols:"))) - 1
