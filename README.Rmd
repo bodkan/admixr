@@ -68,12 +68,15 @@ downloaded for running testing script of the ADMIXTOOLS package.
 Note that a single call to our `qpDstat` function generates all required
 intermediate config and population files, runs ADMIXTOOLS, parses its log
 output and returns results as a `data.frame` object. It does so all behind
-the scenes without the user having to deal with the "low-level" technical
-details.
+the scenes without the user having to deal with "low-level" technical details.
 
 ```{r}
 library(admixr)
 
+# Population IDs are taken from a 3rd column of allmap.ind file (as is always
+# the case for ADMIXTOOLS commands). Prefix is simply a common path to
+# the EIGENSTRAT geno/snp/ind "triplet" (however, user can specify individual
+# paths to all files - see documentation for more details).
 res <- qpDstat(
   W = "Yoruba", X = "French", Y = c("Han", "Japanese"), Z = "Uygur",
   prefix = "/Users/martin_petr/local/AdmixTools/data/allmap"
