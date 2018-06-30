@@ -5,7 +5,7 @@
 #'
 #' This function reads the genotypes from a 'geno' file, their
 #' coordinates and reference/alternative alleles and the individuals'
-#' names from an 'ind' file and generates a minimalistic VCF file.
+#' names from an 'ind' file and generates a minimal VCF file.
 #'
 #' Compressing and indexing requires having "bgzip" and "tabix"
 #' commands in $PATH.

@@ -115,7 +115,7 @@ write_geno <- function(file, df) {
 }
 
 
-#' Write a tripplet of EIGENSTRAT (geno/snp/ind files) files.
+#' Write a triplet of EIGENSTRAT (geno/snp/ind files) files.
 #'
 #' @param prefix Prefix of the geno/snp/ind files (can
 #'     include the path).

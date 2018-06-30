@@ -2,7 +2,7 @@
 % Please edit documentation in R/eigenstrat_io.R
 \name{write_eigenstrat}
 \alias{write_eigenstrat}
-\title{Write a tripplet of EIGENSTRAT (geno/snp/ind files) files.}
+\title{Write a triplet of EIGENSTRAT (geno/snp/ind files) files.}
 \usage{
 write_eigenstrat(prefix, ind, snp, geno)
 }
@@ -17,5 +17,5 @@ include the path).}
 \item{geno}{data.frame object with data in a 'geno' format}
 }
 \description{
-Write a tripplet of EIGENSTRAT (geno/snp/ind files) files.
+Write a triplet of EIGENSTRAT (geno/snp/ind files) files.
 }
