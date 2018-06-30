@@ -1,15 +1,4 @@
-#' Generate a parameter file.
-#'
-#' @param files List of filenames of the population file, parameter
-#'     file and log file.
-#' @param prefix Prefix of the geno/snp/ind files (can include the
-#'     path). If specified, geno_file/snp_file/ind_file will be
-#'     ignored.
-#' @param geno_file Path to the genotype file.
-#' @param snp_file Path to the snp file.
-#' @param ind_file Path to the ind file.
-#' @param badsnp_file SNP file with information about ignored sites.
-#' @export
+# Generate a parameter file.
 create_par_file <- function(files,
                             prefix=NULL,
                             geno_file=NULL, snp_file=NULL, ind_file= NULL,
