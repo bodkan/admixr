@@ -8,6 +8,11 @@ Status](https://travis-ci.org/bodkan/admixr.svg?branch=master)](https://travis-c
 
 ***“Make ADMIXTOOLS fun again\!”***
 
+**TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
+touch ADMIXTOOLS/parfiles/popfile/logfiles ever again.
+
+## Introduction
+
 [ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a popular
 and widely used software package for calculating various population
 genetic statistics and for testing population genetics hypotheses.
@@ -76,6 +81,6 @@ res
 #> # A tibble: 2 x 10
 #>   W      X      Y        Z          D  stderr Zscore  BABA  ABBA n_snps
 #>   <chr>  <chr>  <chr>    <chr>  <dbl>   <dbl>  <dbl> <int> <int>  <int>
-#> 1 Yoruba French Han      Uygur 0.0410 0.00127   32.3 30753 28328 621026
+#> 1 Yoruba French Han      Uygur 0.041  0.00127   32.3 30753 28328 621026
 #> 2 Yoruba French Japanese Uygur 0.0402 0.00130   31.0 30690 28320 621026
 ```

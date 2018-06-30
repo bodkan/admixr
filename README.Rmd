@@ -18,6 +18,11 @@ knitr::opts_chunk$set(
 
 _**"Make ADMIXTOOLS fun again!"**_
 
+**TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
+touch ADMIXTOOLS/parfiles/popfile/logfiles ever again.
+
+## Introduction
+
 [ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a popular
 and widely used software package for calculating various population
 genetic statistics and for testing population genetics hypotheses.
