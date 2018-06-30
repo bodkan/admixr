@@ -8,11 +8,11 @@ qp3Pop(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL, inbreed = FALSE)
 }
 \arguments{
-\item{A}{Population names, using the terminology of Patterson (2012).}
+\item{A}{Population names.}
 
-\item{B}{Population names, using the terminology of Patterson (2012).}
+\item{B}{Population names.}
 
-\item{C}{Population names, using the terminology of Patterson (2012).}
+\item{C}{Population names.}
 
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}

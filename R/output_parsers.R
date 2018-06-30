@@ -26,8 +26,8 @@ read_qpF4ratio <- function(file) {
         stringr::str_replace("^ ", "")
 
     res_df <- res_lines %>%
-        paste0("\n", collapse="\n") %>%
-        readr::read_delim(delim=" ", col_names=FALSE) %>%
+        paste0("\n", collapse = "\n") %>%
+        readr::read_delim(delim = " ", col_names = FALSE) %>%
         setNames(c("A", "O", "X", "C", "A", "O", "B", "C", "alpha", "stderr", "Zscore")) %>%
         .[c("A", "B", "X", "C", "O", "alpha", "stderr", "Zscore")]
 
@@ -63,12 +63,14 @@ read_qpDstat <- function(file) {
     result_col <- ifelse(any(stringr::str_detect(log_lines, "f4mode: YES")), "f4", "D")
 
     raw_cols <- res_lines %>%
-        paste0("\n", collapse="\n") %>%
-        readr::read_delim(delim=" ", col_names=FALSE)
+        paste0("\n", collapse = "\n") %>%
+        readr::read_delim(delim = " ", col_names = FALSE)
 
     # remove the weird "best" column first, then add an optional stderr column
     # (if it's present)
-    res_df <- raw_cols[, !purrr::map_lgl(raw_cols, ~ any(stringr::str_detect(., "best")))] %>%
+    res_df <-
+      raw_cols[, !purrr::map_lgl(raw_cols,
+                                 ~ any(stringr::str_detect(., "best")))] %>%
       {
         setNames(., c("W", "X", "Y", "Z", result_col,
                       if (ncol(.) > 9) { "stderr" } else{ NULL },
@@ -91,9 +93,6 @@ read_qpDstat <- function(file) {
 read_qp3Pop <- function(file) {
     log_lines <- readLines(file)
 
-    # extract the number of analyzed population quadruples
-    n_quads <- length(log_lines) - (which(stringr::str_detect(log_lines, "^nrows, ncols:"))) - 1
-
     # parse the lines of the results section and extract the names of
     # tested populations/individuals, estimated admixture proportions
     # alpha, std. errors and Z-score
@@ -103,8 +102,8 @@ read_qp3Pop <- function(file) {
         stringr::str_replace_all("^ | $", "")
 
     res_df <- res_lines %>%
-        paste0("\n", collapse="\n") %>%
-        readr::read_delim(delim=" ", col_names=FALSE) %>%
+        paste0("\n", collapse = "\n") %>%
+        readr::read_delim(delim = " ", col_names = FALSE) %>%
         setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "n_snps"))
 
     res_df

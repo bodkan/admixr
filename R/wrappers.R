@@ -1,10 +1,10 @@
 #' Perform an f4-ratio calculation and return its result as a data.frame.
 #'
-#' @param X Population names, using the terminology of Patterson (2012).
-#' @param A Population names, using the terminology of Patterson (2012).
-#' @param B Population names, using the terminology of Patterson (2012).
-#' @param C Population names, using the terminology of Patterson (2012).
-#' @param O Population names, using the terminology of Patterson (2012).
+#' @param X Population names.
+#' @param A Population names.
+#' @param B Population names.
+#' @param C Population names.
+#' @param O Population names.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno Path to the genotype file. Overrides the 'prefix' argument.
@@ -16,8 +16,8 @@
 #'
 #' @export
 qpF4ratio <- function(X, A, B, C, O,
-                     prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
-                     dir_name=NULL) {
+                     prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
+                     dir_name = NULL) {
     check_presence(c(X, A, B, C, O), prefix, ind)
 
     # get the path to the population, parameter and log files
@@ -25,22 +25,22 @@ qpF4ratio <- function(X, A, B, C, O,
     config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
     files <- get_files(dir_name, config_prefix)
 
-    create_qpF4ratio_pop_file(X=X, A=A, B=B, C=C, O=O, file=files[["pop_file"]])
+    create_qpF4ratio_pop_file(X = X, A = A, B = B, C = C, O = O, file = files[["pop_file"]])
     create_par_file(files, prefix, geno, snp, ind, badsnp)
 
-    run_cmd("qpF4ratio", par_file=files[["par_file"]], log_file=files[["log_file"]])
+    run_cmd("qpF4ratio", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_qpF4ratio(files[["log_file"]]) %>% dplyr::mutate(setup=setup)
+    read_qpF4ratio(files[["log_file"]]) %>% dplyr::mutate(setup = setup)
 }
 
 
 #' Calculate D statistics or F4 statistics (which is just the
 #' numerator of a D statistic) and return results as a data.frame.
 #'
-#' @param W Population names, using the terminology of Patterson (2012).
-#' @param X Population names, using the terminology of Patterson (2012).
-#' @param Y Population names, using the terminology of Patterson (2012).
-#' @param Z Population names, using the terminology of Patterson (2012).
+#' @param W Population names.
+#' @param X Population names.
+#' @param Y Population names.
+#' @param Z Population names.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno Path to the genotype file. Overrides the 'prefix' argument.
@@ -53,8 +53,8 @@ qpF4ratio <- function(X, A, B, C, O,
 #'
 #' @export
 qpDstat <- function(W, X, Y, Z,
-                    prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
-                    dir_name=NULL, f4mode=FALSE) {
+                    prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
+                    dir_name = NULL, f4mode = FALSE) {
     check_presence(c(W, X, Y, Z), prefix, ind)
 
     # get the path to the population, parameter and log files
@@ -62,17 +62,17 @@ qpDstat <- function(W, X, Y, Z,
     config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
     files <- get_files(dir_name, config_prefix)
 
-    create_qpDstat_pop_file(W, X, Y, Z, file=files[["pop_file"]])
+    create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
     create_par_file(files, prefix, geno, snp, ind, badsnp)
 
     if (f4mode) {
-        write("f4mode: YES", file=files[["par_file"]], append=TRUE)
+        write("f4mode: YES", file = files[["par_file"]], append = TRUE)
     }
 
     # automatically calculate standard errors
     write("printsd: YES", file = files[["par_file"]], append = TRUE)
 
-    run_cmd("qpDstat", par_file=files[["par_file"]], log_file=files[["log_file"]])
+    run_cmd("qpDstat", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
     read_qpDstat(files[["log_file"]])
 }
@@ -80,9 +80,9 @@ qpDstat <- function(W, X, Y, Z,
 
 #' Calculate a 3-population statistic and return results as a data.frame.
 #'
-#' @param A Population names, using the terminology of Patterson (2012).
-#' @param B Population names, using the terminology of Patterson (2012).
-#' @param C Population names, using the terminology of Patterson (2012).
+#' @param A Population names.
+#' @param B Population names.
+#' @param C Population names.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno Path to the genotype file. Overrides the 'prefix'
@@ -96,8 +96,8 @@ qpDstat <- function(W, X, Y, Z,
 #'
 #' @export
 qp3Pop <- function(A, B, C,
-                   prefix=NULL, geno=NULL, snp=NULL, ind=NULL, badsnp=NULL,
-                   dir_name=NULL, inbreed=FALSE) {
+                   prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
+                   dir_name = NULL, inbreed = FALSE) {
     check_presence(c(A, B, C), prefix, ind)
 
     # get the path to the population, parameter and log files
@@ -105,14 +105,14 @@ qp3Pop <- function(A, B, C,
     config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
     files <- get_files(dir_name, config_prefix)
 
-    create_qp3Pop_pop_file(A, B, C, file=files[["pop_file"]])
+    create_qp3Pop_pop_file(A, B, C, file = files[["pop_file"]])
     create_par_file(files, prefix, geno, snp, ind, badsnp)
 
     if (inbreed) {
-        write("inbreed: YES", file=files[["par_file"]], append=TRUE)
+        write("inbreed: YES", file = files[["par_file"]], append = TRUE)
     }
 
-    run_cmd("qp3Pop", par_file=files[["par_file"]], log_file=files[["log_file"]])
+    run_cmd("qp3Pop", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
     read_qp3Pop(files[["log_file"]])
 }

@@ -1,13 +1,14 @@
 # Generate a parameter file.
 create_par_file <- function(files,
-                            prefix=NULL,
-                            geno_file=NULL, snp_file=NULL, ind_file= NULL,
-                            badsnp_file=NULL) {
+                            prefix = NULL,
+                            geno_file = NULL, snp_file = NULL, ind_file = NULL,
+                            badsnp_file = NULL) {
     if (all(is.null(c(prefix, geno_file, snp_file, ind_file)))) {
-        stop("Prefix of EIGENSTRAT files or the paths to individual geno/snp/ind files must be specified")
+        stop("EIGENSTRAT prefix geno/snp/ind paths must be specified")
     }
 
-    # if the user specified EIGENSTRAT prefix, set only paths to unspecified geno/snp/ind files
+    # if the user specified EIGENSTRAT prefix, set only paths to unspecified
+    # geno/snp/ind files
     if (!is.null(prefix)) {
         if (is.null(geno_file)) geno_file <- paste0(prefix, ".geno")
         if (is.null(snp_file)) snp_file <- paste0(prefix, ".snp")
@@ -16,17 +17,17 @@ create_par_file <- function(files,
 
     writeLines(sprintf("genotypename: %s\nsnpname: %s\nindivname: %s\n",
                        geno_file, snp_file, ind_file),
-               con=files$par_file)
+               con = files$par_file)
 
     if (!is.null(files[["pop_file"]])) {
-        write(sprintf("popfilename: %s\n", files$pop_file), file=files$par_file, append=TRUE)
+        write(sprintf("popfilename: %s\n", files$pop_file), file = files$par_file, append = TRUE)
     } else if (!is.null(files$popleft) & !is.null(files$popright)) {
-        write(sprintf("popleft: %s", files$popleft), file=files$par_file, append=TRUE)
-        write(sprintf("popright: %s", files$popright), file=files$par_file, append=TRUE)
+        write(sprintf("popleft: %s", files$popleft), file = files$par_file, append = TRUE)
+        write(sprintf("popright: %s", files$popright), file = files$par_file, append = TRUE)
     }
 
     if (!is.null(badsnp_file)) {
-        write(sprintf("badsnpname: %s", badsnp_file), file=files$par_file, append=TRUE)
+        write(sprintf("badsnpname: %s", badsnp_file), file = files$par_file, append = TRUE)
     }
 }
 
@@ -39,7 +40,7 @@ create_qpF4ratio_pop_file <- function(X, A, B, C, O, file) {
 
 
 # Generate a file with populations for a qpDstat run.
-create_qpDstat_pop_file <- function(W=NULL, X=NULL, Y=NULL, Z=NULL, file) {
+create_qpDstat_pop_file <- function(W = NULL, X = NULL, Y = NULL, Z = NULL, file) {
     lines <- c()
     for (w in W) for (x in X) for (y in Y) for (z in Z) {
         lines <- c(lines, sprintf("%s %s %s %s", w, x, y, z))

@@ -9,13 +9,13 @@ qpDstat(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL, f4mode = FALSE)
 }
 \arguments{
-\item{W}{Population names, using the terminology of Patterson (2012).}
+\item{W}{Population names.}
 
-\item{X}{Population names, using the terminology of Patterson (2012).}
+\item{X}{Population names.}
 
-\item{Y}{Population names, using the terminology of Patterson (2012).}
+\item{Y}{Population names.}
 
-\item{Z}{Population names, using the terminology of Patterson (2012).}
+\item{Z}{Population names.}
 
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}

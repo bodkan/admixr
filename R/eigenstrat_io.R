@@ -10,7 +10,7 @@
 #'
 #' @export
 read_ind <- function(file) {
-    readr::read_table2(file, col_names=c("id", "sex", "label"), col_types="ccc")
+    readr::read_table2(file, col_names = c("id", "sex", "label"), col_types = "ccc")
 }
 
 
@@ -25,9 +25,9 @@ read_ind <- function(file) {
 read_snp <- function(file) {
     readr::read_table2(
       file,
-      col_names=c("id", "chrom", "gen", "pos", "ref", "alt"),
-      col_types="ccdicc",
-      progress=FALSE
+      col_names = c("id", "chrom", "gen", "pos", "ref", "alt"),
+      col_types = "ccdicc",
+      progress = FALSE
     )
 }
 
@@ -41,7 +41,7 @@ read_snp <- function(file) {
 #'     by the EIGENSTRAT format).
 #'
 #' @export
-read_geno <- function(file, ind_file=NULL) {
+read_geno <- function(file, ind_file = NULL) {
     if (!is.null(ind_file)) {
         inds <- read_ind(ind_file)$id
     } else {
@@ -52,9 +52,9 @@ read_geno <- function(file, ind_file=NULL) {
     n <- nchar(readLines(file, 1))
     readr::read_fwf(
       file,
-      col_positions=readr::fwf_widths(rep(1, n), inds),
-      col_types=readr::cols(.default="i"),
-      progress=FALSE
+      col_positions = readr::fwf_widths(rep(1, n), inds),
+      col_types = readr::cols(.default = "i"),
+      progress = FALSE
     )
 }
 
@@ -68,9 +68,9 @@ read_geno <- function(file, ind_file=NULL) {
 #' @export
 read_eigenstrat <- function(prefix=NULL) {
     list(
-        geno=read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind")),
-        snp=read_snp(paste0(prefix, ".snp")),
-        ind=read_ind(paste0(prefix, ".ind"))
+        geno = read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind")),
+        snp = read_snp(paste0(prefix, ".snp")),
+        ind = read_ind(paste0(prefix, ".ind"))
     )
 }
 
@@ -87,7 +87,7 @@ read_eigenstrat <- function(prefix=NULL) {
 #'
 #' @export
 write_ind <- function(file, df) {
-    readr::write_tsv(df, file, col_names=FALSE)
+    readr::write_tsv(df, file, col_names = FALSE)
 }
 
 
@@ -99,7 +99,7 @@ write_ind <- function(file, df) {
 #'
 #' @export
 write_snp <- function(file, df) {
-    readr::write_tsv(df, file, col_names=FALSE)
+    readr::write_tsv(df, file, col_names = FALSE)
 }
 
 
@@ -111,7 +111,7 @@ write_snp <- function(file, df) {
 #'
 #' @export
 write_geno <- function(file, df) {
-    writeLines(apply(df, 1, paste, collapse=""), con=file)
+    writeLines(apply(df, 1, paste, collapse = ""), con = file)
 }
 
 
