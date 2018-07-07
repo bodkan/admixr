@@ -9,22 +9,13 @@ qpDstat(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL, f4mode = FALSE)
 }
 \arguments{
-\item{W}{Population names.}
-
-\item{X}{Population names.}
-
-\item{Y}{Population names.}
-
-\item{Z}{Population names.}
+\item{W, X, Y, Z}{Population names according to nomenclature in Patterson
+et al., 2012.}
 
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}
 
-\item{geno}{Path to the genotype file. Overrides the 'prefix' argument.}
-
-\item{snp}{Path to the snp file. Overrides the 'prefix' argument.}
-
-\item{ind}{Path to the ind file. Overrides the 'prefix' argument.}
+\item{geno, snp, ind}{Path to the geno/snp/ind file. Each overrides the 'prefix' argument.}
 
 \item{badsnp}{SNP file with information about ignored sites.}
 

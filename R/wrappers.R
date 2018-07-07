@@ -1,15 +1,10 @@
 #' Perform an f4-ratio calculation and return its result as a data.frame.
 #'
-#' @param X Population names.
-#' @param A Population names.
-#' @param B Population names.
-#' @param C Population names.
-#' @param O Population names.
+#' @param X,A,B,C,O Population names according to nomenclature used in
+#'     Patterson et al., 2012.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
-#' @param geno Path to the genotype file. Overrides the 'prefix' argument.
-#' @param snp Path to the snp file. Overrides the 'prefix' argument.
-#' @param ind Path to the ind file. Overrides the 'prefix' argument.
+#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
@@ -37,15 +32,11 @@ qpF4ratio <- function(X, A, B, C, O,
 #' Calculate D statistics or F4 statistics (which is just the
 #' numerator of a D statistic) and return results as a data.frame.
 #'
-#' @param W Population names.
-#' @param X Population names.
-#' @param Y Population names.
-#' @param Z Population names.
+#' @param W,X,Y,Z Population names according to nomenclature in Patterson
+#'     et al., 2012.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
-#' @param geno Path to the genotype file. Overrides the 'prefix' argument.
-#' @param snp Path to the snp file. Overrides the 'prefix' argument.
-#' @param ind Path to the ind file. Overrides the 'prefix' argument.
+#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
@@ -80,15 +71,10 @@ qpDstat <- function(W, X, Y, Z,
 
 #' Calculate a 3-population statistic and return results as a data.frame.
 #'
-#' @param A Population names.
-#' @param B Population names.
-#' @param C Population names.
+#' @param A,B,C Population names.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
-#' @param geno Path to the genotype file. Overrides the 'prefix'
-#'     argument.
-#' @param snp Path to the snp file. Overrides the 'prefix' argument.
-#' @param ind Path to the ind file. Overrides the 'prefix' argument.
+#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).

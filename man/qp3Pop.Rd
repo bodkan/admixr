@@ -8,21 +8,12 @@ qp3Pop(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, dir_name = NULL, inbreed = FALSE)
 }
 \arguments{
-\item{A}{Population names.}
-
-\item{B}{Population names.}
-
-\item{C}{Population names.}
+\item{A, B, C}{Population names.}
 
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}
 
-\item{geno}{Path to the genotype file. Overrides the 'prefix'
-argument.}
-
-\item{snp}{Path to the snp file. Overrides the 'prefix' argument.}
-
-\item{ind}{Path to the ind file. Overrides the 'prefix' argument.}
+\item{geno, snp, ind}{Path to the geno/snp/ind file. Each overrides the 'prefix' argument.}
 
 \item{badsnp}{SNP file with information about ignored sites.}
 
