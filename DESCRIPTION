@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: person("Martin", "Petr", email = "mp@bodkan.net", role = c("aut", "cre"))
 Description: Perform all ADMIXTOOLS analyses directly from R.
 Depends: R (>= 3.1.0)
-Imports: 
+Imports:
     stringr,
     tibble,
     dplyr,
@@ -16,3 +16,4 @@ Encoding: UTF-8
 RoxygenNote: 6.0.1
 URL: https://github.com/bodkan/admixr
 BugReports: https://github.com/bodkan/admixr/issues
+Suggests: testthat

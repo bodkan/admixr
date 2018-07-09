@@ -149,3 +149,12 @@ check_presence <- function(labels, prefix = NULL, ind = NULL) {
              paste(not_present, collapse = ", "))
     }
 }
+
+
+# Look for path to ADMIXTOOLS' example data - we will use this for testing
+# purposes and for examples.
+data_path <- function() {
+  admixtools_path <- system("which qpDstat", intern = TRUE) %>%
+    stringr::str_replace("/bin.*", "")
+  file.path(admixtools_path, "data")
+}
