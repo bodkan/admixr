@@ -3,7 +3,7 @@
 language: R
 sudo: false
 cache: packages
-after_script:
+before_install:
   - cd $HOME
   - wget https://www.dropbox.com/s/0nsxdwaooyd5jtz/v5.0.tar.gz
   - tar xf v5.0.tar.gz
