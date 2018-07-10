@@ -1,4 +1,4 @@
-context("Basic checks")
+context("Basic ADMIXTOOLS checks")
 
 admixtools_present <- function() {
   system("which qpDstat", ignore.stdout = TRUE) == 0
