@@ -11,3 +11,4 @@ after_script:
   - wget https://reich.hms.harvard.edu/sites/reich.hms.harvard.edu/files/inline-files/AdmixTools_Example_Data.tar_.gz
   - tar xf AdmixTools_Example_Data.tar_.gz
   - export PATH=$PATH:$PWD/bin
+  - which qpDstat
