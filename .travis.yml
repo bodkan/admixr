@@ -3,10 +3,10 @@
 language: R
 sudo: false
 cache: packages
-install:
+before_install:
   - wget https://www.dropbox.com/s/0nsxdwaooyd5jtz/v5.0.tar.gz
   - tar xf v5.0.tar.gz
   - cd AdmixTools-5.0; cd src/; make clobber; make all; make install; cd ../
-  - wget https://www.dropbox.com/s/2m53dharng61ou9/AdmixTools_Example_Data.tar_.gz
-  - tar xf AdmixTools_Example_Data.tar_.gz
+#  - wget https://www.dropbox.com/s/2m53dharng61ou9/AdmixTools_Example_Data.tar_.gz
+#  - tar xf AdmixTools_Example_Data.tar_.gz
   - export PATH=$PATH:$PWD/bin
