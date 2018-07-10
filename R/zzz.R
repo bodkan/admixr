@@ -1,4 +1,4 @@
-.onLoad <- function(libname, pkgname) {
+.onAttach <- function(libname, pkgname) {
   # check for presence of an ADMIXTOOLS command on user's PATH and display
   # a warning if it's not present
   path_check <- system("command -v qpDstat", ignore.stdout = TRUE)
