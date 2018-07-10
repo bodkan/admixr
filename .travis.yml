@@ -2,7 +2,10 @@
 
 language: R
 sudo: false
-cache: packages
+cache:
+  packages
+  directories:
+    $HOME/AdmixTools-5.0
 after_script:
   - cd $HOME
   - wget https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
