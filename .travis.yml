@@ -11,4 +11,3 @@ before_install:
   - tar xf AdmixTools_Example_Data.tar_.gz
 install:
   - cd src/; make clobber; make all; make install; cd ../
-  - cd examples; perl mklog
