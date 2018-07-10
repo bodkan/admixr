@@ -1,8 +1,6 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R perl
-perl:
-  - "5.26"
+language: R
 sudo: false
 cache: packages
 before_install:
@@ -11,7 +9,6 @@ before_install:
   - cd AdmixTools-5.0
   - wget https://reich.hms.harvard.edu/sites/reich.hms.harvard.edu/files/inline-files/AdmixTools_Example_Data.tar_.gz
   - tar xf AdmixTools_Example_Data.tar_.gz
-  - sed -i '1 s/local\/bin\/perl/bin\/env perl/' examples/mklog
 install:
   - cd src/; make clobber; make all; make install; cd ../
-  - cd examples; ./mklog
+  - cd examples; perl mklog
