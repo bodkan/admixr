@@ -9,7 +9,7 @@ before_install:
   - cd AdmixTools-5.0
   - wget https://reich.hms.harvard.edu/sites/reich.hms.harvard.edu/files/inline-files/AdmixTools_Example_Data.tar_.gz
   - tar xf AdmixTools_Example_Data.tar_.gz
-  - sed -i .old '1 s/local\/bin\/perl/bin\/env perl/' examples/mklog
+  - sed -i '1 s/local\/bin\/perl/bin\/env perl/' examples/mklog
 install:
   - cd src/; make clobber; make all; make install; cd ../
   - cd examples; ./mklog
