@@ -3,3 +3,12 @@
 language: R
 sudo: false
 cache: packages
+before_install:
+  - wget https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
+  - tar xf v5.0.tar.gz
+  - cd AdmixTools-5.0
+  - wget https://reich.hms.harvard.edu/sites/reich.hms.harvard.edu/files/inline-files/AdmixTools_Example_Data.tar_.gz
+  - tar xf AdmixTools_Example_Data.tar_.gz
+install:
+  - cd src/; make clobber; make all; make install; cd ../
+  - cd examples; ./mklog
