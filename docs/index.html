@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">admixr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>The following assumes that we have a working installation of ADMIXTOOLS in <code>~/local/AdmixTools/</code>. This example requires a small EIGENSTRAT data set downloaded for running testing script of the ADMIXTOOLS package.</p>
+<p>The following assumes that we have a working installation of ADMIXTOOLS in <code>~/local/AdmixTools-5.0/</code>. This example requires a small EIGENSTRAT data set downloaded for running testing script of the ADMIXTOOLS package.</p>
 <p>Note that a single call to our <code>qpDstat</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns results as a <code>data.frame</code> object. It does so all behind the scenes without the user having to deal with “low-level” technical details.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
@@ -106,7 +106,7 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># paths to all files - see documentation for more details).</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/qpDstat.html">qpDstat</a></span>(</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">W =</span> <span class="st">"Yoruba"</span>, <span class="dt">X =</span> <span class="st">"French"</span>, <span class="dt">Y =</span> <span class="kw">c</span>(<span class="st">"Han"</span>, <span class="st">"Japanese"</span>), <span class="dt">Z =</span> <span class="st">"Uygur"</span>,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">  <span class="dt">prefix =</span> <span class="st">"/Users/martin_petr/local/AdmixTools/data/allmap"</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">  <span class="dt">prefix =</span> <span class="st">"/Users/martin_petr/local/AdmixTools-5.0/data/allmap"</span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">res</a>

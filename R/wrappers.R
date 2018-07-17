@@ -25,7 +25,7 @@ qpF4ratio <- function(X, A, B, C, O,
 
     run_cmd("qpF4ratio", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_qpF4ratio(files[["log_file"]]) %>% dplyr::mutate(setup = setup)
+    read_qpF4ratio(files[["log_file"]])
 }
 
 

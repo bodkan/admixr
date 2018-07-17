@@ -151,10 +151,7 @@ check_presence <- function(labels, prefix = NULL, ind = NULL) {
 }
 
 
-# Look for path to ADMIXTOOLS' example data - we will use this for testing
-# purposes and for examples.
-data_path <- function() {
-  admixtools_path <- system("which qpDstat", intern = TRUE) %>%
-    stringr::str_replace("/bin.*", "")
-  file.path(admixtools_path, "data")
+# Look for path to the ADMIXTOOLS directory.
+admixtools_path <- function() {
+  system("which qpDstat", intern = TRUE) %>% stringr::str_replace("/bin.*", "")
 }

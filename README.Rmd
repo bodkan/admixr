@@ -67,7 +67,7 @@ ADMIXTOOLS commands will eventually be supported.
 ## Example
 
 The following assumes that we have a working installation of ADMIXTOOLS in
-`~/local/AdmixTools/`. This example requires a small EIGENSTRAT data set
+`~/local/AdmixTools-5.0/`. This example requires a small EIGENSTRAT data set
 downloaded for running testing script of the ADMIXTOOLS package.
 
 Note that a single call to our `qpDstat` function generates all required
@@ -84,7 +84,7 @@ library(admixr)
 # paths to all files - see documentation for more details).
 res <- qpDstat(
   W = "Yoruba", X = "French", Y = c("Han", "Japanese"), Z = "Uygur",
-  prefix = "/Users/martin_petr/local/AdmixTools/data/allmap"
+  prefix = "/Users/martin_petr/local/AdmixTools-5.0/data/allmap"
 )
 
 res
