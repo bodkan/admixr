@@ -1,3 +1,33 @@
+#' Read output file of one of the ADMIXTOOLS' programs.
+#' 
+#' This function servers as a despatcher delegating the parsing to
+#' read_qpF4ratio, read_qpDstat, etc.
+#'
+#' @param file Name of the output log file.
+#'
+#' @return Tibble object with parsed results.
+#'
+#' @export
+#'
+#' @importFrom magrittr %>%
+read_output <- function(file) {
+  # extract ADMIXTOOLS command name from the output file
+  cmd <- readLines(file) %>%
+    stringr::str_match("^## (\\w+) version:") %>%
+    .[complete.cases(.)] %>% .[2]
+
+  parsers <- list(
+    qp3Pop = read_qp3Pop,
+    qpDstat = read_qpDstat,
+    qpF4ratio = read_qpF4ratio
+  )
+  
+  # it feels a little dumb, re-reading the whole output file a 2nd time,
+  # there must be a cleaner way to do this
+  parsers[[cmd]](file)
+}
+
+
 #' Read output log file from a qpF4ratio run.
 #'
 #' @param file Name of the output log file.

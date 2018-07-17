@@ -21,7 +21,7 @@ test_that("qp3Pop wrapper produces correct results", {
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
   expect_equal(
     qp3Pop(A = pops$A, B = pops$B, C = pops$C, prefix = prefix),
-    read_qp3Pop(file.path(examples_dir, "test_qp3Pop.log"))
+    read_output(file.path(examples_dir, "test_qp3Pop.log"))
   )
 })
 
@@ -29,7 +29,7 @@ test_that("qpDstat wrapper produces correct results (4 population input version)
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
   expect_equal(
     dplyr::select(qpDstat(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, prefix = prefix), -stderr),
-    read_qpDstat(file.path(examples_dir, "test_qpDstat1.log"))
+    read_output(file.path(examples_dir, "test_qpDstat1.log"))
   )
 })
 
@@ -50,6 +50,6 @@ test_that("qpF4ratio wrapper produces correct results", {
         prefix = prefix
       )
     })),
-    read_qpF4ratio(file.path(examples_dir, "test_qpF4ratio.log"))
+    read_output(file.path(examples_dir, "test_qpF4ratio.log"))
   )
 })
