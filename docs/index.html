@@ -100,21 +100,17 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <p>Note that a single call to our <code>qpDstat</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns results as a <code>data.frame</code> object. It does so all behind the scenes without the user having to deal with “low-level” technical details.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># Population IDs are taken from a 3rd column of allmap.ind file (as is always</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># the case for ADMIXTOOLS commands). Prefix is simply a common path to</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># the EIGENSTRAT geno/snp/ind "triplet" (however, user can specify individual</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># paths to all files - see documentation for more details).</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/qpDstat.html">qpDstat</a></span>(</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">W =</span> <span class="st">"Yoruba"</span>, <span class="dt">X =</span> <span class="st">"French"</span>, <span class="dt">Y =</span> <span class="kw">c</span>(<span class="st">"Han"</span>, <span class="st">"Japanese"</span>), <span class="dt">Z =</span> <span class="st">"Uygur"</span>,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">  <span class="dt">prefix =</span> <span class="st">"/Users/martin_petr/local/AdmixTools-5.0/data/allmap"</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">)</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">res</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; # A tibble: 2 x 10</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;   W      X      Y        Z          D  stderr Zscore  BABA  ABBA n_snps</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 1 Yoruba French Han      Uygur 0.041  0.00127   32.3 30753 28328 621026</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; 2 Yoruba French Japanese Uygur 0.0402 0.00130   31.0 30690 28320 621026</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/qpDstat.html">qpDstat</a></span>(</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">W =</span> <span class="st">"Yoruba"</span>, <span class="dt">X =</span> <span class="st">"French"</span>, <span class="dt">Y =</span> <span class="kw">c</span>(<span class="st">"Han"</span>, <span class="st">"Japanese"</span>), <span class="dt">Z =</span> <span class="st">"Uygur"</span>,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">prefix =</span> <span class="st">"/Users/martin_petr/local/AdmixTools-5.0/data/allmap"</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">res</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; # A tibble: 2 x 10</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;   W      X      Y        Z          D  stderr Zscore  BABA  ABBA n_snps</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; 1 Yoruba French Han      Uygur 0.041  0.00127   32.3 30753 28328 621026</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; 2 Yoruba French Japanese Uygur 0.0402 0.00130   31.0 30690 28320 621026</span></a></code></pre></div>
 </div>
 </div>
   </div>

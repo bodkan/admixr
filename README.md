@@ -9,7 +9,7 @@ Status](https://travis-ci.org/bodkan/admixr.svg?branch=master)](https://travis-c
 ***“Make ADMIXTOOLS fun again\!”***
 
 **TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
-touch ADMIXTOOLS/parfiles/popfile/logfiles ever again.
+touch ADMIXTOOLS/parfiles/popfiles/logfiles ever again.
 
 ## Introduction
 
@@ -56,8 +56,9 @@ commands, although all ADMIXTOOLS commands will eventually be supported.
 ## Example
 
 The following assumes that we have a working installation of ADMIXTOOLS
-in `~/local/AdmixTools/`. This example requires a small EIGENSTRAT data
-set downloaded for running testing script of the ADMIXTOOLS package.
+in `~/local/AdmixTools-5.0/`. This example requires a small EIGENSTRAT
+data set downloaded for running testing script of the ADMIXTOOLS
+package.
 
 Note that a single call to our `qpDstat` function generates all required
 intermediate config and population files, runs ADMIXTOOLS, parses its
@@ -68,13 +69,9 @@ technical details.
 ``` r
 library(admixr)
 
-# Population IDs are taken from a 3rd column of allmap.ind file (as is always
-# the case for ADMIXTOOLS commands). Prefix is simply a common path to
-# the EIGENSTRAT geno/snp/ind "triplet" (however, user can specify individual
-# paths to all files - see documentation for more details).
 res <- qpDstat(
   W = "Yoruba", X = "French", Y = c("Han", "Japanese"), Z = "Uygur",
-  prefix = "/Users/martin_petr/local/AdmixTools/data/allmap"
+  prefix = "/Users/martin_petr/local/AdmixTools-5.0/data/allmap"
 )
 
 res
