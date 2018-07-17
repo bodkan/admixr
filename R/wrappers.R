@@ -25,7 +25,7 @@ qpF4ratio <- function(X, A, B, C, O,
 
     run_cmd("qpF4ratio", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_qpF4ratio(files[["log_file"]])
+    read_output(files[["log_file"]])
 }
 
 
@@ -65,7 +65,7 @@ qpDstat <- function(W, X, Y, Z,
 
     run_cmd("qpDstat", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_qpDstat(files[["log_file"]])
+    read_output(files[["log_file"]])
 }
 
 
@@ -100,5 +100,5 @@ qp3Pop <- function(A, B, C,
 
     run_cmd("qp3Pop", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_qp3Pop(files[["log_file"]])
+    read_output(files[["log_file"]])
 }
