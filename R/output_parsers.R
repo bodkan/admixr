@@ -99,8 +99,8 @@ read_qpDstat <- function(file) {
     # remove the weird "best" column first, then add an optional stderr column
     # (if it's present)
     res_df <-
-      raw_cols[, !purrr::map_lgl(raw_cols,
-                                 ~ any(stringr::str_detect(., "best")))] %>%
+      raw_cols[, !sapply(raw_cols,
+                         function(col) any(stringr::str_detect(col, "best")))] %>%
       {
         setNames(., c("W", "X", "Y", "Z", result_col,
                       if (ncol(.) > 9) { "stderr" } else{ NULL },

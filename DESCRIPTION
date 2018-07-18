@@ -9,8 +9,7 @@ Imports:
     tibble,
     dplyr,
     readr,
-    magrittr,
-    purrr
+    magrittr
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 6.0.1
