@@ -5,28 +5,17 @@
 \title{Merge populations from an EIGENSTRAT "ind" file under a single
 population label.}
 \usage{
-merge_labels(file, modified_file, pop_labels)
+merge_labels(ind, modified_ind, pop_labels)
 }
 \arguments{
+\item{ind}{EIGENSTRAT ind file to modify.}
+
+\item{modified_ind}{Modified EIGENSTRAT ind filename.}
+
 \item{pop_labels}{Named list of labels to merge. Names specify labels
 to merge into.}
-
-\item{ind_file}{EIGENSTRAT ind file to modify.}
-
-\item{modified_ind_file}{Modified EIGENSTRAT ind filename.}
 }
 \description{
 Merge populations from an EIGENSTRAT "ind" file under a single
 population label.
-}
-\examples{
-
-# this will create a new ind file with "Europe" in the 3rd column
-# instead of individual population labels
-\dontrun{merge_labels(
-    ind = IND_FILE,
-    modified_ind = paste0(IND_FILE, ".merged"),
-    pop_labels = list(Europe = c("French", "Sardinian", "Czech")
-)}
-
 }

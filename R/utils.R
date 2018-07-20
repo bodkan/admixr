@@ -1,8 +1,8 @@
 #' Merge populations from an EIGENSTRAT "ind" file under a single
 #' population label.
 #'
-#' @param ind_file EIGENSTRAT ind file to modify.
-#' @param modified_ind_file Modified EIGENSTRAT ind filename.
+#' @param ind EIGENSTRAT ind file to modify.
+#' @param modified_ind Modified EIGENSTRAT ind filename.
 #' @param pop_labels Named list of labels to merge. Names specify labels
 #'     to merge into.
 #'
@@ -19,7 +19,7 @@
 #' )}
 #'
 #' @export
-merge_labels <- function(file, modified_file, pop_labels) {
+merge_labels <- function(ind, modified_ind, pop_labels) {
   lines <- readLines(file)
 
   # iterate over the lines in the "ind" file, replacing population
