@@ -1,18 +1,30 @@
 #' Merge populations from an EIGENSTRAT "ind" file under a single
 #' population label.
 #'
-#' @param file EIGENSTRAT ind file to modify.
-#' @param modified_file Modified EIGENSTRAT ind filename.
-#' @param merge List of labels to merge. List names specified labels
+#' @param ind_file EIGENSTRAT ind file to modify.
+#' @param modified_ind_file Modified EIGENSTRAT ind filename.
+#' @param pop_labels Named list of labels to merge. Names specify labels
 #'     to merge into.
 #'
+#' @examples
+#'
+#' # This will create a new ind file with labels in the 3rd column replaced by
+#' # "Europe", "EastAfrica" and "WestAfrica", respectively.
+#' \dontrun{merge_labels(
+#'     ind = IND_FILE,
+#'     modified_ind = paste0(IND_FILE, ".merged"),
+#'     pop_labels = list(Europe = c("French", "Sardinian", "Czech",
+#'                       EastAfrica = "Dinka",
+#'                       WestAfrica = c("Mbuti", "Mende))
+#' )}
+#'
 #' @export
-merge_pops <- function(file, modified_file, merge) {
+merge_labels <- function(file, modified_file, pop_labels) {
   lines <- readLines(file)
 
   # iterate over the lines in the "ind" file, replacing population
   # labels with their substitutes
-  for (merge_into in names(merge)) {
+  for (merge_into in names(pop_labels)) {
     regex <- paste0("(", paste(merge[[merge_into]], collapse = "|"), ")$")
     lines <- stringr::str_replace(lines, regex, merge_into)
   }
