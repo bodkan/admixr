@@ -68,7 +68,6 @@ d <- function(W, X, Y, Z,
     read_output(files[["log_file"]])
 }
 
-
 #' Calculate a 3-population statistic and return results as a data.frame.
 #'
 #' @param A,B,C Population names.
@@ -101,4 +100,39 @@ f3 <- function(A, B, C,
     run_cmd("qp3Pop", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
     read_output(files[["log_file"]])
+}
+
+#' Calculate admixture proportions in a target population using qpAdm method.
+#'
+#' @param target Target population to estimate admixture proportions for.
+#' @param source Source populations that are related to ancestors of target.
+#' @param outgroup Outgroup populations,B,C Population names.
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
+#' @param badsnp SNP file with information about ignored sites.
+#' @param dir_name Where to put all generated files (temporary
+#'     directory by default).
+#'
+#' @export
+qpAdm <- function(target, source, outgroup,
+                  prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
+                  dir_name = NULL) {
+  check_presence(c(target, source, outgroup), prefix, ind)
+  
+  # get the path to the population, parameter and log files
+  setup <- paste0("qpAdm")
+  config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+  files <- get_files(dir_name, config_prefix)
+
+  files[["popleft"]] <-  stringr::str_replace(files[["pop_file"]], "$", "left")
+  files[["popright"]] <-  stringr::str_replace(files[["pop_file"]], "$", "right")
+  files[["pop_file"]] <- NULL
+
+  create_qpAdm_pop_files(c(target, source), outgroup, files)
+  create_par_file(files, prefix, geno, snp, ind, badsnp)
+  
+  run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
+  
+  read_output(files[["log_file"]])
 }

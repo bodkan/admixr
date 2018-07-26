@@ -19,7 +19,8 @@ read_output <- function(file) {
   parsers <- list(
     qp3Pop = read_qp3Pop,
     qpDstat = read_qpDstat,
-    qpF4ratio = read_qpF4ratio
+    qpF4ratio = read_qpF4ratio,
+    qpAdm = read_qpAdm
   )
   
   # it feels a little dumb, re-reading the whole output file a 2nd time,
@@ -137,4 +138,35 @@ read_qp3Pop <- function(file) {
         setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "n_snps"))
 
     res_df
+}
+
+#' Read output log file from a qp3Pop run.
+#'
+#' @param file Name of the output log file.
+#'
+#' @return Tibble object with parsed results.
+#'
+#' @export
+#'
+#' @importFrom magrittr "%>%"
+read_qpAdm <- function(file) {
+  log_lines <- readLines(file)
+
+  # parse the lines of the results section and extract the names of
+  # tested populations/individuals, estimated admixture proportions
+  # alpha, std. errors and Z-score
+  admix_props <- stringr::str_subset(log_lines, "best coefficients:") %>%
+    stringr::str_replace("best coefficients: +", "") %>%
+    stringr::str_replace_all(" +", " ") %>%
+    stringr::str_replace_all("^ | $", "") %>%
+    stringr::str_split(" ") %>%
+    .[[1]] %>%
+    as.numeric
+  source_pops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
+    .[, 1] %>%  { !is.na(.) } %>% which
+  
+  tibble::tibble(
+    source = log_lines[(source_pops[1] + 2) : (source_pops[2] - 2)],
+    prop = admix_props
+  )
 }

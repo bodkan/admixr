@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Merge populations from an EIGENSTRAT "ind" file under a single
-population label. — merge_labels • admixr</title>
+<title>Read output log file from a qp3Pop run. — read_qpAdm • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -31,11 +30,9 @@ population label. — merge_labels • admixr</title>
 
 
 
-<meta property="og:title" content="Merge populations from an EIGENSTRAT "ind" file under a single
-population label. — merge_labels" />
+<meta property="og:title" content="Read output log file from a qp3Pop run. — read_qpAdm" />
 
-<meta property="og:description" content="Merge populations from an EIGENSTRAT &quot;ind&quot; file under a single
-population label." />
+<meta property="og:description" content="Read output log file from a qp3Pop run." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,38 +97,31 @@ population label." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Merge populations from an EIGENSTRAT "ind" file under a single
-population label.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>merge_labels.Rd</code></div>
+    <h1>Read output log file from a qp3Pop run.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/output_parsers.R'><code>R/output_parsers.R</code></a></small>
+    <div class="hidden name"><code>read_qpAdm.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Merge populations from an EIGENSTRAT "ind" file under a single
-population label.</p>
+    <p>Read output log file from a qp3Pop run.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>merge_labels</span>(<span class='no'>ind</span>, <span class='no'>modified_ind</span>, <span class='no'>pop_labels</span>)</pre>
+    <pre class="usage"><span class='fu'>read_qpAdm</span>(<span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ind</th>
-      <td><p>EIGENSTRAT ind file to modify.</p></td>
-    </tr>
-    <tr>
-      <th>modified_ind</th>
-      <td><p>Modified EIGENSTRAT ind filename.</p></td>
-    </tr>
-    <tr>
-      <th>pop_labels</th>
-      <td><p>Named list of labels to merge. Names specify labels
-to merge into.</p></td>
+      <th>file</th>
+      <td><p>Name of the output log file.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Tibble object with parsed results.</p>
     
 
   </div>
@@ -139,7 +129,9 @@ to merge into.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>

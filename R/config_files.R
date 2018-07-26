@@ -57,3 +57,9 @@ create_qp3Pop_pop_file <- function(A, B, C, file) {
     }
     writeLines(lines, file)
 }
+
+# Generate a file with populations for a qpDstat run.
+create_qpAdm_pop_files <- function(left, right, files) {
+  writeLines(left, files$popleft)
+  writeLines(right, files$popright)
+}
