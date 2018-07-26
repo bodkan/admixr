@@ -140,6 +140,7 @@ read_qp3Pop <- function(file) {
     res_df
 }
 
+
 #' Read output log file from a qp3Pop run.
 #'
 #' @param file Name of the output log file.
@@ -162,11 +163,10 @@ read_qpAdm <- function(file) {
     stringr::str_split(" ") %>%
     .[[1]] %>%
     as.numeric
-  source_pops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
+  leftpops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
     .[, 1] %>%  { !is.na(.) } %>% which
   
-  tibble::tibble(
-    source = log_lines[(source_pops[1] + 2) : (source_pops[2] - 2)],
-    prop = admix_props
-  )
+  rbind(c(log_lines[leftpops[1] + 1], admix_props)) %>%
+    as.data.frame %>%
+    setNames(c("target", log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)]))
 }
