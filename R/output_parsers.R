@@ -167,6 +167,6 @@ read_qpAdm <- function(file) {
     .[, 1] %>%  { !is.na(.) } %>% which
   
   rbind(c(log_lines[leftpops[1] + 1], admix_props)) %>%
-    as.data.frame %>%
+    tibble::as_tibble() %>%
     setNames(c("target", log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)]))
 }

@@ -82,7 +82,6 @@ snps_missing <- function(geno, prop = FALSE) {
 #' @export
 #'
 #' @importFrom magrittr "%>%"
-
 subset_sites <- function(prefix, out_prefix, bed_file, complement = FALSE) {
   coords <- readr::read_table2(
     bed_file,
@@ -145,6 +144,7 @@ get_files <- function(dir_name, prefix) {
         log_file = file.path(directory, paste0(prefix, ".log"))
     )
 }
+
 
 # Check for the presence of a given set of labels in an 'ind' file.
 # Fail if there a sample was not found.

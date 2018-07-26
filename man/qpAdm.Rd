@@ -8,7 +8,7 @@ qpAdm(target, source, outgroup, prefix = NULL, geno = NULL, snp = NULL,
   ind = NULL, badsnp = NULL, dir_name = NULL)
 }
 \arguments{
-\item{target}{Target population to estimate admixture proportions for.}
+\item{target}{Vector of target populations.}
 
 \item{source}{Source populations that are related to ancestors of target.}
 
