@@ -25,11 +25,11 @@ merge_labels <- function(ind, modified_ind, pop_labels) {
   # iterate over the lines in the "ind" file, replacing population
   # labels with their substitutes
   for (merge_into in names(pop_labels)) {
-    regex <- paste0("(", paste(merge[[merge_into]], collapse = "|"), ")$")
+    regex <- paste0("(", paste(pop_labels[[merge_into]], collapse = "|"), ")$")
     lines <- stringr::str_replace(lines, regex, merge_into)
   }
 
-  writeLines(lines, modified_file)
+  writeLines(lines, modified_ind)
 }
 
 
