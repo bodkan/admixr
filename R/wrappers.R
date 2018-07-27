@@ -104,9 +104,9 @@ f3 <- function(A, B, C,
 
 #' Calculate admixture proportions in a target population using qpAdm method.
 #'
-#' @param target Vector of target populations.
-#' @param source Source populations that are related to ancestors of target.
-#' @param outgroup Outgroup populations,B,C Population names.
+#' @param target Vector of target populations (evaluated one at a time).
+#' @param source Source populations related to true ancestors.
+#' @param outgroup Outgroup populations.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
