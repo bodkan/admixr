@@ -8,11 +8,11 @@ qpAdm(target, source, outgroup, prefix = NULL, geno = NULL, snp = NULL,
   ind = NULL, badsnp = NULL, dir_name = NULL)
 }
 \arguments{
-\item{target}{Vector of target populations.}
+\item{target}{Vector of target populations (evaluated one at a time).}
 
-\item{source}{Source populations that are related to ancestors of target.}
+\item{source}{Source populations related to true ancestors.}
 
-\item{outgroup}{Outgroup populations,B,C Population names.}
+\item{outgroup}{Outgroup populations.}
 
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}

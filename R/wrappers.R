@@ -10,9 +10,9 @@
 #'     directory by default).
 #'
 #' @export
-f4_ratio <- function(X, A, B, C, O,
-                     prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
-                     dir_name = NULL) {
+qpF4ratio <- function(X, A, B, C, O,
+                      prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+                      badsnp = NULL, dir_name = NULL) {
     check_presence(c(X, A, B, C, O), prefix, ind)
 
     # get the path to the population, parameter and log files
@@ -43,9 +43,9 @@ f4_ratio <- function(X, A, B, C, O,
 #' @param f4mode Calculate f4 statistics instead of D statistic.
 #'
 #' @export
-d <- function(W, X, Y, Z,
-              prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
-              dir_name = NULL, f4mode = FALSE) {
+qpDstat <- function(W, X, Y, Z,
+                    prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+                    badsnp = NULL, dir_name = NULL, f4mode = FALSE) {
     check_presence(c(W, X, Y, Z), prefix, ind)
 
     # get the path to the population, parameter and log files
@@ -80,7 +80,7 @@ d <- function(W, X, Y, Z,
 #' @param inbreed See README.3PopTest in ADMIXTOOLS.
 #'
 #' @export
-f3 <- function(A, B, C,
+qp3Pop <- function(A, B, C,
                prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
                dir_name = NULL, inbreed = FALSE) {
     check_presence(c(A, B, C), prefix, ind)
@@ -116,8 +116,8 @@ f3 <- function(A, B, C,
 #'
 #' @export
 qpAdm <- function(target, source, outgroup,
-                  prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
-                  dir_name = NULL) {
+                  prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+                  badsnp = NULL, dir_name = NULL) {
   check_presence(c(target, source, outgroup), prefix, ind)
   
   dplyr::bind_rows(lapply(target, function(X) {
