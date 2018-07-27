@@ -20,7 +20,7 @@
 #'
 #' @export
 merge_labels <- function(ind, modified_ind, pop_labels) {
-  lines <- readLines(file)
+  lines <- readLines(ind)
 
   # iterate over the lines in the "ind" file, replacing population
   # labels with their substitutes
