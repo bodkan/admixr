@@ -17,7 +17,7 @@ read_pops <- function(filename, columns) {
 }
 
 test_that("qp3Pop wrapper produces correct results", {
-  prefix <- paste0(data_dir, "/allmap")
+  prefix <- file.path(data_dir, "allmap")
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
   expect_equal(
     qp3Pop(A = pops$A, B = pops$B, C = pops$C, prefix = prefix),
@@ -26,7 +26,7 @@ test_that("qp3Pop wrapper produces correct results", {
 })
 
 test_that("qpDstat wrapper produces correct results (4 population input version)", {
-  prefix <- paste0(data_dir, "/allmap")
+  prefix <- file.path(data_dir, "allmap")
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
   expect_equal(
     dplyr::select(qpDstat(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, prefix = prefix), -stderr),
@@ -35,7 +35,7 @@ test_that("qpDstat wrapper produces correct results (4 population input version)
 })
 
 test_that("qpF4ratio wrapper produces correct results", {
-  prefix <- paste0(data_dir, "/allmap")
+  prefix <- file.path(data_dir, "allmap")
   pops <- readLines(file.path(examples_dir, "list_qpF4ratio")) %>%
     stringr::str_replace_all(" :+ ", " ") %>%
     stringr::str_replace_all("\\s+", " ") %>%
@@ -57,7 +57,7 @@ test_that("qpF4ratio wrapper produces correct results", {
 })
 
 test_that("qpAdm wrapper produces correct results", {
-  prefix <- paste0(data_dir, "/qpdata")
+  prefix <- file.path(data_dir, "qpdata")
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
   right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
     stringr::str_subset("^[^#]")
