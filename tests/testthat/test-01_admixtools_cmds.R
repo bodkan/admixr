@@ -27,3 +27,10 @@ test_that("qpF4ratio test passes", {
                         par_file = file.path(examples_dir, "parqpF4ratio"),
                         log_file = file.path(examples_dir, "test_qpF4ratio.log")))
 })
+
+test_that("qpAdm test passes", {
+  setwd(examples_dir)
+  expect_silent(run_cmd("qpAdm",
+                        par_file = file.path(examples_dir, "parqpAdm"),
+                        log_file = file.path(examples_dir, "test_qpAdm.log")))
+})

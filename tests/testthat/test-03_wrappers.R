@@ -3,12 +3,11 @@
 # admixr's wrapper functions. The results of both tests (i.e. contents of
 # output log files) are then compared to each other.
 
-context("Testing the admixr wrapper functions")
+context("Testing the wrapper functions")
 
 path <- admixtools_path()
 data_dir <- file.path(path, "data")
 examples_dir <- file.path(path, "examples")
-prefix <- paste0(data_dir, "/allmap")
 
 setwd(examples_dir)
 
@@ -18,6 +17,7 @@ read_pops <- function(filename, columns) {
 }
 
 test_that("qp3Pop wrapper produces correct results", {
+  prefix <- paste0(data_dir, "/allmap")
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
   expect_equal(
     qp3Pop(A = pops$A, B = pops$B, C = pops$C, prefix = prefix),
@@ -26,6 +26,7 @@ test_that("qp3Pop wrapper produces correct results", {
 })
 
 test_that("qpDstat wrapper produces correct results (4 population input version)", {
+  prefix <- paste0(data_dir, "/allmap")
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
   expect_equal(
     dplyr::select(qpDstat(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, prefix = prefix), -stderr),
@@ -34,6 +35,7 @@ test_that("qpDstat wrapper produces correct results (4 population input version)
 })
 
 test_that("qpF4ratio wrapper produces correct results", {
+  prefix <- paste0(data_dir, "/allmap")
   pops <- readLines(file.path(examples_dir, "list_qpF4ratio")) %>%
     stringr::str_replace_all(" :+ ", " ") %>%
     stringr::str_replace_all("\\s+", " ") %>%
@@ -51,5 +53,16 @@ test_that("qpF4ratio wrapper produces correct results", {
       )
     })),
     read_output(file.path(examples_dir, "test_qpF4ratio.log"))
+  )
+})
+
+test_that("qpAdm wrapper produces correct results", {
+  prefix <- paste0(data_dir, "/qpdata")
+  left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
+  right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
+    stringr::str_subset("^[^#]")
+  expect_equal(
+    qpAdm(target = left[1], source = left[-1], outgroup = right, prefix = prefix),
+    read_output(file.path(examples_dir, "test_qpAdm.log"))
   )
 })
