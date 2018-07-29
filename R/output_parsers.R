@@ -165,10 +165,14 @@ read_qpAdm <- function(file) {
     as.numeric
   leftpops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
     .[, 1] %>%  { !is.na(.) } %>% which
-  
+
+  snp_count <- stringr::str_subset(log_lines, "numsnps used:") %>%
+    stringr::str_replace("numsnps used: ", "") %>%
+    as.numeric
+
   # FIX types -- everything is character here
-  rbind(c(log_lines[leftpops[1] + 1], admix_props)) %>%
+  rbind(c(log_lines[leftpops[1] + 1], snp_count, admix_props)) %>%
     tibble::as_tibble() %>%
-    setNames(c("target", log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)])) %>%
+    setNames(c("target", "snp_count", log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)])) %>%
     dplyr::mutate_at(dplyr::vars(-target), as.numeric)
 }
