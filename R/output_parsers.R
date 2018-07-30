@@ -169,8 +169,8 @@ read_qpAdm <- function(file) {
   target_pop <- log_lines[leftpops[1] + 1]
   source_pops <- log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)]
 
-  snp_count <- stringr::str_subset(log_lines, glue::glue("coverage: +{target_pop}")) %>%
-    stringr::str_replace(glue::glue("coverage: +{target_pop} +"), "") %>%
+  snp_count <- stringr::str_subset(log_lines, paste0("coverage: +", target_pop)) %>%
+    stringr::str_replace(paste0("coverage: +", target_pop, " +"), "") %>%
     as.numeric
 
   rbind(c(target_pop, snp_count, admix_props)) %>%
