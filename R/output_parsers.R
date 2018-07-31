@@ -156,13 +156,13 @@ read_qpAdm <- function(file) {
   # parse the lines of the results section and extract the names of
   # tested populations/individuals, estimated admixture proportions
   # alpha, std. errors and Z-score
-  admix_props <- stringr::str_subset(log_lines, "best coefficients:") %>%
-    stringr::str_replace("best coefficients: +", "") %>%
+  stats <- stringr::str_subset(log_lines, "(best coefficients|std. errors):") %>%
+    stringr::str_replace("(best coefficients|std. errors): +", "") %>%
     stringr::str_replace_all(" +", " ") %>%
     stringr::str_replace_all("^ | $", "") %>%
     stringr::str_split(" ") %>%
-    .[[1]] %>%
-    as.numeric
+    lapply(as.numeric) %>%
+    setNames(c("proportion", "stderr"))
   leftpops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
     .[, 1] %>%  { !is.na(.) } %>% which
 
@@ -173,8 +173,18 @@ read_qpAdm <- function(file) {
     stringr::str_replace(paste0("coverage: +", target_pop, " +"), "") %>%
     as.numeric
 
-  rbind(c(target_pop, snp_count, admix_props)) %>%
+  # wide format
+  rbind(c(target_pop, snp_count, stats$proportion, stats$stderr)) %>%
     tibble::as_tibble() %>%
-    setNames(c("target", "snp_count", source_pops)) %>%
+    setNames(c("target", "snp_count", source_pops, paste0("stderr_", source_pops))) %>%
     dplyr::mutate_at(dplyr::vars(-target), as.numeric)
+
+  # # long format
+  # tibble::tibble(
+  #   target_pop,
+  #   snp_count,
+  #   source_pops,
+  #   proportion = stats$proportion,
+  #   stderr = stats$stderr
+  # )
 }
