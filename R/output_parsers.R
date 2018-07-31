@@ -156,8 +156,8 @@ read_qpAdm <- function(file) {
   # parse the lines of the results section and extract the names of
   # tested populations/individuals, estimated admixture proportions
   # alpha, std. errors and Z-score
-  stats <- stringr::str_subset(log_lines, "(best coefficients|std. errors):") %>%
-    stringr::str_replace("(best coefficients|std. errors): +", "") %>%
+  stats <- stringr::str_subset(log_lines, "(Jackknife mean|std. errors):") %>%
+    stringr::str_replace("(Jackknife mean|std. errors): +", "") %>%
     stringr::str_replace_all(" +", " ") %>%
     stringr::str_replace_all("^ | $", "") %>%
     stringr::str_split(" ") %>%
