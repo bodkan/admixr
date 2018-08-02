@@ -4,8 +4,8 @@
 \alias{qpAdm}
 \title{Calculate admixture proportions in a target population using qpAdm method.}
 \usage{
-qpAdm(target, source, outgroup, prefix = NULL, geno = NULL, snp = NULL,
-  ind = NULL, badsnp = NULL, dir_name = NULL)
+qpAdm(target, source, outgroup, prefix = NULL, geno = NULL,
+  snp = NULL, ind = NULL, badsnp = NULL, dir_name = NULL)
 }
 \arguments{
 \item{target}{Vector of target populations (evaluated one at a time).}

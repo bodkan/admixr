@@ -4,13 +4,13 @@
 \alias{write_geno}
 \title{Write an EIGENSTRAT 'geno' file.}
 \usage{
-write_geno(file, df)
+write_geno(df, file)
 }
 \arguments{
-\item{file}{Path to the file.}
-
 \item{df}{Data frame with columns containing "genotypes" of each
 sample (0/1/9 as defined by the EIGENSTRAT format).}
+
+\item{file}{Path to the file.}
 }
 \description{
 Write an EIGENSTRAT 'geno' file.

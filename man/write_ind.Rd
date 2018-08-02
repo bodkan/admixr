@@ -4,13 +4,13 @@
 \alias{write_ind}
 \title{Write an EIGENSTRAT 'ind' file.}
 \usage{
-write_ind(file, df)
+write_ind(df, file)
 }
 \arguments{
-\item{file}{Path to the file.}
-
 \item{df}{A data.frame object with genotypes of each sample (0/1/9 as defined
 by the EIGENSTRAT format).}
+
+\item{file}{Path to the file.}
 }
 \description{
 Write an EIGENSTRAT 'ind' file.

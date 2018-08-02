@@ -81,36 +81,36 @@ read_eigenstrat <- function(prefix=NULL) {
 
 #' Write an EIGENSTRAT 'ind' file.
 #'
-#' @param file Path to the file.
 #' @param df A data.frame object with genotypes of each sample (0/1/9 as defined
 #'     by the EIGENSTRAT format).
+#' @param file Path to the file.
 #'
 #' @export
-write_ind <- function(file, df) {
+write_ind <- function(df, file) {
     readr::write_tsv(df, file, col_names = FALSE)
 }
 
 
 #' Write an EIGENSTRAT 'snp' file.
 #'
-#' @param file Path to the file.
 #' @param df A data.frame object with SNP data (columns defined by the
 #'     EIGENSTRAT format).
+#' @param file Path to the file.
 #'
 #' @export
-write_snp <- function(file, df) {
+write_snp <- function(df, file) {
     readr::write_tsv(df, file, col_names = FALSE)
 }
 
 
 #' Write an EIGENSTRAT 'geno' file.
 #'
-#' @param file Path to the file.
 #' @param df Data frame with columns containing "genotypes" of each
 #'     sample (0/1/9 as defined by the EIGENSTRAT format).
+#' @param file Path to the file.
 #'
 #' @export
-write_geno <- function(file, df) {
+write_geno <- function(df, file) {
     writeLines(apply(df, 1, paste, collapse = ""), con = file)
 }
 

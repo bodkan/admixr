@@ -97,10 +97,10 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>The following assumes that we have a working installation of ADMIXTOOLS in <code>~/local/AdmixTools-5.0/</code>. This example requires a small EIGENSTRAT data set downloaded for running testing script of the ADMIXTOOLS package.</p>
-<p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns results as a <code>data.frame</code> object. It does so all behind the scenes without the user having to deal with “low-level” technical details.</p>
+<p>Note that a single call to the <code>qpDstat</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns results as a <code>data.frame</code> object. It does so all behind the scenes without the user having to deal with “low-level” technical details.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/d.html">d</a></span>(</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/qpDstat.html">qpDstat</a></span>(</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">W =</span> <span class="st">"Yoruba"</span>, <span class="dt">X =</span> <span class="st">"French"</span>, <span class="dt">Y =</span> <span class="kw">c</span>(<span class="st">"Han"</span>, <span class="st">"Japanese"</span>), <span class="dt">Z =</span> <span class="st">"Uygur"</span>,</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">prefix =</span> <span class="st">"/Users/martin_petr/local/AdmixTools-5.0/data/allmap"</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">)</a>
