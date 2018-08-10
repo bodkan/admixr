@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Merge populations from an EIGENSTRAT "ind" file under a single
-population label. — merge_labels • admixr</title>
+<title>Perform an f4-ratio calculation and return its result as a data.frame. — f4ratio • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -31,11 +30,9 @@ population label. — merge_labels • admixr</title>
 
 
 
-<meta property="og:title" content="Merge populations from an EIGENSTRAT "ind" file under a single
-population label. — merge_labels" />
+<meta property="og:title" content="Perform an f4-ratio calculation and return its result as a data.frame. — f4ratio" />
 
-<meta property="og:description" content="Merge populations from an EIGENSTRAT &quot;ind&quot; file under a single
-population label." />
+<meta property="og:description" content="Perform an f4-ratio calculation and return its result as a data.frame." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,62 +97,55 @@ population label." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Merge populations from an EIGENSTRAT "ind" file under a single
-population label.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>merge_labels.Rd</code></div>
+    <h1>Perform an f4-ratio calculation and return its result as a data.frame.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
+    <div class="hidden name"><code>f4ratio.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Merge populations from an EIGENSTRAT "ind" file under a single
-population label.</p>
+    <p>Perform an f4-ratio calculation and return its result as a data.frame.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>merge_labels</span>(<span class='no'>ind</span>, <span class='no'>modified_ind</span>, <span class='no'>pop_labels</span>)</pre>
+    <pre class="usage"><span class='fu'>f4ratio</span>(<span class='no'>X</span>, <span class='no'>A</span>, <span class='no'>B</span>, <span class='no'>C</span>, <span class='no'>O</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>snp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ind</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>badsnp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ind</th>
-      <td><p>EIGENSTRAT ind file to modify.</p></td>
+      <th>X, A, B, C, O</th>
+      <td><p>Population names according to nomenclature used in
+Patterson et al., 2012.</p></td>
     </tr>
     <tr>
-      <th>modified_ind</th>
-      <td><p>Modified EIGENSTRAT ind filename.</p></td>
+      <th>prefix</th>
+      <td><p>Prefix of the geno/snp/ind files (including the whole
+path).</p></td>
     </tr>
     <tr>
-      <th>pop_labels</th>
-      <td><p>Named list of labels to merge. Names specify labels
-to merge into.</p></td>
+      <th>geno, snp, ind</th>
+      <td><p>Path to the geno/snp/ind file. Each overrides the 'prefix' argument.</p></td>
+    </tr>
+    <tr>
+      <th>badsnp</th>
+      <td><p>SNP file with information about ignored sites.</p></td>
+    </tr>
+    <tr>
+      <th>dir_name</th>
+      <td><p>Where to put all generated files (temporary
+directory by default).</p></td>
     </tr>
     </table>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div><span class='co'># NOT RUN {</span>
-<span class='co'># This will create a new ind file with labels in the 3rd column replaced by</span>
-<span class='co'># Europe", "EastAfrica" and "WestAfrica", respectively.</span>
-<span class='fu'>merge_labels</span>(
-    <span class='kw'>ind</span> <span class='kw'>=</span> <span class='no'>IND_FILE</span>,
-    <span class='kw'>modified_ind</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='no'>IND_FILE</span>, <span class='st'>".merged"</span>),
-    <span class='kw'>pop_labels</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>Europe</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Czech"</span>),
-                      <span class='kw'>EastAfrica</span> <span class='kw'>=</span> <span class='st'>"Dinka"</span>,
-                      <span class='kw'>WestAfrica</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Mbuti"</span>, <span class='st'>"Mende"</span>))
-)
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

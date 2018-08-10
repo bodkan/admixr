@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-[![Travis-CI Build Status](https://travis-ci.org/bodkan/admixr.svg?branch=master)](https://travis-ci.org/bodkan/admixr)
+[![Travis-CI Build Status](https://travis-ci.org/bodkan/admixr.svg?branch=master)](https://travis-ci.org/bodkan/admixr) [![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](https://codecov.io/github/bodkan/admixr?branch=master)
 
 # admixr
 
@@ -78,7 +78,7 @@ the scenes without the user having to deal with "low-level" technical details.
 ```{r}
 library(admixr)
 
-res <- qpDstat(
+res <- d(
   W = "Yoruba", X = "French", Y = c("Han", "Japanese"), Z = "Uygur",
   prefix = "/Users/martin_petr/local/AdmixTools-5.0/data/allmap"
 )

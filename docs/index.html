@@ -100,7 +100,7 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <p>Note that a single call to the <code>qpDstat</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns results as a <code>data.frame</code> object. It does so all behind the scenes without the user having to deal with “low-level” technical details.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/qpDstat.html">qpDstat</a></span>(</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/d.html">d</a></span>(</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">W =</span> <span class="st">"Yoruba"</span>, <span class="dt">X =</span> <span class="st">"French"</span>, <span class="dt">Y =</span> <span class="kw">c</span>(<span class="st">"Han"</span>, <span class="st">"Japanese"</span>), <span class="dt">Z =</span> <span class="st">"Uygur"</span>,</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">prefix =</span> <span class="st">"/Users/martin_petr/local/AdmixTools-5.0/data/allmap"</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">)</a>
@@ -143,6 +143,7 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/bodkan/admixr"><img src="https://travis-ci.org/bodkan/admixr.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://codecov.io/github/bodkan/admixr?branch=master"><img src="https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 </ul>
 </div>
 </div>
