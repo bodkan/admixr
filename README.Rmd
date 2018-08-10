@@ -51,7 +51,7 @@ returning a simple dataframe for downstream analyses.
 ## Installation instructions
 
 To install `admixr` from Github you need to install the package `devtools`
-first. Then it's a simple matter of running:
+first. You can simply run:
 
 ```
 install.packages("devtools")
