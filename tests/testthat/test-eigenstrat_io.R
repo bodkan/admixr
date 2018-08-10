@@ -53,6 +53,4 @@ test_that("read_eigenstrat and write_eigenstrat are inverse functions", {
   new <- read_eigenstrat(new_prefix)
   
   expect_equal(true, new)
-
-  unlink(prefix_dir, recursive = TRUE)
 })
