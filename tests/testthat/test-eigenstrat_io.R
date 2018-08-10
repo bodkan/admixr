@@ -1,4 +1,4 @@
-context("EIGENSTRAT I/O functionality")
+context("EIGENSTRAT file I/O functionality")
 
 prefix <- file.path(admixtools_path(), "convertf", "example")
 

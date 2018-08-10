@@ -1,4 +1,4 @@
-context("Testing the presence of ADMIXTOOLS")
+context("Presence of ADMIXTOOLS on the system")
 
 admixtools_present <- function() {
   system("which qpDstat", ignore.stdout = TRUE) == 0
