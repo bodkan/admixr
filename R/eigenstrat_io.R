@@ -129,7 +129,7 @@ write_geno <- function(df, file) {
 #'
 #' @export
 write_eigenstrat <- function(prefix, ind, snp, geno) {
-    write_ind(paste0(prefix, ".ind"), ind)
-    write_snp(paste0(prefix, ".snp"), snp)
-    write_geno(paste0(prefix, ".geno"), geno)
+    write_ind(ind, paste0(prefix, ".ind"))
+    write_snp(snp, paste0(prefix, ".snp"))
+    write_geno(geno, paste0(prefix, ".geno"))
 }
