@@ -3,6 +3,8 @@
 
 [![Travis-CI Build
 Status](https://travis-ci.org/bodkan/admixr.svg?branch=master)](https://travis-ci.org/bodkan/admixr)
+[![Coverage
+status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](https://codecov.io/github/bodkan/admixr?branch=master)
 
 # admixr
 
@@ -42,7 +44,7 @@ always returning a simple dataframe for downstream analyses.
 ## Installation instructions
 
 To install `admixr` from Github you need to install the package
-`devtools` first. Then it’s a simple matter of running:
+`devtools` first. You can simply run:
 
     install.packages("devtools")
     devtools::install_github("bodkan/admixr")
@@ -69,7 +71,7 @@ technical details.
 ``` r
 library(admixr)
 
-res <- qpDstat(
+res <- d(
   W = "Yoruba", X = "French", Y = c("Han", "Japanese"), Z = "Uygur",
   prefix = "/Users/martin_petr/local/AdmixTools-5.0/data/allmap"
 )
