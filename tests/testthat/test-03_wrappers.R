@@ -16,23 +16,29 @@ read_pops <- function(filename, columns) {
   lapply(df, function(col) unique(col))
 }
 
+# f3 ----------------------------------------------------------------------
+
 test_that("qp3Pop wrapper produces correct results", {
   prefix <- file.path(data_dir, "allmap")
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
   expect_equal(
-    qp3Pop(A = pops$A, B = pops$B, C = pops$C, prefix = prefix),
+    f3(A = pops$A, B = pops$B, C = pops$C, prefix = prefix),
     read_output(file.path(examples_dir, "test_qp3Pop.log"))
   )
 })
+
+# D -----------------------------------------------------------------------
 
 test_that("qpDstat wrapper produces correct results (4 population input version)", {
   prefix <- file.path(data_dir, "allmap")
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
   expect_equal(
-    dplyr::select(qpDstat(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, prefix = prefix), -stderr),
+    dplyr::select(d(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, prefix = prefix), -stderr),
     read_output(file.path(examples_dir, "test_qpDstat1.log"))
   )
 })
+
+# f4-ratio ----------------------------------------------------------------
 
 test_that("qpF4ratio wrapper produces correct results", {
   prefix <- file.path(data_dir, "allmap")
@@ -47,7 +53,7 @@ test_that("qpF4ratio wrapper produces correct results", {
     dplyr::select(X, A, B, C, O)
   expect_equal(
     dplyr::bind_rows(lapply(seq_len(nrow(pops)), function(i) {
-      qpF4ratio(
+      f4ratio(
         X = pops$X[i], A = pops$A[i], B = pops$B[i], C = pops$C[i], O = pops$O[i],
         prefix = prefix
       )
@@ -55,6 +61,8 @@ test_that("qpF4ratio wrapper produces correct results", {
     read_output(file.path(examples_dir, "test_qpF4ratio.log"))
   )
 })
+
+# qpAdm -------------------------------------------------------------------
 
 test_that("qpAdm wrapper produces correct results", {
   prefix <- file.path(data_dir, "qpdata")
