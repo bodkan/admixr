@@ -8,15 +8,18 @@
 #'
 #' @examples
 #'
+
+#' \dontrun{
 #' # This will create a new ind file with labels in the 3rd column replaced by
-#' # "Europe", "EastAfrica" and "WestAfrica", respectively.
-#' \dontrun{merge_labels(
+#' # Europe", "EastAfrica" and "WestAfrica", respectively.
+#' merge_labels(
 #'     ind = IND_FILE,
 #'     modified_ind = paste0(IND_FILE, ".merged"),
-#'     pop_labels = list(Europe = c("French", "Sardinian", "Czech",
+#'     pop_labels = list(Europe = c("French", "Sardinian", "Czech"),
 #'                       EastAfrica = "Dinka",
-#'                       WestAfrica = c("Mbuti", "Mende))
-#' )}
+#'                       WestAfrica = c("Mbuti", "Mende"))
+#' )
+#' }
 #'
 #' @export
 merge_labels <- function(ind, modified_ind, pop_labels) {

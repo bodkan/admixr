@@ -19,3 +19,18 @@ to merge into.}
 Merge populations from an EIGENSTRAT "ind" file under a single
 population label.
 }
+\examples{
+
+\dontrun{
+# This will create a new ind file with labels in the 3rd column replaced by
+# Europe", "EastAfrica" and "WestAfrica", respectively.
+merge_labels(
+    ind = IND_FILE,
+    modified_ind = paste0(IND_FILE, ".merged"),
+    pop_labels = list(Europe = c("French", "Sardinian", "Czech"),
+                      EastAfrica = "Dinka",
+                      WestAfrica = c("Mbuti", "Mende"))
+)
+}
+
+}
