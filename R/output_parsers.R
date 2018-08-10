@@ -15,7 +15,7 @@ read_output <- function(file) {
   cmd <- readLines(file) %>%
     stringr::str_match("^## (\\w+) version:") %>%
     .[complete.cases(.)] %>% .[2]
-
+  
   parsers <- list(
     qp3Pop = read_qp3Pop,
     qpDstat = read_qpDstat,

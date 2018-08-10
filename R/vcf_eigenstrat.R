@@ -34,7 +34,7 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress = TRUE, index = TRUE) {
 
     # generate a dataframe with the "body" of the VCF file (info and GT columns)
     info_cols <-
-      dplyr::mutate(snp, ID = ".", QUAL = "0", FILTER = ".", INFO = ".", FORMAT = "GT") %>%
+      dplyr::mutate(snp, ID = snp$id, QUAL = "0", FILTER = ".", INFO = ".", FORMAT = "GT") %>%
       dplyr::select(`#CHROM` = chrom, POS = pos, ID, REF = ref, ALT = alt, QUAL, FILTER, INFO, FORMAT)
     gt_cols <- dplyr::mutate_all(geno, eigenstrat_to_gt)
     body_cols <- dplyr::bind_cols(info_cols, gt_cols)
@@ -58,19 +58,19 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress = TRUE, index = TRUE) {
 #' @importFrom magrittr "%>%"
 vcf_to_eigenstrat <- function(vcf_file, prefix) {
     vcf <- readr::read_tsv(vcf_file, comment = "##", progress = FALSE) %>%
-        dplyr::rename(chrom = `#CHROM`, pos = POS, ref = REF, alt = ALT) %>%
-        dplyr::select(-c(ID, QUAL, FILTER, INFO, FORMAT))
+        dplyr::rename(chrom = `#CHROM`, pos = POS, snp_id = ID, ref = REF, alt = ALT) %>%
+        dplyr::select(-c(QUAL, FILTER, INFO, FORMAT))
 
     # generate dataframes with the 3 EIGENSTRAT info tables
-    snp <- dplyr::select(vcf, chrom, pos, ref, alt) %>%
-        dplyr::mutate(snp_id = paste(chrom, pos, sep = "_"), gen_dist = "0.0") %>%
+    snp <- dplyr::select(vcf, chrom, pos, snp_id, ref, alt) %>%
+        dplyr::mutate(gen_dist = "0.0") %>%
         dplyr::select(snp_id, chrom, gen_dist, pos, ref, alt)
     ind <- tibble::tibble(
-        sample_id = dplyr::select(vcf, -c(chrom, pos, ref, alt)) %>% names,
+        sample_id = dplyr::select(vcf, -c(chrom, pos, snp_id, ref, alt)) %>% names,
         sex = "U",
         label = sample_id
     )
-    geno <- dplyr::select(vcf, -c(chrom, pos, ref, alt)) %>%
+    geno <- dplyr::select(vcf, -c(chrom, pos, snp_id, ref, alt)) %>%
         dplyr::mutate_all(gt_to_eigenstrat)
 
     # write all three EIGENSTRAT files
