@@ -4,10 +4,13 @@
 \alias{read_eigenstrat}
 \title{Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.}
 \usage{
-read_eigenstrat(prefix = NULL)
+read_eigenstrat(prefix = NULL, geno_suffix = ".geno",
+  ind_suffix = ".ind", snp_suffix = ".snp")
 }
 \arguments{
 \item{prefix}{EIGENSTRAT prefix of geno/snp/ind files.}
+
+\item{ind_suffix, snp_suffix, geno_suffix}{Alternative EIGENSTRAT suffixes.}
 }
 \value{
 List of three data.frame objects (one for geno/snp/ind data).

@@ -62,15 +62,19 @@ read_geno <- function(file, ind_file = NULL) {
 #' Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.
 #'
 #' @param prefix EIGENSTRAT prefix of geno/snp/ind files.
+#' @param ind_suffix,snp_suffix,geno_suffix Alternative EIGENSTRAT suffixes.
 #'
 #' @return List of three data.frame objects (one for geno/snp/ind data).
 #'
 #' @export
-read_eigenstrat <- function(prefix=NULL) {
+read_eigenstrat <- function(prefix = NULL,
+                            geno_suffix = ".geno",
+                            ind_suffix = ".ind",
+                            snp_suffix = ".snp") {
     list(
-        geno = read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind")),
-        snp = read_snp(paste0(prefix, ".snp")),
-        ind = read_ind(paste0(prefix, ".ind"))
+        geno = read_geno(paste0(prefix, geno_suffix), paste0(prefix, ind_suffix)),
+        snp = read_snp(paste0(prefix, snp_suffix)),
+        ind = read_ind(paste0(prefix, ind_suffix))
     )
 }
 
