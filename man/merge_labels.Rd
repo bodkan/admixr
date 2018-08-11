@@ -28,8 +28,7 @@ merge_labels(
     ind = IND_FILE,
     modified_ind = paste0(IND_FILE, ".merged"),
     pop_labels = list(Europe = c("French", "Sardinian", "Czech"),
-                      EastAfrica = "Dinka",
-                      WestAfrica = c("Mbuti", "Mende"))
+                      WestAfrica = c("Yoruba", "Mende"))
 )
 }
 
