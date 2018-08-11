@@ -3,7 +3,7 @@ sudo: false
 cache: packages
 before_install:
   - sudo apt-get update
-  - sudo apt-get install libopenblas-dev libgsl0-dev
+  - sudo apt-get install libopenblas-dev libgsl-dev
   - wget https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
   - tar xf v5.0.tar.gz
   - cd AdmixTools-5.0; cd src/; make clobber; make all; make install; cd ../
