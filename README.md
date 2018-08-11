@@ -15,31 +15,34 @@ touch ADMIXTOOLS/parfiles/popfiles/logfiles ever again.
 
 ## Introduction
 
-[ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a popular
-and widely used software package for calculating various population
-genetic statistics and for testing population genetics hypotheses.
-However, although very powerful and comprehensive, it leaves a lot to be
-desired in terms of user experience.
+[ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a widely
+used software package for calculating statistics and testing hypotheses
+about population admixture. However, although very powerful and
+comprehensive, it leaves a lot to be desired in terms of user
+experience. A typical ADMIXTOOLS workflow usually involves a combination
+of `sed`/`awk`/shell scripting and manual editing to create different
+configuration files. These files are then supplied as command-line
+arguments to one of the ADMIXTOOLS commands, and describe how to run a
+particular analysis. The results of each analysis are then usually
+redirected to another file. Afterwards, the user needs to extract values
+of interest from this file (which can be somewhat complex and full of
+redundant information), most likely using more command-line scripting or
+manual copy-pasting, and analyse them in R or Excel. This workflow is
+quite cumbersome, especially if one wants to test many hypotheses
+involving different combinations of populations. Most importantly,
+however, it makes it difficult to follow good practices of reproducible
+science.
 
-This R package aims to make it possible to perform all stages of
-ADMIXTOOLS analysis entirely from within R. A typical ADMIXTOOLS
-workflow usually involves using a combination of `sed`/`awk`/shell
-scripting and manual editing to create parameter and population
-configuration files. These files are then supplied as arguments to an
-ADMIXTOOLS command and describe how to run a particular analysis, with
-results saved to another file. Afterwards, the user needs to extract
-values of interest from this file (which can be somewhat complex and
-full of redundant information), most likely using more command-line
-scripting, and analyse them in R or Excel. This can be cumbersome
-especially if one wants to run a large number of analyses that can
-involve many combinations of populations.
+This R package makes it possible to perform all stages of ADMIXTOOLS
+analysis entirely from within R. It provides a set of convenient
+functions that completely abstract away the need for “low level”
+configuration of individual ADMIXTOOLS programs, allowing the user to
+focus on the analysis itself.
 
-This package provides a set of functions that completely abstract away
-the “low level” configuration of ADMIXTOOLS programs, making it possible
-to focus on the analysis itself. It achieves this by automatically
-generating all configuration files, running the commands and parsing
-their outputs behind the scenes, extracting only useful information and
-always returning a simple dataframe for downstream analyses.
+It achieves this by automatically generating all configuration files,
+running ADMIXTOOLS commands and parsing their outputs “behind the
+scenes”", extracting only useful information and presenting it in the
+form of a simple R dataframe for downstream analyses.
 
 ## Installation instructions
 
