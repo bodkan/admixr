@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 _**"Make ADMIXTOOLS fun again!"**_
 
 **TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
-deal with parfiles/popfiles/logfiles ever again.
+deal with par/pop/log files ever again.
 
 ## Introduction
 
