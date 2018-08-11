@@ -1,8 +1,8 @@
 language: R
 sudo: false
-cache: packages
-  directories:
-    - /tmp/deps
+cache:
+  directories: /tmp/deps
+  packages: true
 before_install:
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
