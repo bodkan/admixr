@@ -11,7 +11,7 @@ status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](http
 ***“Make ADMIXTOOLS fun again\!”***
 
 **TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
-deal with par/pop/log files ever again.
+deal with par/pop/log files at all.
 
 ## Introduction
 
