@@ -11,7 +11,7 @@ status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](http
 ***“Make ADMIXTOOLS fun again\!”***
 
 **TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
-touch ADMIXTOOLS/parfiles/popfiles/logfiles ever again.
+deal with parfiles/popfiles/logfiles ever again.
 
 ## Introduction
 
@@ -21,17 +21,17 @@ about population admixture. However, although very powerful and
 comprehensive, it leaves a lot to be desired in terms of user
 experience. A typical ADMIXTOOLS workflow usually involves a combination
 of `sed`/`awk`/shell scripting and manual editing to create different
-configuration files. These files are then supplied as command-line
-arguments to one of the ADMIXTOOLS commands, and describe how to run a
-particular analysis. The results of each analysis are then usually
-redirected to another file. Afterwards, the user needs to extract values
-of interest from this file (which can be somewhat complex and full of
-redundant information), most likely using more command-line scripting or
-manual copy-pasting, and analyse them in R or Excel. This workflow is
-quite cumbersome, especially if one wants to test many hypotheses
-involving different combinations of populations. Most importantly,
-however, it makes it difficult to follow good practices of reproducible
-science.
+configuration files. These files are then supplied by the user as
+command-line arguments to one of the ADMIXTOOLS commands, and describe
+how to run a particular analysis. The results of each analysis are then
+usually redirected to another file. Afterwards, the user needs to
+extract values of interest from this file (which can be somewhat complex
+and full of redundant information), most likely using more command-line
+scripting or manual copy-pasting, and analyse them in R or Excel. This
+workflow is quite cumbersome, especially if one wants to test many
+hypotheses involving different combinations of populations. Most
+importantly, however, it makes it difficult to follow good practices of
+reproducible science.
 
 This R package makes it possible to perform all stages of ADMIXTOOLS
 analysis entirely from within R. It provides a set of convenient
@@ -51,12 +51,6 @@ To install `admixr` from Github you need to install the package
 
     install.packages("devtools")
     devtools::install_github("bodkan/admixr")
-
-## Warning\!
-
-**This package is an alpha stage software and its API is still
-changing\!** It supports only a subset of available ADMIXTOOLS commands,
-although all ADMIXTOOLS commands will eventually be supported.
 
 ## Example
 
