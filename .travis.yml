@@ -1,7 +1,7 @@
 language: R
 sudo: false
 cache: packages
-install:
+before_install:
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
   - wget https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
