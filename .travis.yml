@@ -4,7 +4,6 @@ cache: packages
 before_install:
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
-install:
   - wget https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
   - tar xf v5.0.tar.gz
   - pushd AdmixTools-5.0
