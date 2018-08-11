@@ -6,7 +6,7 @@ before_install:
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
   - wget https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
   - tar xf v5.0.tar.gz
-  - cd AdmixTools-5.0; cd src/; make clobber; make all; make install; cd ../
+  - cd AdmixTools-5.0; cd src/; make clobber; make LDLIBS="-llapack" all; make install; cd ../
   - wget https://www.dropbox.com/s/2m53dharng61ou9/AdmixTools_Example_Data.tar_.gz
   - tar xf AdmixTools_Example_Data.tar_.gz
   - export PATH=$PATH:$PWD/bin
