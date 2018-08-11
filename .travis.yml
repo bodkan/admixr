@@ -6,7 +6,6 @@ cache:
 before_install:
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
-  - mkdir -p /tmp/deps
   - pushd /tmp/deps
   - wget https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
   - tar xf v5.0.tar.gz
