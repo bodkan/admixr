@@ -1,6 +1,6 @@
 #' Read output file of one of the ADMIXTOOLS' programs.
 #' 
-#' This function servers as a despatcher delegating the parsing to
+#' This function servers as a dispatcher delegating the parsing to
 #' read_qpF4ratio, read_qpDstat, etc.
 #'
 #' @param file Name of the output log file.
@@ -99,7 +99,7 @@ read_qpDstat <- function(file) {
       {
         setNames(., c("W", "X", "Y", "Z", result_col,
                       if (ncol(.) > 9) { "stderr" } else{ NULL },
-                     "Zscore", "BABA", "ABBA", "n_snps"))
+                     "Zscore", "BABA", "ABBA", "nsnps"))
       }
 
     res_df
@@ -127,7 +127,7 @@ read_qp3Pop <- function(file) {
     res_df <- res_lines %>%
         paste0("\n", collapse = "\n") %>%
         readr::read_delim(delim = " ", col_names = FALSE) %>%
-        setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "n_snps"))
+        setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "nsnps"))
 
     res_df
 }
@@ -166,7 +166,7 @@ read_qpAdm <- function(file) {
   # wide format
   rbind(c(target_pop, snp_count, stats$proportion, stats$stderr)) %>%
     tibble::as_tibble() %>%
-    setNames(c("target", "snp_count", source_pops, paste0("stderr_", source_pops))) %>%
+    setNames(c("target", "nsnps", source_pops, paste0("stderr_", source_pops))) %>%
     dplyr::mutate_at(dplyr::vars(-target), as.numeric)
 
   # # long format

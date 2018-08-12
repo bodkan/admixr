@@ -18,8 +18,8 @@ knitr::opts_chunk$set(
 
 _**"Make ADMIXTOOLS fun again!"**_
 
-**TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
-deal with par/pop/log files at all.
+**TL;DR** Perform ADMIXTOOLS analyses directly from R, without ever having to
+deal with par/pop/log files again.
 
 ## Introduction
 
@@ -43,11 +43,6 @@ This R package makes it possible to perform all stages of ADMIXTOOLS
 analysis entirely from within R. It provides a set of convenient functions that
 completely abstract away the need for "low level" configuration of individual
 ADMIXTOOLS programs, allowing the user to focus on the analysis itself.
-
-It achieves this by automatically generating all configuration files, running
-ADMIXTOOLS commands and parsing their outputs "behind the scenes"", extracting
-only useful information and presenting it in the form of a simple R dataframe
-for downstream analyses.
 
 ## Installation instructions
 

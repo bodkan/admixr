@@ -10,8 +10,8 @@ status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](http
 
 ***“Make ADMIXTOOLS fun again\!”***
 
-**TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
-deal with par/pop/log files at all.
+**TL;DR** Perform ADMIXTOOLS analyses directly from R, without ever
+having to deal with par/pop/log files again.
 
 ## Introduction
 
@@ -38,11 +38,6 @@ analysis entirely from within R. It provides a set of convenient
 functions that completely abstract away the need for “low level”
 configuration of individual ADMIXTOOLS programs, allowing the user to
 focus on the analysis itself.
-
-It achieves this by automatically generating all configuration files,
-running ADMIXTOOLS commands and parsing their outputs “behind the
-scenes”", extracting only useful information and presenting it in the
-form of a simple R dataframe for downstream analyses.
 
 ## Installation instructions
 
@@ -75,7 +70,7 @@ res <- d(
 
 res
 #> # A tibble: 2 x 10
-#>   W      X      Y        Z          D  stderr Zscore  BABA  ABBA n_snps
+#>   W      X      Y        Z          D  stderr Zscore  BABA  ABBA  nsnps
 #>   <chr>  <chr>  <chr>    <chr>  <dbl>   <dbl>  <dbl> <int> <int>  <int>
 #> 1 Yoruba French Han      Uygur 0.041  0.00127   32.3 30753 28328 621026
 #> 2 Yoruba French Japanese Uygur 0.0402 0.00130   31.0 30690 28320 621026

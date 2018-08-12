@@ -13,6 +13,6 @@ read_output(file)
 Tibble object with parsed results.
 }
 \description{
-This function servers as a despatcher delegating the parsing to
+This function servers as a dispatcher delegating the parsing to
 read_qpF4ratio, read_qpDstat, etc.
 }
