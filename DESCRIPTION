@@ -3,18 +3,19 @@ Title: Perform all ADMIXTOOLS analyses directly from R
 Version: 0.3.0
 Authors@R: person("Martin", "Petr", email = "mp@bodkan.net", role = c("aut", "cre"))
 Description: Perform all ADMIXTOOLS analyses directly from R.
-Depends: R (>= 3.1.0)
-Imports:
-    stringr,
-    tibble,
-    dplyr,
-    readr,
-    magrittr
 License: MIT + file LICENSE
-Encoding: UTF-8
-RoxygenNote: 6.1.0
 URL: https://github.com/bodkan/admixr
 BugReports: https://github.com/bodkan/admixr/issues
-Suggests: 
-    testthat,
-    covr
+Depends:
+    R (>= 3.1.0)
+Imports:
+    dplyr,
+    magrittr,
+    readr,
+    stringr,
+    tibble
+Suggests:
+    covr,
+    testthat
+Encoding: UTF-8
+RoxygenNote: 6.1.0
