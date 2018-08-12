@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read an EIGENSTRAT 'geno' file. — read_geno • admixr</title>
+<title>Calculate F4 statistic (which is just the numerator of D statistic) and
+return results as a data.frame. — f4 • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +31,11 @@
 
 
 
-<meta property="og:title" content="Read an EIGENSTRAT 'geno' file. — read_geno" />
+<meta property="og:title" content="Calculate F4 statistic (which is just the numerator of D statistic) and
+return results as a data.frame. — f4" />
 
-<meta property="og:description" content="Read an EIGENSTRAT 'geno' file." />
+<meta property="og:description" content="Calculate F4 statistic (which is just the numerator of D statistic) and
+return results as a data.frame." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,36 +103,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read an EIGENSTRAT 'geno' file.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/eigenstrat_io.R'><code>R/eigenstrat_io.R</code></a></small>
-    <div class="hidden name"><code>read_geno.Rd</code></div>
+    <h1>Calculate F4 statistic (which is just the numerator of D statistic) and
+return results as a data.frame.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
+    <div class="hidden name"><code>f4.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Read an EIGENSTRAT 'geno' file.</p>
+    <p>Calculate F4 statistic (which is just the numerator of D statistic) and
+return results as a data.frame.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>read_geno</span>(<span class='no'>file</span>, <span class='kw'>ind_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>f4</span>(<span class='no'>W</span>, <span class='no'>X</span>, <span class='no'>Y</span>, <span class='no'>Z</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>snp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ind</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>badsnp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>Path to the geno file.</p></td>
+      <th>W, X, Y, Z</th>
+      <td><p>Population names according to nomenclature in Patterson
+et al., 2012.</p></td>
     </tr>
     <tr>
-      <th>ind_file</th>
-      <td><p>Path to the ind file to read sample names from.</p></td>
+      <th>prefix</th>
+      <td><p>Prefix of the geno/snp/ind files (including the whole
+path).</p></td>
+    </tr>
+    <tr>
+      <th>geno, snp, ind</th>
+      <td><p>Path to the geno/snp/ind file. Each overrides the 'prefix' argument.</p></td>
+    </tr>
+    <tr>
+      <th>badsnp</th>
+      <td><p>SNP file with information about ignored sites.</p></td>
+    </tr>
+    <tr>
+      <th>dir_name</th>
+      <td><p>Where to put all generated files (temporary
+directory by default).</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A data.frame object with genotypes of each sample (0/1/9 as defined
-    by the EIGENSTRAT format).</p>
     
 
   </div>
@@ -137,9 +153,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

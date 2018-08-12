@@ -40,7 +40,8 @@ f4ratio <- function(X, A, B, C, O,
 #' @param badsnp SNP file with information about ignored sites.
 #' @param dir_name Where to put all generated files (temporary
 #'     directory by default).
-#' @param f4mode Calculate f4 statistics instead of D statistic.
+#' @param f4mode Calculate f4 statistics instead of D statistic. One can also
+#'     use a dedicated f4 function.
 #'
 #' @export
 d <- function(W, X, Y, Z,
@@ -66,6 +67,25 @@ d <- function(W, X, Y, Z,
     run_cmd("qpDstat", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
     read_output(files[["log_file"]])
+}
+
+#' Calculate F4 statistic (which is just the numerator of D statistic) and
+#' return results as a data.frame.
+#'
+#' @param W,X,Y,Z Population names according to nomenclature in Patterson
+#'     et al., 2012.
+#' @param prefix Prefix of the geno/snp/ind files (including the whole
+#'     path).
+#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
+#' @param badsnp SNP file with information about ignored sites.
+#' @param dir_name Where to put all generated files (temporary
+#'     directory by default).
+#'
+#' @export
+f4 <- function(W, X, Y, Z,
+              prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+              badsnp = NULL, dir_name = NULL) {
+  d(W, X, Y, Z, prefix, geno, snp, ind, badsnp, dir_name, f4mode = TRUE)
 }
 
 #' Calculate a 3-population statistic and return results as a data.frame.

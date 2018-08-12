@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read an EIGENSTRAT 'geno' file. — read_geno • admixr</title>
+<title>Changelog • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,7 @@
 
 
 
-<meta property="og:title" content="Read an EIGENSTRAT 'geno' file. — read_geno" />
-
-<meta property="og:description" content="Read an EIGENSTRAT 'geno' file." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -49,7 +46,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -100,48 +97,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read an EIGENSTRAT 'geno' file.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/eigenstrat_io.R'><code>R/eigenstrat_io.R</code></a></small>
-    <div class="hidden name"><code>read_geno.Rd</code></div>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/bodkan/admixr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    
-    <p>Read an EIGENSTRAT 'geno' file.</p>
-    
-    </div>
-
-    <pre class="usage"><span class='fu'>read_geno</span>(<span class='no'>file</span>, <span class='kw'>ind_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>file</th>
-      <td><p>Path to the geno file.</p></td>
-    </tr>
-    <tr>
-      <th>ind_file</th>
-      <td><p>Path to the ind file to read sample names from.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A data.frame object with genotypes of each sample (0/1/9 as defined
-    by the EIGENSTRAT format).</p>
-    
-
+    <div id="admixr-0-2-0" class="section level1">
+<h1 class="page-header">
+<a href="#admixr-0-2-0" class="anchor"></a>admixr 0.2.0</h1>
+<ul>
+<li><p>The package now includes qpAdm functionality.</p></li>
+<li><p>Formal tests for all implemented wrapper functions have been implemented.</p></li>
+</ul>
+</div>
+    <div id="admixr-0-1-0" class="section level1">
+<h1 class="page-header">
+<a href="#admixr-0-1-0" class="anchor"></a>admixr 0.1.0</h1>
+<p>Implemented:</p>
+<ul>
+<li>D statistic as qpDstat,</li>
+<li>f4 statistic as qpDstat(f4mode = TRUE),</li>
+<li>f4-ratio statistic as qpF4Ratio,</li>
+<li>f3 statistic as qp3Pop.</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
-
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#admixr-0-2-0">0.2.0</a></li>
+        <li><a href="#admixr-0-1-0">0.1.0</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
       <footer>
