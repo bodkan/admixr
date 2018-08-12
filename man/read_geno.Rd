@@ -4,7 +4,7 @@
 \alias{read_geno}
 \title{Read an EIGENSTRAT 'geno' file.}
 \usage{
-read_geno(file, ind_file = NULL)
+read_geno(file, ind_file = stringr::str_replace("geno$", "ind$"))
 }
 \arguments{
 \item{file}{Path to the geno file.}

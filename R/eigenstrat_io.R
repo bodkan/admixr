@@ -41,12 +41,8 @@ read_snp <- function(file) {
 #'     by the EIGENSTRAT format).
 #'
 #' @export
-read_geno <- function(file, ind_file = NULL) {
-    if (!is.null(ind_file)) {
-        inds <- read_ind(ind_file)$id
-    } else {
-        inds <- NULL
-    }
+read_geno <- function(file, ind_file = stringr::str_replace("geno$", "ind$")) {
+    inds <- read_ind(ind_file)$id
 
     # get the number of samples in the geno file
     n <- nchar(readLines(file, 1))
