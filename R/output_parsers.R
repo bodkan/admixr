@@ -32,8 +32,6 @@ read_output <- function(file) {
 #' @param file Name of the output log file.
 #'
 #' @return data.frame with parsed results.
-#'
-#' @export
 read_qpF4ratio <- function(file) {
     log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
@@ -67,8 +65,6 @@ read_qpF4ratio <- function(file) {
 #' @param file Name of the output log file.
 #'
 #' @return data.frame with parsed results.
-#'
-#' @export
 read_qpDstat <- function(file) {
     log_lines <- readLines(file) %>%
       .[!stringr::str_detect(., "warning")] %>%
@@ -111,8 +107,6 @@ read_qpDstat <- function(file) {
 #' @param file Name of the output log file.
 #'
 #' @return data.frame with parsed results.
-#'
-#' @export
 read_qp3Pop <- function(file) {
     log_lines <- readLines(file)
 
@@ -138,8 +132,6 @@ read_qp3Pop <- function(file) {
 #' @param file Name of the output log file.
 #'
 #' @return data.frame object with parsed results.
-#'
-#' @export
 read_qpAdm <- function(file) {
   log_lines <- readLines(file)
 
