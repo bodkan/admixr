@@ -82,8 +82,6 @@ snps_missing <- function(geno, prop = FALSE) {
 #' @param complement Perform an intersect or a complement operation?
 #'
 #' @export
-#'
-#' @importFrom magrittr "%>%"
 subset_sites <- function(prefix, out_prefix, bed_file, complement = FALSE) {
   coords <- readr::read_table2(
     bed_file,
@@ -165,3 +163,17 @@ check_presence <- function(labels, prefix = NULL, ind = NULL) {
 admixtools_path <- function() {
   system("which qpDstat", intern = TRUE) %>% stringr::str_replace("/bin.*", "")
 }
+
+#' Pipe operator
+#' 
+#' Added via usethis::use_pipe().
+#'
+#' See \code{magrittr::\link[magrittr]{\%>\%}} for details.
+#'
+#' @name %>%
+#' @rdname pipe
+#' @keywords internal
+#' @export
+#' @importFrom magrittr %>%
+#' @usage lhs \%>\% rhs
+NULL

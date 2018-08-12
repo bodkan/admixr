@@ -17,8 +17,6 @@
 #' @param index Index the VCF with tabix?
 #'
 #' @export
-#' 
-#' @importFrom magrittr "%>%"
 eigenstrat_to_vcf <- function(prefix, vcf_file, compress = TRUE, index = TRUE) {
     geno <- read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind"))
     snp <- read_snp(paste0(prefix, ".snp"))
@@ -54,8 +52,6 @@ eigenstrat_to_vcf <- function(prefix, vcf_file, compress = TRUE, index = TRUE) {
 #'     path) that will be generated.
 #'
 #' @export
-#'
-#' @importFrom magrittr "%>%"
 vcf_to_eigenstrat <- function(vcf_file, prefix) {
     vcf <- readr::read_tsv(vcf_file, comment = "##", progress = FALSE) %>%
         dplyr::rename(chrom = `#CHROM`, pos = POS, snp_id = ID, ref = REF, alt = ALT) %>%

@@ -8,8 +8,6 @@
 #' @return Tibble object with parsed results.
 #'
 #' @export
-#'
-#' @importFrom magrittr %>%
 read_output <- function(file) {
   # extract ADMIXTOOLS command name from the output file
   cmd <- readLines(file) %>%
@@ -36,8 +34,6 @@ read_output <- function(file) {
 #' @return Tibble object with parsed results.
 #'
 #' @export
-#'
-#' @importFrom magrittr "%>%"
 read_qpF4ratio <- function(file) {
     log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
@@ -73,8 +69,6 @@ read_qpF4ratio <- function(file) {
 #' @return Tibble object with parsed results.
 #'
 #' @export
-#'
-#' @importFrom magrittr "%>%"
 read_qpDstat <- function(file) {
     log_lines <- readLines(file) %>%
       .[!stringr::str_detect(., "warning")] %>%
@@ -119,8 +113,6 @@ read_qpDstat <- function(file) {
 #' @return Tibble object with parsed results.
 #'
 #' @export
-#'
-#' @importFrom magrittr "%>%"
 read_qp3Pop <- function(file) {
     log_lines <- readLines(file)
 
@@ -148,8 +140,6 @@ read_qp3Pop <- function(file) {
 #' @return Tibble object with parsed results.
 #'
 #' @export
-#'
-#' @importFrom magrittr "%>%"
 read_qpAdm <- function(file) {
   log_lines <- readLines(file)
 
