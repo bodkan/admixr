@@ -18,12 +18,13 @@ test_that("read_ind and write_ind are inverse functions", {
 # read_geno / write_geno --------------------------------------------------
 
 test_that("read_geno and write_geno are inverse functions", {
-  true <- read_geno(paste0(prefix, ".eigenstratgeno"))
+  true <- read_geno(paste0(prefix, ".eigenstratgeno"),
+                    paste0(prefix, ".ind"))
   
   new_file <- tempfile()
   write_geno(true, new_file)
   
-  new <- read_geno(new_file)
+  new <- read_geno(new_file,  paste0(prefix, ".ind"))
   
   expect_equal(true, new)
 })
