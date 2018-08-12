@@ -54,7 +54,7 @@ in `~/local/AdmixTools-5.0/`. This example requires a small EIGENSTRAT
 data set downloaded for running testing script of the ADMIXTOOLS
 package.
 
-Note that a single call to the `qpDstat` function generates all required
+Note that a single call to the `d` function generates all required
 intermediate config and population files, runs ADMIXTOOLS, parses its
 log output and returns results as a `data.frame` object. It does so all
 behind the scenes without the user having to deal with “low-level”
