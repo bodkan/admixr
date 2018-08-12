@@ -10,7 +10,7 @@ read_output(file)
 \item{file}{Name of the output log file.}
 }
 \value{
-Tibble object with parsed results.
+data.frame with parsed results.
 }
 \description{
 This function servers as a dispatcher delegating the parsing to

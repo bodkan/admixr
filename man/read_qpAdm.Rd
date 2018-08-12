@@ -10,7 +10,7 @@ read_qpAdm(file)
 \item{file}{Name of the output log file.}
 }
 \value{
-Tibble object with parsed results.
+data.frame object with parsed results.
 }
 \description{
 Read output log file from a qp3Pop run.

@@ -10,7 +10,7 @@ read_qpF4ratio(file)
 \item{file}{Name of the output log file.}
 }
 \value{
-Tibble object with parsed results.
+data.frame with parsed results.
 }
 \description{
 Read output log file from a qpF4ratio run.

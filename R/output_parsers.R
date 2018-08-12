@@ -5,7 +5,7 @@
 #'
 #' @param file Name of the output log file.
 #'
-#' @return Tibble object with parsed results.
+#' @return data.frame with parsed results.
 #'
 #' @export
 read_output <- function(file) {
@@ -23,7 +23,7 @@ read_output <- function(file) {
   
   # it feels a little dumb, re-reading the whole output file a 2nd time,
   # there must be a cleaner way to do this
-  parsers[[cmd]](file)
+  as.data.frame(parsers[[cmd]](file))
 }
 
 
@@ -31,7 +31,7 @@ read_output <- function(file) {
 #'
 #' @param file Name of the output log file.
 #'
-#' @return Tibble object with parsed results.
+#' @return data.frame with parsed results.
 #'
 #' @export
 read_qpF4ratio <- function(file) {
@@ -66,7 +66,7 @@ read_qpF4ratio <- function(file) {
 #'
 #' @param file Name of the output log file.
 #'
-#' @return Tibble object with parsed results.
+#' @return data.frame with parsed results.
 #'
 #' @export
 read_qpDstat <- function(file) {
@@ -110,7 +110,7 @@ read_qpDstat <- function(file) {
 #'
 #' @param file Name of the output log file.
 #'
-#' @return Tibble object with parsed results.
+#' @return data.frame with parsed results.
 #'
 #' @export
 read_qp3Pop <- function(file) {
@@ -137,7 +137,7 @@ read_qp3Pop <- function(file) {
 #'
 #' @param file Name of the output log file.
 #'
-#' @return Tibble object with parsed results.
+#' @return data.frame object with parsed results.
 #'
 #' @export
 read_qpAdm <- function(file) {

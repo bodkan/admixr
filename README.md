@@ -69,9 +69,7 @@ res <- d(
 )
 
 res
-#> # A tibble: 2 x 10
-#>   W      X      Y        Z          D  stderr Zscore  BABA  ABBA  nsnps
-#>   <chr>  <chr>  <chr>    <chr>  <dbl>   <dbl>  <dbl> <int> <int>  <int>
-#> 1 Yoruba French Han      Uygur 0.041  0.00127   32.3 30753 28328 621026
-#> 2 Yoruba French Japanese Uygur 0.0402 0.00130   31.0 30690 28320 621026
+#>        W      X        Y     Z      D   stderr Zscore  BABA  ABBA  nsnps
+#> 1 Yoruba French      Han Uygur 0.0410 0.001271 32.300 30753 28328 621026
+#> 2 Yoruba French Japanese Uygur 0.0402 0.001295 31.016 30690 28320 621026
 ```
