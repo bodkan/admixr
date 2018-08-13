@@ -10,9 +10,14 @@ create_par_file <- function(files,
     # if the user specified EIGENSTRAT prefix, set only paths to unspecified
     # geno/snp/ind files
     if (!is.null(prefix)) {
-        if (is.null(geno_file)) geno_file <- paste0(prefix, ".geno")
-        if (is.null(snp_file)) snp_file <- paste0(prefix, ".snp")
-        if (is.null(ind_file)) ind_file <- paste0(prefix, ".ind")
+      prefix <- path.expand(prefix)
+      if (is.null(geno_file)) geno_file <- paste0(prefix, ".geno")
+      if (is.null(snp_file)) snp_file <- paste0(prefix, ".snp")
+      if (is.null(ind_file)) ind_file <- paste0(prefix, ".ind")
+    } else {
+      ind_file <- path.expand(ind_file)
+      snp_file <- path.expand(snp_file)
+      geno_file <- path.expand(geno_file)
     }
 
     writeLines(sprintf("genotypename: %s\nsnpname: %s\nindivname: %s\n",

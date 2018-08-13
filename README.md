@@ -60,7 +60,7 @@ library(admixr)
 
 res <- d(
   W = "Yoruba", X = "French", Y = c("Han", "Japanese"), Z = "Uygur",
-  prefix = "/Users/martin_petr/local/AdmixTools-5.0/data/allmap"
+  prefix = "~/local/AdmixTools-5.0/data/allmap"
 )
 
 res
