@@ -50,16 +50,10 @@ To install `admixr` from Github you need to install the package
 
 ## Example
 
-The following assumes that we have a working installation of ADMIXTOOLS
-in `~/local/AdmixTools-5.0/`. This example requires a small EIGENSTRAT
-data set downloaded for running testing script of the ADMIXTOOLS
-package.
-
-Note that a single call to the `d` function generates all required
-intermediate config and population files, runs ADMIXTOOLS, parses its
-log output and returns results as a `data.frame` object. It does so all
-behind the scenes without the user having to deal with “low-level”
-technical details.
+This is all the code that you need to perform ADMIXTOOLS analyses using
+this package\! No shell scripting, no copy-pasting and manual editing of
+text files. The only thing you need is a working ADMIXTOOLS installation
+and a path to EIGENSTRAT data (a trio of ind/snp/geno files).
 
 ``` r
 library(admixr)
@@ -74,3 +68,9 @@ res
 #> 1 Yoruba French      Han Uygur 0.0410 0.001271 32.300 30753 28328 621026
 #> 2 Yoruba French Japanese Uygur 0.0402 0.001295 31.016 30690 28320 621026
 ```
+
+Note that a single call to the `d` function generates all required
+intermediate config and population files, runs ADMIXTOOLS, parses its
+log output and returns results as a `data.frame` object. It does so all
+behind the scenes without the user having to deal with “low-level”
+technical details.

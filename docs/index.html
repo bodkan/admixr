@@ -93,8 +93,7 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>The following assumes that we have a working installation of ADMIXTOOLS in <code>~/local/AdmixTools-5.0/</code>. This example requires a small EIGENSTRAT data set downloaded for running testing script of the ADMIXTOOLS package.</p>
-<p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns results as a <code>data.frame</code> object. It does so all behind the scenes without the user having to deal with “low-level” technical details.</p>
+<p>This is all the code that you need to perform ADMIXTOOLS analyses using this package! No shell scripting, no copy-pasting and manual editing of text files. The only thing you need is a working ADMIXTOOLS installation and a path to EIGENSTRAT data (a trio of ind/snp/geno files).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/d.html">d</a></span>(</a>
@@ -106,6 +105,7 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;        W      X        Y     Z      D   stderr Zscore  BABA  ABBA  nsnps</span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 1 Yoruba French      Han Uygur 0.0410 0.001271 32.300 30753 28328 621026</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 2 Yoruba French Japanese Uygur 0.0402 0.001295 31.016 30690 28320 621026</span></a></code></pre></div>
+<p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns results as a <code>data.frame</code> object. It does so all behind the scenes without the user having to deal with “low-level” technical details.</p>
 </div>
 </div>
   </div>
