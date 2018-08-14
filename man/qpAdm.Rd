@@ -8,6 +8,12 @@ qpAdm(targets, sources, outgroups, prefix = NULL, geno = NULL,
   snp = NULL, ind = NULL, badsnp = NULL, outdir = NULL)
 }
 \arguments{
+\item{targets}{Vector of target populations (evaluated one at a time).}
+
+\item{sources}{Source populations related to true ancestors.}
+
+\item{outgroups}{Outgroup populations.}
+
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
 path).}
 
@@ -17,12 +23,6 @@ path).}
 
 \item{outdir}{Where to put all generated files (temporary
 directory by default).}
-
-\item{target}{Vector of target populations (evaluated one at a time).}
-
-\item{source}{Source populations related to true ancestors.}
-
-\item{outgroup}{Outgroup populations.}
 }
 \description{
 Calculate admixture proportions in a target population using qpAdm method.
