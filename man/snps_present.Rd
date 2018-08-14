@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{snps_present}
 \alias{snps_present}
-\title{Calculate the number (or proportion) of sites with an allele
-present (i.e. not 9) for each sample.}
+\title{Calculate the number/proportion of covered sites in each sample.}
 \usage{
 snps_present(geno, prop = FALSE)
 }
@@ -17,6 +16,5 @@ instead.}
 A named vector of counts or proportions.
 }
 \description{
-Calculate the number (or proportion) of sites with an allele
-present (i.e. not 9) for each sample.
+Calculate the number/proportion of covered sites in each sample.
 }

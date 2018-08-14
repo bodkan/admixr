@@ -2,7 +2,7 @@
 % Please edit documentation in R/output_parsers.R
 \name{read_output}
 \alias{read_output}
-\title{Read output file of one of the ADMIXTOOLS' programs.}
+\title{Read output file of one of the ADMIXTOOLS programs.}
 \usage{
 read_output(file)
 }
@@ -13,6 +13,5 @@ read_output(file)
 data.frame with parsed results.
 }
 \description{
-This function servers as a dispatcher delegating the parsing to
-read_qpF4ratio, read_qpDstat, etc.
+Read output file of one of the ADMIXTOOLS programs.
 }

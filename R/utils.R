@@ -1,5 +1,4 @@
-#' Merge populations from an EIGENSTRAT "ind" file under a single
-#' population label.
+#' Merge multiple samples/populations under a single label.
 #'
 #' @param ind EIGENSTRAT ind file to modify.
 #' @param modified_ind Modified EIGENSTRAT ind filename.
@@ -8,7 +7,6 @@
 #'
 #' @examples
 #'
-
 #' \dontrun{
 #' # This will create a new ind file with labels in the 3rd column replaced by
 #' # Europe", "EastAfrica" and "WestAfrica", respectively.
@@ -39,8 +37,7 @@ merge_labels <- function(ind, modified_ind, pop_labels) {
 # Filtering functions  --------------------------------------------------
 
 
-#' Calculate the number (or proportion) of sites with an allele
-#' present (i.e. not 9) for each sample.
+#' Calculate the number/proportion of covered sites in each sample.
 #'
 #' @param geno EIGENSTRAT geno dataframe.
 #' @param prop Calculate the proportion of non-missing alleles
@@ -55,8 +52,7 @@ snps_present <- function(geno, prop = FALSE) {
 }
 
 
-#' Calculate the number (or proportion) of sites with an allele
-#' missing for each sample.
+#' Calculate the number/proportion of missing sites in each sample.
 #'
 #' @param geno EIGENSTRAT geno dataframe.
 #' @param prop Calculate the proportion of missing alleles
@@ -71,8 +67,7 @@ snps_missing <- function(geno, prop = FALSE) {
 }
 
 
-#' Create a new set of EIGENSTRAT files by intersecting the original
-#' data with a given set of coordinates.
+#' Generate new EIGENSTRAT dataset overlapping a given BED file.
 #'
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).

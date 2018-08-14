@@ -1,0 +1,34 @@
+reference:
+  - title: Running analyses
+    contents:
+    - f3
+    - d
+    - f4
+    - f4ratio
+    - qpAdm
+
+  - title: Processing and filtering data
+    contents:
+    - merge_labels
+    - snps_missing
+    - snps_present
+    - subset_sites
+
+  - title: Reading EIGENSTRAT data
+    contents:
+    - starts_with("read_(eigenstrat|geno|ind|snp)")
+
+  - title: Writing EIGENSTRAT data
+    contents:
+    - starts_with("write_(eigenstrat|geno|ind|snp)")
+
+  - title: VCF-EIGENSTRAT conversion
+    contents:
+    - vcf_to_eigenstrat
+    - eigenstrat_to_vcf
+
+  - title: Parsing ADMIXTOOLS log files
+    desc: Useful only for processing old log files generated on the command-line
+      without `admixr`.
+    contents:
+    - read_output

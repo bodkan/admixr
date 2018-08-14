@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{merge_labels}
 \alias{merge_labels}
-\title{Merge populations from an EIGENSTRAT "ind" file under a single
-population label.}
+\title{Merge multiple samples/populations under a single label.}
 \usage{
 merge_labels(ind, modified_ind, pop_labels)
 }
@@ -16,8 +15,7 @@ merge_labels(ind, modified_ind, pop_labels)
 to merge into.}
 }
 \description{
-Merge populations from an EIGENSTRAT "ind" file under a single
-population label.
+Merge multiple samples/populations under a single label.
 }
 \examples{
 

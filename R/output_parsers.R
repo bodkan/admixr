@@ -1,8 +1,5 @@
-#' Read output file of one of the ADMIXTOOLS' programs.
+#' Read output file of one of the ADMIXTOOLS programs.
 #' 
-#' This function servers as a dispatcher delegating the parsing to
-#' read_qpF4ratio, read_qpDstat, etc.
-#'
 #' @param file Name of the output log file.
 #'
 #' @return data.frame with parsed results.
@@ -27,11 +24,7 @@ read_output <- function(file) {
 }
 
 
-#' Read output log file from a qpF4ratio run.
-#'
-#' @param file Name of the output log file.
-#'
-#' @return data.frame with parsed results.
+# Read output log file from a qpF4ratio run.
 read_qpF4ratio <- function(file) {
     log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
@@ -60,11 +53,7 @@ read_qpF4ratio <- function(file) {
 }
 
 
-#' Read output log file from a qpDstat run.
-#'
-#' @param file Name of the output log file.
-#'
-#' @return data.frame with parsed results.
+# Read output log file from a qpDstat run.
 read_qpDstat <- function(file) {
     log_lines <- readLines(file) %>%
       .[!stringr::str_detect(., "warning")] %>%
@@ -102,11 +91,7 @@ read_qpDstat <- function(file) {
 }
 
 
-#' Read output log file from a qp3Pop run.
-#'
-#' @param file Name of the output log file.
-#'
-#' @return data.frame with parsed results.
+# Read output log file from a qp3Pop run.
 read_qp3Pop <- function(file) {
     log_lines <- readLines(file)
 
@@ -127,11 +112,7 @@ read_qp3Pop <- function(file) {
 }
 
 
-#' Read output log file from a qp3Pop run.
-#'
-#' @param file Name of the output log file.
-#'
-#' @return data.frame object with parsed results.
+# Read output log file from a qp3Pop run.
 read_qpAdm <- function(file) {
   log_lines <- readLines(file)
 

@@ -2,8 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{f4}
 \alias{f4}
-\title{Calculate F4 statistic (which is just the numerator of D statistic) and
-return results as a data.frame.}
+\title{Calculate f4 statistic.}
 \usage{
 f4(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, outdir = NULL)
@@ -23,6 +22,5 @@ path).}
 directory by default).}
 }
 \description{
-Calculate F4 statistic (which is just the numerator of D statistic) and
-return results as a data.frame.
+Calculate f4 statistic.
 }

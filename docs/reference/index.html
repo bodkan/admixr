@@ -111,56 +111,81 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-running-analyses" class="hasAnchor"><a href="#section-running-analyses" class="anchor"></a>Running analyses</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="d.html">d()</a></code> </p>
-        </td>
-        <td><p>Calculate D statistics or F4 statistics (which is just the
-numerator of a D statistic) and return results as a data.frame.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="eigenstrat_to_vcf.html">eigenstrat_to_vcf()</a></code> </p>
-        </td>
-        <td><p>Convert EIGENSTRAT files into a VCF file.</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="f3.html">f3()</a></code> </p>
         </td>
-        <td><p>Calculate a 3-population statistic and return results as a data.frame.</p></td>
+        <td><p>Calculate 3-population statistic.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="d.html">d()</a></code> </p>
+        </td>
+        <td><p>Calculate D statistic.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="f4.html">f4()</a></code> </p>
         </td>
-        <td><p>Calculate F4 statistic (which is just the numerator of D statistic) and
-return results as a data.frame.</p></td>
+        <td><p>Calculate f4 statistic.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="f4ratio.html">f4ratio()</a></code> </p>
         </td>
-        <td><p>Perform an f4-ratio calculation and return its result as a data.frame.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="merge_labels.html">merge_labels()</a></code> </p>
-        </td>
-        <td><p>Merge populations from an EIGENSTRAT "ind" file under a single
-population label.</p></td>
+        <td><p>Calculate f4-ratio statistic.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="qpAdm.html">qpAdm()</a></code> </p>
         </td>
-        <td><p>Calculate admixture proportions in a target population using qpAdm method.</p></td>
+        <td><p>Calculate admixture proportions in target populations using qpAdm.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-processing-and-filtering-data" class="hasAnchor"><a href="#section-processing-and-filtering-data" class="anchor"></a>Processing and filtering data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="merge_labels.html">merge_labels()</a></code> </p>
+        </td>
+        <td><p>Merge multiple samples/populations under a single label.</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="snps_missing.html">snps_missing()</a></code> </p>
+        </td>
+        <td><p>Calculate the number/proportion of missing sites in each sample.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="snps_present.html">snps_present()</a></code> </p>
+        </td>
+        <td><p>Calculate the number/proportion of covered sites in each sample.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="subset_sites.html">subset_sites()</a></code> </p>
+        </td>
+        <td><p>Generate new EIGENSTRAT dataset overlapping a given BED file.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-reading-eigenstrat-data" class="hasAnchor"><a href="#section-reading-eigenstrat-data" class="anchor"></a>Reading EIGENSTRAT data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="read_eigenstrat.html">read_eigenstrat()</a></code> </p>
@@ -181,67 +206,18 @@ population label.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="read_output.html">read_output()</a></code> </p>
-        </td>
-        <td><p>Read output file of one of the ADMIXTOOLS' programs.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_qp3Pop.html">read_qp3Pop()</a></code> </p>
-        </td>
-        <td><p>Read output log file from a qp3Pop run.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_qpAdm.html">read_qpAdm()</a></code> </p>
-        </td>
-        <td><p>Read output log file from a qp3Pop run.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_qpDstat.html">read_qpDstat()</a></code> </p>
-        </td>
-        <td><p>Read output log file from a qpDstat run.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_qpF4ratio.html">read_qpF4ratio()</a></code> </p>
-        </td>
-        <td><p>Read output log file from a qpF4ratio run.</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="read_snp.html">read_snp()</a></code> </p>
         </td>
         <td><p>Read an EIGENSTRAT 'snp' file.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="snps_missing.html">snps_missing()</a></code> </p>
-        </td>
-        <td><p>Calculate the number (or proportion) of sites with an allele
-missing for each sample.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="snps_present.html">snps_present()</a></code> </p>
-        </td>
-        <td><p>Calculate the number (or proportion) of sites with an allele
-present (i.e. not 9) for each sample.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="subset_sites.html">subset_sites()</a></code> </p>
-        </td>
-        <td><p>Create a new set of EIGENSTRAT files by intersecting the original
-data with a given set of coordinates.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="vcf_to_eigenstrat.html">vcf_to_eigenstrat()</a></code> </p>
-        </td>
-        <td><p>Convert VCF file into three-file EIGENSTRAT format.</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-writing-eigenstrat-data" class="hasAnchor"><a href="#section-writing-eigenstrat-data" class="anchor"></a>Writing EIGENSTRAT data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="write_eigenstrat.html">write_eigenstrat()</a></code> </p>
@@ -266,6 +242,40 @@ data with a given set of coordinates.</p></td>
         </td>
         <td><p>Write an EIGENSTRAT 'snp' file.</p></td>
       </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-vcf-eigenstrat-conversion" class="hasAnchor"><a href="#section-vcf-eigenstrat-conversion" class="anchor"></a>VCF-EIGENSTRAT conversion</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="vcf_to_eigenstrat.html">vcf_to_eigenstrat()</a></code> </p>
+        </td>
+        <td><p>Convert VCF file into three-file EIGENSTRAT format.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="eigenstrat_to_vcf.html">eigenstrat_to_vcf()</a></code> </p>
+        </td>
+        <td><p>Convert EIGENSTRAT files into a VCF file.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-parsing-admixtools-log-files" class="hasAnchor"><a href="#section-parsing-admixtools-log-files" class="anchor"></a>Parsing ADMIXTOOLS log files</h2>
+          <p class="section-desc"><p>Useful only for processing old log files generated on the command-line without <code>admixr</code>.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="read_output.html">read_output()</a></code> </p>
+        </td>
+        <td><p>Read output file of one of the ADMIXTOOLS programs.</p></td>
+      </tr>
     </tbody>
     </table>
   </div>
@@ -273,7 +283,12 @@ data with a given set of coordinates.</p></td>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-running-analyses">Running analyses</a></li>
+      <li><a href="#section-processing-and-filtering-data">Processing and filtering data</a></li>
+      <li><a href="#section-reading-eigenstrat-data">Reading EIGENSTRAT data</a></li>
+      <li><a href="#section-writing-eigenstrat-data">Writing EIGENSTRAT data</a></li>
+      <li><a href="#section-vcf-eigenstrat-conversion">VCF-EIGENSTRAT conversion</a></li>
+      <li><a href="#section-parsing-admixtools-log-files">Parsing ADMIXTOOLS log files</a></li>
     </ul>
   </div>
 </div>

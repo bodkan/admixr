@@ -2,8 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{d}
 \alias{d}
-\title{Calculate D statistics or F4 statistics (which is just the
-numerator of a D statistic) and return results as a data.frame.}
+\title{Calculate D statistic.}
 \usage{
 d(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, outdir = NULL, f4mode = FALSE)
@@ -22,10 +21,9 @@ path).}
 \item{outdir}{Where to put all generated files (temporary
 directory by default).}
 
-\item{f4mode}{Calculate f4 statistics instead of D statistic. One can also
+\item{f4mode}{Calculate f4 statistic instead of D statistic. One can also
 use a dedicated f4 function.}
 }
 \description{
-Calculate D statistics or F4 statistics (which is just the
-numerator of a D statistic) and return results as a data.frame.
+Calculate D statistic.
 }

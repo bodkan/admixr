@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{f3}
 \alias{f3}
-\title{Calculate a 3-population statistic and return results as a data.frame.}
+\title{Calculate 3-population statistic.}
 \usage{
 f3(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
   badsnp = NULL, outdir = NULL, inbreed = FALSE)
@@ -23,5 +23,5 @@ directory by default).}
 \item{inbreed}{See README.3PopTest in ADMIXTOOLS.}
 }
 \description{
-Calculate a 3-population statistic and return results as a data.frame.
+Calculate 3-population statistic.
 }

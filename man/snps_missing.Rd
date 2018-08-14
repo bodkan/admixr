@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{snps_missing}
 \alias{snps_missing}
-\title{Calculate the number (or proportion) of sites with an allele
-missing for each sample.}
+\title{Calculate the number/proportion of missing sites in each sample.}
 \usage{
 snps_missing(geno, prop = FALSE)
 }
@@ -17,6 +16,5 @@ instead.}
 A named vector of counts or proportions.
 }
 \description{
-Calculate the number (or proportion) of sites with an allele
-missing for each sample.
+Calculate the number/proportion of missing sites in each sample.
 }

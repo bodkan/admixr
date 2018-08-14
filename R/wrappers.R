@@ -1,4 +1,4 @@
-#' Perform an f4-ratio calculation and return its result as a data.frame.
+#' Calculate f4-ratio statistic.
 #'
 #' @param X,A,B,C,O Population names according to nomenclature used in
 #'     Patterson et al., 2012.
@@ -29,8 +29,7 @@ f4ratio <- function(X, A, B, C, O,
 }
 
 
-#' Calculate D statistics or F4 statistics (which is just the
-#' numerator of a D statistic) and return results as a data.frame.
+#' Calculate D statistic.
 #'
 #' @param W,X,Y,Z Population names according to nomenclature in Patterson
 #'     et al., 2012.
@@ -40,7 +39,7 @@ f4ratio <- function(X, A, B, C, O,
 #' @param badsnp SNP file with information about ignored sites.
 #' @param outdir Where to put all generated files (temporary
 #'     directory by default).
-#' @param f4mode Calculate f4 statistics instead of D statistic. One can also
+#' @param f4mode Calculate f4 statistic instead of D statistic. One can also
 #'     use a dedicated f4 function.
 #'
 #' @export
@@ -69,8 +68,7 @@ d <- function(W, X, Y, Z,
     read_output(files[["log_file"]])
 }
 
-#' Calculate F4 statistic (which is just the numerator of D statistic) and
-#' return results as a data.frame.
+#' Calculate f4 statistic.
 #'
 #' @param W,X,Y,Z Population names according to nomenclature in Patterson
 #'     et al., 2012.
@@ -88,7 +86,7 @@ f4 <- function(W, X, Y, Z,
   d(W, X, Y, Z, prefix, geno, snp, ind, badsnp, outdir, f4mode = TRUE)
 }
 
-#' Calculate a 3-population statistic and return results as a data.frame.
+#' Calculate 3-population statistic.
 #'
 #' @param A,B,C Population names.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
@@ -122,7 +120,7 @@ f3 <- function(A, B, C,
     read_output(files[["log_file"]])
 }
 
-#' Calculate admixture proportions in a target population using qpAdm method.
+#' Calculate admixture proportions in target populations using qpAdm.
 #'
 #' @param targets Vector of target populations (evaluated one at a time).
 #' @param sources Source populations related to true ancestors.

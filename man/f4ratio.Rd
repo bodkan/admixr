@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{f4ratio}
 \alias{f4ratio}
-\title{Perform an f4-ratio calculation and return its result as a data.frame.}
+\title{Calculate f4-ratio statistic.}
 \usage{
 f4ratio(X, A, B, C, O, prefix = NULL, geno = NULL, snp = NULL,
   ind = NULL, badsnp = NULL, outdir = NULL)
@@ -22,5 +22,5 @@ path).}
 directory by default).}
 }
 \description{
-Perform an f4-ratio calculation and return its result as a data.frame.
+Calculate f4-ratio statistic.
 }

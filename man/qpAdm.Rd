@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{qpAdm}
 \alias{qpAdm}
-\title{Calculate admixture proportions in a target population using qpAdm method.}
+\title{Calculate admixture proportions in target populations using qpAdm.}
 \usage{
 qpAdm(targets, sources, outgroups, prefix = NULL, geno = NULL,
   snp = NULL, ind = NULL, badsnp = NULL, outdir = NULL)
@@ -25,5 +25,5 @@ path).}
 directory by default).}
 }
 \description{
-Calculate admixture proportions in a target population using qpAdm method.
+Calculate admixture proportions in target populations using qpAdm.
 }

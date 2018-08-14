@@ -2,8 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{subset_sites}
 \alias{subset_sites}
-\title{Create a new set of EIGENSTRAT files by intersecting the original
-data with a given set of coordinates.}
+\title{Generate new EIGENSTRAT dataset overlapping a given BED file.}
 \usage{
 subset_sites(prefix, out_prefix, bed_file, complement = FALSE)
 }
@@ -19,6 +18,5 @@ subset of the data.}
 \item{complement}{Perform an intersect or a complement operation?}
 }
 \description{
-Create a new set of EIGENSTRAT files by intersecting the original
-data with a given set of coordinates.
+Generate new EIGENSTRAT dataset overlapping a given BED file.
 }
