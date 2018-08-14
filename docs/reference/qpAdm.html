@@ -111,24 +111,12 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>qpAdm</span>(<span class='no'>target</span>, <span class='no'>source</span>, <span class='no'>outgroup</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>qpAdm</span>(<span class='no'>targets</span>, <span class='no'>sources</span>, <span class='no'>outgroups</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>snp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ind</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>badsnp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>target</th>
-      <td><p>Vector of target populations (evaluated one at a time).</p></td>
-    </tr>
-    <tr>
-      <th>source</th>
-      <td><p>Source populations related to true ancestors.</p></td>
-    </tr>
-    <tr>
-      <th>outgroup</th>
-      <td><p>Outgroup populations.</p></td>
-    </tr>
     <tr>
       <th>prefix</th>
       <td><p>Prefix of the geno/snp/ind files (including the whole
@@ -146,6 +134,18 @@ path).</p></td>
       <th>dir_name</th>
       <td><p>Where to put all generated files (temporary
 directory by default).</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>Vector of target populations (evaluated one at a time).</p></td>
+    </tr>
+    <tr>
+      <th>source</th>
+      <td><p>Source populations related to true ancestors.</p></td>
+    </tr>
+    <tr>
+      <th>outgroup</th>
+      <td><p>Outgroup populations.</p></td>
     </tr>
     </table>
     

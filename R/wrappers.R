@@ -135,12 +135,12 @@ f3 <- function(A, B, C,
 #'     directory by default).
 #'
 #' @export
-qpAdm <- function(target, source, outgroup,
+qpAdm <- function(targets, sources, outgroups,
                   prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
                   badsnp = NULL, dir_name = NULL) {
-  check_presence(c(target, source, outgroup), prefix, ind)
+  check_presence(c(targets, sources, outgroups), prefix, ind)
   
-  dplyr::bind_rows(lapply(target, function(X) {
+  dplyr::bind_rows(lapply(targets, function(X) {
     # get the path to the population, parameter and log files
     setup <- paste0("qpAdm")
     config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
@@ -150,7 +150,7 @@ qpAdm <- function(target, source, outgroup,
     files[["popright"]] <-  stringr::str_replace(files[["pop_file"]], "$", "right")
     files[["pop_file"]] <- NULL
   
-    create_qpAdm_pop_files(c(X, source), outgroup, files)
+    create_qpAdm_pop_files(c(X, sources), outgroups, files)
     create_par_file(files, prefix, geno, snp, ind, badsnp)
     
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
