@@ -5,7 +5,7 @@
 \title{Calculate admixture proportions in a target population using qpAdm method.}
 \usage{
 qpAdm(targets, sources, outgroups, prefix = NULL, geno = NULL,
-  snp = NULL, ind = NULL, badsnp = NULL, dir_name = NULL)
+  snp = NULL, ind = NULL, badsnp = NULL, outdir = NULL)
 }
 \arguments{
 \item{prefix}{Prefix of the geno/snp/ind files (including the whole
@@ -15,7 +15,7 @@ path).}
 
 \item{badsnp}{SNP file with information about ignored sites.}
 
-\item{dir_name}{Where to put all generated files (temporary
+\item{outdir}{Where to put all generated files (temporary
 directory by default).}
 
 \item{target}{Vector of target populations (evaluated one at a time).}

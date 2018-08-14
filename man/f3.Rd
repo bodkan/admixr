@@ -5,7 +5,7 @@
 \title{Calculate a 3-population statistic and return results as a data.frame.}
 \usage{
 f3(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-  badsnp = NULL, dir_name = NULL, inbreed = FALSE)
+  badsnp = NULL, outdir = NULL, inbreed = FALSE)
 }
 \arguments{
 \item{A, B, C}{Population names.}
@@ -17,7 +17,7 @@ path).}
 
 \item{badsnp}{SNP file with information about ignored sites.}
 
-\item{dir_name}{Where to put all generated files (temporary
+\item{outdir}{Where to put all generated files (temporary
 directory by default).}
 
 \item{inbreed}{See README.3PopTest in ADMIXTOOLS.}

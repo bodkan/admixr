@@ -6,7 +6,7 @@
 return results as a data.frame.}
 \usage{
 f4(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-  badsnp = NULL, dir_name = NULL)
+  badsnp = NULL, outdir = NULL)
 }
 \arguments{
 \item{W, X, Y, Z}{Population names according to nomenclature in Patterson
@@ -19,7 +19,7 @@ path).}
 
 \item{badsnp}{SNP file with information about ignored sites.}
 
-\item{dir_name}{Where to put all generated files (temporary
+\item{outdir}{Where to put all generated files (temporary
 directory by default).}
 }
 \description{

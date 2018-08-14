@@ -5,7 +5,7 @@
 \title{Perform an f4-ratio calculation and return its result as a data.frame.}
 \usage{
 f4ratio(X, A, B, C, O, prefix = NULL, geno = NULL, snp = NULL,
-  ind = NULL, badsnp = NULL, dir_name = NULL)
+  ind = NULL, badsnp = NULL, outdir = NULL)
 }
 \arguments{
 \item{X, A, B, C, O}{Population names according to nomenclature used in
@@ -18,7 +18,7 @@ path).}
 
 \item{badsnp}{SNP file with information about ignored sites.}
 
-\item{dir_name}{Where to put all generated files (temporary
+\item{outdir}{Where to put all generated files (temporary
 directory by default).}
 }
 \description{
