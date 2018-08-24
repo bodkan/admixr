@@ -1,0 +1,351 @@
+---
+title: "`admixr` - overview"
+author: "Martin Petr"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+
+
+
+
+
+
+
+
+## Introduction
+
+[ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a widely used
+software package for calculating statistics and testing hypotheses about
+population admixture. However, although powerful and comprehensive, it is not
+exactly user-friendly.
+
+A typical ADMIXTOOLS workflow usually involves a combination of `sed`/`awk`/shell
+scripting and manual editing to create different configuration files. These are then
+passed as command-line arguments to one of ADMIXTOOLS' commands, controlling how
+to run  a particular analysis. The result of each analysis is then redirected to
+another file, and the user needs to extract values of interest from this file (which
+is full of redundant information), most likely using more shell
+scripting or (worse) by manual copy-pasting. The results are then analyse in R,
+Excel or another program.
+
+This workflow very cumbersome, especially if one wants to explore many hypotheses
+involving different combinations of populations. Most importantly, however, it
+makes it difficult to follow good practices of reproducible science.
+
+This R package makes it possible to perform all stages of ADMIXTOOLS
+analysis entirely from within R. It provides a set of convenient functions that
+completely abstract away the need for "low level" configuration of individual
+ADMIXTOOLS programs, allowing the user to focus on the analysis itself.
+
+
+
+
+
+
+
+
+
+
+## Installation
+
+To install `admixr` from Github you need to install the package `devtools`
+first. You can simply run:
+
+```{r, eval = FALSE}
+install.packages("devtools")
+devtools::install_github("bodkan/admixr")
+```
+
+Furthermore, if you want to follow the examples in this vignette, you will
+need the tidyverse meta-package, which you can install with:
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+```
+
+When everything is ready, you can load both packages:
+
+```{r}
+library(admixr)
+library(tidyverse)
+```
+
+
+
+
+
+
+## A boring technical note about EIGENSTRAT files and ADMIXTOOLS
+
+If you have an EIGENSTRAT "triplet" of files ready and want to know how to
+calculate different statistics, feel free to skip this section.
+
+### EIGENSTRAT file format
+
+ADMIXTOOLS softwre uses a peculiar set of genetic file formats, which feel
+strange if you are used to working with [VCF files](http://samtools.github.io/hts-specs/VCFv4.3.pdf).
+However, the basic idea remains the same - we want to store and
+access SNP data (REF/ALT alleles) of a set of individuals at a defined set of
+genomic positions.
+
+EIGENSTRAT datasets always contain three kinds of files:
+
+- `ind` file - specifies name, sex and population assignment of each sample
+- `snp` file - specifies positions of SNPs, REF/ALT alleles etc.
+- `geno` file - specifies SNP data in a dense string-based format:
+  - 0: homozygous ALT
+  - 1: heterozygote
+  - 2: homozygous REF
+  - 9: missing site
+  
+As you can see, VCF files are essentially a combination of all three files
+in a single file. Luckily for us, all three EIGENSTRAT files usually share
+a common path and prefix (at least you should try to make it so whenever you
+work with them). This allows us to work with just the prefix, instead of
+worrying about individual files.
+
+As such, all main `admixr` functions accept an argument called `prefix`, which
+specifies the path to and prefix of all three EIGENSTRAT files (you can still
+work with individual files if you need to, using `ind`, `snp` and `geno`
+arguments of each `admixr` function, but try to avoid that).
+
+Here is a prefix of a small testing SNP dataset that's distributed with
+`admixr`. We will be working with this data in the rest of this vignette.
+
+```{r}
+(eigen <- file.path(system.file(package = "admixr", "extdata"), "snps"))
+```
+
+We can verify that there are three files with this prefix:
+
+```{r}
+dir(path = dirname(eigen))
+```
+
+Let's look at their contents. Here are three lines from each of them:
+
+**`ind` file**
+```{r, echo = FALSE}
+cat(system(paste0("head -n 3 ", eigen, ".ind"), intern = TRUE), sep = "\n")
+```
+
+**`snp` file**
+```{r, echo = FALSE}
+cat(system(paste0("head -n 3 ", eigen, ".snp"), intern = TRUE), sep = "\n")
+```
+
+**`geno` file**
+```{r, echo = FALSE}
+cat(system(paste0("head -n 3 ", eigen, ".geno"), intern = TRUE), sep = "\n")
+```
+
+
+
+
+
+
+
+
+
+
+## Philosophy of `admixr`
+
+The goal of this package is to make it easier to run ADMIXTOOLS analyses,
+without having to worry about (in ADMIXTOOLS jargon) par/pop/log/left/right
+files and other low level detail.
+
+The only interface between you and ADMIXTOOLS are the following R functions:
+
+- `d()`
+- `f4()`
+- `f4ratio()`
+- `f3()`
+- `qpAdm()`
+
+Anything that would often take [dozens of lines of shell scripts](https://gaworkshop.readthedocs.io/en/latest/contents/06_f3/f3.html) can 
+be accomplished by running a single line of R code.
+
+The only thing that is needed is:
+
+- triplet of files in an EIGENSTRAT format
+- working ADMIXTOOLS installation
+- R :)
+
+
+
+
+
+
+
+
+## $D$ statistic
+Next question we could ask is - how closely related are different African
+populations to non-Africans today? One way to look at this is using the following
+D statistic: $D(\textrm{non-African}, \textrm{Denisova}, \textrm{African Y}, \textrm{Chimp})$.
+This statistic is simply based on counting sites that match an African $Y$, and
+is informative about the "branching" order of non-Africans from non-Africans
+over time. The more positive this $D$ statistic is, the more recently did non-Africans
+split from an African population $Y4.
+
+```{r}
+# place sample names into variables for more readable code
+nonafr <- c("French", "Sardinian", "Han", "Papuan")
+afr <- c("Khomani_San", "Mbuti", "Yoruba", "Dinka")
+```
+
+We can calculate $D$ statistic using `admixr`'s function `d`:
+
+```{r}
+df <- d(W = nonafr, X = "Denisova", Y =  afr, Z = "Chimp", prefix = eigen)
+```
+
+```{r eval = FALSE}
+head(df)
+```
+
+```{r, echo = FALSE}
+knitr::kable(head(df))
+```
+
+We can see that the resulting `data.frame` object contains all the input information,
+but also additional statistics:
+
+- `D` - $D$ statistic value
+- `stderr` - standard error of the $D$ statistic calculated with block jackknife
+- `Zscore` - $Z$ significance value
+- `BABA`/`ABBA` - counts of observed site patterns
+- `nsnps` - number of SNPs used for the calculation in this row
+
+The format of output tables is very similar of other `admixr` functions, and they
+generally differ only in the name of the output column.
+
+In general, tables are not a good representation of this kind of data, especially as
+the number of samples increases. This is what the results look like when plotted
+using the `ggplot2` package:
+
+```{r, fig.width = 7, fig.height = 4}
+ggplot(df, aes(fct_reorder(Y, D), D, color = W)) +
+  geom_point() +
+  labs(x = "African population Y")
+```
+
+We can see that the closest African population to non-Africans today are East
+African [Dinka](https://en.wikipedia.org/wiki/Dinka), which is consistent with
+the hypothesis that the ancestors of all non-Africans today split of the East
+African lineage during the Out of Africa migration. Decreasing values of
+the $D$ statistic for Yoruba, Mbuti and San fits with what we know about the
+split times of African from [other](http://science.sciencemag.org/content/early/2017/09/27/science.aao6266)
+[studies](https://www.cell.com/cell/abstract/S0092-8674(17)31008-5),
+with San being the most divergent modern human population, followed by Mbuti,
+Yoruba and Dinka.
+
+
+
+
+
+
+
+
+## $f_4$ statistic
+
+An alternative way of addressing the previous question would be to use the $f_4$
+statistic, which is very similar to $D$ statistic. In fact, if $D$ is calculated
+as
+
+$$ D = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# BABA sites + # ABBA sites}},$$
+
+$f_4$ statistic is simply obtained by skipping the normalization step. Therefore,
+
+$$ f_4 = \textrm{# BABA sites - # ABBA sites}$$
+
+Sometime one is more convenient than other though, so `admixr` provides a
+separate function for calculating $f_4$ statistics called `f4`.
+
+To repeat the previous analysis, we can run:
+
+```{r}
+df <- f4(W = nonafr, X = "Denisova", Y =  afr, Z = "Chimp", prefix = eigen)
+```
+
+```{r eval = FALSE}
+head(df)
+```
+
+```{r, echo = FALSE}
+knitr::kable(head(df))
+```
+
+```{r, fig.width = 7, fig.height = 4}
+ggplot(df, aes(fct_reorder(Y, f4), f4, color = W)) +
+  geom_point() +
+  labs(x = "African population Y")
+```
+
+As we can see, we can make the same conclusion using $f_4$ statistic, as we made
+using $D$ statistic. The higher the $f_4$ value, the more drift the samples
+in $W$ and $Y$ shared. In other words, the more recently the split between the
+two happened. Again, even this very simple analysis reproduces the major
+characteristics of modern human demographic history inferred using much more
+sophisticated methods.
+
+
+
+
+
+
+
+
+
+
+## $f_4$-ratio statistic
+
+```{r}
+df <- f4ratio(
+  X = c("French", "Sardinian", "Han", "Papuan", "Dinka", "Mbuti", "Khomani_San"),
+  A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp",
+  prefix = eigen
+)
+```
+
+This is what the final `data.frame` looks like:
+
+```{r, eval=FALSE}
+df
+```
+
+```{r, echo=FALSE}
+knitr::kable(head(df))
+```
+
+```{r, fig.width = 7, fig.height = 4}
+ggplot(df, aes(fct_reorder(X, alpha), alpha, color = abs(Zscore) > 2)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = alpha - 2 * stderr, ymax = alpha + 2 * stderr)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  labs(y = "Neandertal ancestry proportion", x = "present-day individual")
+```
+
+Despite the wide confidence intervals (caused by a very low number of SNPs in
+our testing dataset), we can notice several well-known features:
+
+- No significant Neandertal ancestry in present-day Africans.
+- Between 2-3% Neandertal ancestry in present-day non-Africans.
+- A much higher proportion of Neandertal ancestry in people from Papua New Guinea.
+
+Again, as you can see, we got a nice "publication-ready" figure in just a few lines
+of R code! No shell, no `awk/grep` or manual editing and copy-pasting required. 👍
+
+
