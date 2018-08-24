@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/overview.html">`admixr` - overview</a>
+      <a href="articles/overview.html">admixr - overview</a>
     </li>
   </ul>
 </li>
@@ -92,7 +92,9 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><a href="http://www.genetics.org/content/192/3/1065">ADMIXTOOLS</a> is a widely used software package for calculating statistics and testing hypotheses about population admixture. However, although very powerful and comprehensive, it leaves a lot to be desired in terms of user experience. A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These files are then supplied by the user as command-line arguments to one of the ADMIXTOOLS commands, and describe how to run a particular analysis. The results of each analysis are then usually redirected to another file. Afterwards, the user needs to extract values of interest from this file (which can be somewhat complex and full of redundant information), most likely using more command-line scripting or manual copy-pasting, and analyse them in R or Excel. This workflow is quite cumbersome, especially if one wants to test many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow good practices of reproducible science.</p>
+<p><a href="http://www.genetics.org/content/192/3/1065">ADMIXTOOLS</a> is a widely used software package for calculating statistics and testing hypotheses about population admixture. However, although powerful and comprehensive, it is not exactly user-friendly.</p>
+<p>A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS’ commands, controlling how to run a particular analysis. The result of each analysis is then redirected to another file, and the user needs to extract values of interest from this file (which is full of redundant information), most likely using more shell scripting or (worse) by manual copy-pasting. The results are then analysed in R, Excel or another program.</p>
+<p>This workflow is very cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow good practices of reproducible science.</p>
 <p>This R package makes it possible to perform all stages of ADMIXTOOLS analysis entirely from within R. It provides a set of convenient functions that completely abstract away the need for “low level” configuration of individual ADMIXTOOLS programs, allowing the user to focus on the analysis itself.</p>
 </div>
 <div id="installation-instructions" class="section level2">
