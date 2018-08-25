@@ -79,9 +79,17 @@ devtools::install_github("bodkan/admixr")
 Furthermore, if you want to follow the examples in this vignette, you will need the [tidyverse](https://www.tidyverse.org) collection of
 packages for convenient data analysis, which you can install with:
 
+```{r, results = "hide", message = FALSE, echo = FALSE}
+# ERROR: dependencies ‘MASS’, ‘mgcv’ are not available for package ‘ggplot2’checking for hidden files and directories
+# https://github.com/rstudio/packrat/issues/484#issuecomment-405621083
+options(repos = c(CRAN = "https://cran.rstudio.com"))
+ap <- available.packages()
+install.packages(rownames(ap[ap[, "Priority"] %in% "recommended", ]))
+```
+
 ```{r, results = "hide", message = FALSE}
 # specifying 'repos' to avoid Travis CI build errors - not needed in user code
-install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+install.packages("tidyverse")
 ```
 
 When everything is ready, you can run:

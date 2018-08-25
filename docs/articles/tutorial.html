@@ -52,6 +52,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/paper.html">admixr - R package for performing ADMIXTOOLS analyses from within R</a>
+    </li>
+    <li>
       <a href="../articles/tutorial.html">admixr - tutorial</a>
     </li>
   </ul>
@@ -108,7 +111,7 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</a></code></pre></div>
 <p>Furthermore, if you want to follow the examples in this vignette, you will need the <a href="https://www.tidyverse.org">tidyverse</a> collection of packages for convenient data analysis, which you can install with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># specifying 'repos' to avoid Travis CI build errors - not needed in user code</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</a></code></pre></div>
 <p>When everything is ready, you can run:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
@@ -326,7 +329,7 @@
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">ggplot</span>(result, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(W, D), D, <span class="dt">color =</span> <span class="kw">abs</span>(Zscore) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> D <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr, <span class="dt">ymax =</span> D <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr))</a></code></pre></div>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 <p>We can see that all three Africans have <span class="math inline">\(D\)</span> consistent with 0, meaning that the data is consistent with the null hypothesis of no significant Neanderthal ancestry in Africans. On the other hand, the test rejects the null hypothesis for all non-Africans today, suggesting that Neanderthals admixed with the ancestors of present-day non-Africans. In fact, this is a similar test to the one that was used as evidence supporting the Neanderthal admixture hypothesis in the first place!</p>
 </div>
 <div id="f_4-statistic" class="section level2">
@@ -428,7 +431,7 @@
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">ggplot</span>(result, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(W, f4), f4, <span class="dt">color =</span> <span class="kw">abs</span>(Zscore) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> f4 <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr, <span class="dt">ymax =</span> f4 <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr))</a></code></pre></div>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
 <p>As we can see by comparing this result to the <span class="math inline">\(D\)</span> statistic result, we can make the same conclusions.</p>
 <p>You might be wondering why we have both <span class="math inline">\(f_4\)</span> and <span class="math inline">\(D\)</span> if they are so similar. The truth is that <span class="math inline">\(f_4\)</span> is directly informative about the amount of shared genetic drift (the “branch length”) between pairs of populations which is, in many cases, a very useful theoretical property. Other than that, it’s often a matter of personal preference, and so <code>admixr</code> provides a separate functions for calculating both.</p>
 </div>
@@ -520,7 +523,7 @@
 <a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> alpha <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr, <span class="dt">ymax =</span> alpha <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-5" data-line-number="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Neandertal ancestry proportion"</span>, <span class="dt">x =</span> <span class="st">"present-day individual"</span>)</a></code></pre></div>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
 <p>We can make several observations:</p>
 <ul>
 <li>Again, we don’t see any significant Neanderthal ancestry in present-day Africans (proportion consistent with 0%), which is what we confirmed using <span class="math inline">\(D\)</span> and <span class="math inline">\(f_4\)</span> above.</li>
@@ -617,7 +620,7 @@ Guinea - more than 4%!</li>
 <a class="sourceLine" id="cb21-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">A =</span> <span class="kw">factor</span>(A, <span class="dt">levels =</span> ordered),</a>
 <a class="sourceLine" id="cb21-7" data-line-number="7">         <span class="dt">B =</span> <span class="kw">factor</span>(B, <span class="dt">levels =</span> ordered)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb21-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(A, B)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> f3))</a></code></pre></div>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-26-1.png" width="672"></p>
 <p>We can see that when we order the heat map labels based on values of pairwise <span class="math inline">\(f_3\)</span> statistics, the decreasing divergence times between human populations (left to right and bottom up) shows beautifully.</p>
 </div>
 <div id="qpadm-method" class="section level2">
