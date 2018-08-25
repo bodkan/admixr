@@ -4,13 +4,13 @@
 \alias{qpAdm}
 \title{Calculate admixture proportions in target populations using qpAdm.}
 \usage{
-qpAdm(targets, sources, outgroups, prefix = NULL, geno = NULL,
+qpAdm(target, refs, outgroups, prefix = NULL, geno = NULL,
   snp = NULL, ind = NULL, badsnp = NULL, outdir = NULL)
 }
 \arguments{
-\item{targets}{Vector of target populations (evaluated one at a time).}
+\item{target}{Vector of target populations (evaluated one at a time).}
 
-\item{sources}{Source populations related to true ancestors.}
+\item{refs}{Reference source populations related to true ancestors.}
 
 \item{outgroups}{Outgroup populations.}
 

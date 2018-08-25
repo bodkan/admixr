@@ -17,30 +17,31 @@ having to deal with par/pop/log files again.
 ## Introduction
 
 [ADMIXTOOLS](http://www.genetics.org/content/192/3/1065) is a widely
-used software package for calculating statistics and testing hypotheses
-about population admixture. However, although powerful and
-comprehensive, it is not exactly user-friendly.
+used software package for calculating admixture statistics and testing
+population admixture hypotheses. However, although powerful and
+comprehensive, it is not really user-friendly.
 
 A typical ADMIXTOOLS workflow usually involves a combination of
 `sed`/`awk`/shell scripting and manual editing to create different
 configuration files. These are then passed as command-line arguments to
-one of ADMIXTOOLS’ commands, controlling how to run a particular
-analysis. The result of each analysis is then redirected to another
-file, and the user needs to extract values of interest from this file
-(which is full of redundant information), most likely using more shell
-scripting or (worse) by manual copy-pasting. The results are then
-analyse in R, Excel or another program.
+one of ADMIXTOOLS’ commands, and control how to run a particular
+analysis. The results are then redirected to another file, and the user
+needs to extract values of interest from this file (which is full of
+redundant information), often using additional command-line utilities,
+or (worse) by manual copy-pasting. The processed results are then
+analysed in R, Excel or another program.
 
-This workflow very cumbersome, especially if one wants to explore many
-hypotheses involving different combinations of populations. Most
+This workflow is very cumbersome, especially if one wants to explore
+many hypotheses involving different combinations of populations. Most
 importantly, however, it makes it difficult to follow good practices of
-reproducible science.
+reproducible science, as it is nearly impossible to construct
+reproducible automated “pipelines”.
 
 This R package makes it possible to perform all stages of ADMIXTOOLS
-analysis entirely from within R. It provides a set of convenient
-functions that completely abstract away the need for “low level”
-configuration of individual ADMIXTOOLS programs, allowing the user to
-focus on the analysis itself.
+analyses entirely from within R. It provides a set of convenient
+functions that completely remove the need for “low level” configuration
+of individual ADMIXTOOLS programs, allowing users to focus on the
+analysis itself.
 
 ## Installation instructions
 
@@ -60,19 +61,19 @@ and a path to EIGENSTRAT data (a trio of ind/snp/geno files).
 ``` r
 library(admixr)
 
-res <- d(
-  W = "Yoruba", X = "French", Y = c("Han", "Japanese"), Z = "Uygur",
-  prefix = "~/local/AdmixTools-5.0/data/allmap"
+result <- d(
+  W = c("French", "Sardinian"), X = "Yoruba", Y = "Vindija", Z = "Chimp",
+  prefix = "~/local/R_LIBS/admixr/extdata/snps"
 )
 
-res
-#>        W      X        Y     Z      D   stderr Zscore  BABA  ABBA  nsnps
-#> 1 Yoruba French      Han Uygur 0.0410 0.001271 32.300 30753 28328 621026
-#> 2 Yoruba French Japanese Uygur 0.0402 0.001295 31.016 30690 28320 621026
+result
+#>           W      X       Y     Z      D   stderr Zscore BABA ABBA  nsnps
+#> 1    French Yoruba Vindija Chimp 0.0233 0.008729  2.665 6296 6010 195040
+#> 2 Sardinian Yoruba Vindija Chimp 0.0184 0.008292  2.216 6278 6052 194981
 ```
 
 Note that a single call to the `d` function generates all required
 intermediate config and population files, runs ADMIXTOOLS, parses its
-log output and returns results as a `data.frame` object. It does so all
-behind the scenes without the user having to deal with “low-level”
-technical details.
+log output and returns the result as a `data.frame` object. It does all
+of this behind the scenes, without the user having to deal with
+low-level technical details.

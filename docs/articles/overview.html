@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>admixr - overview • admixr</title>
+<title>admixr - tutorial • admixr</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="admixr - overview">
+<script src="../pkgdown.js"></script><meta property="og:title" content="admixr - tutorial">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/overview.html">admixr - overview</a>
+      <a href="../articles/overview.html">admixr - tutorial</a>
     </li>
   </ul>
 </li>
@@ -79,7 +79,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>admixr - overview</h1>
+      <h1>admixr - tutorial</h1>
                         <h4 class="author">Martin Petr</h4>
             
             <h4 class="date">2018-08-25</h4>
@@ -91,71 +91,74 @@
 
     
     
+<p>This vignette describes how to calculate various population admixture statistics (<span class="math inline">\(D\)</span>, <span class="math inline">\(f_4\)</span>, etc.) using the <code>admixr</code> package. It assumes that you already know a little bit about them, because we don’t have enough space to go into details of how and why they work. If you want to learn more and are not afraid of little bit of math, I highly recommend Benjamin Peter’s <a href="http://www.genetics.org/content/early/2016/02/03/genetics.115.183913">wonderful overview</a> of the subject and Nick Patterson’s <a href="http://www.genetics.org/content/192/3/1065">original ADMIXTOOLS paper</a>.</p>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><a href="http://www.genetics.org/content/192/3/1065">ADMIXTOOLS</a> is a widely used software package for calculating statistics and testing hypotheses about population admixture. However, although powerful and comprehensive, it is not exactly user-friendly.</p>
-<p>A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS’ commands, controlling how to run a particular analysis. The result of each analysis is then redirected to another file, and the user needs to extract values of interest from this file (which is full of redundant information), most likely using more shell scripting or (worse) by manual copy-pasting. The results are then analysed in R, Excel or another program.</p>
-<p>This workflow is very cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow good practices of reproducible science.</p>
-<p>This R package makes it possible to perform all stages of ADMIXTOOLS analysis entirely from within R. It provides a set of convenient functions that completely abstract away the need for “low level” configuration of individual ADMIXTOOLS programs, allowing the user to focus on the analysis itself.</p>
+<p><a href="http://www.genetics.org/content/192/3/1065">ADMIXTOOLS</a> is a widely used software package for calculating admixture statistics and testing population admixture hypotheses. However, although powerful and comprehensive, it is not really user-friendly.</p>
+<p>A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS’ commands, and control how to run a particular analysis. The results are then redirected to another file, and the user needs to extract values of interest from this file (which is full of redundant information), often using additional command-line utilities, or (worse) by manual copy-pasting. The processed results are then analysed in R, Excel or another program.</p>
+<p>This workflow is very cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow good practices of reproducible science, as it is nearly impossible to construct reproducible automated “pipelines”.</p>
+<p>This R package makes it possible to perform all stages of ADMIXTOOLS analyses entirely from within R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>To install <code>admixr</code> from Github you need to install the package <code>devtools</code> first. To do this, you can simply run:</p>
+<p>To install <code>admixr</code> from GitHub you need to install the package <code>devtools</code> first. To do this, you can simply run (in R):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</a></code></pre></div>
-<p>Furthermore, if you want to follow the examples in this vignette, you will need the <a href="https://www.tidyverse.org">tidyverse</a> collection of packages, which you can install with:</p>
+<p>Furthermore, if you want to follow the examples in this vignette, you will need the <a href="https://www.tidyverse.org">tidyverse</a> collection of packages for convenient data analysis, which you can install with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</a></code></pre></div>
 <p>When everything is ready, you can load both packages:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────── tidyverse 1.2.1 ──</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ──</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; ✔ ggplot2 3.0.0     ✔ purrr   0.2.5</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; ✔ tibble  1.4.2     ✔ dplyr   0.7.6</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; ✔ tidyr   0.8.1     ✔ stringr 1.3.1</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.3.0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ── Conflicts ────────────────────────────────────── tidyverse_conflicts() ──</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ── Conflicts ────────────────────────────────────────────────────── tidyverse_conflicts() ──</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a></code></pre></div>
-<p><strong>Note that in order to run <code>admixr</code> analyses, you need a working installation of ADMIXTOOLS!</strong> Explaining how to compile it is beyond the scope of this document, but you can find help <a href="https://github.com/DReichLab/AdmixTools">here</a>. <strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code>library(admixr)</code> will give a message with instructions on how to do this.</p>
+<p><strong>Note that in order to run <code>admixr</code> analyses, you need a working installation of ADMIXTOOLS!</strong> Explaining how to compile it is beyond the scope of this document, but you can find help <a href="https://github.com/DReichLab/AdmixTools">here</a>. <strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code>library(admixr)</code> will show a warning message with instructions on how to fix this.</p>
 </div>
-<div id="a-note-about-eigenstrat-files-and-admixtools" class="section level2">
+<div id="a-note-about-eigenstrat-files" class="section level2">
 <h2 class="hasAnchor">
-<a href="#a-note-about-eigenstrat-files-and-admixtools" class="anchor"></a>A note about EIGENSTRAT files and ADMIXTOOLS</h2>
+<a href="#a-note-about-eigenstrat-files" class="anchor"></a>A note about EIGENSTRAT files</h2>
 <p>If you have an EIGENSTRAT “triplet” of files ready, and just want to know how to calculate different admixture statistics, feel free to skip this section.</p>
 <div id="eigenstrat-file-format" class="section level3">
 <h3 class="hasAnchor">
 <a href="#eigenstrat-file-format" class="anchor"></a>EIGENSTRAT file format</h3>
 <p>ADMIXTOOLS software uses a peculiar set of genetic file formats, which seem strange if you are used to working with <a href="http://samtools.github.io/hts-specs/VCFv4.3.pdf">VCF files</a>. However, the basic idea remains the same - we want to store and access SNP data (REF/ALT alleles) of a set of individuals at a defined set of genomic positions.</p>
-<p>EIGENSTRAT datasets always contain three kinds of files:</p>
+<p>EIGENSTRAT data sets always contain three kinds of files:</p>
 <ul>
 <li>
 <code>ind</code> file - specifies name, sex and population assignment of each sample</li>
 <li>
 <code>snp</code> file - specifies positions of SNPs, REF/ALT alleles etc.</li>
 <li>
-<code>geno</code> file - specifies SNP data in a dense string-based format:
+<code>geno</code> file - specifies SNP data (one row per site) in a dense string-based format:
 <ul>
-<li>0: homozygous ALT</li>
-<li>1: heterozygote</li>
-<li>2: homozygous REF</li>
-<li>9: missing site</li>
+<li>0: individual is homozygous ALT</li>
+<li>1: individual is a heterozygote</li>
+<li>2: individual is homozygous REF</li>
+<li>9: missing data</li>
 </ul>
 </li>
 </ul>
 <p>As you can see, a VCF file is essentially a combination of all three files in a single file. Luckily for us, all three EIGENSTRAT files usually share a common path and prefix (at least you should try to make it so whenever you work with them). This allows us to work with just the prefix, instead of worrying about individual files.</p>
-<p>As such, all main <code>admixr</code> functions accept an argument called <code>prefix</code>, which specifies the path to and prefix of all three EIGENSTRAT files (you can still work with individual files if you need to, using <code>ind</code>, <code>snp</code> and <code>geno</code> arguments of each <code>admixr</code> function, but try to avoid that).</p>
-<p>Here is a prefix of a small testing SNP dataset that’s distributed with <code>admixr</code>. We will be using this dataset in the rest of this vignette.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">(eigen &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">system.file</span>(<span class="dt">package =</span> <span class="st">"admixr"</span>, <span class="st">"extdata"</span>), <span class="st">"snps"</span>))</a>
+<p>As such, all main <code>admixr</code> functions accept a <code>prefix</code> argument, which specifies the path and prefix of all three EIGENSTRAT files (you can still work with individual files if you need to, using <code>ind</code>, <code>snp</code> and <code>geno</code> arguments of each <code>admixr</code> function, but try to avoid that, as it makes your code mode verbose).</p>
+<p>Here is a prefix of a small testing SNP data set that’s distributed with <code>admixr</code>. We will be using this data set in the rest of this vignette.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">(eigenstrat &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">system.file</span>(<span class="dt">package =</span> <span class="st">"admixr"</span>, <span class="st">"extdata"</span>), <span class="st">"snps"</span>))</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps"</span></a></code></pre></div>
 <p>We can verify that there are three files with this prefix, as they should be:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">dir</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(eigen), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">dir</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(eigenstrat), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.geno"</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind" </span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.snp"</span></a></code></pre></div>
 <p>Let’s look at their contents.</p>
-<p><strong><code>ind</code> file</strong></p>
+<div id="ind-file" class="section level4">
+<h4 class="hasAnchor">
+<a href="#ind-file" class="anchor"></a><code>ind</code> file</h4>
 <pre><code>#&gt; Chimp    U   Chimp
 #&gt; Mbuti    U   Mbuti
 #&gt; Yoruba   U   Yoruba
@@ -169,21 +172,29 @@
 #&gt; Vindija  U   Vindija
 #&gt; Altai    U   Altai
 #&gt; Denisova U   Denisova</code></pre>
-<p><strong><code>snp</code> file</strong> (first 3 lines)</p>
+<p>The first column (individual ID) and the third column (population label) are generally not the same (individual IDs often having numerical suffixes, etc.), but are the same here for simplicity. Importantly, when specifying population/sample arguments in <code>admixr</code> functions, the information in the third column is what is used. For example, if you have individuals such as “French1”, “French2”, “French3” in the first column, all three sharing a “French” population label in the third column, specifying “French” in an <code>admixr</code> command will combine all three samples in a single population, and will calculate allele frequency from all of them.</p>
+</div>
+<div id="snp-file-first-3-lines" class="section level4">
+<h4 class="hasAnchor">
+<a href="#snp-file-first-3-lines" class="anchor"></a><code>snp</code> file (first 3 lines)</h4>
 <pre><code>#&gt; 1_777122 1   0.007771    777122  A   T
 #&gt; 1_832756 1   0.008328    832756  T   G
 #&gt; 1_834832 1   0.008348    834832  G   C</code></pre>
-<p><strong><code>geno</code> file</strong> (first 3 lines)</p>
+</div>
+<div id="geno-file-first-3-lines" class="section level4">
+<h4 class="hasAnchor">
+<a href="#geno-file-first-3-lines" class="anchor"></a><code>geno</code> file (first 3 lines)</h4>
 <pre><code>#&gt; 9220000000000
 #&gt; 9022021012000
 #&gt; 9022021012000</code></pre>
+</div>
 </div>
 </div>
 <div id="philosophy-of-admixr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#philosophy-of-admixr" class="anchor"></a>Philosophy of <code>admixr</code>
 </h2>
-<p>The goal of <code>admixr</code> is to make ADMIXTOOLS analyses as trivial to perform as possible, without having to worry about par/pop/log/left/right files (in ADMIXTOOLS’ jargon) and other low-level details.</p>
+<p>The goal of <code>admixr</code> is to make ADMIXTOOLS analyses as trivial to perform as possible, without having to worry about par/pop/left/right configuration files (as they are known in ADMIXTOOLS’ jargon) and other low-level details.</p>
 <p>The only interface between you and ADMIXTOOLS is the following set of R functions:</p>
 <ul>
 <li><code><a href="../reference/d.html">d()</a></code></li>
@@ -193,21 +204,20 @@
 <li><code><a href="../reference/qpAdm.html">qpAdm()</a></code></li>
 </ul>
 <p>Anything that would normally require <a href="https://gaworkshop.readthedocs.io/en/latest/contents/06_f3/f3.html">dozens of lines of shell scripts</a> can be (most of the time) accomplished by running a single line of R code.</p>
-</div>
-<div id="using-the-main-functions-of-admixr" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-the-main-functions-of-admixr" class="anchor"></a>Using the main functions of <code>admixr</code>
-</h2>
 <p>The following sections describe the usage of <code>admixr</code> on a set of example analyses that one might be interested in doing.</p>
-<div id="d-statistic-d-function" class="section level3">
-<h3 class="hasAnchor">
-<a href="#d-statistic-d-function" class="anchor"></a><span class="math inline">\(D\)</span> statistic — <code><a href="../reference/d.html">d()</a></code> function</h3>
-<p>Next question we could ask is - how closely related are different African populations to non-Africans today? One way to look at this is using the following D statistic: <span class="math inline">\(D(\textrm{non-African}, \textrm{Denisova}, \textrm{African Y}, \textrm{Chimp})\)</span>. This statistic is simply based on counting sites that match an African <span class="math inline">\(Y\)</span>, and is informative about the “branching” order of non-Africans from non-Africans over time. The more positive this <span class="math inline">\(D\)</span> statistic is, the more recently did non-Africans split from an African population <span class="math inline">\(Y\)</span>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># save sample names into variables for more readable code</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">nonafr &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">afr &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Dinka"</span>)</a></code></pre></div>
-<p>Then we can simply run:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/d.html">d</a></span>(<span class="dt">W =</span> nonafr, <span class="dt">X =</span> <span class="st">"Denisova"</span>, <span class="dt">Y =</span> afr, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigen)</a></code></pre></div>
+</div>
+<div id="d-statistic" class="section level2">
+<h2 class="hasAnchor">
+<a href="#d-statistic" class="anchor"></a><span class="math inline">\(D\)</span> statistic</h2>
+<p>Let’s say we are interested in the following question: <em>"Which populations today show evidence of Neanderthal admixture?</em></p>
+<p>One way of looking at this is using the following D statistic: <span class="math display">\[D(\textrm{present-day human W}, \textrm{African}, \textrm{Neanderthal}, \textrm{Chimp}).\]</span> All <span class="math inline">\(D\)</span> statistics are based on comparing the proportions of BABA and ABBA sites patterns observed in data:</p>
+<p><span class="math display">\[ D = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# BABA sites + # ABBA sites}}.\]</span></p>
+<p>Significant departure of <span class="math inline">\(D\)</span> from zero indicates an excess of allele sharing between the first and the third population (positive <span class="math inline">\(D\)</span>), or an excess of allele sharing between the second and the third population (negative <span class="math inline">\(D\)</span>). If we get <span class="math inline">\(D\)</span> that is not significantly different from 0, this suggests that the first and second populations form a clade, and don’t differ in their genetic affinity to the third population.</p>
+<p>Therefore, our <span class="math inline">\(D\)</span> statistic above simply tests whether some modern humans today admixed with Neanderthals, which would increase their genetic affinity to this archaic group compared to West Africans (whose ancestors never met Neanderthals).</p>
+<p>Let’s save the population names first to make the code below more readable:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">pops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>)</a></code></pre></div>
+<p>Then we can calculate the <span class="math inline">\(D\)</span> statistic above by running:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/d.html">d</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
 <p>Which will return the following <code>data.frame</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
@@ -226,79 +236,79 @@
 <tbody>
 <tr class="odd">
 <td align="left">French</td>
-<td align="left">Denisova</td>
-<td align="left">Khomani_San</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.3922</td>
-<td align="right">0.007191</td>
-<td align="right">54.543</td>
-<td align="right">13710</td>
-<td align="right">5985</td>
-<td align="right">194959</td>
+<td align="right">0.0233</td>
+<td align="right">0.008729</td>
+<td align="right">2.665</td>
+<td align="right">6296</td>
+<td align="right">6010</td>
+<td align="right">195040</td>
 </tr>
 <tr class="even">
-<td align="left">French</td>
-<td align="left">Denisova</td>
-<td align="left">Mbuti</td>
+<td align="left">Sardinian</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.4255</td>
-<td align="right">0.006923</td>
-<td align="right">61.465</td>
-<td align="right">14683</td>
-<td align="right">5918</td>
+<td align="right">0.0184</td>
+<td align="right">0.008292</td>
+<td align="right">2.216</td>
+<td align="right">6278</td>
+<td align="right">6052</td>
 <td align="right">194981</td>
 </tr>
 <tr class="odd">
-<td align="left">French</td>
-<td align="left">Denisova</td>
+<td align="left">Han</td>
 <td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.4793</td>
-<td align="right">0.006408</td>
-<td align="right">74.785</td>
-<td align="right">16533</td>
-<td align="right">5820</td>
-<td align="right">194985</td>
+<td align="right">0.0344</td>
+<td align="right">0.008920</td>
+<td align="right">3.853</td>
+<td align="right">6396</td>
+<td align="right">5971</td>
+<td align="right">195120</td>
 </tr>
 <tr class="even">
-<td align="left">French</td>
-<td align="left">Denisova</td>
-<td align="left">Dinka</td>
+<td align="left">Papuan</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.5158</td>
-<td align="right">0.006256</td>
-<td align="right">82.441</td>
-<td align="right">17286</td>
-<td align="right">5522</td>
-<td align="right">195010</td>
+<td align="right">0.0474</td>
+<td align="right">0.008791</td>
+<td align="right">5.387</td>
+<td align="right">6475</td>
+<td align="right">5890</td>
+<td align="right">195040</td>
 </tr>
 <tr class="odd">
-<td align="left">Sardinian</td>
-<td align="left">Denisova</td>
 <td align="left">Khomani_San</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.3915</td>
-<td align="right">0.007093</td>
-<td align="right">55.196</td>
-<td align="right">13924</td>
-<td align="right">6089</td>
-<td align="right">194883</td>
+<td align="right">0.0074</td>
+<td align="right">0.008169</td>
+<td align="right">0.906</td>
+<td align="right">6485</td>
+<td align="right">6390</td>
+<td align="right">194960</td>
 </tr>
 <tr class="even">
-<td align="left">Sardinian</td>
-<td align="left">Denisova</td>
 <td align="left">Mbuti</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.4254</td>
-<td align="right">0.006664</td>
-<td align="right">63.838</td>
-<td align="right">14918</td>
-<td align="right">6013</td>
-<td align="right">194908</td>
+<td align="right">0.0042</td>
+<td align="right">0.008142</td>
+<td align="right">0.514</td>
+<td align="right">6330</td>
+<td align="right">6277</td>
+<td align="right">194994</td>
 </tr>
 </tbody>
 </table>
-<p>We can see that the resulting <code>data.frame</code> object contains all the input information, but also additional statistics:</p>
+<p>We can see that this <code>data.frame</code> object contains all the input information, but contains additional columns:</p>
 <ul>
 <li>
 <code>D</code> - <span class="math inline">\(D\)</span> statistic value</li>
@@ -312,24 +322,20 @@
 <code>nsnps</code> - number of SNPs used for the calculation in this row</li>
 </ul>
 <p>The format of output tables from other other <code>admixr</code> functions is very similar.</p>
-<p>In general, tables are not the best representation of this kind of data, especially as the number of samples increases. This is how we can plot the results instead (using the <a href="https://ggplot2.tidyverse.org"><code>ggplot2</code></a> package):</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">ggplot</span>(result, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(Y, D), D, <span class="dt">color =</span> W)) <span class="op">+</span></a>
+<p>While we could certainly make some inferences straight from this table by looking at the <span class="math inline">\(Z\)</span> scores, tables in general are not the best representation of this kind of data, especially as the number of samples increases. This is how we can use the <a href="https://ggplot2.tidyverse.org"><code>ggplot2</code></a> package to plot the results:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">ggplot</span>(result, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(W, D), D, <span class="dt">color =</span> <span class="kw">abs</span>(Zscore) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"African population Y"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> D <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr, <span class="dt">ymax =</span> D <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr))</a></code></pre></div>
 <p><img src="overview_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
-<p>We can see that the closest African population to non-Africans today are East African <a href="https://en.wikipedia.org/wiki/Dinka">Dinka</a> (indicated by the highest <span class="math inline">\(D\)</span> statistic value), which is consistent with the hypothesis that the ancestors of all non-Africans today split from the East African lineage during the Out of Africa migration. Decreasing values of the <span class="math inline">\(D\)</span> statistic for Yoruba, Mbuti and San fits with what we know about the split times of African from <a href="http://science.sciencemag.org/content/early/2017/09/27/science.aao6266">other</a> <a href="https://www.cell.com/cell/abstract/S0092-8674(17)31008-5">studies</a>, with San being the most divergent modern human population, followed by Mbuti, Yoruba and Dinka.</p>
+<p>We can see that all three Africans have <span class="math inline">\(D\)</span> consistent with 0, meaning that the data is consistent with the null hypothesis of no significant Neanderthal ancestry in Africans. On the other hand, the test rejects the null hypothesis for all non-Africans today, suggesting that Neanderthals admixed with the ancestors of present-day non-Africans. In fact, this is a similar test to the one that was used as evidence supporting the Neanderthal admixture hypothesis in the first place!</p>
 </div>
-</div>
-<div id="f_4-statistic-f4-function" class="section level2">
+<div id="f_4-statistic" class="section level2">
 <h2 class="hasAnchor">
-<a href="#f_4-statistic-f4-function" class="anchor"></a><span class="math inline">\(f_4\)</span> statistic — <code><a href="../reference/f4.html">f4()</a></code> function</h2>
-<p>An alternative way of addressing the previous question is to use the <span class="math inline">\(f_4\)</span> statistic, which is very similar to <span class="math inline">\(D\)</span> statistic. In fact, if <span class="math inline">\(D\)</span> is calculated as</p>
-<p><span class="math display">\[ D = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# BABA sites + # ABBA sites}},\]</span></p>
-<p><span class="math inline">\(f_4\)</span> statistic is simply obtained by skipping the normalization step, and is equal to the numerator of the <span class="math inline">\(D\)</span> statistic. Therefore,</p>
-<p><span class="math display">\[ f_4 = \textrm{# BABA sites - # ABBA sites}\]</span></p>
-<p>Sometime one is more convenient than other though, so <code>admixr</code> provides a separate function for calculating <span class="math inline">\(f_4\)</span> statistics called <code>f4</code>.</p>
+<a href="#f_4-statistic" class="anchor"></a><span class="math inline">\(f_4\)</span> statistic</h2>
+<p>An alternative way of addressing the previous question is to use the <span class="math inline">\(f_4\)</span> statistic, which is very similar to <span class="math inline">\(D\)</span> statistic and can be calculated as:</p>
+<p><span class="math display">\[ f_4 = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# sites}}\]</span> Again, significant departure of <span class="math inline">\(f_4\)</span> from 0 is informative about gene flow, in an analogous way to <span class="math inline">\(D\)</span> statistic.</p>
 <p>To repeat the previous analysis using <span class="math inline">\(f_4\)</span> statistic, we can run:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4.html">f4</a></span>(<span class="dt">W =</span> nonafr, <span class="dt">X =</span> <span class="st">"Denisova"</span>, <span class="dt">Y =</span> afr, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigen)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4.html">f4</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -347,95 +353,93 @@
 <tbody>
 <tr class="odd">
 <td align="left">French</td>
-<td align="left">Denisova</td>
-<td align="left">Khomani_San</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.039622</td>
-<td align="right">0.000797</td>
-<td align="right">49.704</td>
-<td align="right">13710</td>
-<td align="right">5985</td>
-<td align="right">194959</td>
+<td align="right">0.001468</td>
+<td align="right">0.000551</td>
+<td align="right">2.663</td>
+<td align="right">6296</td>
+<td align="right">6010</td>
+<td align="right">195040</td>
 </tr>
 <tr class="even">
-<td align="left">French</td>
-<td align="left">Denisova</td>
-<td align="left">Mbuti</td>
+<td align="left">Sardinian</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.044957</td>
-<td align="right">0.000784</td>
-<td align="right">57.329</td>
-<td align="right">14683</td>
-<td align="right">5918</td>
+<td align="right">0.001162</td>
+<td align="right">0.000525</td>
+<td align="right">2.212</td>
+<td align="right">6278</td>
+<td align="right">6052</td>
 <td align="right">194981</td>
 </tr>
 <tr class="odd">
-<td align="left">French</td>
-<td align="left">Denisova</td>
+<td align="left">Han</td>
 <td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.054941</td>
-<td align="right">0.000851</td>
-<td align="right">64.572</td>
-<td align="right">16533</td>
-<td align="right">5820</td>
-<td align="right">194985</td>
+<td align="right">0.002178</td>
+<td align="right">0.000567</td>
+<td align="right">3.838</td>
+<td align="right">6396</td>
+<td align="right">5971</td>
+<td align="right">195120</td>
 </tr>
 <tr class="even">
-<td align="left">French</td>
-<td align="left">Denisova</td>
-<td align="left">Dinka</td>
+<td align="left">Papuan</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.060324</td>
-<td align="right">0.000889</td>
-<td align="right">67.865</td>
-<td align="right">17286</td>
-<td align="right">5522</td>
-<td align="right">195010</td>
+<td align="right">0.003002</td>
+<td align="right">0.000559</td>
+<td align="right">5.374</td>
+<td align="right">6475</td>
+<td align="right">5890</td>
+<td align="right">195040</td>
 </tr>
 <tr class="odd">
-<td align="left">Sardinian</td>
-<td align="left">Denisova</td>
 <td align="left">Khomani_San</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.040205</td>
-<td align="right">0.000804</td>
-<td align="right">50.007</td>
-<td align="right">13924</td>
-<td align="right">6089</td>
-<td align="right">194883</td>
+<td align="right">0.000489</td>
+<td align="right">0.000540</td>
+<td align="right">0.905</td>
+<td align="right">6485</td>
+<td align="right">6390</td>
+<td align="right">194960</td>
 </tr>
 <tr class="even">
-<td align="left">Sardinian</td>
-<td align="left">Denisova</td>
 <td align="left">Mbuti</td>
+<td align="left">Yoruba</td>
+<td align="left">Vindija</td>
 <td align="left">Chimp</td>
-<td align="right">0.045688</td>
-<td align="right">0.000784</td>
-<td align="right">58.260</td>
-<td align="right">14918</td>
-<td align="right">6013</td>
-<td align="right">194908</td>
+<td align="right">0.000271</td>
+<td align="right">0.000526</td>
+<td align="right">0.514</td>
+<td align="right">6330</td>
+<td align="right">6277</td>
+<td align="right">194994</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">ggplot</span>(result, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(Y, f4), f4, <span class="dt">color =</span> W)) <span class="op">+</span></a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">ggplot</span>(result, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(W, f4), f4, <span class="dt">color =</span> <span class="kw">abs</span>(Zscore) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"African population Y"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> f4 <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr, <span class="dt">ymax =</span> f4 <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr))</a></code></pre></div>
 <p><img src="overview_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
-<p>As we can see, we can make the same conclusion using <span class="math inline">\(f_4\)</span> statistic. The higher the <span class="math inline">\(f_4\)</span> value, the more shared drift occured between the samples <span class="math inline">\(W\)</span> and <span class="math inline">\(Y\)</span>. In other words, because the amount of drift on a branch is equivalent to the length of that branch (i.e. time), higher values of <span class="math inline">\(f_4\)</span> indicate a more recent split between <span class="math inline">\(W\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>As we can see by comparing this result to the <span class="math inline">\(D\)</span> statistic result, we can make the same conclusions.</p>
+<p>You might be wondering why we have both <span class="math inline">\(f_4\)</span> and <span class="math inline">\(D\)</span> if they are so similar. The truth is that <span class="math inline">\(f_4\)</span> is directly informative about the amount of shared genetic drift (the “branch length”) between pairs of populations which is, in many cases, a very useful theoretical property. Other than that, it’s often a matter of personal preference, and so <code>admixr</code> provides a separate functions for calculating both.</p>
 </div>
-<div id="f_4-ratio-statistic-f4ratio-function" class="section level2">
+<div id="f_4-ratio-statistic" class="section level2">
 <h2 class="hasAnchor">
-<a href="#f_4-ratio-statistic-f4ratio-function" class="anchor"></a><span class="math inline">\(f_4\)</span>-ratio statistic — <code><a href="../reference/f4ratio.html">f4ratio()</a></code> function</h2>
-<p>If we are einterested in estimating the <em>proportion</em> of ancestry coming from a parental lineage, we can use ratio of <span class="math inline">\(f_4\)</span> statistics.</p>
-<p>For example, we might be interested in knowing what is the proportion of Neandertal ancestry in a set of present-day humans. Using the nomenclature of Patterson et al. 2012, we can perform this calculation using the following code (<code>X</code> being a vector of samples in which we want to estimate Neandertal ancestry):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">  <span class="dt">X =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Dinka"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Khomani_San"</span>),</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">  <span class="dt">A =</span> <span class="st">"Altai"</span>, <span class="dt">B =</span> <span class="st">"Vindija"</span>, <span class="dt">C =</span> <span class="st">"Yoruba"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>,</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">  <span class="dt">prefix =</span> eigen</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">)</a></code></pre></div>
-<p>The ancestry proportion (number between 0 and 1) is given in the “alpha” column:</p>
+<a href="#f_4-ratio-statistic" class="anchor"></a><span class="math inline">\(f_4\)</span>-ratio statistic</h2>
+<p>Now we know that non-Africans today carry <em>some</em> Neanderthal ancestry. But what if we want to know <em>how much</em> Neanderthal ancestry they have? What proportion of their genomes is of Neanderthal origin?</p>
+<p>In general, when we are interested in estimating the <em>proportion</em> of ancestry coming from a parental lineage, we can use ratio of <span class="math inline">\(f_4\)</span> statistics. The theory between <span class="math inline">\(f_4\)</span>-ratios is slightly more complicated and we can’t explain it here, but if you’re interested in the technical details XXX</p>
+<p>Using the nomenclature of Patterson et al. 2012, we can perform calculate <span class="math inline">\(f_4\)</span>-ratios using the following code (<code>X</code> being a vector of samples in which we want to estimate Neanderthal ancestry):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(<span class="dt">X =</span> pops, <span class="dt">A =</span> <span class="st">"Altai"</span>, <span class="dt">B =</span> <span class="st">"Vindija"</span>, <span class="dt">C =</span> <span class="st">"Yoruba"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat )</a></code></pre></div>
+<p>The ancestry proportion (a number between 0 and 1) is given in the <code>alpha</code> column:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -492,12 +496,12 @@
 <tr class="odd">
 <td align="left">Altai</td>
 <td align="left">Vindija</td>
-<td align="left">Dinka</td>
+<td align="left">Khomani_San</td>
 <td align="left">Yoruba</td>
 <td align="left">Chimp</td>
-<td align="right">-0.004999</td>
-<td align="right">0.007186</td>
-<td align="right">-0.696</td>
+<td align="right">0.004076</td>
+<td align="right">0.007621</td>
+<td align="right">0.535</td>
 </tr>
 <tr class="even">
 <td align="left">Altai</td>
@@ -517,13 +521,109 @@
 <a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-5" data-line-number="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Neandertal ancestry proportion"</span>, <span class="dt">x =</span> <span class="st">"present-day individual"</span>)</a></code></pre></div>
 <p><img src="overview_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
-<p>Despite the wide confidence intervals (caused by a very low number of SNPs in our testing dataset), we can make several interesting observations:</p>
+<p>We can make several observations:</p>
 <ul>
-<li>We don’t see any significant Neandertal ancestry in present-day Africans (proportion consistent with 0).</li>
-<li>Present-day non-Africans carry between 2-3% of Neandertal ancestry.</li>
-<li>We see a much higher proportion of Neandertal ancestry in people from Papua New Guinea, consistent with previous studies of this population.</li>
+<li>Again, we don’t see any significant Neanderthal ancestry in present-day Africans (proportion consistent with 0%), which is what we confirmed using <span class="math inline">\(D\)</span> and <span class="math inline">\(f_4\)</span> above.</li>
+<li>Present-day non-Africans carry between 2-3% of Neanderthal ancestry.</li>
+<li>We see a much higher proportion of Neanderthal ancestry in people from Papua New<br>
+Guinea - more than 4%!</li>
 </ul>
-<p>Again, as you can see, we got a nice “publication-ready” figure in just a few lines of R code! No shell, no <code>awk/grep</code>, no manual editing and no copy-pasting required. 👍</p>
+</div>
+<div id="f_3-statistic" class="section level2">
+<h2 class="hasAnchor">
+<a href="#f_3-statistic" class="anchor"></a><span class="math inline">\(f_3\)</span> statistic</h2>
+<p>The <span class="math inline">\(f_3\)</span> statistic, also known as the 3-population statistic, is useful whenever we want to:</p>
+<ol style="list-style-type: decimal">
+<li>Estimate the branch length (shared genetic drift) between a pair of populations <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> with respect to a common outgroup <span class="math inline">\(C\)</span>. In this case, the higher the <span class="math inline">\(f_3\)</span> value, the longer the shared evolutionary time between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</li>
+<li>Test whether population <span class="math inline">\(C\)</span> is a mixture of two parental populations <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. Negative value of the <span class="math inline">\(f_3\)</span> statistic then serves as statistical evidence of this admixture.</li>
+</ol>
+<p>As an example, imagine we are interested in relative divergence times between pairs of present-day human populations, and want to know in which approximate order they split of from each other. To address this problem, we could use <span class="math inline">\(f_3\)</span> statistic by fixing the <span class="math inline">\(C\)</span> outgroup as Chimp, and calculating pairwise <span class="math inline">\(f_3\)</span> statistics between all pairs of present-day modern humans.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">pops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f3.html">f3</a></span>(<span class="dt">A =</span> pops, <span class="dt">B =</span> pops, <span class="dt">C =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="right">f3</th>
+<th align="right">stderr</th>
+<th align="right">Zscore</th>
+<th align="right">nsnps</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">French</td>
+<td align="left">Sardinian</td>
+<td align="left">Chimp</td>
+<td align="right">6.991000e+14</td>
+<td align="right">2.035678e+12</td>
+<td align="right">343.424</td>
+<td align="right">90378</td>
+</tr>
+<tr class="even">
+<td align="left">French</td>
+<td align="left">Han</td>
+<td align="left">Chimp</td>
+<td align="right">6.658685e+14</td>
+<td align="right">1.982191e+12</td>
+<td align="right">335.925</td>
+<td align="right">91942</td>
+</tr>
+<tr class="odd">
+<td align="left">French</td>
+<td align="left">Papuan</td>
+<td align="left">Chimp</td>
+<td align="right">6.532613e+14</td>
+<td align="right">2.068070e+12</td>
+<td align="right">315.880</td>
+<td align="right">90734</td>
+</tr>
+<tr class="even">
+<td align="left">French</td>
+<td align="left">Khomani_San</td>
+<td align="left">Chimp</td>
+<td align="right">4.884753e+14</td>
+<td align="right">1.665916e+12</td>
+<td align="right">293.217</td>
+<td align="right">97516</td>
+</tr>
+<tr class="odd">
+<td align="left">French</td>
+<td align="left">Mbuti</td>
+<td align="left">Chimp</td>
+<td align="right">5.061458e+14</td>
+<td align="right">1.616864e+12</td>
+<td align="right">313.042</td>
+<td align="right">101399</td>
+</tr>
+<tr class="even">
+<td align="left">French</td>
+<td align="left">Dinka</td>
+<td align="left">Chimp</td>
+<td align="right">5.651877e+14</td>
+<td align="right">1.722862e+12</td>
+<td align="right">328.052</td>
+<td align="right">103154</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># sort the population labels according to an increasing f3 value relative to French</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">ordered &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">filter</span>(result, A <span class="op">==</span><span class="st"> "French"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(f3) <span class="op">%&gt;%</span><span class="st"> </span>.[[<span class="st">"B"</span>]], <span class="st">"French"</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co"># plot heatmap of pairwise f3 values</span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">result <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">A =</span> <span class="kw">factor</span>(A, <span class="dt">levels =</span> ordered),</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7">         <span class="dt">B =</span> <span class="kw">factor</span>(B, <span class="dt">levels =</span> ordered)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(A, B)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> f3)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</a></code></pre></div>
+<p><img src="overview_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<p>We can see that when we order the heat map labels based on values of pairwise <span class="math inline">\(f_3\)</span> statistics, the decreasing divergence times between human populations (left to right and bottom up) shows beautifully.</p>
+</div>
+<div id="qpadm-method" class="section level2">
+<h2 class="hasAnchor">
+<a href="#qpadm-method" class="anchor"></a>qpAdm method</h2>
+<p>The last ADMIXTOOLS method implemented in <code>admixr</code> is qpAdm. Unfortunately, it is also one that is the most complex and has not been properly described and peer-reviewed yet. Nevertheless, it has a lot of power to disentangle complex admixture scenarios and we provide a convenient wrapper for it as well.</p>
 </div>
   </div>
 
@@ -534,11 +634,13 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#installation">Installation</a></li>
-      <li><a href="#a-note-about-eigenstrat-files-and-admixtools">A note about EIGENSTRAT files and ADMIXTOOLS</a></li>
+      <li><a href="#a-note-about-eigenstrat-files">A note about EIGENSTRAT files</a></li>
       <li><a href="#philosophy-of-admixr">Philosophy of <code>admixr</code></a></li>
-      <li><a href="#using-the-main-functions-of-admixr">Using the main functions of <code>admixr</code></a></li>
-      <li><a href="#f_4-statistic-f4-function"><span class="math inline">\(f_4\)</span> statistic — <code><a href="--/reference/f4-html">f4()</a></code> function</a></li>
-      <li><a href="#f_4-ratio-statistic-f4ratio-function"><span class="math inline">\(f_4\)</span>-ratio statistic — <code><a href="--/reference/f4ratio-html">f4ratio()</a></code> function</a></li>
+      <li><a href="#d-statistic"><span class="math inline">\(D\)</span> statistic</a></li>
+      <li><a href="#f_4-statistic"><span class="math inline">\(f_4\)</span> statistic</a></li>
+      <li><a href="#f_4-ratio-statistic"><span class="math inline">\(f_4\)</span>-ratio statistic</a></li>
+      <li><a href="#f_3-statistic"><span class="math inline">\(f_3\)</span> statistic</a></li>
+      <li><a href="#qpadm-method">qpAdm method</a></li>
       </ul>
 </div>
       </div>
