@@ -41,20 +41,19 @@ really user-friendly.
 
 A typical ADMIXTOOLS workflow usually involves a combination of `sed`/`awk`/shell
 scripting and manual editing to create different configuration files. These are then
-passed as command-line arguments to one of ADMIXTOOLS' commands, and control how
+passed as command-line arguments to one of ADMIXTOOLS' commands and control how
 to run a particular analysis. The results are then redirected to
-another file, and the user needs to extract values of interest from this file (which
-is full of redundant information), often using additional command-line utilities,
-or (worse) by manual copy-pasting. The processed results are then analysed in R,
-Excel or another program.
+another file, which has to be parsed by the user to extract values of interest,
+often using command-line utilities again or (worse) by manual copy-pasting.
+The processed results are then analysed in R, Excel or another program.
 
 This workflow is very cumbersome, especially if one wants to explore many hypotheses
 involving different combinations of populations. Most importantly, however, it
 makes it difficult to follow good practices of reproducible science, as it is
 nearly impossible to construct reproducible automated "pipelines".
 
-This R package makes it possible to perform all stages of ADMIXTOOLS
-analyses entirely from within R. It provides a set of convenient functions that
+This R package makes it possible to perform all stages of an ADMIXTOOLS
+analysis entirely from within R. It provides a set of convenient functions that
 completely remove the need for "low level" configuration of individual
 ADMIXTOOLS programs, allowing users to focus on the analysis itself.
 
@@ -80,11 +79,12 @@ devtools::install_github("bodkan/admixr")
 Furthermore, if you want to follow the examples in this vignette, you will need the [tidyverse](https://www.tidyverse.org) collection of
 packages for convenient data analysis, which you can install with:
 
-```{r, eval = FALSE}
-install.packages("tidyverse")
+```{r, results = "hide", message = FALSE}
+# specifying 'repos' to avoid Travis CI build errors - not needed in user code
+install.packages("tidyverse", repos = "http://cran.us.r-project.org")
 ```
 
-When everything is ready, you can load both packages:
+When everything is ready, you can run:
 
 ```{r}
 library(admixr)
@@ -361,14 +361,16 @@ genomes is of Neanderthal origin?
 In general, when we are interested in estimating the *proportion* of ancestry
 coming from a parental lineage, we can use ratio of $f_4$ statistics. The theory
 between $f_4$-ratios is slightly more complicated and we can't explain it here,
-but if you're interested in the technical details XXX
+but if you're interested in the technical details I recommend Benjamin Peter's
+[overview](http://www.genetics.org/content/early/2016/02/03/genetics.115.183913)
+and Nick Patterson's [original ADMIXTOOLS paper](http://www.genetics.org/content/192/3/1065).
 
 Using the nomenclature of Patterson et al. 2012, we can perform calculate $f_4$-ratios
 using the following code (`X` being a vector of samples in which we want 
 to estimate Neanderthal ancestry):
 
 ```{r}
-result <- f4ratio(X = pops, A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp", prefix = eigenstrat )
+result <- f4ratio(X = pops, A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp", prefix = eigenstrat)
 ```
 
 The ancestry proportion (a number between 0 and 1) is given in the `alpha`
@@ -448,7 +450,7 @@ ordered <- c(filter(result, A == "French") %>% arrange(f3) %>% .[["B"]], "French
 result %>%
   mutate(A = factor(A, levels = ordered),
          B = factor(B, levels = ordered)) %>%
-  ggplot(aes(A, B)) + geom_tile(aes(fill = f3)) + theme_classic()
+  ggplot(aes(A, B)) + geom_tile(aes(fill = f3))
 ```
 
 We can see that when we order the heat map labels based on values of pairwise
@@ -466,7 +468,7 @@ $f_3$ statistics, the decreasing divergence times between human populations
 The last ADMIXTOOLS method implemented in `admixr` is qpAdm. Unfortunately, it
 is also one that is the most complex and has not been properly described and
 peer-reviewed yet. Nevertheless, it seems to have lot of power to disentangle complex
-admixture scenarios.
+admixture scenarios, and so we included it in our package as well.
 
 Very briefly, qpAdm can be used to estimate admixture proportions coming from
 a series of $N$ source *ancestral* populations, assuming we have reference populations 
@@ -474,7 +476,7 @@ that form clades with those *source* populations and are closer to them than to 
 the specified *outgroup* populations.
 
 Formally, if the Test population has ancestry coming from $N$ ancestral source
-populations, with Reference populations being closer to them then are outgroup
+populations, with Reference populations being closer to them than are outgroup
 populations $O_i$, we can write:
 
 $$f_4(\textrm{Test}, O_a, O_b, O_c) \approx \sum_{i=1}^N \alpha_i f_4(\textrm{Reference}_i, O_a; O_b, O_c),$$
@@ -482,17 +484,19 @@ $$f_4(\textrm{Test}, O_a, O_b, O_c) \approx \sum_{i=1}^N \alpha_i f_4(\textrm{Re
 where $\sum_{i=1}^N \alpha_i = 1$ and $\alpha_i \geq 1$ for all $i = 1, ..., N$.
 
 If this looks like black magic to you, I sincerely apologize and direct you
-to the Supplementary Section 9 of Haak et al., and an [informal write-up](https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf)
+to the Supplementary Section 9 of [Haak et al. 2015](http://www.nature.com/articles/nature14317), and an [informal write-up](https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf)
 distributed with the ADMIXTOOLS software.
 
-Probably the simples possible case to show that qpAdm works is by returning
+Probably the simplest possible case to show that qpAdm works is by returning
 to the question of estimating Neanderthal ancestry proportions. Let's define:
 
-- *target* European populations to estimate ancestry proportions for
-- *source* populations as Vindija Neanderthal and African (two sources of
-  ancestries in all modern humans)
-- *outgroup* populations Chimp, Altai Neanderthal and Denisovan (which are further
-  from the true ancestral populations as the *source* populations)
+- *target* populations to estimate ancestry proportions for - Europeans in this case
+- *reference* populations - Vindija Neanderthal and an African (two potential sources of
+  ancestries in Europeans today)
+- *outgroup* populations - Chimp, Altai Neanderthal and Denisovan (which are all
+  further from the true ancestral populations than the *reference* populations)
+
+Then we can run qpAdm with:
 
 ```{r}
 result <- qpAdm(
@@ -502,3 +506,16 @@ result <- qpAdm(
   prefix = eigenstrat
 )
 ```
+
+And we get the result as a `data.frame` again:
+```{r, eval=FALSE}
+result
+```
+
+```{r, echo=FALSE}
+knitr::kable(result)
+```
+
+
+Note that we get admixture proportions standard errors for each potential
+source in columns.

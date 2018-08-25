@@ -136,9 +136,9 @@ f3 <- function(A, B, C,
 qpAdm <- function(target, refs, outgroups,
                   prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
                   badsnp = NULL, outdir = NULL) {
-  check_presence(c(targets, refs, outgroups), prefix, ind)
+  check_presence(c(target, refs, outgroups), prefix, ind)
   
-  dplyr::bind_rows(lapply(targets, function(X) {
+  dplyr::bind_rows(lapply(target, function(X) {
     # get the path to the population, parameter and log files
     setup <- paste0("qpAdm")
     config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))

@@ -11,8 +11,8 @@ status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](http
 
 ***“Make ADMIXTOOLS fun again\!”***
 
-**TL;DR** Perform ADMIXTOOLS analyses directly from R, without ever
-having to deal with par/pop/log files again.
+**TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to
+deal with par/pop/log files ever again.
 
 ## Introduction
 
@@ -24,12 +24,11 @@ comprehensive, it is not really user-friendly.
 A typical ADMIXTOOLS workflow usually involves a combination of
 `sed`/`awk`/shell scripting and manual editing to create different
 configuration files. These are then passed as command-line arguments to
-one of ADMIXTOOLS’ commands, and control how to run a particular
-analysis. The results are then redirected to another file, and the user
-needs to extract values of interest from this file (which is full of
-redundant information), often using additional command-line utilities,
-or (worse) by manual copy-pasting. The processed results are then
-analysed in R, Excel or another program.
+one of ADMIXTOOLS’ commands and control how to run a particular
+analysis. The results are then redirected to another file, which has to
+be parsed by the user to extract values of interest, often using
+command-line utilities again or (worse) by manual copy-pasting. The
+processed results are then analysed in R, Excel or another program.
 
 This workflow is very cumbersome, especially if one wants to explore
 many hypotheses involving different combinations of populations. Most
@@ -37,8 +36,8 @@ importantly, however, it makes it difficult to follow good practices of
 reproducible science, as it is nearly impossible to construct
 reproducible automated “pipelines”.
 
-This R package makes it possible to perform all stages of ADMIXTOOLS
-analyses entirely from within R. It provides a set of convenient
+This R package makes it possible to perform all stages of an ADMIXTOOLS
+analysis entirely from within R. It provides a set of convenient
 functions that completely remove the need for “low level” configuration
 of individual ADMIXTOOLS programs, allowing users to focus on the
 analysis itself.
@@ -67,9 +66,9 @@ result <- d(
 )
 
 result
-#>           W      X       Y     Z      D   stderr Zscore BABA ABBA  nsnps
-#> 1    French Yoruba Vindija Chimp 0.0233 0.008729  2.665 6296 6010 195040
-#> 2 Sardinian Yoruba Vindija Chimp 0.0184 0.008292  2.216 6278 6052 194981
+#>           W      X       Y     Z      D   stderr Zscore  BABA  ABBA  nsnps
+#> 1    French Yoruba Vindija Chimp 0.0313 0.006933  4.510 15802 14844 487753
+#> 2 Sardinian Yoruba Vindija Chimp 0.0287 0.006792  4.222 15729 14852 487646
 ```
 
 Note that a single call to the `d` function generates all required

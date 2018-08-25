@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/overview.html">admixr - tutorial</a>
+      <a href="articles/tutorial.html">admixr - tutorial</a>
     </li>
   </ul>
 </li>
@@ -88,14 +88,14 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#admixr" class="anchor"></a>admixr</h1></div>
 <p><em><strong>“Make ADMIXTOOLS fun again!”</strong></em></p>
-<p><strong>TL;DR</strong> Perform ADMIXTOOLS analyses directly from R, without ever having to deal with par/pop/log files again.</p>
+<p><strong>TL;DR</strong> Perform ADMIXTOOLS analyses directly from R, without having to deal with par/pop/log files ever again.</p>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p><a href="http://www.genetics.org/content/192/3/1065">ADMIXTOOLS</a> is a widely used software package for calculating admixture statistics and testing population admixture hypotheses. However, although powerful and comprehensive, it is not really user-friendly.</p>
-<p>A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS’ commands, and control how to run a particular analysis. The results are then redirected to another file, and the user needs to extract values of interest from this file (which is full of redundant information), often using additional command-line utilities, or (worse) by manual copy-pasting. The processed results are then analysed in R, Excel or another program.</p>
+<p>A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS’ commands and control how to run a particular analysis. The results are then redirected to another file, which has to be parsed by the user to extract values of interest, often using command-line utilities again or (worse) by manual copy-pasting. The processed results are then analysed in R, Excel or another program.</p>
 <p>This workflow is very cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow good practices of reproducible science, as it is nearly impossible to construct reproducible automated “pipelines”.</p>
-<p>This R package makes it possible to perform all stages of ADMIXTOOLS analyses entirely from within R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
+<p>This R package makes it possible to perform all stages of an ADMIXTOOLS analysis entirely from within R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
 </div>
 <div id="installation-instructions" class="section level2">
 <h2 class="hasAnchor">
@@ -116,9 +116,9 @@ devtools::install_github("bodkan/admixr")</code></pre>
 <a class="sourceLine" id="cb2-6" data-line-number="6">)</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">result</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;           W      X       Y     Z      D   stderr Zscore BABA ABBA  nsnps</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 1    French Yoruba Vindija Chimp 0.0233 0.008729  2.665 6296 6010 195040</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 2 Sardinian Yoruba Vindija Chimp 0.0184 0.008292  2.216 6278 6052 194981</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;           W      X       Y     Z      D   stderr Zscore  BABA  ABBA  nsnps</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 1    French Yoruba Vindija Chimp 0.0313 0.006933  4.510 15802 14844 487753</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 2 Sardinian Yoruba Vindija Chimp 0.0287 0.006792  4.222 15729 14852 487646</span></a></code></pre></div>
 <p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns the result as a <code>data.frame</code> object. It does all of this behind the scenes, without the user having to deal with low-level technical details.</p>
 </div>
 </div>

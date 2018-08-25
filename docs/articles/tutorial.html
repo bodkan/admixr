@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/overview.html">admixr - tutorial</a>
+      <a href="../articles/tutorial.html">admixr - tutorial</a>
     </li>
   </ul>
 </li>
@@ -82,10 +82,10 @@
       <h1>admixr - tutorial</h1>
                         <h4 class="author">Martin Petr</h4>
             
-            <h4 class="date">2018-08-25</h4>
+            <h4 class="date">2018-08-26</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/overview.Rmd"><code>vignettes/overview.Rmd</code></a></small>
-      <div class="hidden name"><code>overview.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
+      <div class="hidden name"><code>tutorial.Rmd</code></div>
 
     </div>
 
@@ -96,9 +96,9 @@
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p><a href="http://www.genetics.org/content/192/3/1065">ADMIXTOOLS</a> is a widely used software package for calculating admixture statistics and testing population admixture hypotheses. However, although powerful and comprehensive, it is not really user-friendly.</p>
-<p>A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS’ commands, and control how to run a particular analysis. The results are then redirected to another file, and the user needs to extract values of interest from this file (which is full of redundant information), often using additional command-line utilities, or (worse) by manual copy-pasting. The processed results are then analysed in R, Excel or another program.</p>
+<p>A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS’ commands and control how to run a particular analysis. The results are then redirected to another file, which has to be parsed by the user to extract values of interest, often using command-line utilities again or (worse) by manual copy-pasting. The processed results are then analysed in R, Excel or another program.</p>
 <p>This workflow is very cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow good practices of reproducible science, as it is nearly impossible to construct reproducible automated “pipelines”.</p>
-<p>This R package makes it possible to perform all stages of ADMIXTOOLS analyses entirely from within R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
+<p>This R package makes it possible to perform all stages of an ADMIXTOOLS analysis entirely from within R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -107,8 +107,9 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</a></code></pre></div>
 <p>Furthermore, if you want to follow the examples in this vignette, you will need the <a href="https://www.tidyverse.org">tidyverse</a> collection of packages for convenient data analysis, which you can install with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</a></code></pre></div>
-<p>When everything is ready, you can load both packages:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># specifying 'repos' to avoid Travis CI build errors - not needed in user code</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
+<p>When everything is ready, you can run:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ──</span></a>
@@ -325,7 +326,7 @@
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">ggplot</span>(result, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(W, D), D, <span class="dt">color =</span> <span class="kw">abs</span>(Zscore) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> D <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr, <span class="dt">ymax =</span> D <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr))</a></code></pre></div>
-<p><img src="overview_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 <p>We can see that all three Africans have <span class="math inline">\(D\)</span> consistent with 0, meaning that the data is consistent with the null hypothesis of no significant Neanderthal ancestry in Africans. On the other hand, the test rejects the null hypothesis for all non-Africans today, suggesting that Neanderthals admixed with the ancestors of present-day non-Africans. In fact, this is a similar test to the one that was used as evidence supporting the Neanderthal admixture hypothesis in the first place!</p>
 </div>
 <div id="f_4-statistic" class="section level2">
@@ -427,7 +428,7 @@
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">ggplot</span>(result, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(W, f4), f4, <span class="dt">color =</span> <span class="kw">abs</span>(Zscore) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> f4 <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr, <span class="dt">ymax =</span> f4 <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr))</a></code></pre></div>
-<p><img src="overview_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
 <p>As we can see by comparing this result to the <span class="math inline">\(D\)</span> statistic result, we can make the same conclusions.</p>
 <p>You might be wondering why we have both <span class="math inline">\(f_4\)</span> and <span class="math inline">\(D\)</span> if they are so similar. The truth is that <span class="math inline">\(f_4\)</span> is directly informative about the amount of shared genetic drift (the “branch length”) between pairs of populations which is, in many cases, a very useful theoretical property. Other than that, it’s often a matter of personal preference, and so <code>admixr</code> provides a separate functions for calculating both.</p>
 </div>
@@ -435,9 +436,9 @@
 <h2 class="hasAnchor">
 <a href="#f_4-ratio-statistic" class="anchor"></a><span class="math inline">\(f_4\)</span>-ratio statistic</h2>
 <p>Now we know that non-Africans today carry <em>some</em> Neanderthal ancestry. But what if we want to know <em>how much</em> Neanderthal ancestry they have? What proportion of their genomes is of Neanderthal origin?</p>
-<p>In general, when we are interested in estimating the <em>proportion</em> of ancestry coming from a parental lineage, we can use ratio of <span class="math inline">\(f_4\)</span> statistics. The theory between <span class="math inline">\(f_4\)</span>-ratios is slightly more complicated and we can’t explain it here, but if you’re interested in the technical details XXX</p>
+<p>In general, when we are interested in estimating the <em>proportion</em> of ancestry coming from a parental lineage, we can use ratio of <span class="math inline">\(f_4\)</span> statistics. The theory between <span class="math inline">\(f_4\)</span>-ratios is slightly more complicated and we can’t explain it here, but if you’re interested in the technical details I recommend Benjamin Peter’s <a href="http://www.genetics.org/content/early/2016/02/03/genetics.115.183913">overview</a> and Nick Patterson’s <a href="http://www.genetics.org/content/192/3/1065">original ADMIXTOOLS paper</a>.</p>
 <p>Using the nomenclature of Patterson et al. 2012, we can perform calculate <span class="math inline">\(f_4\)</span>-ratios using the following code (<code>X</code> being a vector of samples in which we want to estimate Neanderthal ancestry):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(<span class="dt">X =</span> pops, <span class="dt">A =</span> <span class="st">"Altai"</span>, <span class="dt">B =</span> <span class="st">"Vindija"</span>, <span class="dt">C =</span> <span class="st">"Yoruba"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat )</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(<span class="dt">X =</span> pops, <span class="dt">A =</span> <span class="st">"Altai"</span>, <span class="dt">B =</span> <span class="st">"Vindija"</span>, <span class="dt">C =</span> <span class="st">"Yoruba"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
 <p>The ancestry proportion (a number between 0 and 1) is given in the <code>alpha</code> column:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
@@ -519,7 +520,7 @@
 <a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> alpha <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr, <span class="dt">ymax =</span> alpha <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>stderr)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-5" data-line-number="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Neandertal ancestry proportion"</span>, <span class="dt">x =</span> <span class="st">"present-day individual"</span>)</a></code></pre></div>
-<p><img src="overview_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
 <p>We can make several observations:</p>
 <ul>
 <li>Again, we don’t see any significant Neanderthal ancestry in present-day Africans (proportion consistent with 0%), which is what we confirmed using <span class="math inline">\(D\)</span> and <span class="math inline">\(f_4\)</span> above.</li>
@@ -615,8 +616,8 @@ Guinea - more than 4%!</li>
 <a class="sourceLine" id="cb21-5" data-line-number="5">result <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb21-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">A =</span> <span class="kw">factor</span>(A, <span class="dt">levels =</span> ordered),</a>
 <a class="sourceLine" id="cb21-7" data-line-number="7">         <span class="dt">B =</span> <span class="kw">factor</span>(B, <span class="dt">levels =</span> ordered)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(A, B)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> f3)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</a></code></pre></div>
-<p><img src="overview_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(A, B)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> f3))</a></code></pre></div>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
 <p>We can see that when we order the heat map labels based on values of pairwise <span class="math inline">\(f_3\)</span> statistics, the decreasing divergence times between human populations (left to right and bottom up) shows beautifully.</p>
 </div>
 <div id="qpadm-method" class="section level2">
