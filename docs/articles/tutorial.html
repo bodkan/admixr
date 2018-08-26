@@ -114,12 +114,12 @@
 <p>When everything is ready, you can run:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ── Attaching packages ────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; ✔ ggplot2 3.0.0     ✔ purrr   0.2.5</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; ✔ tibble  1.4.2     ✔ dplyr   0.7.6</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; ✔ tidyr   0.8.1     ✔ stringr 1.3.1</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.3.0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ── Conflicts ───────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ── Conflicts ────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a></code></pre></div>
 <p><strong>Note that in order to run <code>admixr</code> analyses, you need a working installation of ADMIXTOOLS!</strong> Explaining how to compile it is beyond the scope of this document, but you can find help <a href="https://github.com/DReichLab/AdmixTools">here</a>. <strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code>library(admixr)</code> will show a warning message with instructions on how to fix this.</p>
@@ -620,7 +620,7 @@ Guinea - more than 4%!</li>
 <a class="sourceLine" id="cb21-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">A =</span> <span class="kw">factor</span>(A, <span class="dt">levels =</span> ordered),</a>
 <a class="sourceLine" id="cb21-7" data-line-number="7">         <span class="dt">B =</span> <span class="kw">factor</span>(B, <span class="dt">levels =</span> ordered)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb21-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(A, B)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> f3))</a></code></pre></div>
-<p><img src="tutorial_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<p><img src="tutorial_files/figure-html/unnamed-chunk-25-1.png" width="768"></p>
 <p>We can see that when we order the heat map labels based on values of pairwise <span class="math inline">\(f_3\)</span> statistics, the decreasing divergence times between human populations (left to right and bottom up) shows beautifully.</p>
 </div>
 <div id="qpadm-method" class="section level2">
