@@ -42,7 +42,7 @@ test_that("Merging of population labels", {
   admixr_ind <- tempfile()
   merge_labels(ind = paste0(prefix, ".ind"),
                modified_ind = admixr_ind,
-               pop_labels = merge_list)
+               labels = merge_list)
 
   # compare both generated ind tables
   expect_equal(read_ind(shell_ind), read_ind(admixr_ind))

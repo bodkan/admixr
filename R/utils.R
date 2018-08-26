@@ -2,7 +2,7 @@
 #'
 #' @param ind EIGENSTRAT ind file to modify.
 #' @param modified_ind Modified EIGENSTRAT ind filename.
-#' @param pop_labels Named list of labels to merge. Names specify labels
+#' @param labels Named list of labels to merge. Names specify labels
 #'     to merge into.
 #'
 #' @examples
@@ -13,19 +13,19 @@
 #' merge_labels(
 #'     ind = IND_FILE,
 #'     modified_ind = paste0(IND_FILE, ".merged"),
-#'     pop_labels = list(Europe = c("French", "Sardinian", "Czech"),
+#'     labels = list(Europe = c("French", "Sardinian", "Czech"),
 #'                       WestAfrica = c("Yoruba", "Mende"))
 #' )
 #' }
 #'
 #' @export
-merge_labels <- function(ind, modified_ind, pop_labels) {
+merge_labels <- function(ind, modified_ind, labels) {
   lines <- readLines(ind)
 
   # iterate over the lines in the "ind" file, replacing population
   # labels with their substitutes
-  for (merge_into in names(pop_labels)) {
-    regex <- paste0("(", paste(pop_labels[[merge_into]], collapse = "|"), ")$")
+  for (merge_into in names(labels)) {
+    regex <- paste0("(", paste(labels[[merge_into]], collapse = "|"), ")$")
     lines <- stringr::str_replace(lines, regex, merge_into)
   }
 

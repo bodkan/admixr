@@ -4,14 +4,14 @@
 \alias{merge_labels}
 \title{Merge multiple samples/populations under a single label.}
 \usage{
-merge_labels(ind, modified_ind, pop_labels)
+merge_labels(ind, modified_ind, labels)
 }
 \arguments{
 \item{ind}{EIGENSTRAT ind file to modify.}
 
 \item{modified_ind}{Modified EIGENSTRAT ind filename.}
 
-\item{pop_labels}{Named list of labels to merge. Names specify labels
+\item{labels}{Named list of labels to merge. Names specify labels
 to merge into.}
 }
 \description{
@@ -25,7 +25,7 @@ Merge multiple samples/populations under a single label.
 merge_labels(
     ind = IND_FILE,
     modified_ind = paste0(IND_FILE, ".merged"),
-    pop_labels = list(Europe = c("French", "Sardinian", "Czech"),
+    labels = list(Europe = c("French", "Sardinian", "Czech"),
                       WestAfrica = c("Yoruba", "Mende"))
 )
 }

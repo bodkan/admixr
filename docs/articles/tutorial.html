@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/paper.html">admixr - R package for performing ADMIXTOOLS analyses from within R</a>
+      <a href="../articles/paper.html">admixr - paper</a>
     </li>
     <li>
       <a href="../articles/tutorial.html">admixr - tutorial</a>
@@ -110,17 +110,16 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</a></code></pre></div>
 <p>Furthermore, if you want to follow the examples in this vignette, you will need the <a href="https://www.tidyverse.org">tidyverse</a> collection of packages for convenient data analysis, which you can install with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># specifying 'repos' to avoid Travis CI build errors - not needed in user code</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</a></code></pre></div>
 <p>When everything is ready, you can run:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ──</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; ✔ ggplot2 3.0.0     ✔ purrr   0.2.5</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; ✔ tibble  1.4.2     ✔ dplyr   0.7.6</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; ✔ tidyr   0.8.1     ✔ stringr 1.3.1</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; ✔ readr   1.1.1     ✔ forcats 0.3.0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ── Conflicts ────────────────────────────────────────────────────── tidyverse_conflicts() ──</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ── Conflicts ────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a></code></pre></div>
 <p><strong>Note that in order to run <code>admixr</code> analyses, you need a working installation of ADMIXTOOLS!</strong> Explaining how to compile it is beyond the scope of this document, but you can find help <a href="https://github.com/DReichLab/AdmixTools">here</a>. <strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code>library(admixr)</code> will show a warning message with instructions on how to fix this.</p>
@@ -156,9 +155,10 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps"</span></a></code></pre></div>
 <p>We can verify that there are three files with this prefix, as they should be:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">dir</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(eigenstrat), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.geno"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind" </span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.snp"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.geno"      </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind"       </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind.merged"</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [4] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.snp"</span></a></code></pre></div>
 <p>Let’s look at their contents.</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
@@ -696,6 +696,82 @@ Guinea - more than 4%!</li>
 </table>
 <p>Note that we get admixture proportions standard errors for each potential source in columns.</p>
 </div>
+<div id="merging-populations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#merging-populations" class="anchor"></a>Merging populations</h2>
+<p>What we’ve been doing so far was calculating statistics for individual samples. However, it is often useful to treat multiple samples as a single group or population. <code>admixr</code> provides a function called <code>merge_labels</code> that does just that.</p>
+<p>Here is an example: let’s say we want to run a similar analysis that we did in the <span class="math inline">\(D\)</span> statistic section, but we want to treat Europeans, Africans and archaics as single combined groups. But the <code>ind</code> file that we have does not contain grouped labels - each sample stands on its own:</p>
+<pre><code>#&gt; Chimp    U   Chimp
+#&gt; Mbuti    U   Mbuti
+#&gt; Yoruba   U   Yoruba
+#&gt; Khomani_San  U   Khomani_San
+#&gt; Han  U   Han
+#&gt; Dinka    U   Dinka
+#&gt; Sardinian    U   Sardinian
+#&gt; Papuan   U   Papuan
+#&gt; French   U   French
+#&gt; Vindija  U   Vindija
+#&gt; Altai    U   Altai
+#&gt; Denisova U   Denisova</code></pre>
+<p>To merge several individual samples under combined label we can call <code>merge_labels</code> like this:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">ind_path &lt;-<span class="st"> </span><span class="kw">paste0</span>(eigenstrat, <span class="st">".ind"</span>)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">modif_path &lt;-<span class="st"> </span><span class="kw">paste0</span>(ind_path, <span class="st">".merged"</span>)</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="kw"><a href="../reference/merge_labels.html">merge_labels</a></span>(</a>
+<a class="sourceLine" id="cb25-5" data-line-number="5">  <span class="dt">ind =</span> ind_path,            <span class="co"># path to the original ind file</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6">  <span class="dt">modified_ind =</span> modif_path, <span class="co"># where to save the modified ind file</span></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7">  <span class="dt">labels =</span> <span class="kw">list</span>(             <span class="co"># new population labels</span></a>
+<a class="sourceLine" id="cb25-8" data-line-number="8">    <span class="dt">Europe =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>),</a>
+<a class="sourceLine" id="cb25-9" data-line-number="9">    <span class="dt">Africa =</span> <span class="kw">c</span>(<span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Khomani_San"</span>),</a>
+<a class="sourceLine" id="cb25-10" data-line-number="10">    <span class="dt">Archaic =</span> <span class="kw">c</span>(<span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>)</a>
+<a class="sourceLine" id="cb25-11" data-line-number="11">  )</a>
+<a class="sourceLine" id="cb25-12" data-line-number="12">)</a></code></pre></div>
+<p>This is what a modified <code>ind</code> file generated by <code>merge_labels</code> looks like:</p>
+<pre><code>#&gt; Chimp    U   Chimp
+#&gt; Mbuti    U   Africa
+#&gt; Yoruba   U   Africa
+#&gt; Khomani_San  U   Africa
+#&gt; Han  U   Han
+#&gt; Dinka    U   Africa
+#&gt; Sardinian    U   Europe
+#&gt; Papuan   U   Papuan
+#&gt; French   U   Europe
+#&gt; Vindija  U   Archaic
+#&gt; Altai    U   Archaic
+#&gt; Denisova U   Archaic</code></pre>
+<p>We can then use “European”, “Africa” and “Archaic” labels in any of the <code>admixr</code> wrapper functions described above. For example:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/d.html">d</a></span>(<span class="dt">W =</span> <span class="st">"Europe"</span>, <span class="dt">X =</span> <span class="st">"Africa"</span>, <span class="dt">Y =</span> <span class="st">"Archaic"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">            <span class="dt">prefix =</span> eigenstrat, <span class="dt">ind =</span> modif_path)</a></code></pre></div>
+<p>Here is the result, showing (as we’ve seen above for individual samples) that Europeans show genetic affinity to archaic humans compared to Africans today:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">W</th>
+<th align="left">X</th>
+<th align="left">Y</th>
+<th align="left">Z</th>
+<th align="right">D</th>
+<th align="right">stderr</th>
+<th align="right">Zscore</th>
+<th align="right">BABA</th>
+<th align="right">ABBA</th>
+<th align="right">nsnps</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">Europe</td>
+<td align="left">Africa</td>
+<td align="left">Archaic</td>
+<td align="left">Chimp</td>
+<td align="right">0.0225</td>
+<td align="right">0.004404</td>
+<td align="right">5.117</td>
+<td align="right">15487</td>
+<td align="right">14805</td>
+<td align="right">489003</td>
+</tr></tbody>
+</table>
+<p>Note that in the <code><a href="../reference/d.html">d()</a></code> call we provided both path to shared EIGENSTRAT prefix, but we also specified the path to the modified <code>ind</code> file separately. This overides the unmodified <code>ind</code> file that would be normally used, and ADMIXTOOLS picks up the combined population labels from the modified <code>ind</code> file.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -712,6 +788,7 @@ Guinea - more than 4%!</li>
       <li><a href="#f_4-ratio-statistic"><span class="math inline">\(f_4\)</span>-ratio statistic</a></li>
       <li><a href="#f_3-statistic"><span class="math inline">\(f_3\)</span> statistic</a></li>
       <li><a href="#qpadm-method">qpAdm method</a></li>
+      <li><a href="#merging-populations">Merging populations</a></li>
       </ul>
 </div>
       </div>

@@ -1,5 +1,5 @@
 ---
-title: "admixr - R package for performing ADMIXTOOLS analyses from within R"
+title: "admixr - paper"
 author:
   - Martin Petr, Janet Kelso
 date: "`r Sys.Date()`"
@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+# _admixr - R package for performing ADMIXTOOLS analyses_
 
 ## Abstract
 

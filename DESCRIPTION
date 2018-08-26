@@ -1,5 +1,5 @@
 Package: admixr
-Title: Perform all ADMIXTOOLS analyses directly from R
+Title: Perform ADMIXTOOLS analyses directly from R
 Version: 0.3.0
 Authors@R: person("Martin", "Petr", email = "mp@bodkan.net", role = c("aut", "cre"))
 Description: Perform all ADMIXTOOLS analyses directly from R.

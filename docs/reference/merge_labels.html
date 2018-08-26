@@ -84,7 +84,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/paper.html">admixr - R package for performing ADMIXTOOLS analyses from within R</a>
+      <a href="../articles/paper.html">admixr - paper</a>
     </li>
     <li>
       <a href="../articles/tutorial.html">admixr - tutorial</a>
@@ -126,7 +126,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>merge_labels</span>(<span class='no'>ind</span>, <span class='no'>modified_ind</span>, <span class='no'>pop_labels</span>)</pre>
+    <pre class="usage"><span class='fu'>merge_labels</span>(<span class='no'>ind</span>, <span class='no'>modified_ind</span>, <span class='no'>labels</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,7 +140,7 @@
       <td><p>Modified EIGENSTRAT ind filename.</p></td>
     </tr>
     <tr>
-      <th>pop_labels</th>
+      <th>labels</th>
       <td><p>Named list of labels to merge. Names specify labels
 to merge into.</p></td>
     </tr>
@@ -155,7 +155,7 @@ to merge into.</p></td>
 <span class='fu'>merge_labels</span>(
     <span class='kw'>ind</span> <span class='kw'>=</span> <span class='no'>IND_FILE</span>,
     <span class='kw'>modified_ind</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='no'>IND_FILE</span>, <span class='st'>".merged"</span>),
-    <span class='kw'>pop_labels</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>Europe</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Czech"</span>),
+    <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>Europe</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Czech"</span>),
                       <span class='kw'>WestAfrica</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Yoruba"</span>, <span class='st'>"Mende"</span>))
 )
 <span class='co'># }</span><div class='input'>
