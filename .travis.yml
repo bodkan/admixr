@@ -15,5 +15,7 @@ before_install:
   - tar xf AdmixTools_Example_Data.tar_.gz
   - export PATH=$PATH:$PWD/bin
   - popd
+install:
+  - Rscript -e 'install.packages(c("tidyverse", "MASS", "mgcv"), repos = "http://cran.rstudio.com")'
 after_success:
   - Rscript -e 'covr::codecov()'

@@ -51,7 +51,7 @@ ADMIXTOOLS programs, allowing users to focus on the analysis itself.
 To install `admixr` from Github you need to install the package `devtools`
 first. You can simply run:
 
-```
+```{r, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("bodkan/admixr")
 ```
