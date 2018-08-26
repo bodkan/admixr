@@ -76,3 +76,6 @@ intermediate config and population files, runs ADMIXTOOLS, parses its
 log output and returns the result as a `data.frame` object. It does all
 of this behind the scenes, without the user having to deal with
 low-level technical details.
+
+**To see many more examples, please check out the
+[vignette](./articles/tutorial.html).**
