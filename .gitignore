@@ -5,3 +5,4 @@
 .Rbuildignore
 tmp/*
 inst/doc
+*.html
