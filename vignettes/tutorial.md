@@ -1,7 +1,7 @@
 ---
 title: "admixr - tutorial"
 author: "Martin Petr"
-date: "`r Sys.Date()`"
+date: "2018-08-27"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -9,12 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 
 
@@ -74,7 +69,8 @@ ADMIXTOOLS programs, allowing users to focus on the analysis itself.
 To install `admixr` from GitHub you need to install the package `devtools`
 first. To do this, you can simply run (in R):
 
-```{r, eval = FALSE}
+
+```r
 install.packages("devtools")
 devtools::install_github("bodkan/admixr")
 ```
@@ -83,15 +79,25 @@ Furthermore, if you want to follow the examples in this vignette, you will need
 the [tidyverse](https://www.tidyverse.org) collection of packages for
 convenient data analysis, which you can install with:
 
-```{r, eval = FALSE}
+
+```r
 install.packages("tidyverse")
 ```
 
 When everything is ready, you can run:
 
-```{r}
+
+```r
 library(admixr)
 library(tidyverse)
+#> ── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
+#> ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+#> ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+#> ✔ tidyr   0.8.1     ✔ stringr 1.3.1
+#> ✔ readr   1.1.1     ✔ forcats 0.3.0
+#> ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
 ```
 
 **Note that in order to run `admixr` analyses, you need a working
@@ -148,22 +154,40 @@ that, as it makes your code mode verbose).
 Here is a prefix of a small testing SNP data set that's distributed with
 `admixr`. We will be using this data set in the rest of this vignette.
 
-```{r}
+
+```r
 (eigenstrat <- file.path(system.file(package = "admixr", "extdata"), "snps"))
+#> [1] "/Users/martin_petr/projects/admixr/inst/extdata/snps"
 ```
 
 We can verify that there are three files with this prefix, as they should
 be:
 
-```{r}
+
+```r
 dir(path = dirname(eigenstrat), full.names = TRUE)
+#> [1] "/Users/martin_petr/projects/admixr/inst/extdata/snps.geno"
+#> [2] "/Users/martin_petr/projects/admixr/inst/extdata/snps.ind" 
+#> [3] "/Users/martin_petr/projects/admixr/inst/extdata/snps.snp"
 ```
 
 Let's look at their contents.
 
 #### `ind` file
-```{r, echo = FALSE}
-cat(system(paste0("cat ", eigenstrat, ".ind"), intern = TRUE), sep = "\n")
+
+```
+#> Chimp	U	Chimp
+#> Mbuti	U	Mbuti
+#> Yoruba	U	Yoruba
+#> Khomani_San	U	Khomani_San
+#> Han	U	Han
+#> Dinka	U	Dinka
+#> Sardinian	U	Sardinian
+#> Papuan	U	Papuan
+#> French	U	French
+#> Vindija	U	Vindija
+#> Altai	U	Altai
+#> Denisova	U	Denisova
 ```
 
 The first column (individual ID) and the third column (population label) are
@@ -176,13 +200,19 @@ column, specifying "French" in an `admixr` command will combine all three sample
 in a single population, and will calculate allele frequency from all of them.
 
 #### `snp` file (first 3 lines)
-```{r, echo = FALSE}
-cat(system(paste0("head -n 3 ", eigenstrat, ".snp"), intern = TRUE), sep = "\n")
+
+```
+#> 1_832756	1	0.008328	832756	T	G
+#> 1_838931	1	0.008389	838931	A	C
+#> 1_843249	1	0.008432	843249	A	T
 ```
 
 #### `geno` file (first 3 lines)
-```{r, echo = FALSE}
-cat(system(paste0("head -n 3 ", eigenstrat, ".geno"), intern = TRUE), sep = "\n")
+
+```
+#> 902021012000
+#> 922221211222
+#> 922222122222
 ```
 
 
@@ -255,24 +285,33 @@ admixed with Neanderthals, which would increase their genetic affinity to this
 archaic group compared to West Africans (whose ancestors never met Neanderthals).
 
 Let's save the population names first to make the code below more readable:
-```{r}
+
+```r
 pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka")
 ```
 
 Then we can calculate the $D$ statistic above by running:
 
-```{r}
+
+```r
 result <- d(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", prefix = eigenstrat)
 ```
 
 Which will return the following `data.frame`:
-```{r eval = FALSE}
+
+```r
 head(result)
 ```
 
-```{r, echo = FALSE}
-knitr::kable(head(result))
-```
+
+|W           |X      |Y       |Z     |       D|   stderr| Zscore|  BABA|  ABBA|  nsnps|
+|:-----------|:------|:-------|:-----|-------:|--------:|------:|-----:|-----:|------:|
+|French      |Yoruba |Vindija |Chimp |  0.0313| 0.006933|  4.510| 15802| 14844| 487753|
+|Sardinian   |Yoruba |Vindija |Chimp |  0.0287| 0.006792|  4.222| 15729| 14852| 487646|
+|Han         |Yoruba |Vindija |Chimp |  0.0278| 0.006609|  4.199| 15780| 14928| 487925|
+|Papuan      |Yoruba |Vindija |Chimp |  0.0457| 0.006571|  6.953| 16131| 14721| 487694|
+|Khomani_San |Yoruba |Vindija |Chimp |  0.0066| 0.006292|  1.051| 16168| 15955| 487564|
+|Mbuti       |Yoruba |Vindija |Chimp | -0.0005| 0.006345| -0.074| 15751| 15766| 487642|
 
 We can see that this `data.frame` object contains all the input 
 information, but contains additional columns:
@@ -291,11 +330,14 @@ at the $Z$ scores, tables in general are not the best representation of this
 kind of data, especially as the number of samples increases. This is how we can
 use the [`ggplot2`](https://ggplot2.tidyverse.org) package to plot the results:
 
-```{r, fig.width = 7, fig.height = 4}
+
+```r
 ggplot(result, aes(fct_reorder(W, D), D, color = abs(Zscore) > 2)) +
   geom_point() +
   geom_errorbar(aes(ymin = D - 2 * stderr, ymax = D + 2 * stderr))
 ```
+
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
 
 We can see that all three Africans have $D$ consistent with 0, meaning that
 the data is consistent with the null hypothesis of no significant Neanderthal
@@ -322,23 +364,34 @@ in an analogous way to $D$ statistic.
 
 To repeat the previous analysis using $f_4$ statistic, we can run:
 
-```{r}
+
+```r
 result <- f4(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", prefix = eigenstrat)
 ```
 
-```{r eval = FALSE}
+
+```r
 head(result)
 ```
 
-```{r, echo = FALSE}
-knitr::kable(head(result))
-```
 
-```{r, fig.width = 7, fig.height = 4}
+|W           |X      |Y       |Z     |        f4|   stderr| Zscore|  BABA|  ABBA|  nsnps|
+|:-----------|:------|:-------|:-----|---------:|--------:|------:|-----:|-----:|------:|
+|French      |Yoruba |Vindija |Chimp |  0.001965| 0.000437|  4.501| 15802| 14844| 487753|
+|Sardinian   |Yoruba |Vindija |Chimp |  0.001798| 0.000427|  4.209| 15729| 14852| 487646|
+|Han         |Yoruba |Vindija |Chimp |  0.001746| 0.000418|  4.178| 15780| 14928| 487925|
+|Papuan      |Yoruba |Vindija |Chimp |  0.002890| 0.000417|  6.924| 16131| 14721| 487694|
+|Khomani_San |Yoruba |Vindija |Chimp |  0.000436| 0.000415|  1.051| 16168| 15955| 487564|
+|Mbuti       |Yoruba |Vindija |Chimp | -0.000030| 0.000410| -0.074| 15751| 15766| 487642|
+
+
+```r
 ggplot(result, aes(fct_reorder(W, f4), f4, color = abs(Zscore) > 2)) +
   geom_point() +
   geom_errorbar(aes(ymin = f4 - 2 * stderr, ymax = f4 + 2 * stderr))
 ```
+
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
 
 As we can see by comparing this result to the $D$ statistic result, we can make
 the same conclusions.
@@ -372,28 +425,39 @@ Using the nomenclature of Patterson et al. 2012, we can perform calculate $f_4$-
 using the following code (`X` being a vector of samples in which we want 
 to estimate Neanderthal ancestry):
 
-```{r}
+
+```r
 result <- f4ratio(X = pops, A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp", prefix = eigenstrat)
 ```
 
 The ancestry proportion (a number between 0 and 1) is given in the `alpha`
 column:
 
-```{r, eval=FALSE}
+
+```r
 head(result)
 ```
 
-```{r, echo=FALSE}
-knitr::kable(head(result))
-```
 
-```{r, fig.width = 7, fig.height = 4}
+|A     |B       |X           |C      |O     |    alpha|   stderr| Zscore|
+|:-----|:-------|:-----------|:------|:-----|--------:|--------:|------:|
+|Altai |Vindija |French      |Yoruba |Chimp | 0.023774| 0.006173|  3.851|
+|Altai |Vindija |Sardinian   |Yoruba |Chimp | 0.024468| 0.006079|  4.025|
+|Altai |Vindija |Han         |Yoruba |Chimp | 0.022117| 0.005901|  3.748|
+|Altai |Vindija |Papuan      |Yoruba |Chimp | 0.037311| 0.005821|  6.410|
+|Altai |Vindija |Khomani_San |Yoruba |Chimp | 0.003909| 0.005923|  0.660|
+|Altai |Vindija |Mbuti       |Yoruba |Chimp | 0.000319| 0.005721|  0.056|
+
+
+```r
 ggplot(result, aes(fct_reorder(X, alpha), alpha, color = abs(Zscore) > 2)) +
   geom_point() +
   geom_errorbar(aes(ymin = alpha - 2 * stderr, ymax = alpha + 2 * stderr)) +
   geom_hline(yintercept = 0, linetype = 2) +
   labs(y = "Neandertal ancestry proportion", x = "present-day individual")
 ```
+
+![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png)
 
 We can make several observations:
 
@@ -430,22 +494,31 @@ fixing the $C$ outgroup as Chimp, and calculating pairwise $f_3$ statistics
 between all pairs of present-day modern humans.
 
 
-```{r}
+
+```r
 pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka", "Yoruba")
 
 result <- f3(A = pops, B = pops, C = "Chimp", prefix = eigenstrat)
 ```
 
-```{r, eval=FALSE}
+
+```r
 head(result)
 ```
 
-```{r, echo=FALSE}
-knitr::kable(head(result))
-```
+
+|A      |B           |C     |           f3|       stderr|  Zscore|  nsnps|
+|:------|:-----------|:-----|------------:|------------:|-------:|------:|
+|French |Sardinian   |Chimp | 1.738202e+15| 4.373915e+12| 397.402| 225492|
+|French |Han         |Chimp | 1.658993e+15| 4.153303e+12| 399.440| 229514|
+|French |Papuan      |Chimp | 1.626844e+15| 4.323632e+12| 376.268| 226981|
+|French |Khomani_San |Chimp | 1.221558e+15| 3.667817e+12| 333.048| 243884|
+|French |Mbuti       |Chimp | 1.259897e+15| 3.474916e+12| 362.569| 253162|
+|French |Dinka       |Chimp | 1.410976e+15| 3.752041e+12| 376.055| 257987|
 
 
-```{r, fig.width = 8, fig.height = 6}
+
+```r
 # sort the population labels according to an increasing f3 value relative to French
 ordered <- filter(result, A == "French") %>% arrange(f3) %>% .[["B"]] %>% c("French")
 
@@ -455,6 +528,8 @@ result %>%
          B = factor(B, levels = ordered)) %>%
   ggplot(aes(A, B)) + geom_tile(aes(fill = f3))
 ```
+
+![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png)
 
 We can see that when we order the heat map labels based on values of pairwise
 $f_3$ statistics, the decreasing divergence times between human populations
@@ -501,7 +576,8 @@ to the question of estimating Neanderthal ancestry proportions. Let's define:
 
 Then we can run qpAdm with:
 
-```{r}
+
+```r
 result <- qpAdm(
   target = c("French", "Sardinian", "Mbuti", "Dinka"),
   refs = c("Vindija", "Yoruba"),
@@ -511,13 +587,18 @@ result <- qpAdm(
 ```
 
 And we get the result as a `data.frame` again:
-```{r, eval=FALSE}
+
+```r
 result
 ```
 
-```{r, echo=FALSE}
-knitr::kable(result)
-```
+
+|target    |  nsnps|    Vindija|    Yoruba| stderr_Vindija| stderr_Yoruba|
+|:---------|------:|----------:|---------:|--------------:|-------------:|
+|French    | 499434|  0.0215749| 0.9784251|          0.006|         0.006|
+|Sardinian | 499314|  0.0246924| 0.9753076|          0.006|         0.006|
+|Mbuti     | 499334|  0.0009431| 0.9990569|          0.006|         0.006|
+|Dinka     | 499362| -0.0027000| 1.0027000|          0.005|         0.005|
 
 
 Note that we get admixture proportions standard errors for each potential
@@ -541,15 +622,27 @@ the $D$ statistic section, but we want to treat Europeans, Africans and archaics
 as single combined groups. But the `ind` file that we have does not contain
 grouped labels - each sample stands on its own:
 
-```{r, echo = FALSE}
-ind_path <- paste0(eigenstrat, ".ind")
-cat(system(paste0("cat ", ind_path), intern = TRUE), sep = "\n")
+
+```
+#> Chimp	U	Chimp
+#> Mbuti	U	Mbuti
+#> Yoruba	U	Yoruba
+#> Khomani_San	U	Khomani_San
+#> Han	U	Han
+#> Dinka	U	Dinka
+#> Sardinian	U	Sardinian
+#> Papuan	U	Papuan
+#> French	U	French
+#> Vindija	U	Vindija
+#> Altai	U	Altai
+#> Denisova	U	Denisova
 ```
 
 To merge several individual samples under combined label we can call `merge_labels`
 like this:
 
-```{r}
+
+```r
 ind_path <- paste0(eigenstrat, ".ind")
 modif_path <- paste0(ind_path, ".merged")
 
@@ -565,14 +658,27 @@ merge_labels(
 ```
 
 This is what a modified `ind` file generated by `merge_labels` looks like:
-```{r, echo = FALSE}
-cat(system(paste0("cat ", modif_path), intern = TRUE), sep = "\n")
+
+```
+#> Chimp	U	Chimp
+#> Mbuti	U	Africa
+#> Yoruba	U	Africa
+#> Khomani_San	U	Africa
+#> Han	U	Han
+#> Dinka	U	Africa
+#> Sardinian	U	Europe
+#> Papuan	U	Papuan
+#> French	U	Europe
+#> Vindija	U	Archaic
+#> Altai	U	Archaic
+#> Denisova	U	Archaic
 ```
 
 We can then use "European", "Africa" and "Archaic" labels in any of the `admixr`
 wrapper functions described above. For example:
 
-```{r}
+
+```r
 result <- d(W = "Europe", X = "Africa", Y = "Archaic", Z = "Chimp",
             prefix = eigenstrat, ind = modif_path)
 ```
@@ -580,13 +686,15 @@ result <- d(W = "Europe", X = "Africa", Y = "Archaic", Z = "Chimp",
 Here is the result, showing (as we've seen above for individual samples) that
 Europeans show genetic affinity to archaic humans compared to Africans today:
 
-```{r eval = FALSE}
+
+```r
 head(result)
 ```
 
-```{r, echo = FALSE}
-knitr::kable(head(result))
-```
+
+|W      |X      |Y       |Z     |      D|   stderr| Zscore|  BABA|  ABBA|  nsnps|
+|:------|:------|:-------|:-----|------:|--------:|------:|-----:|-----:|------:|
+|Europe |Africa |Archaic |Chimp | 0.0225| 0.004404|  5.117| 15487| 14805| 489003|
 
 Note that in the `d()` call we provided both path to shared EIGENSTRAT prefix,
 but we also specified the path to the modified `ind` file separately. This overides
