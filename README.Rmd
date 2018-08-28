@@ -4,7 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r setup, echo = FALSE}
 knitr::opts_chunk$set( collapse = TRUE, comment = "#>", fig.path = "README-")
 ```
 
@@ -51,7 +51,7 @@ ADMIXTOOLS programs, allowing users to focus on the analysis itself.
 To install `admixr` from Github you need to install the package `devtools`
 first. You can simply run:
 
-```{r, eval = FALSE}
+```{r libraries, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("bodkan/admixr")
 ```
@@ -71,7 +71,7 @@ package! No shell scripting, no copy-pasting and manual editing of text files.
 The only thing you need is a working ADMIXTOOLS installation and a path to
 EIGENSTRAT data (a trio of ind/snp/geno files), which we call `prefix` here.
 
-```{r}
+```{r example}
 library(admixr)
 
 result <- d(
