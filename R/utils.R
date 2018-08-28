@@ -64,31 +64,33 @@ merge_eigenstrat <- function(prefix, input1, input2) {
 
 #' Calculate the number/proportion of covered sites in each sample.
 #'
-#' @param geno EIGENSTRAT geno dataframe.
-#' @param prop Calculate the proportion of non-missing alleles
-#'     instead.
+#' @param prefix EIGENSTRAT prefix.
+#' @param prop Calculate the proportion of non-missing alleles instead?
 #'
-#' @return A named vector of counts or proportions.
+#' @return data.frame object with SNP counts/proportions.
 #'
 #' @export
-snps_present <- function(geno, prop = FALSE) {
+snps_present <- function(prefix, prop = FALSE) {
   fn <- ifelse(prop, mean, sum)
-  dplyr::summarise_all(geno, funs(fn(. != 9)))
+  eigenstrat <- read_eigenstrat(prefix)
+  dplyr::summarise_all(eigenstrat$geno, dplyr::funs(fn(. != 9))) %>%
+      tidyr::gather(name, nsnps)
 }
 
 
 #' Calculate the number/proportion of missing sites in each sample.
 #'
-#' @param geno EIGENSTRAT geno dataframe.
-#' @param prop Calculate the proportion of missing alleles
-#'     instead.
+#' @param prefix EIGENSTRAT prefix.
+#' @param prop Calculate the proportion of non-missing alleles instead?
 #'
-#' @return A named vector of counts or proportions.
+#' @return data.frame object with SNP counts/proportions.
 #'
 #' @export
-snps_missing <- function(geno, prop = FALSE) {
+snps_missing <- function(prefix, prop = FALSE) {
   fn <- ifelse(prop, mean, sum)
-  dplyr::summarise_all(geno, funs(fn(. == 9)))
+  eigenstrat <- read_eigenstrat(prefix)
+  dplyr::summarise_all(eigenstrat$geno, dplyr::funs(fn(. == 9))) %>%
+      tidyr::gather(name, nsnps)
 }
 
 

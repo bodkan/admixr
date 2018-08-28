@@ -14,7 +14,9 @@ Imports:
     magrittr,
     readr,
     stringr,
-    tibble
+    tibble,
+    tidyr,
+    stats
 Suggests:
     covr,
     testthat,

@@ -4,16 +4,15 @@
 \alias{snps_present}
 \title{Calculate the number/proportion of covered sites in each sample.}
 \usage{
-snps_present(geno, prop = FALSE)
+snps_present(prefix, prop = FALSE)
 }
 \arguments{
-\item{geno}{EIGENSTRAT geno dataframe.}
+\item{prefix}{EIGENSTRAT prefix.}
 
-\item{prop}{Calculate the proportion of non-missing alleles
-instead.}
+\item{prop}{Calculate the proportion of non-missing alleles instead?}
 }
 \value{
-A named vector of counts or proportions.
+data.frame object with SNP counts/proportions.
 }
 \description{
 Calculate the number/proportion of covered sites in each sample.
