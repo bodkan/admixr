@@ -40,23 +40,23 @@ merge_labels <- function(ind, modified_ind, labels) {
 #'
 #' @export
 merge_eigenstrat <- function(prefix, input1, input2) {
-    parfile <- tempfile()
-    paste0(
-       "outputformat: EIGENSTRAT\n",
-       "strandcheck: NO\n",
-       "geno1: ", input1, ".geno\n",
-       "snp1: ", input1, ".snp\n",
-       "ind1: ", input1, ".ind\n",
-       "geno2: ", input2, ".geno\n",
-       "snp2: ", input2, ".snp\n",
-       "ind2: ", input2, ".ind\n",
-       "genooutfilename: ", prefix, ".geno\n",
-       "snpoutfilename: ", prefix, ".snp\n",
-       "indoutfilename: ", prefix, ".ind"
-    ) %>% writeLines(text = ., con = parfile)
-    return_value <- run_cmd("mergeit", parfile, "/dev/null")
+  parfile <- tempfile()
+  paste0(
+    "outputformat: EIGENSTRAT\n",
+    "strandcheck: NO\n",
+    "geno1: ", input1, ".geno\n",
+    "snp1: ", input1, ".snp\n",
+    "ind1: ", input1, ".ind\n",
+    "geno2: ", input2, ".geno\n",
+    "snp2: ", input2, ".snp\n",
+    "ind2: ", input2, ".ind\n",
+    "genooutfilename: ", prefix, ".geno\n",
+    "snpoutfilename: ", prefix, ".snp\n",
+    "indoutfilename: ", prefix, ".ind"
+  ) %>% writeLines(text = ., con = parfile)
 
-    if (return_value) cat("\nMerge command ended with an error -- see above.\n")
+  return_value <- run_cmd("mergeit", parfile, "/dev/null")
+  if (return_value) cat("\nMerge command ended with an error -- see above.\n")
 }
 
 # Filtering functions  --------------------------------------------------
@@ -74,7 +74,7 @@ snps_present <- function(prefix, prop = FALSE) {
   fn <- ifelse(prop, mean, sum)
   eigenstrat <- read_eigenstrat(prefix)
   dplyr::summarise_all(eigenstrat$geno, dplyr::funs(fn(. != 9))) %>%
-      tidyr::gather(name, nsnps)
+    tidyr::gather(name, nsnps)
 }
 
 
@@ -90,7 +90,7 @@ snps_missing <- function(prefix, prop = FALSE) {
   fn <- ifelse(prop, mean, sum)
   eigenstrat <- read_eigenstrat(prefix)
   dplyr::summarise_all(eigenstrat$geno, dplyr::funs(fn(. == 9))) %>%
-      tidyr::gather(name, nsnps)
+    tidyr::gather(name, nsnps)
 }
 
 
