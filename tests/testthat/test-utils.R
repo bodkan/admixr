@@ -48,7 +48,7 @@ test_that("Merging of population labels", {
   expect_equal(read_ind(shell_ind), read_ind(admixr_ind))
 })
 
-# SNP counting -----------------------------------------------
+# SNP counting ------------------------------------------------------------
 
 test_that("SNP counts correspond to numbers from CLI utilities", {
   prefix <- file.path(admixtools_path(), "convertf", "example")
@@ -69,4 +69,29 @@ test_that("SNP counts correspond to numbers from CLI utilities", {
 
   expect_equal(snps_present(prefix)$nsnps, shell_counts$present)
   expect_equal(snps_missing(prefix)$nsnps, shell_counts$missing)
+})
+
+# EIGENSTRAT merging--------------------------------------------------------
+
+test_that("Merging produces correct results", {
+  prefix <- file.path(admixtools_path(), "convertf", "example")
+
+  # read a testing EIGENSTRAT dataset and split it in two parts
+  whole <- read_eigenstrat(prefix)
+  part1 <- list(geno = whole$geno[, 1:2], snp = whole$snp, ind = whole$ind[1:2, ])
+  part2 <- list(geno = whole$geno[, 3:ncol(whole$geno)], snp = whole$snp, ind = whole$ind[3:nrow(whole$ind), ])
+
+  # save both parts
+  prefix1 <- file.path(tempdir(), "prefix1")
+  prefix2 <- file.path(tempdir(), "prefix2")
+  write_eigenstrat(prefix = prefix1, ind = part1$ind, snp = part1$snp, geno = part1$geno)
+  write_eigenstrat(prefix = prefix2, ind = part2$ind, snp = part2$snp, geno = part2$geno)
+
+  # merge both parts
+  merged_prefix <- file.path(tempdir(), "merged")
+  merge_eigenstrat(prefix = merged_prefix, input1 = prefix1, input2 = prefix2)
+
+  # load the merged EIGENSTRAT and compare to the original
+  merged_whole <- read_eigenstrat(merged_prefix)
+  expect_true(all(sapply(c("ind", "snp", "geno"), function(i) all(whole[[i]] == merged_whole[[i]]))))
 })
