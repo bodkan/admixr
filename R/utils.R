@@ -33,6 +33,31 @@ merge_labels <- function(ind, modified_ind, labels) {
 }
 
 
+#' Merge two sets of EIGENSTRAT datasets (utilizing the 'mergeit' command).
+#'
+#' @param prefix Prefix of the merged dataset.
+#' @param input1,input2 Prefixes of two EIGENSTRAT datasets to merge.
+#'
+#' @export
+merge_eigenstrat <- function(prefix, input1, input2) {
+    parfile <- tempfile()
+    paste0(
+       "outputformat: EIGENSTRAT\n",
+       "strandcheck: NO\n",
+       "geno1: ", input1, ".geno\n",
+       "snp1: ", input1, ".snp\n",
+       "ind1: ", input1, ".ind\n",
+       "geno2: ", input2, ".geno\n",
+       "snp2: ", input2, ".snp\n",
+       "ind2: ", input2, ".ind\n",
+       "genooutfilename: ", prefix, ".geno\n",
+       "snpoutfilename: ", prefix, ".snp\n",
+       "indoutfilename: ", prefix, ".ind"
+    ) %>% writeLines(text = ., con = parfile)
+    return_value <- run_cmd("mergeit", parfile, "/dev/null")
+
+    if (return_value) cat("\nMerge command ended with an error -- see above.\n")
+}
 
 # Filtering functions  --------------------------------------------------
 

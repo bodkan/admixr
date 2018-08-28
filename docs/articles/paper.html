@@ -83,10 +83,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>admixr - paper</h1>
+                        <h4 class="author">Martin Petr, Janet Kelso</h4>
             
-            <h4 class="date">2018-08-26</h4>
+            <h4 class="date">2018-08-27</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/paper.Rmd"><code>vignettes/paper.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/R/vignettes/paper.Rmd"><code>R/vignettes/paper.Rmd</code></a></small>
       <div class="hidden name"><code>paper.Rmd</code></div>
 
     </div>
@@ -97,17 +98,27 @@
 <h1 class="hasAnchor">
 <a href="#admixr---r-package-for-performing-admixtools-analyses" class="anchor"></a><em>admixr - R package for performing ADMIXTOOLS analyses</em>
 </h1>
-<div id="abstract" class="section level2">
+<div id="summary" class="section level2">
 <h2 class="hasAnchor">
-<a href="#abstract" class="anchor"></a>Abstract</h2>
+<a href="#summary" class="anchor"></a>Summary</h2>
+<p>We present a new R package called admixr, which makes it possible to perform all stages of ADMIXTOOLS analyses directly from R. This avoids the need for cumbersome production of text configuration files and parsing of output files on the command-line for each individual analysis. Compared to a traditional ADMIXTOOLS workflow that relies on a combination of shell scripting, editing and manual copy-pasting, our package reduces the number of steps required into a couple of lines of R code, dramatically reducing cognitive load for the user and potential for bugs Importantly, by utilizing the R environment for all steps of ADMIXTOOLS analyses, from data processing and running of analyses, to output processing, statistical analysis and plotting, this package allows building of fully automated analytic pipelines, improving the reproducibility of population genetic studies.</p>
 </div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
+<p>The growing numbers of available ancient and modern DNA samples have transformed our understanding of the evolutionary history of humans and other species. Several statistical methods have been developed to make inferences about past population movements and admixture events from genomic data. Chief among those has been a series of admixture statistics such as <span class="math inline">\(f_3\)</span>, <span class="math inline">\(f_4\)</span>, <span class="math inline">\(f_4\)</span>-ratio and <span class="math inline">\(D\)</span> statistics as implemented in the set of command-line utilities distributed in the ADMIXTOOLS software package. Despite being instrumental in making inferences about ancient and modern human history - being used in nearly all recent studies in high-profile journals - ADMIXTOOLS utilities suffer from several disadvantages. First, each individual analysis or a hypothesis test relies on a set of text configuration files which are commonly generated using a combination of shell scripting and manual editing. This is especially problematic as both the number of available samples and testable hypotheses steadily increases, because each separate analysis often requires a new set of configuration files, thus making this workflow not scalable. Most importantly, however, ADMIXTOOLS’ reliance on manual user intervention and copy-pasting for both the preparation of configuration files and extracting information from output files for further analysis makes it difficult to build automated analytic pipelines. This makes it difficult to follow the current best practices for reproducible computing. To overcome these challenges, we present a new package for the R programming language that provides convenient wrappers for ADMIXTOOLS command-line utilities and completely abstract away all technical details This package not only drastically reduces the amount of code needed to perform population genetic analyses, but presents a significant improvement for reproducible research by making it possible to build fully automatic analytic pipelines.</p>
 </div>
 <div id="implementation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#implementation" class="anchor"></a>Implementation</h2>
+<p>The <code>admixr</code> package is implemented using the R programming language. It’s core comprises of series of R functions with a unified programming interface, such as <code><a href="../reference/f3.html">f3()</a></code>, <code><a href="../reference/d.html">d()</a></code>, <code><a href="../reference/f4.html">f4()</a></code>, <code><a href="../reference/f4ratio.html">f4ratio()</a></code> and <code><a href="../reference/qpAdm.html">qpAdm()</a></code>. Generally, performing even the most trivial analysis using the ADMIXTOOLS package presents a significant amount of work for the user. For example, in order to calculate <span class="math inline">\(f_4\)</span>-ratio statistic such as <span class="math inline">\(f_4(\textrm{Nea}_1, \textrm{Chimp}; \textrm{Eur}, \textrm{Afr}) / f_4(\textrm{Nea}_1, \textrm{Chimp}; \textrm{Nea}_2, \textrm{Afr})\)</span>, the user needs to do the following:</p>
+<ul>
+<li>create a “par” file describing the location of data in the EIGENSTRAT format, the list of population labels</li>
+</ul>
+<p>Note that changing the analysis setup in a slightly different way requires</p>
+<p>In contrast, the same analysis using the <code>admixr</code> package can be run using the following R code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(<span class="dt">X =</span> <span class="st">"Eur"</span>, <span class="dt">A =</span> <span class="st">"Nea1"</span>, <span class="dt">B =</span> <span class="st">"Nea2"</span>, <span class="dt">C =</span> <span class="st">"Afr"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
+<p>This line performs all the low-level work</p>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
@@ -127,7 +138,7 @@
       <ul class="nav nav-pills nav-stacked">
 <li>
 <a href="#admixr---r-package-for-performing-admixtools-analyses"><em>admixr - R package for performing ADMIXTOOLS analyses</em></a><ul class="nav nav-pills nav-stacked">
-<li><a href="#abstract">Abstract</a></li>
+<li><a href="#summary">Summary</a></li>
       <li><a href="#introduction">Introduction</a></li>
       <li><a href="#implementation">Implementation</a></li>
       <li><a href="#examples">Examples</a></li>

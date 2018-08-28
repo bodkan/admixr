@@ -18,10 +18,14 @@ vignette: >
 
 
 This vignette describes how to calculate various population admixture
-statistics ($D$, $f_4$, etc.) using the `admixr` package. It assumes that you
-already know a little bit about them, because we don't have enough space to go
-into details of how and why they work. If you want to learn more and are not
-afraid of little bit of math, I highly recommend Benjamin Peter's [wonderful
+statistics ($D$, $f_4$, etc.) using the `admixr` package.
+
+**A friendly warning**: many of the statistics implemented here can be quite
+sensitive to assumptions about population histories or to errors in the data
+(causiing spurious correlations between similarly processed samples, aspecially
+in case of ancient DNA). If you want to use these methods, you should really
+understand the theory behind them! I highly recommend reading Benjamin Peter's
+[wonderful
 overview](http://www.genetics.org/content/early/2016/02/03/genetics.115.183913)
 of the subject and Nick Patterson's [original ADMIXTOOLS
 paper](http://www.genetics.org/content/192/3/1065).
@@ -35,14 +39,13 @@ software package for calculating admixture statistics and testing population
 admixture hypotheses. However, although powerful and comprehensive, it is not
 exactly known for being user-friendly.
 
-A typical ADMIXTOOLS workflow usually involves a combination of
-`sed`/`awk`/shell scripting and manual editing to create different
-configuration files. These are then passed as command-line arguments to one of
-ADMIXTOOLS commands and control how to run a particular analysis. The results
-are then redirected to another file, which has to be parsed by the user to
-extract values of interest, often using command-line utilities again or (worse)
-by manual copy-pasting.  The processed results are then analysed in R, Excel or
-another program.
+A typical ADMIXTOOLS workflow often involves a combination of `sed`/`awk`/shell
+scripting and manual editing to create different configuration files. These are
+then passed as command-line arguments to one of ADMIXTOOLS commands and control
+how to run a particular analysis. The results are then redirected to another
+file, which has to be parsed by the user to extract values of interest, often
+using command-line utilities again or (worse) by manual copy-pasting.  The
+processed results are then analysed in R, Excel or another program.
 
 This workflow is very cumbersome, especially if one wants to explore many
 hypotheses involving different combinations of populations. Most importantly,
@@ -100,56 +103,49 @@ library(tidyverse)
 #> ✖ dplyr::lag()    masks stats::lag()
 ```
 
-**Note that in order to run `admixr` analyses, you need a working
-installation of ADMIXTOOLS!** Explaining how to compile it is beyond
-the scope of this document, but you can find help 
-[here](https://github.com/DReichLab/AdmixTools). **Furthermore, you
-need to make sure that R can find ADMIXTOOLS binaries on the `$PATH`.** 
-If this is not the case, running `library(admixr)` will show a warning message
-with instructions on how to fix this.
+**Note that in order to use the `admixr` package, you need a working
+installation of ADMIXTOOLS!** You can find installation instructions
+[here](https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL).
+
+**Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the
+`$PATH`.** If this is not the case, running `library(admixr)` will show a
+warning message with instructions on how to fix this.
 
 
 
 
 
 
+## A note about EIGENSTRAT format
 
-## A note about EIGENSTRAT files
-
-If you have an EIGENSTRAT "triplet" of files ready, and just want to know
-how to calculate different admixture statistics, feel free to skip
-this section.
-
-### EIGENSTRAT file format
-
-ADMIXTOOLS software uses a peculiar set of genetic file formats, which 
-seem strange if you are used to working with
-[VCF files](http://samtools.github.io/hts-specs/VCFv4.3.pdf).
-However, the basic idea remains the same - we want to store and
-access SNP data (REF/ALT alleles) of a set of individuals at a defined 
-set of genomic positions.
+ADMIXTOOLS software uses a peculiar set of genetic file formats, which may seem
+strange if you are used to working with [VCF
+files](http://samtools.github.io/hts-specs/VCFv4.3.pdf).  However, the basic
+idea remains the same - we want to store and access SNP data (REF/ALT alleles)
+of a set of individuals at a defined set of genomic positions.
 
 EIGENSTRAT data sets always contain three kinds of files:
 
-- `ind` file - specifies name, sex and population assignment of each sample
-- `snp` file - specifies positions of SNPs, REF/ALT alleles etc.
-- `geno` file - specifies SNP data (one row per site) in a dense string-based format:
+- `ind` file - specifies the name, sex and population assignment of each sample
+- `snp` file - specifies the positions of SNPs, REF/ALT alleles etc.
+- `geno` file - contains SNP data (one row per site, one columne per sample) in
+  a dense string-based format:
   - 0: individual is homozygous ALT
   - 1: individual is a heterozygote
   - 2: individual is homozygous REF
   - 9: missing data
   
-As you can see, a VCF file is essentially a combination of all three 
-files in a single file. Luckily for us, all three EIGENSTRAT files 
-usually share a common path and prefix (at least you should try to
-make it so whenever you work with them). This allows us to work with
-just the prefix, instead of worrying about individual files.
+As you can see, a VCF file is essentially a combination of all three files in a
+single file. Luckily for us, all three EIGENSTRAT files usually share a common
+path and prefix (at least you should try to make it so whenever you work with
+them). This allows us to work with just the prefix instead of worrying about
+individual files.
 
-As such, all main `admixr` functions accept a `prefix` argument, 
-which specifies the path and prefix of all three EIGENSTRAT files
-(you can still work with individual files if you need to, using `ind`,
-`snp` and `geno` arguments of each `admixr` function, but try to avoid
-that, as it makes your code mode verbose).
+As such, all main `admixr` functions accept a `prefix` argument, which
+specifies the path and prefix of all three EIGENSTRAT files (you can still work
+with individual files if you need to - using `ind`, `snp` and `geno` arguments
+of each `admixr` function - but try to avoid that, as it makes your code mode
+verbose).
 
 Here is a prefix of a small testing SNP data set that's distributed with
 `admixr`. We will be using this data set in the rest of this vignette.
@@ -160,8 +156,7 @@ Here is a prefix of a small testing SNP data set that's distributed with
 #> [1] "/Users/martin_petr/projects/admixr/inst/extdata/snps"
 ```
 
-We can verify that there are three files with this prefix, as they should
-be:
+We can verify that there are three files with this prefix, as they should be:
 
 
 ```r
@@ -176,28 +171,29 @@ Let's look at their contents.
 #### `ind` file
 
 ```
-#> Chimp	U	Chimp
-#> Mbuti	U	Mbuti
-#> Yoruba	U	Yoruba
-#> Khomani_San	U	Khomani_San
-#> Han	U	Han
-#> Dinka	U	Dinka
-#> Sardinian	U	Sardinian
-#> Papuan	U	Papuan
-#> French	U	French
-#> Vindija	U	Vindija
-#> Altai	U	Altai
-#> Denisova	U	Denisova
+#> Chimp        U  Chimp
+#> Mbuti        U  Mbuti
+#> Yoruba       U  Yoruba
+#> Khomani_San  U  Khomani_San
+#> Han          U  Han
+#> Dinka        U  Dinka
+#> Sardinian    U  Sardinian
+#> Papuan       U  Papuan
+#> French       U  French
+#> Vindija      U  Vindija
+#> Altai        U  Altai
+#> Denisova     U  Denisova
 ```
 
-The first column (individual ID) and the third column (population label) are
-generally not the same (individual IDs often having numerical suffixes, etc.),
-but are the same here for simplicity. Importantly, when specifying population/sample
-arguments in `admixr` functions, the information in the third column is what is
-used. For example, if you have individuals such as "French1", "French2", "French3"
-in the first column, all three sharing a "French" population label in the third
-column, specifying "French" in an `admixr` command will combine all three samples
-in a single population, and will calculate allele frequency from all of them.
+The first column (sample name) and the third column (population label) are
+generally not the same (sample names often have numerical suffixes, etc.), but
+be kept them the same for simplicity. Importantly, when specifying
+population/sample arguments in `admixr` functions, the information in the third
+column is what is used. For example, if you have individuals such as "French1",
+"French2", "French3" in the first column of an `ind` file, all three sharing a
+"French" population label in the third column, specifying "French" in an
+`admixr` command will combine all three samples in a single population, and
+will calculate allele frequency from all of them.
 
 #### `snp` file (first 3 lines)
 
@@ -226,12 +222,12 @@ in a single population, and will calculate allele frequency from all of them.
 
 ## Philosophy of `admixr`
 
-The goal of `admixr` is to make ADMIXTOOLS analyses as trivial to perform
-as possible, without having to worry about par/pop/left/right
-configuration files (as they are known in ADMIXTOOLS' jargon) and other
-low-level details.
+The goal of `admixr` is to make ADMIXTOOLS analyses as trivial to perform as
+possible, without having to worry about par/pop/left/right configuration files
+(as they are known in ADMIXTOOLS' jargon) and other low-level details.
 
-The only interface between you and ADMIXTOOLS is the following set of R functions:
+The only interface between you and ADMIXTOOLS is the following set of R
+functions:
 
 - `d()`
 - `f4()`
@@ -239,9 +235,9 @@ The only interface between you and ADMIXTOOLS is the following set of R function
 - `f3()`
 - `qpAdm()`
 
-Anything that would normally require [dozens of lines of shell scripts](https://gaworkshop.readthedocs.io/en/latest/contents/06_f3/f3.html)
-can be (most of the time) accomplished by running a single line of R 
-code.
+Anything that would normally require [dozens of lines of shell
+scripts](https://gaworkshop.readthedocs.io/en/latest/contents/06_f3/f3.html)
+can be often accomplished by running a single line of R code.
 
 
 
@@ -263,41 +259,45 @@ example analyses that one might be interested in doing.
 
 ## $D$ statistic
 
-Let's say we are interested in the following question:
-_"Which populations today show evidence of Neanderthal admixture?_
+Let's say we are interested in the following question: _"Which populations
+today show evidence of Neanderthal admixture?_
 
 One way of looking at this is using the following D statistic:
 $$D(\textrm{present-day human W}, \textrm{African}, \textrm{Neanderthal}, \textrm{Chimp}).$$
-All $D$ statistics are based on comparing the proportions of BABA and ABBA sites
-patterns observed in data:
 
-$$ D = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# BABA sites + # ABBA sites}}.$$
+All $D$ statistics are based on comparing the proportions of BABA and ABBA
+sites patterns observed in data:
 
-Significant departure of $D$ from zero indicates an excess of allele
-sharing between the first and the third population (positive $D$),
-or an excess of allele sharing between the second and the third population
-(negative $D$). If we get $D$ that is not significantly different from 0,
-this suggests that the first and second populations form a clade, and don't
-differ in their genetic affinity to the third population.
+$$D = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# BABA sites + # ABBA sites}}.$$
 
-Therefore, our $D$ statistic above simply tests whether some modern humans today
-admixed with Neanderthals, which would increase their genetic affinity to this
-archaic group compared to West Africans (whose ancestors never met Neanderthals).
+Significant departure of $D$ from zero indicates an excess of allele sharing
+between the first and the third population (positive $D$), or an excess of
+allele sharing between the second and the third population (negative $D$). If
+we get $D$ that is not significantly different from 0, this suggests that the
+first and second populations form a clade, and don't differ in their genetic
+affinity to the third population.
+
+Therefore, our $D$ statistic above simply tests whether some modern humans
+today admixed with Neanderthals, which would increase their genetic affinity to
+this archaic group compared to West Africans (whose ancestors never met
+Neanderthals).
 
 Let's save the population names first to make the code below more readable:
+
 
 ```r
 pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka")
 ```
 
-Then we can calculate the $D$ statistic above by running:
+Using the `admixr` package we can then calculate the $D$ statistic above simply
+by running:
 
 
 ```r
 result <- d(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", prefix = eigenstrat)
 ```
 
-Which will return the following `data.frame`:
+The result is a simple `data.frame`:
 
 ```r
 head(result)
@@ -313,22 +313,23 @@ head(result)
 |Khomani_San |Yoruba |Vindija |Chimp |  0.0066| 0.006292|  1.051| 16168| 15955| 487564|
 |Mbuti       |Yoruba |Vindija |Chimp | -0.0005| 0.006345| -0.074| 15751| 15766| 487642|
 
-We can see that this `data.frame` object contains all the input 
-information, but contains additional columns:
+We can see that in addition to the input information, this `data.frame`
+contains additional columns:
 
 - `D` - $D$ statistic value
 - `stderr` - standard error of the $D$ statistic from the block jackknife
-- `Zscore` - $Z$ significance value
+- `Zscore` - $Z$-zscore value (number of standard errors the $D$ is from 0,
+  i.e. how strongly do we reject the null hypothesis of no admixture)
 - `BABA`/`ABBA` - counts of observed site patterns
 - `nsnps` - number of SNPs used for the calculation in this row
 
-The format of output tables from other other `admixr` functions is very 
-similar. 
+Output tables from other `admixr` functions follow a very similar format.
 
-While we could certainly make some inferences straight from this table by looking
-at the $Z$ scores, tables in general are not the best representation of this
-kind of data, especially as the number of samples increases. This is how we can
-use the [`ggplot2`](https://ggplot2.tidyverse.org) package to plot the results:
+While we could certainly make some inferences straight from this table by
+looking at the $Z$-scores, tables in general are not the best representation of
+this kind of data, especially as the number of samples increases. This is how
+we can use the [`ggplot2`](https://ggplot2.tidyverse.org) package to plot the
+results:
 
 
 ```r
@@ -339,12 +340,13 @@ ggplot(result, aes(fct_reorder(W, D), D, color = abs(Zscore) > 2)) +
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
 
-We can see that all three Africans have $D$ consistent with 0, meaning that
-the data is consistent with the null hypothesis of no significant Neanderthal
-ancestry in Africans. On the other hand, the test rejects the null hypothesis for
-all non-Africans today, suggesting that Neanderthals admixed with the ancestors
-of present-day non-Africans. In fact, this is a similar test to the one that was
-used as evidence supporting the Neanderthal admixture hypothesis in the first place!
+We can see that all three Africans have $D$ values not significantly different
+from 0, meaning that the data is consistent with the null hypothesis of no
+Neanderthal ancestry in Africans. On the other hand, the test rejects the null
+hypothesis for all non-Africans today, suggesting that Neanderthals admixed
+with the ancestors of present-day non-Africans. In fact, this is a similar test
+to the one that was used as evidence supporting the Neanderthal admixture
+hypothesis in the first place!
 
 
 
@@ -355,8 +357,8 @@ used as evidence supporting the Neanderthal admixture hypothesis in the first pl
 
 ## $f_4$ statistic
 
-An alternative way of addressing the previous question is to use the 
-$f_4$ statistic, which is very similar to $D$ statistic and can be calculated as:
+An alternative way of addressing the previous question is to use the $f_4$
+statistic, which is very similar to $D$ statistic and can be calculated as:
 
 $$ f_4 = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# sites}}$$
 Again, significant departure of $f_4$ from 0 is informative about gene flow,
@@ -384,23 +386,15 @@ head(result)
 |Khomani_San |Yoruba |Vindija |Chimp |  0.000436| 0.000415|  1.051| 16168| 15955| 487564|
 |Mbuti       |Yoruba |Vindija |Chimp | -0.000030| 0.000410| -0.074| 15751| 15766| 487642|
 
+We can see by comparing this result to the $D$ statistic result above that we
+can make the same conclusions.
 
-```r
-ggplot(result, aes(fct_reorder(W, f4), f4, color = abs(Zscore) > 2)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = f4 - 2 * stderr, ymax = f4 + 2 * stderr))
-```
-
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
-
-As we can see by comparing this result to the $D$ statistic result, we can make
-the same conclusions.
-
-You might be wondering why we have both $f_4$ and $D$ if they are so similar. The
-truth is that $f_4$ is directly informative about the amount of shared genetic
-drift (the "branch length") between pairs of populations which is, in many cases,
-a very useful theoretical property. Other than that, it's often a matter of personal
-preference, and so `admixr` provides a separate functions for calculating both.
+You might be wondering why we have both $f_4$ and $D$ if they are so similar.
+The truth is that $f_4$ is directly informative about the amount of shared
+genetic drift (the "branch length") between pairs of populations, which is, in
+many cases, a very useful theoretical property. Other than that, it's often a
+matter of personal preference and so `admixr` provides a separate functions for
+calculating both.
 
 
 
@@ -415,15 +409,11 @@ we want to know _how much_ Neanderthal ancestry they have? What proportion of th
 genomes is of Neanderthal origin?
 
 In general, when we are interested in estimating the *proportion* of ancestry
-coming from a parental lineage, we can use ratio of $f_4$ statistics. The theory
-between $f_4$-ratios is slightly more complicated and we can't explain it here,
-but if you're interested in the technical details I recommend Benjamin Peter's
-[overview](http://www.genetics.org/content/early/2016/02/03/genetics.115.183913)
-and Nick Patterson's [original ADMIXTOOLS paper](http://www.genetics.org/content/192/3/1065).
+coming some parental lineage, we can use ratio of $f_4$ statistics.
 
-Using the nomenclature of Patterson et al. 2012, we can perform calculate $f_4$-ratios
-using the following code (`X` being a vector of samples in which we want 
-to estimate Neanderthal ancestry):
+Using the nomenclature of Patterson et al. 2012, we can perform calculate
+$f_4$-ratios using the following code (`X` being a vector of samples for which
+we want to estimate Neanderthal ancestry):
 
 
 ```r
@@ -457,16 +447,16 @@ ggplot(result, aes(fct_reorder(X, alpha), alpha, color = abs(Zscore) > 2)) +
   labs(y = "Neandertal ancestry proportion", x = "present-day individual")
 ```
 
-![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png)
+![plot of chunk unnamed-chunk-20](figure/unnamed-chunk-20-1.png)
 
 We can make several observations:
 
-- Again, we don't see any significant Neanderthal ancestry in present-day 
-  Africans (proportion consistent with 0%), which is what we confirmed using $D$
-  and $f_4$ above.
+- Again, we don't see any significant Neanderthal ancestry in present-day
+  Africans (proportion consistent with 0%), which is what we confirmed using
+  $D$ and $f_4$ above.
 - Present-day non-Africans carry between 2-3% of Neanderthal ancestry.
-- We see a much higher proportion of Neanderthal ancestry in people from Papua New   
-  Guinea - more than 4%!
+- We see a much higher proportion of Neanderthal ancestry in people from Papua
+  New Guinea - more than 4%!
 
 
 
@@ -477,21 +467,22 @@ We can make several observations:
 
 ## $f_3$ statistic
 
-The $f_3$ statistic, also known as the 3-population statistic, is useful whenever we
-want to:
+The $f_3$ statistic, also known as the 3-population statistic, is useful
+whenever we want to:
 
-1. Estimate the branch length (shared genetic drift) between a pair of populations
-   $A$ and $B$ with respect to a common outgroup $C$. In this case, the higher the
-   $f_3$ value, the longer the shared evolutionary time between $A$ and $B$.
-2. Test whether population $C$ is a mixture of two parental populations $A$ and $B$.
-   Negative value of the $f_3$ statistic then serves as statistical evidence of
-   this admixture.
+1. Estimate the branch length (shared genetic drift) between a pair of
+   populations $A$ and $B$ with respect to a common outgroup $C$. In this case,
+   the higher the $f_3$ value, the longer the shared evolutionary time between
+   $A$ and $B$.
+2. Test whether population $C$ is a mixture of two parental populations $A$ and
+   $B$. Negative value of the $f_3$ statistic then serves as statistical
+   evidence of this admixture.
 
-As an example, imagine we are interested in relative divergence times between pairs
-of present-day human populations, and want to know in which approximate order they
-split of from each other. To address this problem, we could use $f_3$ statistic by
-fixing the $C$ outgroup as Chimp, and calculating pairwise $f_3$ statistics
-between all pairs of present-day modern humans.
+As an example, imagine we are interested in relative divergence times between
+pairs of present-day human populations and want to know in which approximate
+order they split of from each other. To address this problem, we could use
+$f_3$ statistic by fixing the $C$ outgroup as Chimp, and calculating pairwise
+$f_3$ statistics between all pairs of present-day modern humans.
 
 
 
@@ -517,7 +508,6 @@ head(result)
 |French |Dinka       |Chimp | 1.410976e+15| 3.752041e+12| 376.055| 257987|
 
 
-
 ```r
 # sort the population labels according to an increasing f3 value relative to French
 ordered <- filter(result, A == "French") %>% arrange(f3) %>% .[["B"]] %>% c("French")
@@ -529,11 +519,11 @@ result %>%
   ggplot(aes(A, B)) + geom_tile(aes(fill = f3))
 ```
 
-![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png)
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
 
 We can see that when we order the heat map labels based on values of pairwise
-$f_3$ statistics, the decreasing divergence times between human populations
-(left to right and bottom up) shows beautifully.
+$f_3$ statistics, the order of population splits pops up beautifully (i.e.
+San separated first, followed by Mbuti, etc.).
 
 
 
@@ -545,15 +535,15 @@ $f_3$ statistics, the decreasing divergence times between human populations
 
 The last ADMIXTOOLS method implemented in `admixr` is qpAdm. Unfortunately, it
 is also one that is the most complex and has not been properly described and
-peer-reviewed yet. Nevertheless, it seems to have lot of power to disentangle complex
-admixture scenarios, and so we included it in our package as well.
+peer-reviewed yet. Nevertheless, it seems to have lot of power to disentangle
+complex admixture scenarios, and so we included it in our package as well.
 
-Very briefly, qpAdm can be used to estimate admixture proportions coming from
-a series of $N$ source *ancestral* populations, assuming we have reference populations 
-that form clades with those *source* populations and are closer to them than to any of
-the specified *outgroup* populations.
+Very briefly, qpAdm can be used to estimate admixture proportions coming from a
+series of $N$ source *ancestral* populations, assuming we have reference
+populations that form clades with those *source* populations that are closer to
+them than to any of the specified *outgroup* populations.
 
-Formally, if the Test population has ancestry coming from $N$ ancestral source
+Formally, if a Test population has ancestry coming from $N$ ancestral source
 populations, with Reference populations being closer to them than are outgroup
 populations $O_i$, we can write:
 
@@ -561,20 +551,23 @@ $$f_4(\textrm{Test}, O_a, O_b, O_c) \approx \sum_{i=1}^N \alpha_i f_4(\textrm{Re
 
 where $\sum_{i=1}^N \alpha_i = 1$ and $\alpha_i \geq 1$ for all $i = 1, ..., N$.
 
-If this looks like black magic to you, I sincerely apologize and direct you
-to the Supplementary Section 9 of [Haak et al. 2015](http://www.nature.com/articles/nature14317), and an [informal write-up](https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf)
+If this looks like black magic to you, I feel your pain and direct you to the
+Supplementary Section 9 of [Haak et al.
+2015](http://www.nature.com/articles/nature14317), and an [informal
+write-up](https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf)
 distributed with the ADMIXTOOLS software.
 
 Probably the simplest possible case to show that qpAdm works is by returning
 to the question of estimating Neanderthal ancestry proportions. Let's define:
 
-- *target* populations to estimate ancestry proportions for - Europeans in this case
-- *reference* populations - Vindija Neanderthal and an African (two potential sources of
-  ancestries in Europeans today)
-- *outgroup* populations - Chimp, Altai Neanderthal and Denisovan (which are all
-  further from the true ancestral populations than the *reference* populations)
+- Europeans as the *target* samples to estimate ancestry proportions for
+- Vindija Neanderthal and an African as two *reference* populations (two
+  potential sources of ancestries in Europeans today)
+- *outgroup* populations - Chimp, Altai Neanderthal and Denisovan (which are
+  all further from the true ancestral populations - Vindija and African - than
+  the *reference* populations)
 
-Then we can run qpAdm with:
+Assuming all of that, we can run qpAdm with:
 
 
 ```r
@@ -602,7 +595,9 @@ result
 
 
 Note that we get admixture proportions standard errors for each potential
-source in columns.
+source in columns. If we compare this result to the $f_4$-ratio values
+calculated above, we see that the qpAdm estimates are very close to what we got
+earlier.
 
 
 
@@ -614,44 +609,46 @@ source in columns.
 ## Merging populations
 
 What we've been doing so far was calculating statistics for individual samples.
-However, it is often useful to treat multiple samples as a single group or population.
-`admixr` provides a function called `merge_labels` that does just that.
+However, it is often useful to treat multiple samples as a single group or
+population. `admixr` provides a function called `merge_labels` that does just
+that.
 
-Here is an example: let's say we want to run a similar analysis that we did in
-the $D$ statistic section, but we want to treat Europeans, Africans and archaics
-as single combined groups. But the `ind` file that we have does not contain
-grouped labels - each sample stands on its own:
+Here is an example: let's say we want to run a similar analysis to the one
+described in the $D$ statistic section, but we want to treat Europeans,
+Africans and archaics as single combined groups. But the `ind` file that we
+have does not contain grouped labels - each sample stands on its own:
 
 
 ```
-#> Chimp	U	Chimp
-#> Mbuti	U	Mbuti
-#> Yoruba	U	Yoruba
-#> Khomani_San	U	Khomani_San
-#> Han	U	Han
-#> Dinka	U	Dinka
-#> Sardinian	U	Sardinian
-#> Papuan	U	Papuan
-#> French	U	French
-#> Vindija	U	Vindija
-#> Altai	U	Altai
-#> Denisova	U	Denisova
+Chimp        U  Chimp
+Mbuti        U  Mbuti
+Yoruba       U  Yoruba
+Khomani_San  U  Khomani_San
+Han          U  Han
+Dinka        U  Dinka
+Sardinian    U  Sardinian
+Papuan       U  Papuan
+French       U  French
+Vindija      U  Vindija
+Altai        U  Altai
+Denisova     U  Denisova
 ```
 
-To merge several individual samples under combined label we can call `merge_labels`
-like this:
+To merge several individual samples under a combined label we can call
+`merge_labels` like this:
 
 
 ```r
+# paths to the original ind file and a new modified ind file with merged labels
 ind_path <- paste0(eigenstrat, ".ind")
 modif_path <- paste0(ind_path, ".merged")
 
 merge_labels(
-  ind = ind_path,            # path to the original ind file
-  modified_ind = modif_path, # where to save the modified ind file
-  labels = list(             # new population labels
-    Europe = c("French", "Sardinian"),
-    Africa = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
+  ind = ind_path,
+  modified_ind = modif_path,
+  labels = list( # new population labels
+    European = c("French", "Sardinian"),
+    African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
     Archaic = c("Vindija", "Altai", "Denisova")
   )
 )
@@ -660,26 +657,27 @@ merge_labels(
 This is what a modified `ind` file generated by `merge_labels` looks like:
 
 ```
-#> Chimp	U	Chimp
-#> Mbuti	U	Africa
-#> Yoruba	U	Africa
-#> Khomani_San	U	Africa
-#> Han	U	Han
-#> Dinka	U	Africa
-#> Sardinian	U	Europe
-#> Papuan	U	Papuan
-#> French	U	Europe
-#> Vindija	U	Archaic
-#> Altai	U	Archaic
-#> Denisova	U	Archaic
+Chimp        U  Chimp
+Mbuti        U  African
+Yoruba       U  African
+Khomani_San  U  African
+Han          U  Han
+Dinka        U  African
+Sardinian    U  European
+Papuan       U  Papuan
+French       U  European
+Vindija      U  Archaic
+Altai        U  Archaic
+Denisova     U  Archaic
 ```
 
-We can then use "European", "Africa" and "Archaic" labels in any of the `admixr`
-wrapper functions described above. For example:
+We can then use "European", "African" and "Archaic" labels in any of the
+`admixr` wrapper functions described above, we just have to specify a new `ind`
+file in addition to the `prefix` argument. For example:
 
 
 ```r
-result <- d(W = "Europe", X = "Africa", Y = "Archaic", Z = "Chimp",
+result <- d(W = "European", X = "African", Y = "Archaic", Z = "Chimp",
             prefix = eigenstrat, ind = modif_path)
 ```
 
@@ -692,9 +690,9 @@ head(result)
 ```
 
 
-|W      |X      |Y       |Z     |      D|   stderr| Zscore|  BABA|  ABBA|  nsnps|
-|:------|:------|:-------|:-----|------:|--------:|------:|-----:|-----:|------:|
-|Europe |Africa |Archaic |Chimp | 0.0225| 0.004404|  5.117| 15487| 14805| 489003|
+|W        |X       |Y       |Z     |      D|   stderr| Zscore|  BABA|  ABBA|  nsnps|
+|:--------|:-------|:-------|:-----|------:|--------:|------:|-----:|-----:|------:|
+|European |African |Archaic |Chimp | 0.0225| 0.004404|  5.117| 15487| 14805| 489003|
 
 Note that in the `d()` call we provided both path to shared EIGENSTRAT prefix,
 but we also specified the path to the modified `ind` file separately. This overides

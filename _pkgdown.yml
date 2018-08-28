@@ -1,5 +1,5 @@
 reference:
-  - title: Running analyses
+  - title: Admixture statistics
     contents:
     - f3
     - d
@@ -7,9 +7,10 @@ reference:
     - f4ratio
     - qpAdm
 
-  - title: Processing and filtering data
+  - title: Data processing and filtering
     contents:
     - merge_labels
+    - merge_eigenstrat
     - snps_missing
     - snps_present
     - subset_sites

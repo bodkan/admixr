@@ -95,10 +95,10 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><a href="http://www.genetics.org/content/192/3/1065">ADMIXTOOLS</a> is a widely used software package for calculating admixture statistics and testing population admixture hypotheses. However, although powerful and comprehensive, it is not really user-friendly.</p>
-<p>A typical ADMIXTOOLS workflow usually involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS’ commands and control how to run a particular analysis. The results are then redirected to another file, which has to be parsed by the user to extract values of interest, often using command-line utilities again or (worse) by manual copy-pasting. The processed results are then analysed in R, Excel or another program.</p>
+<p><a href="http://www.genetics.org/content/192/3/1065">ADMIXTOOLS</a> is a widely used software package for calculating admixture statistics and testing population admixture hypotheses. However, although powerful and comprehensive, it is not exactly known for being user-friendly.</p>
+<p>A typical ADMIXTOOLS workflow often involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS commands and control how to run a particular analysis. The results are then redirected to another file, which has to be parsed by the user to extract values of interest, often using command-line utilities again or (worse) by manual copy-pasting. The processed results are then analysed in R, Excel or another program.</p>
 <p>This workflow is very cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow good practices of reproducible science, as it is nearly impossible to construct reproducible automated “pipelines”.</p>
-<p>This R package makes it possible to perform all stages of an ADMIXTOOLS analysis entirely from within R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
+<p>This R package makes it possible to perform all stages of an ADMIXTOOLS analysis entirely from R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
 </div>
 <div id="installation-instructions" class="section level2">
 <h2 class="hasAnchor">
@@ -106,16 +106,18 @@
 <p>To install <code>admixr</code> from Github you need to install the package <code>devtools</code> first. You can simply run:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</a></code></pre></div>
+<p><strong>Note that in order to use the <code>admixr</code> package, you need a working installation of ADMIXTOOLS!</strong> You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL">here</a>.</p>
+<p><strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code>library(admixr)</code> will show a warning message with instructions on how to fix this.</p>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>This is all the code that you need to perform ADMIXTOOLS analyses using this package! No shell scripting, no copy-pasting and manual editing of text files. The only thing you need is a working ADMIXTOOLS installation and a path to EIGENSTRAT data (a trio of ind/snp/geno files).</p>
+<p>This is all the code that you need to perform ADMIXTOOLS analyses using this package! No shell scripting, no copy-pasting and manual editing of text files. The only thing you need is a working ADMIXTOOLS installation and a path to EIGENSTRAT data (a trio of ind/snp/geno files), which we call <code>prefix</code> here.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">result &lt;-<span class="st"> </span><span class="kw"><a href="reference/d.html">d</a></span>(</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">W =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>), <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">prefix =</span> <span class="st">"~/local/R_LIBS/admixr/extdata/snps"</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">W =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>), <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">prefix =</span> <span class="st">"~/local/R_LIBS/admixr/extdata/snps"</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">)</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">result</a>
@@ -123,7 +125,7 @@
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 1    French Yoruba Vindija Chimp 0.0313 0.006933  4.510 15802 14844 487753</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 2 Sardinian Yoruba Vindija Chimp 0.0287 0.006792  4.222 15729 14852 487646</span></a></code></pre></div>
 <p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns the result as a <code>data.frame</code> object. It does all of this behind the scenes, without the user having to deal with low-level technical details.</p>
-<p><strong>To see many more examples, please check out the <a href="./articles/tutorial.html">vignette</a>.</strong></p>
+<p><strong>To see many more examples, please check out the <a href="./articles/tutorial.html">tutorial vignette</a>.</strong></p>
 </div>
 </div>
   </div>
@@ -148,7 +150,7 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Martin Petr <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Martin Petr <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-4879-8421" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" height="16"></a> </li>
 </ul>
 </div>
 
