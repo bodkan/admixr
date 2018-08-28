@@ -52,9 +52,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/paper.html">admixr - paper</a>
-    </li>
-    <li>
       <a href="../articles/tutorial.html">admixr - tutorial</a>
     </li>
   </ul>
@@ -107,6 +104,16 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
+<div id="admixtools" class="section level3">
+<h3 class="hasAnchor">
+<a href="#admixtools" class="anchor"></a>ADMIXTOOLS</h3>
+<p><strong>Note that in order to use the <code>admixr</code> package, you need a working installation of ADMIXTOOLS!</strong> You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL">here</a>.</p>
+<p><strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code>library(admixr)</code> will show a warning message with instructions on how to fix this.</p>
+</div>
+<div id="admixr" class="section level3">
+<h3 class="hasAnchor">
+<a href="#admixr" class="anchor"></a><code>admixr</code>
+</h3>
 <p>To install <code>admixr</code> from GitHub you need to install the package <code>devtools</code> first. To do this, you can simply run (in R):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</a></code></pre></div>
@@ -123,8 +130,7 @@
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></a></code></pre></div>
-<p><strong>Note that in order to use the <code>admixr</code> package, you need a working installation of ADMIXTOOLS!</strong> You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL">here</a>.</p>
-<p><strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code>library(admixr)</code> will show a warning message with instructions on how to fix this.</p>
+</div>
 </div>
 <div id="a-note-about-eigenstrat-format" class="section level2">
 <h2 class="hasAnchor">
