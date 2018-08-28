@@ -1,0 +1,47 @@
+---
+title: "admixr - paper"
+author:
+  - Martin Petr, Janet Kelso
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# _admixr - R package for performing ADMIXTOOLS analyses_
+
+## Summary
+
+We present a new R package called admixr, which makes it possible to perform all stages of ADMIXTOOLS analyses directly from R. This avoids the need for cumbersome production of text configuration files and parsing of output files on the command-line for each individual analysis. Compared to a traditional ADMIXTOOLS workflow that relies on a combination of shell scripting, editing and manual copy-pasting, our package reduces the number of steps required into a couple of lines of R code, dramatically reducing cognitive load for the user and potential for bugs Importantly, by utilizing the R environment for all steps of ADMIXTOOLS analyses, from data processing and running of analyses, to output processing, statistical analysis and plotting, this package allows building of fully automated analytic pipelines, improving the reproducibility of population genetic studies.
+
+## Introduction
+
+The growing numbers of available ancient and modern DNA samples have transformed our understanding of the evolutionary history of humans and other species. Several statistical methods have been developed to make inferences about past population movements and admixture events from genomic data. Chief among those has been a series of admixture statistics such as $f_3$, $f_4$, $f_4$-ratio and $D$ statistics as implemented in the set of command-line utilities distributed in the ADMIXTOOLS software package. Despite being instrumental in making inferences about ancient and modern human history - being used in nearly all recent studies in high-profile journals - ADMIXTOOLS utilities suffer from several disadvantages. First, each individual analysis or a hypothesis test relies on a set of text configuration files which are commonly generated using a combination of shell scripting and manual editing. This is especially problematic as both the number of available samples and testable hypotheses steadily increases, because each separate analysis often requires a new set of configuration files, thus making this workflow not scalable. Most importantly, however, ADMIXTOOLS' reliance on manual user intervention and copy-pasting for both the preparation of configuration files and extracting information from output files for further analysis makes it difficult to build automated analytic pipelines. This makes it difficult to follow the current best practices for reproducible computing. To overcome these challenges, we present a new package for the R programming language that provides convenient wrappers for ADMIXTOOLS command-line utilities and completely abstract away all technical details This package not only drastically reduces the amount of code needed to perform population genetic analyses, but presents a significant improvement for reproducible research by making it possible to build fully automatic analytic pipelines.
+
+## Implementation
+
+The `admixr` package is implemented using the R programming language. It's core comprises of series of R functions with a unified programming interface, such as `f3()`, `d()`, `f4()`, `f4ratio()` and `qpAdm()`. Generally, performing even the most trivial analysis using the ADMIXTOOLS package presents a significant amount of work for the user. For example, in order to calculate $f_4$-ratio statistic such as $f_4(\textrm{Nea}_1, \textrm{Chimp}; \textrm{Eur}, \textrm{Afr}) / f_4(\textrm{Nea}_1, \textrm{Chimp}; \textrm{Nea}_2, \textrm{Afr})$, the user needs to do the following:
+
+- create a "par" file describing the location of data in the EIGENSTRAT format, the list of population labels
+
+Note that changing the analysis setup in a slightly different way requires 
+
+In contrast, the same analysis using the `admixr` package can be run using the following R code:
+
+```{r, eval = FALSE}
+result <- f4ratio(X = "Eur", A = "Nea1", B = "Nea2", C = "Afr", O = "Chimp", prefix = eigenstrat)
+```
+
+This line performs all the low-level work
+
+## Examples
+## Conclusion
