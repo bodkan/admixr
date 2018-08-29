@@ -74,3 +74,15 @@ test_that("qpAdm wrapper produces correct results", {
     read_output(file.path(examples_dir, "test_qpAdm.log"))
   )
 })
+
+# generating parameter files ----------------------------------------------
+
+test_that("create_par_file checks arguments", {
+  files <- list(pop_file = tempfile(), par_file = tempfile(), log_file = tempfile())
+  expect_error(create_par_file(files, prefix = NULL, ind_file = NULL, snp_file = NULL, geno_file = NULL))
+})
+
+test_that("prefix is not necessary", {
+  files <- list(pop_file = tempfile(), par_file = tempfile(), log_file = tempfile())
+  expect_silent(create_par_file(files, prefix = NULL, ind_file = tempfile(), snp_file = tempfile(), geno_file = tempfile()))
+})
