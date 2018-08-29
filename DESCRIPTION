@@ -22,7 +22,8 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    tidyverse
+    tidyverse,
+    data.table
 Encoding: UTF-8
 RoxygenNote: 6.1.0
 VignetteBuilder: knitr

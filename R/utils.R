@@ -104,6 +104,36 @@ snps_missing <- function(prefix, prop = FALSE) {
 #' @param complement Perform an intersect or a complement operation?
 #'
 #' @export
+#' @import data.table
+xsubset_sites <- function(prefix, out_prefix, bed_file, complement = FALSE) {
+  if (!require("data.table")) {
+    stop("This function requires the package data.table - please install it first.")
+  }
+
+  # read BED as a data.table
+  bed <- fread(bed_file, col.names = c("chrom", "start", "end"), showProgress = FALSE)[, chrom := as.character(chrom)]
+  setkey(bed, chrom, start, end)
+
+  # read snp and geno data and merge them into a single data.table
+  snp <- setDT(read_snp(paste0(prefix, ".snp"))) %>%
+    .[, `:=`(chrom = as.character(chrom), start = pos - 1, end = pos)]
+  geno <- fread(paste0(prefix, ".geno"), header = FALSE, col.names = "gt")
+  combined <- cbind(snp, geno)
+  setkey(combined, chrom, start, end)
+  
+  # extract positions of SNPs that fall within or outside given BED regions
+  overlap <- foverlaps(combined, bed, which = TRUE)
+  overlap <- if (complement) overlap[!is.na(yid)] else overlap[is.na(yid)]
+  pos <- unique(overlap$xid)
+
+  # write subset of the original EIGENSTRAT data to a new destination
+  data_subset <- combined[pos]
+  write_snp(data_subset[, -c("gt")], paste0(out_prefix, ".snp"))
+  write_geno(data_subset[, .(gt)], paste0(out_prefix, ".geno"))
+  invisible(file.copy(from = paste0(prefix, ".ind"),
+                      to = paste0(out_prefix, ".ind")))
+}
+
 subset_sites <- function(prefix, out_prefix, bed_file, complement = FALSE) {
   coords <- readr::read_table2(
     bed_file,
