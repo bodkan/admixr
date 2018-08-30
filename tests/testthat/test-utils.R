@@ -95,3 +95,60 @@ test_that("Merging produces correct results", {
   merged_whole <- read_eigenstrat(merged_prefix)
   expect_true(all(sapply(c("ind", "snp", "geno"), function(i) all(whole[[i]] == merged_whole[[i]]))))
 })
+
+# EIGENSTRAT subsetting ---------------------------------------------------
+
+test_that("Overlap with no overlapping regions returns an error", {
+  prefix <- file.path(admixtools_path(), "convertf", "example")
+  bed_file <- tempfile()
+  # create a non-sensical BED file that cannot leave any overlapping sites
+  data.frame(chrom = c(-1, -1, -1), start = c(1, 10, 20), end = c(2, 11, 21)) %>%
+    readr::write_tsv(bed_file, col_names = FALSE)
+  # verify that the function fails
+  expect_error(subset_sites(prefix = prefix, subset_prefix = "blah", bed_file = bed_file))
+})
+
+test_that("Overlap with the same set of sites returns everything", {
+  prefix <- file.path(admixtools_path(), "convertf", "example")
+  # create a BED file that has the same positions as the original EIGENSTRAT
+  bed_file <- tempfile()
+  read_snp(paste0(prefix, ".snp")) %>%
+    dplyr::mutate(start = pos - 1, end = pos) %>%
+    dplyr::select(chrom, start, end) %>%
+    readr::write_tsv(bed_file, col_names = FALSE)
+  # generate a "subset" based on thad BED file
+  subset_prefix <- tempfile()
+  subset_sites(prefix = prefix, subset_prefix = subset_prefix, bed_file = bed_file)
+
+  # verify that both EIGENSTRAT datasets are the same
+  orig_data <- read_eigenstrat(prefix)
+  new_data <- read_eigenstrat(subset_prefix)
+  sapply(c("ind", "snp", "geno"), function(i) all(orig_data[[i]] == new_data[[i]])) %>%
+    all %>%
+    expect_true
+})
+
+test_that("Overlap returns a correct number of sites", {
+  prefix <- file.path(admixtools_path(), "convertf", "example")
+  # resample a BED file a number of times, verifying that we get the correct
+  # number of sites after the overlap operation
+  orig_data <- read_eigenstrat(prefix)
+  successes <- sapply(seq_len(nrow(orig_data$snp)), function(n) {
+    # create a BED file that has a subset of positions as the original EIGENSTRAT
+    bed_file <- tempfile()
+    read_snp(paste0(prefix, ".snp")) %>%
+      dplyr::mutate(start = pos - 1, end = pos) %>%
+      dplyr::select(chrom, start, end) %>%
+      dplyr::sample_n(n) %>%
+      dplyr::arrange(chrom, start, end) %>%
+      readr::write_tsv(bed_file, col_names = FALSE)
+    # generate a "subset" based on thad BED file
+    subset_prefix <- tempfile()
+    subset_sites(prefix = prefix, subset_prefix = subset_prefix, bed_file = bed_file)
+
+    # verify that both EIGENSTRAT datasets are the same
+    new_data <- read_eigenstrat(subset_prefix)
+    nrow(new_data$snp) == n
+  })
+  expect_true(all(successes))
+})

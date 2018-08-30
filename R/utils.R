@@ -94,73 +94,59 @@ snps_missing <- function(prefix, prop = FALSE) {
 }
 
 
-#' Generate new EIGENSTRAT dataset overlapping a given BED file.
+#' Subset data in an EIGENSTRAT file based on a given BED file.
 #'
-#' @param prefix Prefix of the geno/snp/ind files (including the whole
-#'     path).
-#' @param out_prefix Prefix of the generated EIGENSTRAT files with the
-#'     subset of the data.
-#' @param bed_file Path to the 3 column BED file to intersect with.
+#' @param prefix Prefix of EIGENSTRAT geno/snp/ind files.
+#' @param subset_prefix Prefix of the EIGENSTRAT subset.
+#' @param bed_file Path to a 3 column BED file to intersect with.
 #' @param complement Perform an intersect or a complement operation?
 #'
 #' @export
-#' @import data.table
-xsubset_sites <- function(prefix, out_prefix, bed_file, complement = FALSE) {
+subset_sites <- function(prefix, subset_prefix, bed_file, complement = FALSE) {
+  # the following dplyr/data.table-based code is awful, but it's still a better
+  # solution than depending on IRanges and other Bioconductor packages to
+  # do implement a single function
   if (!require("data.table")) {
     stop("This function requires the package data.table - please install it first.")
   }
 
   # read BED as a data.table
-  bed <- fread(bed_file, col.names = c("chrom", "start", "end"), showProgress = FALSE)[, chrom := as.character(chrom)]
-  setkey(bed, chrom, start, end)
+  bed <- readr::read_tsv(bed_file, col_names = c("chrom", "start", "end"), col_types = "cii") %>%
+    data.table::setDT()
+  data.table::setkey(bed, chrom, start, end)
 
   # read snp and geno data and merge them into a single data.table
-  snp <- setDT(read_snp(paste0(prefix, ".snp"))) %>%
-    .[, `:=`(chrom = as.character(chrom), start = pos - 1, end = pos)]
-  geno <- fread(paste0(prefix, ".geno"), header = FALSE, col.names = "gt")
+  snp <- read_snp(paste0(prefix, ".snp")) %>%
+    dplyr::mutate(chrom = as.character(chrom), start = pos - 1, end = pos) %>%
+    data.table::setDT()
+  geno <- data.table::fread(
+    paste0(prefix, ".geno"),
+    header = FALSE,
+    col.names = "gt",
+    showProgress = FALSE,
+    colClasses = "c"
+  )
   combined <- cbind(snp, geno)
-  setkey(combined, chrom, start, end)
+  data.table::setkey(combined, chrom, start, end)
   
-  # extract positions of SNPs that fall within or outside given BED regions
-  overlap <- foverlaps(combined, bed, which = TRUE)
-  overlap <- if (complement) overlap[!is.na(yid)] else overlap[is.na(yid)]
-  pos <- unique(overlap$xid)
+  # get data.table indices of SNPs within/outside given BED regions
+  overlap <- data.table::foverlaps(combined, bed, which = TRUE)
+  # filter the result based on whether an overlap or a complement is needed
+  if (complement)
+    overlap <- overlap[is.na(overlap$yid), ]
+  else
+    overlap <- overlap[!is.na(overlap$yid), ]
+
+  # extract only those sites passing the filter
+  site_idx <- unique(overlap$xid)
+  if (!length(site_idx)) stop("No overlapping sites!")
+  data_subset <- combined[site_idx, ]
 
   # write subset of the original EIGENSTRAT data to a new destination
-  data_subset <- combined[pos]
-  write_snp(data_subset[, -c("gt")], paste0(out_prefix, ".snp"))
-  write_geno(data_subset[, .(gt)], paste0(out_prefix, ".geno"))
+  dplyr::select(data_subset, -c(start, end, gt)) %>% write_snp(paste0(subset_prefix, ".snp"))
+  dplyr::select(data_subset, gt) %>% write_geno(paste0(subset_prefix, ".geno"))
   invisible(file.copy(from = paste0(prefix, ".ind"),
-                      to = paste0(out_prefix, ".ind")))
-}
-
-subset_sites <- function(prefix, out_prefix, bed_file, complement = FALSE) {
-  coords <- readr::read_table2(
-    bed_file,
-    col_names = c("chrom", "start", "pos"),
-    col_types = "cii",
-    progress = FALSE
-  ) %>%
-    dplyr::select(-start)
-  
-  geno <- read_geno(paste0(prefix, ".geno"))
-  snp <- read_snp(paste0(prefix, ".snp"))
-  combined <- dplyr::bind_cols(snp, geno)
-  
-  # determine which function to call on the coordinates
-  fun <- ifelse(complement, dplyr::anti_join, dplyr::inner_join)
-  combined_subset <- fun(combined, coords, by = c("chrom", "pos"))
-  
-  # write the new snp file
-  dplyr::select(combined_subset, id:alt) %>%  
-    readr::write_tsv(path = paste0(out_prefix, ".snp"), col_names = FALSE)
-  # write the new geno file
-  dplyr::select(combined_subset, -(id:alt)) %>%
-    apply(1, paste, collapse = "") %>%
-    writeLines(con = paste0(out_prefix, ".geno"))
-  # write the new ind file
-  invisible(file.copy(from = paste0(prefix, ".ind"),
-                      to = paste0(out_prefix, ".ind")))
+                      to = paste0(subset_prefix, ".ind")))
 }
 
 

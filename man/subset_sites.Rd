@@ -2,21 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{subset_sites}
 \alias{subset_sites}
-\title{Generate new EIGENSTRAT dataset overlapping a given BED file.}
+\title{Subset data in an EIGENSTRAT file based on a given BED file.}
 \usage{
-subset_sites(prefix, out_prefix, bed_file, complement = FALSE)
+subset_sites(prefix, subset_prefix, bed_file, complement = FALSE)
 }
 \arguments{
-\item{prefix}{Prefix of the geno/snp/ind files (including the whole
-path).}
+\item{prefix}{Prefix of EIGENSTRAT geno/snp/ind files.}
 
-\item{out_prefix}{Prefix of the generated EIGENSTRAT files with the
-subset of the data.}
+\item{subset_prefix}{Prefix of the EIGENSTRAT subset.}
 
-\item{bed_file}{Path to the 3 column BED file to intersect with.}
+\item{bed_file}{Path to a 3 column BED file to intersect with.}
 
 \item{complement}{Perform an intersect or a complement operation?}
 }
 \description{
-Generate new EIGENSTRAT dataset overlapping a given BED file.
+Subset data in an EIGENSTRAT file based on a given BED file.
 }
