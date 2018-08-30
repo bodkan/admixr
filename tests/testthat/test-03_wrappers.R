@@ -3,7 +3,7 @@
 # admixr's wrapper functions. The results of both tests (i.e. contents of
 # output log files) are then compared to each other.
 
-context("wrapper functionality")
+context("Wrapper functionality")
 
 path <- admixtools_path()
 data_dir <- file.path(path, "data")

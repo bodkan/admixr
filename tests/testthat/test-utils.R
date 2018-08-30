@@ -98,57 +98,57 @@ test_that("Merging produces correct results", {
 
 # EIGENSTRAT subsetting ---------------------------------------------------
 
-test_that("Overlap with no overlapping regions returns an error", {
-  prefix <- file.path(admixtools_path(), "convertf", "example")
-  bed_file <- tempfile()
-  # create a non-sensical BED file that cannot leave any overlapping sites
-  data.frame(chrom = c(-1, -1, -1), start = c(1, 10, 20), end = c(2, 11, 21)) %>%
-    readr::write_tsv(bed_file, col_names = FALSE)
-  # verify that the function fails
-  expect_error(subset_sites(prefix = prefix, subset_prefix = "blah", bed_file = bed_file))
-})
-
-test_that("Overlap with the same set of sites returns everything", {
-  prefix <- file.path(admixtools_path(), "convertf", "example")
-  # create a BED file that has the same positions as the original EIGENSTRAT
-  bed_file <- tempfile()
-  read_snp(paste0(prefix, ".snp")) %>%
+write_bed <- function(snp, bed) {
+  read_snp(snp) %>%
     dplyr::mutate(start = pos - 1, end = pos) %>%
     dplyr::select(chrom, start, end) %>%
-    readr::write_tsv(bed_file, col_names = FALSE)
-  # generate a "subset" based on thad BED file
-  subset_prefix <- tempfile()
-  subset_sites(prefix = prefix, subset_prefix = subset_prefix, bed_file = bed_file)
+    readr::write_tsv(bed, col_names = FALSE)
+}
 
+test_that("filter_sites correctly handles complete overlap", {
+  snp <- paste0(file.path(admixtools_path(), "convertf", "example"), ".snp")
+  # create a BED file that has the same positions as the original EIGENSTRAT
+  bed <- tempfile()
+  write_bed(snp, bed)
+  # generate a "subset" based on thad BED file
+  output <- tempfile()
+  filter_sites(snp, bed, output, include = TRUE)
   # verify that both EIGENSTRAT datasets are the same
-  orig_data <- read_eigenstrat(prefix)
-  new_data <- read_eigenstrat(subset_prefix)
-  sapply(c("ind", "snp", "geno"), function(i) all(orig_data[[i]] == new_data[[i]])) %>%
-    all %>%
-    expect_true
+  orig_snp <- read_snp(snp)
+  output_snp <- read_snp(output)
+  expect_equal(orig_snp, output_snp)
+})
+
+test_that("filter_sites correctly fails at no overlap", {
+  snp <- paste0(file.path(admixtools_path(), "convertf", "example"), ".snp")
+  # create a BED file that has the same positions as the original EIGENSTRAT
+  bed <- tempfile()
+  write_bed(snp, bed)
+  # verify that no overlaps leads to error
+  expect_error(filter_sites(snp, bed, "blah", include = FALSE))
 })
 
 test_that("Overlap returns a correct number of sites", {
-  prefix <- file.path(admixtools_path(), "convertf", "example")
+  snp_path <- paste0(file.path(admixtools_path(), "convertf", "example"), ".snp")
+  snp <- read_snp(snp_path)
+
   # resample a BED file a number of times, verifying that we get the correct
   # number of sites after the overlap operation
-  orig_data <- read_eigenstrat(prefix)
-  successes <- sapply(seq_len(nrow(orig_data$snp)), function(n) {
-    # create a BED file that has a subset of positions as the original EIGENSTRAT
-    bed_file <- tempfile()
-    read_snp(paste0(prefix, ".snp")) %>%
+  successes <- sapply(seq_len(nrow(snp)), function(n) {
+    # create a BED file that has a subset of sites from the original snp file
+    bed <- tempfile()
+    snp %>%
       dplyr::mutate(start = pos - 1, end = pos) %>%
       dplyr::select(chrom, start, end) %>%
       dplyr::sample_n(n) %>%
-      dplyr::arrange(chrom, start, end) %>%
-      readr::write_tsv(bed_file, col_names = FALSE)
+      dplyr::arrange() %>%
+      readr::write_tsv(bed, col_names = FALSE)
     # generate a "subset" based on thad BED file
-    subset_prefix <- tempfile()
-    subset_sites(prefix = prefix, subset_prefix = subset_prefix, bed_file = bed_file)
+    output <- tempfile()
+    filter_sites(snp_path, bed, output, include = TRUE)
+    output_snp <- read_snp(output)
 
-    # verify that both EIGENSTRAT datasets are the same
-    new_data <- read_eigenstrat(subset_prefix)
-    nrow(new_data$snp) == n
+    nrow(output_snp) == n
   })
   expect_true(all(successes))
 })

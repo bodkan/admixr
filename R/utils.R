@@ -94,59 +94,47 @@ snps_missing <- function(prefix, prop = FALSE) {
 }
 
 
-#' Subset data in an EIGENSTRAT file based on a given BED file.
+#' Generate coordinates of SNPs that overlap/exclude regions in BED file.
 #'
-#' @param prefix Prefix of EIGENSTRAT geno/snp/ind files.
-#' @param subset_prefix Prefix of the EIGENSTRAT subset.
-#' @param bed_file Path to a 3 column BED file to intersect with.
-#' @param complement Perform an intersect or a complement operation?
+#' @param snp Path to an EIGENSTRAT snp file.
+#' @param bed Path to a BED file.
+#' @param output Path to a snp file with coordinates to exclude.
+#' @param include Include sites falling inside the BED file regions?
 #'
 #' @export
-subset_sites <- function(prefix, subset_prefix, bed_file, complement = FALSE) {
-  # the following dplyr/data.table-based code is awful, but it's still a better
-  # solution than depending on IRanges and other Bioconductor packages to
-  # do implement a single function
+filter_sites <- function(snp, bed, output, include = TRUE) {
   if (!require("data.table")) {
     stop("This function requires the package data.table - please install it first.")
   }
 
-  # read BED as a data.table
-  bed <- readr::read_tsv(bed_file, col_names = c("chrom", "start", "end"), col_types = "cii") %>%
-    data.table::setDT()
-  data.table::setkey(bed, chrom, start, end)
+  # process BED file
+  dt_bed <- data.table::fread(
+    bed,
+    col.names = c("chrom", "start", "end"),
+    colClasses = c("character", "integer", "integer")
+  )
+  data.table::setkey(dt_bed, chrom, start, end)
 
-  # read snp and geno data and merge them into a single data.table
-  snp <- read_snp(paste0(prefix, ".snp")) %>%
+  # process SNP file from the prefix
+  dt_snp <- read_snp(snp) %>%
     dplyr::mutate(chrom = as.character(chrom), start = pos - 1, end = pos) %>%
     data.table::setDT()
-  geno <- data.table::fread(
-    paste0(prefix, ".geno"),
-    header = FALSE,
-    col.names = "gt",
-    showProgress = FALSE,
-    colClasses = "c"
-  )
-  combined <- cbind(snp, geno)
-  data.table::setkey(combined, chrom, start, end)
-  
-  # get data.table indices of SNPs within/outside given BED regions
-  overlap <- data.table::foverlaps(combined, bed, which = TRUE)
-  # filter the result based on whether an overlap or a complement is needed
-  if (complement)
-    overlap <- overlap[is.na(overlap$yid), ]
+  data.table::setkey(dt_snp, chrom, start, end)                                          
+                                                                                      
+  # get data.table indices of SNPs within/outside given BED regions                   
+  overlap <- data.table::foverlaps(dt_snp, dt_bed, which = TRUE)                            
+  # filter the result based on whether an overlap or a complement is needed           
+  if (include)                                                                        
+    overlap <- overlap[!is.na(overlap$yid), ]                                         
   else
-    overlap <- overlap[!is.na(overlap$yid), ]
+    overlap <- overlap[is.na(overlap$yid), ]
 
   # extract only those sites passing the filter
   site_idx <- unique(overlap$xid)
-  if (!length(site_idx)) stop("No overlapping sites!")
-  data_subset <- combined[site_idx, ]
+  if (!length(site_idx)) stop("No sites remaining after the overlap!")
+  snp_subset <- dt_snp[site_idx, ]
 
-  # write subset of the original EIGENSTRAT data to a new destination
-  dplyr::select(data_subset, -c(start, end, gt)) %>% write_snp(paste0(subset_prefix, ".snp"))
-  dplyr::select(data_subset, gt) %>% write_geno(paste0(subset_prefix, ".geno"))
-  invisible(file.copy(from = paste0(prefix, ".ind"),
-                      to = paste0(subset_prefix, ".ind")))
+  dplyr::select(snp_subset, -c(start, end)) %>% write_snp(output)
 }
 
 
