@@ -70,7 +70,7 @@ test_that("qpAdm wrapper produces correct results", {
   right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
     stringr::str_subset("^[^#]")
   expect_equal(
-    qpAdm(target = left[1], refs = left[-1], outgroups = right, prefix = prefix),
+    qpAdm(target = left[1], references = left[-1], outgroups = right, prefix = prefix),
     read_output(file.path(examples_dir, "test_qpAdm.log"))
   )
 })

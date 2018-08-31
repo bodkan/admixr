@@ -123,20 +123,19 @@ f3 <- function(A, B, C,
 #' Calculate admixture proportions in target populations using qpAdm.
 #'
 #' @param target Vector of target populations (evaluated one at a time).
-#' @param refs Reference source populations related to true ancestors.
+#' @param references Reference source populations related to true ancestors.
 #' @param outgroups Outgroup populations.
-#' @param prefix Prefix of the geno/snp/ind files (including the whole
-#'     path).
+#' @param prefix Prefix of the geno/snp/ind files (including the whole path).
 #' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
 #' @param badsnp SNP file with information about ignored sites.
 #' @param outdir Where to put all generated files (temporary
 #'     directory by default).
 #'
 #' @export
-qpAdm <- function(target, refs, outgroups,
+qpAdm <- function(target, references, outgroups,
                   prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
                   badsnp = NULL, outdir = NULL) {
-  check_presence(c(target, refs, outgroups), prefix, ind)
+  check_presence(c(target, references, outgroups), prefix, ind)
   
   dplyr::bind_rows(lapply(target, function(X) {
     # get the path to the population, parameter and log files
@@ -148,7 +147,7 @@ qpAdm <- function(target, refs, outgroups,
     files[["popright"]] <-  stringr::str_replace(files[["pop_file"]], "$", "right")
     files[["pop_file"]] <- NULL
   
-    create_qpAdm_pop_files(c(X, refs), outgroups, files)
+    create_qpAdm_pop_files(c(X, references), outgroups, files)
     create_par_file(files, prefix, geno, snp, ind, badsnp)
     
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])

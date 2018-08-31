@@ -66,32 +66,26 @@ merge_eigenstrat <- function(prefix, input1, input2) {
 #'
 #' @param prefix EIGENSTRAT prefix.
 #' @param prop Calculate the proportion of non-missing alleles instead?
+#' @param missing Count present SNPs or missing SNPs?
 #'
 #' @return data.frame object with SNP counts/proportions.
 #'
 #' @export
-snps_present <- function(prefix, prop = FALSE) {
-  fn <- ifelse(prop, mean, sum)
-  eigenstrat <- read_eigenstrat(prefix)
-  dplyr::summarise_all(eigenstrat$geno, dplyr::funs(fn(. != 9))) %>%
-    tidyr::gather(name, nsnps)
+#' @import rlang
+count_snps <- function(prefix, missing = FALSE, prop = FALSE) {
+    fn <- ifelse(prop, mean, sum)
+    if (missing) {
+        op <- `==`
+        col <- "missing"
+    } else {
+        op <- `!=`
+        col <- "present"
+    }
+    eigenstrat <- read_eigenstrat(prefix)
+    dplyr::summarise_all(eigenstrat$geno, dplyr::funs(fn(op(., 9)))) %>%
+        tidyr::gather(name, !!col)
 }
 
-
-#' Calculate the number/proportion of missing sites in each sample.
-#'
-#' @param prefix EIGENSTRAT prefix.
-#' @param prop Calculate the proportion of non-missing alleles instead?
-#'
-#' @return data.frame object with SNP counts/proportions.
-#'
-#' @export
-snps_missing <- function(prefix, prop = FALSE) {
-  fn <- ifelse(prop, mean, sum)
-  eigenstrat <- read_eigenstrat(prefix)
-  dplyr::summarise_all(eigenstrat$geno, dplyr::funs(fn(. == 9))) %>%
-    tidyr::gather(name, nsnps)
-}
 
 
 #' Generate coordinates of SNPs that overlap/exclude regions in BED file.

@@ -67,8 +67,8 @@ test_that("SNP counts correspond to numbers from CLI utilities", {
         tidyr::spread(state, sites)
     }) %>% dplyr::bind_rows()
 
-  expect_equal(snps_present(prefix)$nsnps, shell_counts$present)
-  expect_equal(snps_missing(prefix)$nsnps, shell_counts$missing)
+  expect_equal(count_snps(prefix)$present, shell_counts$present)
+  expect_equal(count_snps(prefix, missing = TRUE)$missing, shell_counts$missing)
 })
 
 # EIGENSTRAT merging--------------------------------------------------------

@@ -16,7 +16,8 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    stats
+    stats,
+    rlang
 Suggests:
     covr,
     testthat,
