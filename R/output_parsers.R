@@ -1,8 +1,8 @@
-#' Read output file of one of the ADMIXTOOLS programs.
+#' Read an output file from one of the ADMIXTOOLS programs.
 #' 
-#' @param file Name of the output log file.
+#' @param file Path to a file.
 #'
-#' @return data.frame with parsed results.
+#' @return A data.frame with parsed results.
 #'
 #' @export
 read_output <- function(file) {

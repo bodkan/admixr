@@ -2,20 +2,20 @@
 % Please edit documentation in R/utils.R
 \name{count_snps}
 \alias{count_snps}
-\title{Calculate the number/proportion of covered sites in each sample.}
+\title{Count the number/proportion of present/missing sites in each sample}
 \usage{
 count_snps(prefix, missing = FALSE, prop = FALSE)
 }
 \arguments{
-\item{prefix}{EIGENSTRAT prefix.}
+\item{prefix}{An EIGENSTRAT prefix.}
 
 \item{missing}{Count present SNPs or missing SNPs?}
 
-\item{prop}{Calculate the proportion of non-missing alleles instead?}
+\item{prop}{Calculate the proportion instead of counts?}
 }
 \value{
-data.frame object with SNP counts/proportions.
+A data.frame object with SNP counts/proportions.
 }
 \description{
-Calculate the number/proportion of covered sites in each sample.
+Count the number/proportion of present/missing sites in each sample
 }

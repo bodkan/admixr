@@ -2,25 +2,43 @@
 % Please edit documentation in R/wrappers.R
 \name{f4ratio}
 \alias{f4ratio}
-\title{Calculate f4-ratio statistic.}
+\alias{d}
+\alias{f4}
+\alias{f3}
+\title{Calculate the D, f4, f4-ratio, or f3 statistic.}
 \usage{
 f4ratio(X, A, B, C, O, prefix = NULL, geno = NULL, snp = NULL,
   ind = NULL, exclude = NULL, outdir = NULL)
+
+d(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+  exclude = NULL, outdir = NULL, f4mode = FALSE)
+
+f4(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+  exclude = NULL, outdir = NULL)
+
+f3(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+  exclude = NULL, outdir = NULL, inbreed = FALSE)
 }
 \arguments{
-\item{X, A, B, C, O}{Population names according to nomenclature used in
+\item{prefix}{An EIGENSTRAT prefix (shared by the geno/snp/ind trio).}
+
+\item{geno}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
+
+\item{snp}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
+
+\item{ind}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
+
+\item{exclude}{Path to file in a snp format with SNPs to exclude from the calculation.}
+
+\item{outdir}{Where to put all generated files (temporary directory by default).}
+
+\item{W, X, Y, Z, A, B, C, O}{Population names according to the nomenclature used in
 Patterson et al., 2012.}
 
-\item{prefix}{Prefix of the geno/snp/ind files (including the whole
-path).}
+\item{f4mode}{Calculate the f4 statistic instead of the D statistic.}
 
-\item{geno, snp, ind}{Path to the geno/snp/ind file. Each overrides the 'prefix' argument.}
-
-\item{exclude}{SNP file with information about ignored sites.}
-
-\item{outdir}{Where to put all generated files (temporary
-directory by default).}
+\item{inbreed}{See README.3PopTest in ADMIXTOOLS for an explanation.}
 }
 \description{
-Calculate f4-ratio statistic.
+Calculate the D, f4, f4-ratio, or f3 statistic.
 }

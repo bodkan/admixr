@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate f4-ratio statistic. — f4ratio • admixr</title>
+<title>Calculate the D, f4, f4-ratio, or f3 statistic. — f4ratio • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Calculate f4-ratio statistic. — f4ratio" />
+<meta property="og:title" content="Calculate the D, f4, f4-ratio, or f3 statistic. — f4ratio" />
 
-<meta property="og:description" content="Calculate f4-ratio statistic." />
+<meta property="og:description" content="Calculate the D, f4, f4-ratio, or f3 statistic." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,45 +112,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate f4-ratio statistic.</h1>
+    <h1>Calculate the D, f4, f4-ratio, or f3 statistic.</h1>
     <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
     <div class="hidden name"><code>f4ratio.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Calculate f4-ratio statistic.</p>
+    <p>Calculate the D, f4, f4-ratio, or f3 statistic.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>f4ratio</span>(<span class='no'>X</span>, <span class='no'>A</span>, <span class='no'>B</span>, <span class='no'>C</span>, <span class='no'>O</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>snp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ind</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>ind</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>d</span>(<span class='no'>W</span>, <span class='no'>X</span>, <span class='no'>Y</span>, <span class='no'>Z</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>snp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ind</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>f4mode</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>f4</span>(<span class='no'>W</span>, <span class='no'>X</span>, <span class='no'>Y</span>, <span class='no'>Z</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>snp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ind</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>f3</span>(<span class='no'>A</span>, <span class='no'>B</span>, <span class='no'>C</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>snp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ind</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inbreed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>X, A, B, C, O</th>
-      <td><p>Population names according to nomenclature used in
-Patterson et al., 2012.</p></td>
-    </tr>
-    <tr>
       <th>prefix</th>
-      <td><p>Prefix of the geno/snp/ind files (including the whole
-path).</p></td>
+      <td><p>An EIGENSTRAT prefix (shared by the geno/snp/ind trio).</p></td>
     </tr>
     <tr>
-      <th>geno, snp, ind</th>
-      <td><p>Path to the geno/snp/ind file. Each overrides the 'prefix' argument.</p></td>
+      <th>geno</th>
+      <td><p>Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.</p></td>
+    </tr>
+    <tr>
+      <th>snp</th>
+      <td><p>Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.</p></td>
+    </tr>
+    <tr>
+      <th>ind</th>
+      <td><p>Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.</p></td>
     </tr>
     <tr>
       <th>exclude</th>
-      <td><p>SNP file with information about ignored sites.</p></td>
+      <td><p>Path to file in a snp format with SNPs to exclude from the calculation.</p></td>
     </tr>
     <tr>
       <th>outdir</th>
-      <td><p>Where to put all generated files (temporary
-directory by default).</p></td>
+      <td><p>Where to put all generated files (temporary directory by default).</p></td>
+    </tr>
+    <tr>
+      <th>W, X, Y, Z, A, B, C, O</th>
+      <td><p>Population names according to the nomenclature used in
+Patterson et al., 2012.</p></td>
+    </tr>
+    <tr>
+      <th>f4mode</th>
+      <td><p>Calculate the f4 statistic instead of the D statistic.</p></td>
+    </tr>
+    <tr>
+      <th>inbreed</th>
+      <td><p>See README.3PopTest in ADMIXTOOLS for an explanation.</p></td>
     </tr>
     </table>
     

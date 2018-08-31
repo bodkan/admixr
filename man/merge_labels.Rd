@@ -2,20 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{merge_labels}
 \alias{merge_labels}
-\title{Merge multiple samples/populations under a single label.}
+\title{Merge multiple samples/populations under a single label}
 \usage{
 merge_labels(ind, modified_ind, labels)
 }
 \arguments{
-\item{ind}{EIGENSTRAT ind file to modify.}
+\item{ind}{Path to an original ind file.}
 
-\item{modified_ind}{Modified EIGENSTRAT ind filename.}
+\item{modified_ind}{Path to a final modified ind file.}
 
-\item{labels}{Named list of labels to merge. Names specify labels
-to merge into.}
+\item{labels}{A named list of labels to merge.}
 }
 \description{
-Merge multiple samples/populations under a single label.
+Merge multiple samples/populations under a single label
 }
 \examples{
 

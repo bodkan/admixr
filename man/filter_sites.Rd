@@ -2,19 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{filter_sites}
 \alias{filter_sites}
-\title{Generate coordinates of SNPs that overlap/exclude regions in BED file.}
+\title{Generate coordinates of SNPs that overlap/exclude regions in BED file}
 \usage{
-filter_sites(snp, bed, output, include = TRUE)
+filter_sites(snp, bed, output, exclude = FALSE)
 }
 \arguments{
-\item{snp}{Path to an EIGENSTRAT snp file.}
+\item{snp}{Path to a snp file.}
 
 \item{bed}{Path to a BED file.}
 
-\item{output}{Path to a snp file with coordinates to exclude.}
+\item{output}{Path to an output snp file with coordinates to exclude.}
 
-\item{include}{Include sites falling inside the BED file regions?}
+\item{exclude}{Exclude sites falling inside the BED file regions?}
 }
 \description{
-Generate coordinates of SNPs that overlap/exclude regions in BED file.
+Generate coordinates of SNPs that overlap/exclude regions in BED file
 }

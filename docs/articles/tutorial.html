@@ -82,9 +82,9 @@
       <h1>admixr - tutorial</h1>
                         <h4 class="author">Martin Petr</h4>
             
-            <h4 class="date">2018-08-31</h4>
+            <h4 class="date">2018-09-01</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/tests/testthat/vignettes/tutorial.Rmd"><code>tests/testthat/vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
 
     </div>
@@ -150,10 +150,9 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps"</span></a></code></pre></div>
 <p>We can verify that there are three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">dir</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(eigenstrat), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.geno"      </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind"       </span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind.merged"</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [4] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.snp"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.geno"</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind" </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.snp"</span></a></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
@@ -194,10 +193,10 @@
 <p>The goal of <code>admixr</code> is to make ADMIXTOOLS analyses as trivial to perform as possible, without having to worry about par/pop/left/right configuration files (as they are known in ADMIXTOOLS’ jargon) and other low-level details.</p>
 <p>The only interface between you and ADMIXTOOLS is the following set of R functions:</p>
 <ul>
-<li><code><a href="../reference/d.html">d()</a></code></li>
-<li><code><a href="../reference/f4.html">f4()</a></code></li>
+<li><code><a href="../reference/f4ratio.html">d()</a></code></li>
+<li><code><a href="../reference/f4ratio.html">f4()</a></code></li>
 <li><code><a href="../reference/f4ratio.html">f4ratio()</a></code></li>
-<li><code><a href="../reference/f3.html">f3()</a></code></li>
+<li><code><a href="../reference/f4ratio.html">f3()</a></code></li>
 <li><code><a href="../reference/qpAdm.html">qpAdm()</a></code></li>
 </ul>
 <p>Anything that would normally require <a href="https://gaworkshop.readthedocs.io/en/latest/contents/06_f3/f3.html">dozens of lines of shell scripts</a> can be often accomplished by running a single line of R code.</p>
@@ -215,7 +214,7 @@
 <p>Let’s save the population names first to make the code below more readable:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">pops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>)</a></code></pre></div>
 <p>Using the <code>admixr</code> package we can then calculate the <span class="math inline">\(D\)</span> statistic above simply by running:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/d.html">d</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
 <p>The result is a following <code>data.frame</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
@@ -336,7 +335,7 @@
 <p><span class="math display">\[ f_4 = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# sites}}\]</span></p>
 <p>Again, significant departure of <span class="math inline">\(f_4\)</span> from 0 is informative about gene flow, in a way analogous to <span class="math inline">\(D\)</span> statistic.</p>
 <p>To repeat the previous analysis using <span class="math inline">\(f_4\)</span> statistic, we can run:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4.html">f4</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -537,7 +536,7 @@
 <p>As an example, imagine we are interested in relative divergence times between pairs of present-day human populations, and want to know in which approximate order they split of from each other. To address this problem, we could use <span class="math inline">\(f_3\)</span> statistic by fixing the <span class="math inline">\(C\)</span> outgroup as Chimp, and calculating pairwise <span class="math inline">\(f_3\)</span> statistics between all pairs of present-day modern humans.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">pops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>)</a>
 <a class="sourceLine" id="cb18-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f3.html">f3</a></span>(<span class="dt">A =</span> pops, <span class="dt">B =</span> pops, <span class="dt">C =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
+<a class="sourceLine" id="cb18-3" data-line-number="3">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f3</a></span>(<span class="dt">A =</span> pops, <span class="dt">B =</span> pops, <span class="dt">C =</span> <span class="st">"Chimp"</span>, <span class="dt">prefix =</span> eigenstrat)</a></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -733,7 +732,7 @@ Vindija      U  Archaic
 Altai        U  Archaic
 Denisova     U  Archaic</code></pre>
 <p>We can then use “European”, “African” and “Archaic” labels in any of the <code>admixr</code> wrapper functions described above, we just have to specify a new <code>ind</code> file in addition to the <code>prefix</code> argument. For example:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/d.html">d</a></span>(<span class="dt">W =</span> <span class="st">"European"</span>, <span class="dt">X =</span> <span class="st">"African"</span>, <span class="dt">Y =</span> <span class="st">"Archaic"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</a>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"European"</span>, <span class="dt">X =</span> <span class="st">"African"</span>, <span class="dt">Y =</span> <span class="st">"Archaic"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</a>
 <a class="sourceLine" id="cb26-2" data-line-number="2">            <span class="dt">prefix =</span> eigenstrat, <span class="dt">ind =</span> modif_path)</a></code></pre></div>
 <p>Here is the result, showing (as we’ve seen above for individual samples) that Europeans show genetic affinity to archaic humans compared to Africans today:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
@@ -763,7 +762,7 @@ Denisova     U  Archaic</code></pre>
 <td align="right">489003</td>
 </tr></tbody>
 </table>
-<p>Note that in the <code><a href="../reference/d.html">d()</a></code> call we provided both path to shared EIGENSTRAT prefix, but we also specified the path to the modified <code>ind</code> file separately. This overides the unmodified <code>ind</code> file that would be normally used, and ADMIXTOOLS picks up the combined population labels from the modified <code>ind</code> file.</p>
+<p>Note that in the <code><a href="../reference/f4ratio.html">d()</a></code> call we provided both path to shared EIGENSTRAT prefix, but we also specified the path to the modified <code>ind</code> file separately. This overides the unmodified <code>ind</code> file that would be normally used, and ADMIXTOOLS picks up the combined population labels from the modified <code>ind</code> file.</p>
 </div>
 <div id="merging-eigenstrat-datasets" class="section level2">
 <h2 class="hasAnchor">

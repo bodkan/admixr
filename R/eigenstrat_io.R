@@ -1,12 +1,11 @@
 # Reading EIGENSTRAT files --------------------------------------------------
 
 
-#' Read an EIGENSTRAT 'ind' file.
+#' Read an EIGENSTRAT ind/snp/geno file.
 #'
-#' @param file Path to the file.
+#' @param file Path to a file.
 #'
-#' @return A data.frame object with sample identifier, sex and label columns
-#'     (as defined by the EIGENSTRAT format).
+#' @return A data.frame object.
 #'
 #' @export
 read_ind <- function(file) {
@@ -14,13 +13,7 @@ read_ind <- function(file) {
 }
 
 
-#' Read an EIGENSTRAT 'snp' file.
-#'
-#' @param file Path to the file.
-#'
-#' @return A data.frame object with SNP data (columns defined by the
-#'     EIGENSTRAT format).
-#'
+#' @rdname read_ind
 #' @export
 read_snp <- function(file) {
     readr::read_table2(
@@ -32,16 +25,10 @@ read_snp <- function(file) {
 }
 
 
-#' Read an EIGENSTRAT 'geno' file.
-#'
-#' @param file Path to the geno file.
-#' @param ind_file Path to the ind file to read sample names from.
-#'
-#' @return A data.frame object with genotypes of each sample (0/1/9 as defined
-#'     by the EIGENSTRAT format).
-#'
+#' @rdname read_ind
 #' @export
-read_geno <- function(file, ind_file = stringr::str_replace(file, "geno$", "ind")) {
+read_geno <- function(file) {
+    ind_file = stringr::str_replace(file, "geno$", "ind")
     inds <- read_ind(ind_file)$id
 
     # get the number of samples in the geno file
@@ -55,22 +42,18 @@ read_geno <- function(file, ind_file = stringr::str_replace(file, "geno$", "ind"
 }
 
 
-#' Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.
+#' Read a trio of EIGENSTRAT geno/snp/ind files.
 #'
-#' @param prefix EIGENSTRAT prefix of geno/snp/ind files.
-#' @param ind_suffix,snp_suffix,geno_suffix Alternative EIGENSTRAT suffixes.
+#' @param prefix EIGENSTRAT geno/snp/ind prefix.
 #'
-#' @return List of three data.frame objects (one for geno/snp/ind data).
+#' @return List of three data.frame objects.
 #'
 #' @export
-read_eigenstrat <- function(prefix = NULL,
-                            geno_suffix = ".geno",
-                            ind_suffix = ".ind",
-                            snp_suffix = ".snp") {
+read_eigenstrat <- function(prefix = NULL) {
     list(
-        geno = read_geno(paste0(prefix, geno_suffix), paste0(prefix, ind_suffix)),
-        snp = read_snp(paste0(prefix, snp_suffix)),
-        ind = read_ind(paste0(prefix, ind_suffix))
+        geno = read_geno(paste0(prefix, ".geno")),
+        snp = read_snp(paste0(prefix, ".snp")),
+        ind = read_ind(paste0(prefix, ".ind"))
     )
 }
 
@@ -79,11 +62,10 @@ read_eigenstrat <- function(prefix = NULL,
 # Writing EIGENSTRAT files --------------------------------------------------
 
 
-#' Write an EIGENSTRAT 'ind' file.
+#' Write an EIGENSTRAT ind/snp/geno file.
 #'
-#' @param df A data.frame object with genotypes of each sample (0/1/9 as defined
-#'     by the EIGENSTRAT format).
-#' @param file Path to the file.
+#' @param df A data.frame object.
+#' @param file Path to an output file.
 #'
 #' @export
 write_ind <- function(df, file) {
@@ -91,37 +73,24 @@ write_ind <- function(df, file) {
 }
 
 
-#' Write an EIGENSTRAT 'snp' file.
-#'
-#' @param df A data.frame object with SNP data (columns defined by the
-#'     EIGENSTRAT format).
-#' @param file Path to the file.
-#'
+#' @rdname write_ind
 #' @export
 write_snp <- function(df, file) {
     readr::write_tsv(df, file, col_names = FALSE)
 }
 
 
-#' Write an EIGENSTRAT 'geno' file.
-#'
-#' @param df Data frame with columns containing "genotypes" of each
-#'     sample (0/1/9 as defined by the EIGENSTRAT format).
-#' @param file Path to the file.
-#'
+#' @rdname write_ind
 #' @export
 write_geno <- function(df, file) {
     writeLines(apply(df, 1, paste, collapse = ""), con = file)
 }
 
 
-#' Write a triplet of EIGENSTRAT (geno/snp/ind files) files.
+#' Write a trio of EIGENSTRAT geno/snp/ind files.
 #'
-#' @param prefix Prefix of the geno/snp/ind files (can
-#'     include the path).
-#' @param ind data.frame object with data in a 'ind' format
-#' @param snp data.frame object with data in a 'snp' format
-#' @param geno data.frame object with data in a 'geno' format
+#' @param prefix EIGENSTRAT geno/snp/ind prefix.
+#' @param ind,snp,geno EIGENSTRAT data as data.frames.
 #'
 #' @export
 write_eigenstrat <- function(prefix, ind, snp, geno) {

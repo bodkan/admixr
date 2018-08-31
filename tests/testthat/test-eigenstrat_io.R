@@ -1,6 +1,7 @@
 context("EIGENSTRAT file I/O functionality")
 
 prefix <- file.path(admixtools_path(), "convertf", "example")
+file.copy(from = paste0(prefix, ".eigenstratgeno"), to = paste0(prefix, ".geno"), overwrite = TRUE)
 
 # read_ind / write_ind ----------------------------------------------------
 
@@ -18,13 +19,14 @@ test_that("read_ind and write_ind are inverse functions", {
 # read_geno / write_geno --------------------------------------------------
 
 test_that("read_geno and write_geno are inverse functions", {
-  true <- read_geno(paste0(prefix, ".eigenstratgeno"),
-                    paste0(prefix, ".ind"))
+  true <- read_geno(paste0(prefix, ".geno"))
   
-  new_file <- tempfile()
+  tmp <- tempfile()
+  new_file <- paste0(tmp, ".geno")
+  file.copy(paste0(prefix, ".ind"), paste0(tmp, ".ind"))
   write_geno(true, new_file)
   
-  new <- read_geno(new_file,  paste0(prefix, ".ind"))
+  new <- read_geno(new_file)
   
   expect_equal(true, new)
 })
@@ -45,7 +47,7 @@ test_that("read_snp and write_snp are inverse functions", {
 # reading / writing EIGENSTRAT data at once -------------------------------
 
 test_that("read_eigenstrat and write_eigenstrat are inverse functions", {
-  true <- read_eigenstrat(prefix, geno_suffix = ".eigenstratgeno")
+  true <- read_eigenstrat(prefix)
   
   prefix_dir <- tempdir()
   new_prefix <- file.path(prefix_dir, "test")

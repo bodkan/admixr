@@ -2,17 +2,22 @@
 % Please edit documentation in R/eigenstrat_io.R
 \name{read_ind}
 \alias{read_ind}
-\title{Read an EIGENSTRAT 'ind' file.}
+\alias{read_snp}
+\alias{read_geno}
+\title{Read an EIGENSTRAT ind/snp/geno file.}
 \usage{
 read_ind(file)
+
+read_snp(file)
+
+read_geno(file)
 }
 \arguments{
-\item{file}{Path to the file.}
+\item{file}{Path to a file.}
 }
 \value{
-A data.frame object with sample identifier, sex and label columns
-    (as defined by the EIGENSTRAT format).
+A data.frame object.
 }
 \description{
-Read an EIGENSTRAT 'ind' file.
+Read an EIGENSTRAT ind/snp/geno file.
 }

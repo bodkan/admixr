@@ -1,6 +1,3 @@
-# Conversion between EIGENSTRAT and VCF -----------------------------------
-
-
 #' Convert EIGENSTRAT files into a VCF file.
 #'
 #' This function reads the genotypes from a 'geno' file, their
@@ -18,7 +15,7 @@
 #'
 #' @export
 eigenstrat_to_vcf <- function(prefix, vcf_file, compress = TRUE, index = TRUE) {
-    geno <- read_geno(paste0(prefix, ".geno"), paste0(prefix, ".ind"))
+    geno <- read_geno(paste0(prefix, ".geno"))
     snp <- read_snp(paste0(prefix, ".snp"))
 
     # construct a minimal VCF header

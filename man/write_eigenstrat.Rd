@@ -2,20 +2,15 @@
 % Please edit documentation in R/eigenstrat_io.R
 \name{write_eigenstrat}
 \alias{write_eigenstrat}
-\title{Write a triplet of EIGENSTRAT (geno/snp/ind files) files.}
+\title{Write a trio of EIGENSTRAT geno/snp/ind files.}
 \usage{
 write_eigenstrat(prefix, ind, snp, geno)
 }
 \arguments{
-\item{prefix}{Prefix of the geno/snp/ind files (can
-include the path).}
+\item{prefix}{EIGENSTRAT geno/snp/ind prefix.}
 
-\item{ind}{data.frame object with data in a 'ind' format}
-
-\item{snp}{data.frame object with data in a 'snp' format}
-
-\item{geno}{data.frame object with data in a 'geno' format}
+\item{ind, snp, geno}{EIGENSTRAT data as data.frames.}
 }
 \description{
-Write a triplet of EIGENSTRAT (geno/snp/ind files) files.
+Write a trio of EIGENSTRAT geno/snp/ind files.
 }

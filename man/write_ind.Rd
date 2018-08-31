@@ -2,16 +2,21 @@
 % Please edit documentation in R/eigenstrat_io.R
 \name{write_ind}
 \alias{write_ind}
-\title{Write an EIGENSTRAT 'ind' file.}
+\alias{write_snp}
+\alias{write_geno}
+\title{Write an EIGENSTRAT ind/snp/geno file.}
 \usage{
 write_ind(df, file)
+
+write_snp(df, file)
+
+write_geno(df, file)
 }
 \arguments{
-\item{df}{A data.frame object with genotypes of each sample (0/1/9 as defined
-by the EIGENSTRAT format).}
+\item{df}{A data.frame object.}
 
-\item{file}{Path to the file.}
+\item{file}{Path to an output file.}
 }
 \description{
-Write an EIGENSTRAT 'ind' file.
+Write an EIGENSTRAT ind/snp/geno file.
 }

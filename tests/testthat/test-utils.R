@@ -110,9 +110,9 @@ test_that("filter_sites correctly handles complete overlap", {
   # create a BED file that has the same positions as the original EIGENSTRAT
   bed <- tempfile()
   write_bed(snp, bed)
-  # generate a "subset" based on thad BED file
+  # generate a "subset" based on that BED file
   output <- tempfile()
-  filter_sites(snp, bed, output, include = TRUE)
+  filter_sites(snp, bed, output)
   # verify that both EIGENSTRAT datasets are the same
   orig_snp <- read_snp(snp)
   output_snp <- read_snp(output)
@@ -125,7 +125,7 @@ test_that("filter_sites correctly fails at no overlap", {
   bed <- tempfile()
   write_bed(snp, bed)
   # verify that no overlaps leads to error
-  expect_error(filter_sites(snp, bed, "blah", include = FALSE))
+  expect_error(filter_sites(snp, bed, "blah", exclude = TRUE))
 })
 
 test_that("Overlap returns a correct number of sites", {
@@ -145,7 +145,7 @@ test_that("Overlap returns a correct number of sites", {
       readr::write_tsv(bed, col_names = FALSE)
     # generate a "subset" based on thad BED file
     output <- tempfile()
-    filter_sites(snp_path, bed, output, include = TRUE)
+    filter_sites(snp_path, bed, output)
     output_snp <- read_snp(output)
 
     nrow(output_snp) == n

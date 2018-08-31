@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate admixture proportions in target populations using qpAdm. — qpAdm • admixr</title>
+<title>Calculate ancestry proportions in target populations using qpAdm. — qpAdm • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Calculate admixture proportions in target populations using qpAdm. — qpAdm" />
+<meta property="og:title" content="Calculate ancestry proportions in target populations using qpAdm. — qpAdm" />
 
-<meta property="og:description" content="Calculate admixture proportions in target populations using qpAdm." />
+<meta property="og:description" content="Calculate ancestry proportions in target populations using qpAdm." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,14 +112,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate admixture proportions in target populations using qpAdm.</h1>
+    <h1>Calculate ancestry proportions in target populations using qpAdm.</h1>
     <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
     <div class="hidden name"><code>qpAdm.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Calculate admixture proportions in target populations using qpAdm.</p>
+    <p>Calculate ancestry proportions in target populations using qpAdm.</p>
     
     </div>
 
@@ -143,20 +143,19 @@
     </tr>
     <tr>
       <th>prefix</th>
-      <td><p>Prefix of the geno/snp/ind files (including the whole path).</p></td>
+      <td><p>An EIGENSTRAT prefix (shared by the geno/snp/ind trio).</p></td>
     </tr>
     <tr>
       <th>geno, snp, ind</th>
-      <td><p>Path to the geno/snp/ind file. Each overrides the 'prefix' argument.</p></td>
+      <td><p>Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.</p></td>
     </tr>
     <tr>
       <th>exclude</th>
-      <td><p>SNP file with information about ignored sites.</p></td>
+      <td><p>Path to file in a snp format with SNPs to exclude from the calculation.</p></td>
     </tr>
     <tr>
       <th>outdir</th>
-      <td><p>Where to put all generated files (temporary
-directory by default).</p></td>
+      <td><p>Where to put all generated files (temporary directory by default).</p></td>
     </tr>
     </table>
     

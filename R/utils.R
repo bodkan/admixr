@@ -1,9 +1,8 @@
-#' Merge multiple samples/populations under a single label.
+#' Merge multiple samples/populations under a single label
 #'
-#' @param ind EIGENSTRAT ind file to modify.
-#' @param modified_ind Modified EIGENSTRAT ind filename.
-#' @param labels Named list of labels to merge. Names specify labels
-#'     to merge into.
+#' @param ind Path to an original ind file.
+#' @param modified_ind Path to a final modified ind file.
+#' @param labels A named list of labels to merge.
 #'
 #' @examples
 #'
@@ -33,9 +32,11 @@ merge_labels <- function(ind, modified_ind, labels) {
 }
 
 
-#' Merge two sets of EIGENSTRAT datasets (utilizing the 'mergeit' command).
+#' Merge two sets of EIGENSTRAT datasets
+#' 
+#' This function utilizes the 'mergeit' command from ADMIXTOOLS.
 #'
-#' @param prefix Prefix of the merged dataset.
+#' @param prefix A prefix of a final merged EIGENSTRAT dataset.
 #' @param input1,input2 Prefixes of two EIGENSTRAT datasets to merge.
 #'
 #' @export
@@ -62,13 +63,13 @@ merge_eigenstrat <- function(prefix, input1, input2) {
 # Filtering functions  --------------------------------------------------
 
 
-#' Calculate the number/proportion of covered sites in each sample.
+#' Count the number/proportion of present/missing sites in each sample
 #'
-#' @param prefix EIGENSTRAT prefix.
-#' @param prop Calculate the proportion of non-missing alleles instead?
+#' @param prefix An EIGENSTRAT prefix.
+#' @param prop Calculate the proportion instead of counts?
 #' @param missing Count present SNPs or missing SNPs?
 #'
-#' @return data.frame object with SNP counts/proportions.
+#' @return A data.frame object with SNP counts/proportions.
 #'
 #' @export
 #' @import rlang
@@ -88,15 +89,15 @@ count_snps <- function(prefix, missing = FALSE, prop = FALSE) {
 
 
 
-#' Generate coordinates of SNPs that overlap/exclude regions in BED file.
+#' Generate coordinates of SNPs that overlap/exclude regions in BED file
 #'
-#' @param snp Path to an EIGENSTRAT snp file.
+#' @param snp Path to a snp file.
 #' @param bed Path to a BED file.
-#' @param output Path to a snp file with coordinates to exclude.
-#' @param include Include sites falling inside the BED file regions?
+#' @param output Path to an output snp file with coordinates to exclude.
+#' @param exclude Exclude sites falling inside the BED file regions?
 #'
 #' @export
-filter_sites <- function(snp, bed, output, include = TRUE) {
+filter_sites <- function(snp, bed, output, exclude = FALSE) {
   if (!require("data.table")) {
     stop("This function requires the package data.table - please install it first.")
   }
@@ -118,10 +119,10 @@ filter_sites <- function(snp, bed, output, include = TRUE) {
   # get data.table indices of SNPs within/outside given BED regions                   
   overlap <- data.table::foverlaps(dt_snp, dt_bed, which = TRUE)                            
   # filter the result based on whether an overlap or a complement is needed           
-  if (include)                                                                        
-    overlap <- overlap[!is.na(overlap$yid), ]                                         
+  if (exclude)                                                                        
+    overlap <- overlap[is.na(overlap$yid), ]                                         
   else
-    overlap <- overlap[is.na(overlap$yid), ]
+    overlap <- overlap[!is.na(overlap$yid), ]
 
   # extract only those sites passing the filter
   site_idx <- unique(overlap$xid)

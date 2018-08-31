@@ -1,13 +1,9 @@
-#' Calculate f4-ratio statistic.
+#' Calculate the D, f4, f4-ratio, or f3 statistic.
 #'
-#' @param X,A,B,C,O Population names according to nomenclature used in
+#' @param W,X,Y,Z,A,B,C,O Population names according to the nomenclature used in
 #'     Patterson et al., 2012.
-#' @param prefix Prefix of the geno/snp/ind files (including the whole
-#'     path).
-#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param exclude SNP file with information about ignored sites.
-#' @param outdir Where to put all generated files (temporary
-#'     directory by default).
+#'
+#' @inheritParams qpAdm
 #'
 #' @export
 f4ratio <- function(X, A, B, C, O,
@@ -29,18 +25,9 @@ f4ratio <- function(X, A, B, C, O,
 }
 
 
-#' Calculate D statistic.
+#' @rdname f4ratio
 #'
-#' @param W,X,Y,Z Population names according to nomenclature in Patterson
-#'     et al., 2012.
-#' @param prefix Prefix of the geno/snp/ind files (including the whole
-#'     path).
-#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param exclude SNP file with information about ignored sites.
-#' @param outdir Where to put all generated files (temporary
-#'     directory by default).
-#' @param f4mode Calculate f4 statistic instead of D statistic. One can also
-#'     use a dedicated f4 function.
+#' @param f4mode Calculate the f4 statistic instead of the D statistic.
 #'
 #' @export
 d <- function(W, X, Y, Z,
@@ -68,16 +55,9 @@ d <- function(W, X, Y, Z,
     read_output(files[["log_file"]])
 }
 
-#' Calculate f4 statistic.
-#'
-#' @param W,X,Y,Z Population names according to nomenclature in Patterson
-#'     et al., 2012.
-#' @param prefix Prefix of the geno/snp/ind files (including the whole
-#'     path).
-#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param exclude SNP file with information about ignored sites.
-#' @param outdir Where to put all generated files (temporary
-#'     directory by default).
+
+
+#' @rdname f4ratio
 #'
 #' @export
 f4 <- function(W, X, Y, Z,
@@ -86,16 +66,11 @@ f4 <- function(W, X, Y, Z,
   d(W, X, Y, Z, prefix, geno, snp, ind, exclude, outdir, f4mode = TRUE)
 }
 
-#' Calculate 3-population statistic.
+
+
+#' @rdname f4ratio
 #'
-#' @param A,B,C Population names.
-#' @param prefix Prefix of the geno/snp/ind files (including the whole
-#'     path).
-#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param exclude SNP file with information about ignored sites.
-#' @param outdir Where to put all generated files (temporary
-#'     directory by default).
-#' @param inbreed See README.3PopTest in ADMIXTOOLS.
+#' @param inbreed See README.3PopTest in ADMIXTOOLS for an explanation.
 #'
 #' @export
 f3 <- function(A, B, C,
@@ -120,16 +95,16 @@ f3 <- function(A, B, C,
     read_output(files[["log_file"]])
 }
 
-#' Calculate admixture proportions in target populations using qpAdm.
+#' Calculate ancestry proportions in target populations using qpAdm.
 #'
 #' @param target Vector of target populations (evaluated one at a time).
 #' @param references Reference source populations related to true ancestors.
 #' @param outgroups Outgroup populations.
-#' @param prefix Prefix of the geno/snp/ind files (including the whole path).
-#' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param exclude SNP file with information about ignored sites.
-#' @param outdir Where to put all generated files (temporary
-#'     directory by default).
+#'
+#' @param prefix An EIGENSTRAT prefix (shared by the geno/snp/ind trio).
+#' @param geno,snp,ind Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.
+#' @param exclude Path to file in a snp format with SNPs to exclude from the calculation.
+#' @param outdir Where to put all generated files (temporary directory by default).
 #'
 #' @export
 qpAdm <- function(target, references, outgroups,

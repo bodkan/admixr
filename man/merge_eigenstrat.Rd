@@ -2,15 +2,15 @@
 % Please edit documentation in R/utils.R
 \name{merge_eigenstrat}
 \alias{merge_eigenstrat}
-\title{Merge two sets of EIGENSTRAT datasets (utilizing the 'mergeit' command).}
+\title{Merge two sets of EIGENSTRAT datasets}
 \usage{
 merge_eigenstrat(prefix, input1, input2)
 }
 \arguments{
-\item{prefix}{Prefix of the merged dataset.}
+\item{prefix}{A prefix of a final merged EIGENSTRAT dataset.}
 
 \item{input1, input2}{Prefixes of two EIGENSTRAT datasets to merge.}
 }
 \description{
-Merge two sets of EIGENSTRAT datasets (utilizing the 'mergeit' command).
+This function utilizes the 'mergeit' command from ADMIXTOOLS.
 }

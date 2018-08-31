@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrappers.R
 \name{qpAdm}
 \alias{qpAdm}
-\title{Calculate admixture proportions in target populations using qpAdm.}
+\title{Calculate ancestry proportions in target populations using qpAdm.}
 \usage{
 qpAdm(target, references, outgroups, prefix = NULL, geno = NULL,
   snp = NULL, ind = NULL, exclude = NULL, outdir = NULL)
@@ -14,15 +14,14 @@ qpAdm(target, references, outgroups, prefix = NULL, geno = NULL,
 
 \item{outgroups}{Outgroup populations.}
 
-\item{prefix}{Prefix of the geno/snp/ind files (including the whole path).}
+\item{prefix}{An EIGENSTRAT prefix (shared by the geno/snp/ind trio).}
 
-\item{geno, snp, ind}{Path to the geno/snp/ind file. Each overrides the 'prefix' argument.}
+\item{geno, snp, ind}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
 
-\item{exclude}{SNP file with information about ignored sites.}
+\item{exclude}{Path to file in a snp format with SNPs to exclude from the calculation.}
 
-\item{outdir}{Where to put all generated files (temporary
-directory by default).}
+\item{outdir}{Where to put all generated files (temporary directory by default).}
 }
 \description{
-Calculate admixture proportions in target populations using qpAdm.
+Calculate ancestry proportions in target populations using qpAdm.
 }

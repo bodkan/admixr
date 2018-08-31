@@ -2,19 +2,16 @@
 % Please edit documentation in R/eigenstrat_io.R
 \name{read_eigenstrat}
 \alias{read_eigenstrat}
-\title{Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.}
+\title{Read a trio of EIGENSTRAT geno/snp/ind files.}
 \usage{
-read_eigenstrat(prefix = NULL, geno_suffix = ".geno",
-  ind_suffix = ".ind", snp_suffix = ".snp")
+read_eigenstrat(prefix = NULL)
 }
 \arguments{
-\item{prefix}{EIGENSTRAT prefix of geno/snp/ind files.}
-
-\item{ind_suffix, snp_suffix, geno_suffix}{Alternative EIGENSTRAT suffixes.}
+\item{prefix}{EIGENSTRAT geno/snp/ind prefix.}
 }
 \value{
-List of three data.frame objects (one for geno/snp/ind data).
+List of three data.frame objects.
 }
 \description{
-Read a tripplet of EIGENSTRAT (geno/snp/ind files) files.
+Read a trio of EIGENSTRAT geno/snp/ind files.
 }

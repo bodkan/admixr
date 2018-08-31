@@ -2,16 +2,16 @@
 % Please edit documentation in R/output_parsers.R
 \name{read_output}
 \alias{read_output}
-\title{Read output file of one of the ADMIXTOOLS programs.}
+\title{Read an output file from one of the ADMIXTOOLS programs.}
 \usage{
 read_output(file)
 }
 \arguments{
-\item{file}{Name of the output log file.}
+\item{file}{Path to a file.}
 }
 \value{
-data.frame with parsed results.
+A data.frame with parsed results.
 }
 \description{
-Read output file of one of the ADMIXTOOLS programs.
+Read an output file from one of the ADMIXTOOLS programs.
 }
