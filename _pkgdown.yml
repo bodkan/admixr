@@ -14,12 +14,9 @@ reference:
     - count_snps
     - filter_sites
 
-  - title: Reading EIGENSTRAT data
+  - title: Reading/writing EIGENSTRAT data
     contents:
     - starts_with("read_(eigenstrat|geno|ind|snp)")
-
-  - title: Writing EIGENSTRAT data
-    contents:
     - starts_with("write_(eigenstrat|geno|ind|snp)")
 
   - title: VCF-EIGENSTRAT conversion
@@ -30,6 +27,7 @@ reference:
   - title: Parsing ADMIXTOOLS log files
     desc: Useful only for processing old log files generated on the
         command-line without `admixr`. For everything else, please use
-        the built-in wrapper functions in this package.
+        the built-in wrapper functions in this package which calculate
+        statistics _and_ parse outputs at once.
     contents:
     - read_output
