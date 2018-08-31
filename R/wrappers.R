@@ -5,14 +5,14 @@
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param badsnp SNP file with information about ignored sites.
+#' @param exclude SNP file with information about ignored sites.
 #' @param outdir Where to put all generated files (temporary
 #'     directory by default).
 #'
 #' @export
 f4ratio <- function(X, A, B, C, O,
                     prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-                    badsnp = NULL, outdir = NULL) {
+                    exclude = NULL, outdir = NULL) {
     check_presence(c(X, A, B, C, O), prefix, ind)
 
     # get the path to the population, parameter and log files
@@ -21,7 +21,7 @@ f4ratio <- function(X, A, B, C, O,
     files <- get_files(outdir, config_prefix)
 
     create_qpF4ratio_pop_file(X = X, A = A, B = B, C = C, O = O, file = files[["pop_file"]])
-    create_par_file(files, prefix, geno, snp, ind, badsnp)
+    create_par_file(files, prefix, geno, snp, ind, exclude)
 
     run_cmd("qpF4ratio", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
@@ -36,7 +36,7 @@ f4ratio <- function(X, A, B, C, O,
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param badsnp SNP file with information about ignored sites.
+#' @param exclude SNP file with information about ignored sites.
 #' @param outdir Where to put all generated files (temporary
 #'     directory by default).
 #' @param f4mode Calculate f4 statistic instead of D statistic. One can also
@@ -45,7 +45,7 @@ f4ratio <- function(X, A, B, C, O,
 #' @export
 d <- function(W, X, Y, Z,
               prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-              badsnp = NULL, outdir = NULL, f4mode = FALSE) {
+              exclude = NULL, outdir = NULL, f4mode = FALSE) {
     check_presence(c(W, X, Y, Z), prefix, ind)
 
     # get the path to the population, parameter and log files
@@ -54,7 +54,7 @@ d <- function(W, X, Y, Z,
     files <- get_files(outdir, config_prefix)
 
     create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
-    create_par_file(files, prefix, geno, snp, ind, badsnp)
+    create_par_file(files, prefix, geno, snp, ind, exclude)
 
     if (f4mode) {
         write("f4mode: YES", file = files[["par_file"]], append = TRUE)
@@ -75,15 +75,15 @@ d <- function(W, X, Y, Z,
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param badsnp SNP file with information about ignored sites.
+#' @param exclude SNP file with information about ignored sites.
 #' @param outdir Where to put all generated files (temporary
 #'     directory by default).
 #'
 #' @export
 f4 <- function(W, X, Y, Z,
               prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-              badsnp = NULL, outdir = NULL) {
-  d(W, X, Y, Z, prefix, geno, snp, ind, badsnp, outdir, f4mode = TRUE)
+              exclude = NULL, outdir = NULL) {
+  d(W, X, Y, Z, prefix, geno, snp, ind, exclude, outdir, f4mode = TRUE)
 }
 
 #' Calculate 3-population statistic.
@@ -92,14 +92,14 @@ f4 <- function(W, X, Y, Z,
 #' @param prefix Prefix of the geno/snp/ind files (including the whole
 #'     path).
 #' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param badsnp SNP file with information about ignored sites.
+#' @param exclude SNP file with information about ignored sites.
 #' @param outdir Where to put all generated files (temporary
 #'     directory by default).
 #' @param inbreed See README.3PopTest in ADMIXTOOLS.
 #'
 #' @export
 f3 <- function(A, B, C,
-               prefix = NULL, geno = NULL, snp = NULL, ind = NULL, badsnp = NULL,
+               prefix = NULL, geno = NULL, snp = NULL, ind = NULL, exclude = NULL,
                outdir = NULL, inbreed = FALSE) {
     check_presence(c(A, B, C), prefix, ind)
 
@@ -109,7 +109,7 @@ f3 <- function(A, B, C,
     files <- get_files(outdir, config_prefix)
 
     create_qp3Pop_pop_file(A, B, C, file = files[["pop_file"]])
-    create_par_file(files, prefix, geno, snp, ind, badsnp)
+    create_par_file(files, prefix, geno, snp, ind, exclude)
 
     if (inbreed) {
         write("inbreed: YES", file = files[["par_file"]], append = TRUE)
@@ -127,14 +127,14 @@ f3 <- function(A, B, C,
 #' @param outgroups Outgroup populations.
 #' @param prefix Prefix of the geno/snp/ind files (including the whole path).
 #' @param geno,snp,ind Path to the geno/snp/ind file. Each overrides the 'prefix' argument.
-#' @param badsnp SNP file with information about ignored sites.
+#' @param exclude SNP file with information about ignored sites.
 #' @param outdir Where to put all generated files (temporary
 #'     directory by default).
 #'
 #' @export
 qpAdm <- function(target, references, outgroups,
                   prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-                  badsnp = NULL, outdir = NULL) {
+                  exclude = NULL, outdir = NULL) {
   check_presence(c(target, references, outgroups), prefix, ind)
   
   dplyr::bind_rows(lapply(target, function(X) {
@@ -148,7 +148,7 @@ qpAdm <- function(target, references, outgroups,
     files[["pop_file"]] <- NULL
   
     create_qpAdm_pop_files(c(X, references), outgroups, files)
-    create_par_file(files, prefix, geno, snp, ind, badsnp)
+    create_par_file(files, prefix, geno, snp, ind, exclude)
     
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
     

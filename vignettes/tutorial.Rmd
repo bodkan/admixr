@@ -653,3 +653,12 @@ count_snps(eigenstrat)
 ```{r present_snps_kable, echo = FALSE}
 knitr::kable(count_snps(eigenstrat))
 ```
+
+
+
+
+
+
+
+
+## Subsetting sites

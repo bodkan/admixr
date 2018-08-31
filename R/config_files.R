@@ -2,7 +2,7 @@
 create_par_file <- function(files,
                             prefix = NULL,
                             geno_file = NULL, snp_file = NULL, ind_file = NULL,
-                            badsnp_file = NULL) {
+                            exclude = NULL) {
     if (all(is.null(c(prefix, geno_file, snp_file, ind_file)))) {
         stop("EIGENSTRAT prefix geno/snp/ind paths must be specified")
     }
@@ -31,8 +31,8 @@ create_par_file <- function(files,
         write(sprintf("popright: %s", files$popright), file = files$par_file, append = TRUE)
     }
 
-    if (!is.null(badsnp_file)) {
-        write(sprintf("badsnpname: %s", badsnp_file), file = files$par_file, append = TRUE)
+    if (!is.null(exclude)) {
+        write(sprintf("badsnpname: %s", exclude), file = files$par_file, append = TRUE)
     }
 }
 

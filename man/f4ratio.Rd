@@ -5,7 +5,7 @@
 \title{Calculate f4-ratio statistic.}
 \usage{
 f4ratio(X, A, B, C, O, prefix = NULL, geno = NULL, snp = NULL,
-  ind = NULL, badsnp = NULL, outdir = NULL)
+  ind = NULL, exclude = NULL, outdir = NULL)
 }
 \arguments{
 \item{X, A, B, C, O}{Population names according to nomenclature used in
@@ -16,7 +16,7 @@ path).}
 
 \item{geno, snp, ind}{Path to the geno/snp/ind file. Each overrides the 'prefix' argument.}
 
-\item{badsnp}{SNP file with information about ignored sites.}
+\item{exclude}{SNP file with information about ignored sites.}
 
 \item{outdir}{Where to put all generated files (temporary
 directory by default).}

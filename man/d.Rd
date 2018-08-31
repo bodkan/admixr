@@ -5,7 +5,7 @@
 \title{Calculate D statistic.}
 \usage{
 d(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-  badsnp = NULL, outdir = NULL, f4mode = FALSE)
+  exclude = NULL, outdir = NULL, f4mode = FALSE)
 }
 \arguments{
 \item{W, X, Y, Z}{Population names according to nomenclature in Patterson
@@ -16,7 +16,7 @@ path).}
 
 \item{geno, snp, ind}{Path to the geno/snp/ind file. Each overrides the 'prefix' argument.}
 
-\item{badsnp}{SNP file with information about ignored sites.}
+\item{exclude}{SNP file with information about ignored sites.}
 
 \item{outdir}{Where to put all generated files (temporary
 directory by default).}

@@ -5,7 +5,7 @@
 \title{Calculate 3-population statistic.}
 \usage{
 f3(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-  badsnp = NULL, outdir = NULL, inbreed = FALSE)
+  exclude = NULL, outdir = NULL, inbreed = FALSE)
 }
 \arguments{
 \item{A, B, C}{Population names.}
@@ -15,7 +15,7 @@ path).}
 
 \item{geno, snp, ind}{Path to the geno/snp/ind file. Each overrides the 'prefix' argument.}
 
-\item{badsnp}{SNP file with information about ignored sites.}
+\item{exclude}{SNP file with information about ignored sites.}
 
 \item{outdir}{Where to put all generated files (temporary
 directory by default).}
