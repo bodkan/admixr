@@ -1,0 +1,14 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^LICENSE\.md$
+^README\.Rmd$
+^README\.html$
+^README-.*\.png$
+^codecov\.yml$
+^\.covrignore$
+^_pkgdown.yml$
+^data-raw$
+^docs$
+figure$
+cran-comments.md

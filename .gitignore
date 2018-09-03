@@ -2,7 +2,6 @@
 *~
 .Rproj.user
 .DS_Store
-.Rbuildignore
 tmp/*
 inst/doc
 *.html
