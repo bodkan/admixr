@@ -17,14 +17,15 @@ Imports:
     tibble,
     tidyr,
     stats,
-    rlang
+    rlang,
+    utils,
+    data.table
 Suggests:
     covr,
     testthat,
     knitr,
     rmarkdown,
     tidyverse,
-    data.table
 Encoding: UTF-8
 RoxygenNote: 6.1.0
 VignetteBuilder: knitr

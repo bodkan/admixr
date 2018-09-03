@@ -13,7 +13,7 @@ f4ratio <- function(X, A, B, C, O,
 
     # get the path to the population, parameter and log files
     setup <- paste0("qpF4ratio__", A, "_", B, "_", C, "_", O)
-    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+    config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
     files <- get_files(outdir, config_prefix)
 
     create_qpF4ratio_pop_file(X = X, A = A, B = B, C = C, O = O, file = files[["pop_file"]])
@@ -37,7 +37,7 @@ d <- function(W, X, Y, Z,
 
     # get the path to the population, parameter and log files
     setup <- paste0("qpDstat")
-    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+    config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
     files <- get_files(outdir, config_prefix)
 
     create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
@@ -80,7 +80,7 @@ f3 <- function(A, B, C,
 
     # get the path to the population, parameter and log files
     setup <- paste0("qp3Pop")
-    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+    config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
     files <- get_files(outdir, config_prefix)
 
     create_qp3Pop_pop_file(A, B, C, file = files[["pop_file"]])
@@ -115,7 +115,7 @@ qpAdm <- function(target, references, outgroups,
   dplyr::bind_rows(lapply(target, function(X) {
     # get the path to the population, parameter and log files
     setup <- paste0("qpAdm")
-    config_prefix <- paste0(setup, "__", as.integer(runif(1, 0, .Machine$integer.max)))
+    config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
     files <- get_files(outdir, config_prefix)
   
     files[["popleft"]] <-  stringr::str_replace(files[["pop_file"]], "$", "left")

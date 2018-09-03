@@ -1,5 +1,5 @@
 ---
-title: "admixr - R package for facilitating ADMIXTOOLS analyses"
+title: "admixr - paper"
 author:
 #date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 library(admixr)
 path_to_eigenstrat <- download_data()
 ```
+# admixr - R package for facilitating ADMIXTOOLS analyses
 
 ## Abstract
 

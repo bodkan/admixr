@@ -98,10 +98,6 @@ count_snps <- function(prefix, missing = FALSE, prop = FALSE) {
 #'
 #' @export
 filter_sites <- function(snp, bed, output, exclude = FALSE) {
-  if (!require("data.table")) {
-    stop("This function requires the package data.table - please install it first.")
-  }
-
   # process BED file
   dt_bed <- data.table::fread(
     bed,
@@ -192,7 +188,7 @@ admixtools_path <- function() {
 #' @export
 download_data <- function(dirname = tempdir()) {
     dest <- file.path(dirname, "snps.tgz")
-    download.file(
+    utils::download.file(
         "https://www.dropbox.com/s/bw1eswcp2domisv/snps.tgz?dl=0",
         destfile = dest,
         method = "wget",
@@ -216,3 +212,14 @@ download_data <- function(dirname = tempdir()) {
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 NULL
+
+
+# this looks incredibly hacky, but seems to be a solution to my R CMD check
+# "missing global variable" NOTE woes caused by dplyr code (the following
+# are not actually global variables)
+utils::globalVariables(
+    names = c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
+              "FORMAT", "chrom", "pos", "snp_id", "ref", "alt", "gen_dist",
+              "sample_id", "name", "target", ".", "start", "end"),
+    package = "admixr"
+)

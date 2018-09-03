@@ -9,7 +9,7 @@ read_output <- function(file) {
   # extract ADMIXTOOLS command name from the output file
   cmd <- readLines(file) %>%
     stringr::str_match("^## (\\w+) version:") %>%
-    .[complete.cases(.)] %>% .[2]
+    .[stats::complete.cases(.)] %>% .[2]
   
   parsers <- list(
     qp3Pop = read_qp3Pop,
@@ -46,7 +46,7 @@ read_qpF4ratio <- function(file) {
     res_df <- res_lines %>%
         paste0("\n", collapse = "\n") %>%
         readr::read_delim(delim = " ", col_names = FALSE) %>%
-        setNames(c("A", "O", "X", "C", "A", "O", "B", "C", "alpha", "stderr", "Zscore")) %>%
+        stats::setNames(c("A", "O", "X", "C", "A", "O", "B", "C", "alpha", "stderr", "Zscore")) %>%
         .[c("A", "B", "X", "C", "O", "alpha", "stderr", "Zscore")]
 
     res_df
@@ -82,7 +82,7 @@ read_qpDstat <- function(file) {
       raw_cols[, !sapply(raw_cols,
                          function(col) any(stringr::str_detect(col, "best")))] %>%
       {
-        setNames(., c("W", "X", "Y", "Z", result_col,
+        stats::setNames(., c("W", "X", "Y", "Z", result_col,
                       if (ncol(.) > 9) { "stderr" } else{ NULL },
                      "Zscore", "BABA", "ABBA", "nsnps"))
       }
@@ -106,7 +106,7 @@ read_qp3Pop <- function(file) {
     res_df <- res_lines %>%
         paste0("\n", collapse = "\n") %>%
         readr::read_delim(delim = " ", col_names = FALSE) %>%
-        setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "nsnps"))
+        stats::setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "nsnps"))
 
     res_df
 }
@@ -125,7 +125,7 @@ read_qpAdm <- function(file) {
     stringr::str_replace_all("^ | $", "") %>%
     stringr::str_split(" ") %>%
     lapply(as.numeric) %>%
-    setNames(c("proportion", "stderr"))
+    stats::setNames(c("proportion", "stderr"))
   leftpops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
     .[, 1] %>%  { !is.na(.) } %>% which
 
@@ -139,7 +139,7 @@ read_qpAdm <- function(file) {
   # wide format
   rbind(c(target_pop, snp_count, stats$proportion, stats$stderr)) %>%
     tibble::as_tibble() %>%
-    setNames(c("target", "nsnps", source_pops, paste0("stderr_", source_pops))) %>%
+    stats::setNames(c("target", "nsnps", source_pops, paste0("stderr_", source_pops))) %>%
     dplyr::mutate_at(dplyr::vars(-target), as.numeric)
 
   # # long format
