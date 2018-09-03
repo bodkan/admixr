@@ -26,7 +26,7 @@ path_to_eigenstrat <- file.path(system.file(package = "admixr", "extdata"), "snp
 We present a new R package _admixr_, which provides a convenient interface for
 the ADMIXTOOLS software suite. In a traditional ADMIXTOOLS workflow, the user
 must first generate a set of text configuration files tailored to each
-individual analysis, often using a combination shell scripting and manual
+individual analysis, often using a combination of shell scripting and manual
 editing. After executing an ADMIXTOOLS program on the command line using the
 provided configuration files, generated log files need to be parsed to extract
 values of interest before they can be used in a downstream analysis. Our
@@ -98,7 +98,7 @@ the analysis setup in a slightly different way or including a different set of
 samples requires re-generating all files again.
 
 In contrast, the same analysis using the _admixr_ package can be performed
-using just the following single R command:
+using just a single R command:
 
 ```{r}
 result <- f4ratio(
