@@ -1,3 +1,5 @@
+# admixr 0.4.1
+
 # admixr 0.4.0
 
 * The package now has a tutorial vignette describing the main functionality.
