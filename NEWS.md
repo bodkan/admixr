@@ -1,5 +1,9 @@
 # admixr 0.4.1
 
+* Fixed missing `group_labels()` update.
+* Removed the huge built-in data set. Implemented `download_data()` function
+  that fetches the example data set from the web.
+
 # admixr 0.4.0
 
 * The package now has a tutorial vignette describing the main functionality.
