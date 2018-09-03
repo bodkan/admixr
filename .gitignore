@@ -6,3 +6,8 @@
 tmp/*
 inst/doc
 *.html
+vignettes/*.html
+vignettes/*.R
+vignettes/*.docx
+vignettes/*.md
+vignettes/figure
