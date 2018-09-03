@@ -1,10 +1,4 @@
-#' Read an output file from one of the ADMIXTOOLS programs.
-#' 
-#' @param file Path to a file.
-#'
-#' @return A data.frame with parsed results.
-#'
-#' @export
+# Read an output file from one of the ADMIXTOOLS programs.
 read_output <- function(file) {
   # extract ADMIXTOOLS command name from the output file
   cmd <- readLines(file) %>%
