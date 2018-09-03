@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.0</span>
       </span>
     </div>
 
@@ -52,6 +52,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/paper.html">admixr - R package for facilitating ADMIXTOOLS analyses</a>
+    </li>
+    <li>
       <a href="../articles/tutorial.html">admixr - tutorial</a>
     </li>
   </ul>
@@ -82,9 +85,9 @@
       <h1>admixr - tutorial</h1>
                         <h4 class="author">Martin Petr</h4>
             
-            <h4 class="date">2018-09-01</h4>
+            <h4 class="date">2018-09-03</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/tests/testthat/vignettes/tutorial.Rmd"><code>tests/testthat/vignettes/tutorial.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/vignettes/tutorial.Rmd"><code>vignettes/vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
 
     </div>
@@ -150,9 +153,10 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps"</span></a></code></pre></div>
 <p>We can verify that there are three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">dir</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(eigenstrat), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.geno"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind" </span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.snp"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.geno"      </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind"       </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.ind.merged"</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [4] "/Users/martin_petr/local/R_LIBS/admixr/extdata/snps.snp"</span></a></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">

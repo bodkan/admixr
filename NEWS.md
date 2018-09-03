@@ -1,5 +1,12 @@
 # admixr 0.4.0
 
+* The package now has a tutorial vignette describing the main functionality.
+* Simple SNP dataset is now included with the package.
+* The API of many utility functions has been simplified and their internals
+  re-written.
+* `filter_sites` is now implemented using `data.table` and allows overlap with
+  an arbitrary BED file.
+
 # admixr 0.3.0
 
 * All wrappers have been given simpler names (`qpDstat()` -> `d()`,
