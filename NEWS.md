@@ -1,3 +1,5 @@
+# admixr 0.4.0
+
 # admixr 0.3.0
 
 * All wrappers have been given simpler names (`qpDstat()` -> `d()`,
