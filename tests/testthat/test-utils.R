@@ -40,7 +40,7 @@ test_that("Merging of population labels", {
 
   # merge labels using
   admixr_ind <- tempfile()
-  merge_labels(ind = paste0(prefix, ".ind"),
+  group_labels(ind = paste0(prefix, ".ind"),
                modified_ind = admixr_ind,
                labels = merge_list)
 

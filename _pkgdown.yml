@@ -9,8 +9,8 @@ reference:
 
   - title: Data processing and filtering
     contents:
-    - merge_labels
     - merge_eigenstrat
+    - group_labels
     - count_snps
     - filter_sites
 

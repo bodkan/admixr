@@ -70,12 +70,17 @@ package! No shell scripting, no copy-pasting and manual editing of text files.
 The only thing you need is a working ADMIXTOOLS installation and a path to
 EIGENSTRAT data (a trio of ind/snp/geno files), which we call `prefix` here.
 
+```{r, echo = FALSE}
+library(admixr)
+path_to_eigenstrat <- download_data()
+```
+
 ```{r example}
 library(admixr)
 
 result <- d(
     W = c("French", "Sardinian"), X = "Yoruba", Y = "Vindija", Z = "Chimp",
-    prefix = "~/local/R_LIBS/admixr/extdata/snps"
+    prefix = path_to_eigenstrat
 )
 
 result

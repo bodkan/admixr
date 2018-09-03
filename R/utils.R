@@ -9,16 +9,16 @@
 #' \dontrun{
 #' # This will create a new ind file with labels in the 3rd column replaced by
 #' # Europe", "EastAfrica" and "WestAfrica", respectively.
-#' merge_labels(
+#' group_labels(
 #'     ind = IND_FILE,
 #'     modified_ind = paste0(IND_FILE, ".merged"),
 #'     labels = list(Europe = c("French", "Sardinian", "Czech"),
-#'                       WestAfrica = c("Yoruba", "Mende"))
+#'                   WestAfrica = c("Yoruba", "Mende"))
 #' )
 #' }
 #'
 #' @export
-merge_labels <- function(ind, modified_ind, labels) {
+group_labels <- function(ind, modified_ind, labels) {
   lines <- readLines(ind)
 
   # iterate over the lines in the "ind" file, replacing population
@@ -184,6 +184,24 @@ check_presence <- function(labels, prefix = NULL, ind = NULL) {
 admixtools_path <- function() {
   system("which qpDstat", intern = TRUE) %>% stringr::str_replace("/bin.*", "")
 }
+
+#' Download example SNP data.
+#'
+#' @param dirname Directory in which to put the data (EIGENSTRAT trio of snp/geno/ind files).
+#'
+#' @export
+download_data <- function(dirname = tempdir()) {
+    dest <- file.path(dirname, "snps.tgz")
+    download.file(
+        "https://www.dropbox.com/s/bw1eswcp2domisv/snps.tgz?dl=0",
+        destfile = dest,
+        method = "wget",
+        quiet = TRUE
+    )
+    system(paste0("cd ", dirname, "; tar xf ", dest, "; rm snps.tgz"))
+    file.path(dirname, "snps", "snps")
+}
+
 
 #' Pipe operator
 #' 
