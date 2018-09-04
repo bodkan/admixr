@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate coordinates of SNPs that overlap/exclude regions in BED file — filter_sites • admixr</title>
+<title>Generate a snp file with positions of transversion SNPs. — filter_damage • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,12 +30,10 @@
 
 
 
-<meta property="og:title" content="Generate coordinates of SNPs that overlap/exclude regions in BED file — filter_sites" />
+<meta property="og:title" content="Generate a snp file with positions of transversion SNPs. — filter_damage" />
 
-<meta property="og:description" content="This function normally produces a snp file with sites that did not overlap
-regions in the specified BED file, that can be then directly supplied to
-any admixr statistic function using it's 'exclude = ' argument. If the
-BED file contains regions that have to be filtered out, set 'remove = TRUE'." />
+<meta property="og:description" content="The output of this function can be used as 'exclude = ' argument in all main
+admixr statistics functions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,21 +116,19 @@ BED file contains regions that have to be filtered out, set 'remove = TRUE'." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate coordinates of SNPs that overlap/exclude regions in BED file</h1>
+    <h1>Generate a snp file with positions of transversion SNPs.</h1>
     <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/filtering.R'><code>R/filtering.R</code></a></small>
-    <div class="hidden name"><code>filter_sites.Rd</code></div>
+    <div class="hidden name"><code>filter_damage.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function normally produces a snp file with sites that did not overlap
-regions in the specified BED file, that can be then directly supplied to
-any admixr statistic function using it's 'exclude = ' argument. If the
-BED file contains regions that have to be filtered out, set 'remove = TRUE'.</p>
+    <p>The output of this function can be used as 'exclude = ' argument in all main
+admixr statistics functions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>filter_sites</span>(<span class='no'>prefix</span>, <span class='no'>bed</span>, <span class='no'>outsnp</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>filter_damage</span>(<span class='no'>prefix</span>, <span class='no'>outsnp</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,17 +138,8 @@ BED file contains regions that have to be filtered out, set 'remove = TRUE'.</p>
       <td><p>An EIGENSTRAT prefix.</p></td>
     </tr>
     <tr>
-      <th>bed</th>
-      <td><p>Path to a BED file.</p></td>
-    </tr>
-    <tr>
       <th>outsnp</th>
       <td><p>Path to an output snp file with coordinates of excluded sites.</p></td>
-    </tr>
-    <tr>
-      <th>remove</th>
-      <td><p>Remove sites falling inside the BED file regions? By default, sites
-that do not overlap BED regions are removed.</p></td>
     </tr>
     </table>
     

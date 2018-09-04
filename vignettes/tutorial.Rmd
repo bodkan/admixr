@@ -149,19 +149,19 @@ reference. (The function downloads the data into a temporary directory, feel
 free to change the final destination using it's `dirname` parameter).
 
 ```{r eigenstrat_path}
-(eigenstrat <- download_data())
+(eigenstrat_prefix <- download_data(dirname = tempdir()))
 ```
 We can verify that there are three files with this prefix:
 
 ```{r eigenstrat_trio}
-dir(path = dirname(eigenstrat), full.names = TRUE)
+dir(path = dirname(eigenstrat_prefix), full.names = TRUE)
 ```
 
 Let's look at their contents:
 
 #### `ind` file
 ```{r ind_file, echo = FALSE}
-cat(system(paste0("column -t ", eigenstrat, ".ind"), intern = TRUE), sep = "\n")
+cat(system(paste0("column -t ", eigenstrat_prefix, ".ind"), intern = TRUE), sep = "\n")
 ```
 
 The first column (sample name) and the third column (population label) are
@@ -176,12 +176,12 @@ work with it as a whole.
 
 #### `snp` file (first 3 lines)
 ```{r snp_file, echo = FALSE}
-cat(system(paste0("head -n 3 ", eigenstrat, ".snp"), intern = TRUE), sep = "\n")
+cat(system(paste0("head -n 3 ", eigenstrat_prefix, ".snp"), intern = TRUE), sep = "\n")
 ```
 
 #### `geno` file (first 3 lines)
 ```{r geno_file, echo = FALSE}
-cat(system(paste0("head -n 3 ", eigenstrat, ".geno"), intern = TRUE), sep = "\n")
+cat(system(paste0("head -n 3 ", eigenstrat_prefix, ".geno"), intern = TRUE), sep = "\n")
 ```
 
 
@@ -266,7 +266,7 @@ Using the `admixr` package we can then calculate the $D$ statistic above simply
 by running:
 
 ```{r d}
-result <- d(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", prefix = eigenstrat)
+result <- d(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", prefix = eigenstrat_prefix)
 ```
 
 The result is a following `data.frame`:
@@ -334,7 +334,7 @@ in a way analogous to $D$ statistic.
 To repeat the previous analysis using $f_4$ statistic, we can run:
 
 ```{r f4}
-result <- f4(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", prefix = eigenstrat)
+result <- f4(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", prefix = eigenstrat_prefix)
 ```
 
 ```{r eval = FALSE}
@@ -361,6 +361,8 @@ functions for calculating both.
 
 
 
+
+
 ## $f_4$-ratio statistic
 
 Now we know that non-Africans today carry _some_ Neanderthal ancestry. But what if
@@ -378,7 +380,7 @@ Using `amidxr`, we can calculate $f_4$-ratios using the following code (`X`
 being a vector of samples for which we want to estimate Neanderthal ancestry):
 
 ```{r f4ratio}
-result <- f4ratio(X = pops, A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp", prefix = eigenstrat)
+result <- f4ratio(X = pops, A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp", prefix = eigenstrat_prefix)
 ```
 
 The ancestry proportion (a number between 0 and 1) is given in the `alpha`
@@ -441,7 +443,7 @@ $f_3$ statistics between all pairs of present-day modern humans.
 ```{r pops2}
 pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka", "Yoruba")
 
-result <- f3(A = pops, B = pops, C = "Chimp", prefix = eigenstrat)
+result <- f3(A = pops, B = pops, C = "Chimp", prefix = eigenstrat_prefix)
 ```
 
 ```{r, eval=FALSE}
@@ -518,7 +520,7 @@ result <- qpAdm(
   target = c("French", "Sardinian", "Mbuti", "Dinka"),
   references = c("Vindija", "Yoruba"),
   outgroups = c("Chimp", "Denisova", "Altai"),
-  prefix = eigenstrat
+  prefix = eigenstrat_prefix
 )
 ```
 
@@ -553,7 +555,7 @@ Africans and archaics combined populations. But the `ind` file that we have
 does not contain grouped labels - each sample stands on its own:
 
 ```{r orig_ind, echo = FALSE, comment = ""}
-ind_path <- paste0(eigenstrat, ".ind")
+ind_path <- paste0(eigenstrat_prefix, ".ind")
 cat(system(paste0("column -t ", ind_path), intern = TRUE), sep = "\n")
 ```
 
@@ -563,8 +565,8 @@ To merge several individual samples under a combined label we can call
 ```{r group_labels}
 # paths to the original ind file and a new modified ind file, which will
 # contain merged population labels
-ind_path <- paste0(eigenstrat, ".ind")
-modif_path <- paste0(ind_path, ".merged")
+ind_path <- paste0(eigenstrat_prefix, ".ind")
+modif_path <- tempfile()
 
 group_labels(
   ind = ind_path,
@@ -589,7 +591,7 @@ file in addition to the `prefix` argument. For example:
 
 ```{r modif_d}
 result <- d(W = "European", X = "African", Y = "Archaic", Z = "Chimp",
-            prefix = eigenstrat, ind = modif_path)
+            prefix = eigenstrat_prefix, ind = modif_path)
 ```
 
 Here is the result, showing (as we've seen above for individual samples) that
@@ -623,8 +625,9 @@ takes two EIGENSTRAT datasets (i.e. trios of ind/snp/geno files) and merges
 them, producing a union of samples and intersection of SNPs from both of them.
 
 ```{r merge_eigenstrat, eval = FALSE}
+# this is just an example code - it will not run unless you specify the paths
 merge_eigenstrat(
-    prefix = output_prefix,       # pefix of the combined dataset
+    prefix = output_prefix,       # prefix of the final combined dataset
     input1 = path_to_1st_dataset, # prefix of the first dataset
     input2 = path_to_2nd_dataset  # prefix of the first dataset
 )
@@ -650,11 +653,11 @@ two optional arguments:
 
 For each sample, count the SNPs present in that sample:
 ```{r present_snps, results = "hide"}
-count_snps(eigenstrat)
+count_snps(eigenstrat_prefix)
 ```
 
 ```{r present_snps_kable, echo = FALSE}
-knitr::kable(count_snps(eigenstrat))
+knitr::kable(count_snps(eigenstrat_prefix))
 ```
 
 
@@ -664,9 +667,80 @@ knitr::kable(count_snps(eigenstrat))
 
 
 
-## Filtering sites
+## Data filtering
+
+
+
 
 ### Filtering based on a BED file
 
-A common situation in genomics is performing an analysis on a subset of a genome.
+A common situation in genomics is performing an analysis on a subset of the
+genome.  However, EIGENSTRAT is a rather obscure file format which makes it
+very difficult to find bioinformatics tools that support it. Luckily, `admixr`
+includes a function `filter_sites()` that takes an EIGENSTRAT prefix and a BED
+file and produces a snp file, that contains simply contains positions of sites
+that either overlap (or don't overlap) regions/sites specified in the BED file.
 
+Why is that useful? Each of the main `admixr` functions accepts an `exclude = `
+argument, which specifies a path to a snp file with positions of we want to
+exclude from our analysis. This is file is exactly what `filter_sites()`
+function generates.
+
+This might seem like a very convoluted way to do this type of analysis but this
+is how ADMIXTOOLS actually works under the hood, and being "just" a wrapper
+around ADMIXTOOLS we have no other choice but to comply. There is a rather
+obscure option called
+[`badsnpfile`](https://github.com/DReichLab/AdmixTools/blob/master/README.ROLLOFF#L48),
+which specifies the sites to exclude from the calculation. The `exclude = `
+argument of `admixr` functions simply fills in the `badsnpfile` parameter
+before starting an ADMIXTOOLS command.
+
+(An alternative to this way of filtering data would be to create a whole new
+EIGENSTRAT snp/geno/ind trio for each new subset. However, this is problematic
+if the data set is huge, or if we need to repeat an analysis on many different
+subsets of data. In my experience, I found that generating just a snp file
+instead of creating a new subset of the complete data is a good compromise. If
+you really think this package should implement this alternative, please get in
+touch and we can talk about it.)
+
+Here are two examples how to filter EIGENSTRAT data (just for illustration,
+they will not run by themselves without specifying all the paths):
+
+```{r, eval = FALSE}
+# run this if your BED file contains regions to keep in an analysis
+filter_sites(prefix = eigenstrat_prefix, bed = regions_to_include, outsnp = excluded_snps1)
+
+# run this if your BED file contains regions to remove from an analysis
+filter_sites(prefix = eigenstrat_prefix, bed = regions_to_exclude, outsnp = excluded_snps2)
+```
+Both commands do a different thing, but both generate a snp file that specifies
+which sites need to be excluded from an analysis. It can be used in this way:
+
+```{r, eval = FALSE}
+d(pop_W, pop_X, pop_Y, pop_Z, prefix = eigenstrat_prefix, exclude = excluded_snps1)
+```
+
+
+
+
+
+### Filtering out potential ancient DNA damage SNPs
+
+In an ancient DNA world, we often need to repeat an analysis on a subset of
+data that is less likely to be influenced by ancient DNA damage, to verify that
+our results are not caused by artifacts in the data (due to biochemical
+properties of DNA degradation, ancient DNA damage will lead to an increase in
+C&rightarrow;T and G&rightarrow;A substitutions). Using a similar method
+described in a general BED filtering section above, we can use the
+`filter_damage()` function to generate a snp file with positions that carry
+transitions (C&rightarrow;T and G&rightarrow;A sites), that can be removed
+using the `exclude = ` argument of the main `admixr` functions.
+
+```{r, eval = FALSE}
+# generate snp file with positions of transitions
+transitions <- tempfile()
+filter_damage(prefix = eigenstrat_prefix, outsnp = transitions)
+
+# perform the calculation only on transversions
+d(W = "French", X = "Dinka", Y = "Altai", Z = "Chimp", prefix = eigenstrat_prefix, exclude = transitions)
+```

@@ -13,6 +13,7 @@ reference:
     - group_labels
     - count_snps
     - filter_sites
+    - filter_damage
 
   - title: Reading/writing EIGENSTRAT data
     contents:

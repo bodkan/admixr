@@ -130,7 +130,7 @@ simplify handling and processing of EIGENSTRAT datasets, _admixr_ implements a
 set of complementary functions that can be useful during data-preparation:
 
 * Filtering of SNP data based on a given BED file &mdash; `filter_sites()`.
-* Ancient DNA damage or GC content filtering &mdash; `filter_damage()`, `filter_gc()`.
+* Filtering out potential ancient DNA damage substitutions &mdash; `filter_damage()`.
 * Merging of EIGENSTRAT datasets &mdash; `merge_eigenstrat()`.
 * Calculating coverage of sites in each sample &mdash; `count_snps()`.
 * Merging of individual population labels into larger groups &mdash; `group_labels()`. 

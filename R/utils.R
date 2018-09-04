@@ -88,47 +88,6 @@ count_snps <- function(prefix, missing = FALSE, prop = FALSE) {
 }
 
 
-
-#' Generate coordinates of SNPs that overlap/exclude regions in BED file
-#'
-#' @param snp Path to a snp file.
-#' @param bed Path to a BED file.
-#' @param output Path to an output snp file with coordinates to exclude.
-#' @param exclude Exclude sites falling inside the BED file regions?
-#'
-#' @export
-filter_sites <- function(snp, bed, output, exclude = FALSE) {
-  # process BED file
-  dt_bed <- data.table::fread(
-    bed,
-    col.names = c("chrom", "start", "end"),
-    colClasses = c("character", "integer", "integer")
-  )
-  data.table::setkey(dt_bed, chrom, start, end)
-
-  # process SNP file from the prefix
-  dt_snp <- read_snp(snp) %>%
-    dplyr::mutate(chrom = as.character(chrom), start = pos - 1, end = pos) %>%
-    data.table::setDT()
-  data.table::setkey(dt_snp, chrom, start, end)                                          
-                                                                                      
-  # get data.table indices of SNPs within/outside given BED regions                   
-  overlap <- data.table::foverlaps(dt_snp, dt_bed, which = TRUE)                            
-  # filter the result based on whether an overlap or a complement is needed           
-  if (exclude)                                                                        
-    overlap <- overlap[is.na(overlap$yid), ]                                         
-  else
-    overlap <- overlap[!is.na(overlap$yid), ]
-
-  # extract only those sites passing the filter
-  site_idx <- unique(overlap$xid)
-  if (!length(site_idx)) stop("No sites remaining after the overlap!")
-  snp_subset <- dt_snp[site_idx, ]
-
-  dplyr::select(snp_subset, -c(start, end)) %>% write_snp(output)
-}
-
-
 # Run a specified ADMIXTOOLS command.
 run_cmd <- function(cmd, par_file, log_file) {
   system(paste(cmd, "-p", par_file, ">", log_file))
