@@ -664,4 +664,9 @@ knitr::kable(count_snps(eigenstrat))
 
 
 
-## Subsetting sites
+## Filtering sites
+
+### Filtering based on a BED file
+
+A common situation in genomics is performing an analysis on a subset of a genome.
+
