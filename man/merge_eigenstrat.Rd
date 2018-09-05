@@ -4,12 +4,14 @@
 \alias{merge_eigenstrat}
 \title{Merge two sets of EIGENSTRAT datasets}
 \usage{
-merge_eigenstrat(prefix, input1, input2)
+merge_eigenstrat(prefix, input1, input2, strandcheck = "NO")
 }
 \arguments{
 \item{prefix}{A prefix of a final merged EIGENSTRAT dataset.}
 
 \item{input1, input2}{Prefixes of two EIGENSTRAT datasets to merge.}
+
+\item{strandcheck}{Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.}
 }
 \description{
 This function utilizes the 'mergeit' command from ADMIXTOOLS.

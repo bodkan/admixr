@@ -38,13 +38,14 @@ group_labels <- function(ind, modified_ind, labels) {
 #'
 #' @param prefix A prefix of a final merged EIGENSTRAT dataset.
 #' @param input1,input2 Prefixes of two EIGENSTRAT datasets to merge.
+#' @param strandcheck Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.
 #'
 #' @export
-merge_eigenstrat <- function(prefix, input1, input2) {
+merge_eigenstrat <- function(prefix, input1, input2, strandcheck = "NO") {
   parfile <- tempfile()
   paste0(
     "outputformat: EIGENSTRAT\n",
-    "strandcheck: NO\n",
+    "strandcheck: ", strandcheck, "\n",
     "geno1: ", input1, ".geno\n",
     "snp1: ", input1, ".snp\n",
     "ind1: ", input1, ".ind\n",
