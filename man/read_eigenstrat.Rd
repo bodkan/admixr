@@ -13,5 +13,9 @@ read_eigenstrat(prefix = NULL)
 List of three data.frame objects.
 }
 \description{
-Read a trio of EIGENSTRAT geno/snp/ind files.
+This function will parse all three components of an EIGENSTRAT trio and return them
+as a list.
+}
+\details{
+Note that \code{read_geno()} will only read plain-text geno files, not compressed ones.
 }

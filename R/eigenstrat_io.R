@@ -3,6 +3,10 @@
 
 #' Read an EIGENSTRAT ind/snp/geno file.
 #'
+#' These functions each read one part of the EIGENSTRAT dataset trio.
+#'
+#' Note that \code{read_geno()} will only read plain-text geno files, not compressed ones.
+#'
 #' @param file Path to a file.
 #'
 #' @return A data.frame object.
@@ -43,6 +47,11 @@ read_geno <- function(file) {
 
 
 #' Read a trio of EIGENSTRAT geno/snp/ind files.
+#'
+#' This function will parse all three components of an EIGENSTRAT trio and return them
+#' as a list.
+#'
+#' Note that \code{read_geno()} will only read plain-text geno files, not compressed ones.
 #'
 #' @param prefix EIGENSTRAT geno/snp/ind prefix.
 #'

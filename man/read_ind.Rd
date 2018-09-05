@@ -19,5 +19,8 @@ read_geno(file)
 A data.frame object.
 }
 \description{
-Read an EIGENSTRAT ind/snp/geno file.
+These functions each read one part of the EIGENSTRAT dataset trio.
+}
+\details{
+Note that \code{read_geno()} will only read plain-text geno files, not compressed ones.
 }
