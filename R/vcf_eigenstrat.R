@@ -1,56 +1,23 @@
-#' Convert EIGENSTRAT files into a VCF file.
+#' Conversion between VCF and EIGENSTRAT file formats
 #'
-#' This function reads the genotypes from a 'geno' file, their
-#' coordinates and reference/alternative alleles and the individuals'
-#' names from an 'ind' file and generates a minimal VCF file.
+#' These functions parse input in either VCF or EIGENSTRAT format and convert it.
 #'
-#' Compressing and indexing requires having "bgzip" and "tabix"
-#' commands in $PATH.
+#' Please note that processing of large data sets (such as whole-genome data)
+#' using these functions will be very inefficient, because they first load all
+#' data into memory first, perform the conversion, and only then save the
+#' output file.  
 #'
-#' @param prefix Prefix of the geno/snp/ind files (including the whole
-#'     path).
-#' @param vcf_file Path to the VCF file that will be generated.
+#' Compressing and indexing is performed by default, and requires having
+#' bgzip and tabix commands in $PATH.
+#'
+#' @param vcf Path to a VCF file.
+#' @param prefix EIGENSTRAT geno/snp/ind output prefix.
 #' @param compress Compress the VCF with bgzip?
 #' @param index Index the VCF with tabix?
 #'
 #' @export
-eigenstrat_to_vcf <- function(prefix, vcf_file, compress = TRUE, index = TRUE) {
-    geno <- read_geno(paste0(prefix, ".geno"))
-    snp <- read_snp(paste0(prefix, ".snp"))
-
-    # construct a minimal VCF header
-    header <- c(
-      "##fileformat=VCFv4.1",
-      "##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">",
-      sapply(unique(snp$chrom), function(chrom) {
-        paste0("##contig=<ID=", chrom, ">")
-      })
-    )
-
-    # generate a dataframe with the "body" of the VCF file (info and GT columns)
-    info_cols <-
-      dplyr::mutate(snp, ID = snp$id, QUAL = "0", FILTER = ".", INFO = ".", FORMAT = "GT") %>%
-      dplyr::select(`#CHROM` = chrom, POS = pos, ID, REF = ref, ALT = alt, QUAL, FILTER, INFO, FORMAT)
-    gt_cols <- dplyr::mutate_all(geno, eigenstrat_to_gt)
-    body_cols <- dplyr::bind_cols(info_cols, gt_cols)
-
-    writeLines(header, vcf_file)
-    readr::write_tsv(body_cols, vcf_file, col_names = TRUE, append = TRUE)
-
-    if (compress) system(paste("bgzip", vcf_file))
-    if (index) system(paste("tabix", paste0(vcf_file, ".gz")))
-}
-
-
-#' Convert VCF file into three-file EIGENSTRAT format.
-#'
-#' @param vcf_file Path to the VCF file.
-#' @param prefix Prefix of the geno/snp/ind files (including the whole
-#'     path) that will be generated.
-#'
-#' @export
-vcf_to_eigenstrat <- function(vcf_file, prefix) {
-    vcf <- readr::read_tsv(vcf_file, comment = "##", progress = FALSE) %>%
+vcf_to_eigenstrat <- function(vcf, prefix) {
+    vcf <- readr::read_tsv(vcf, comment = "##", progress = FALSE) %>%
         dplyr::rename(chrom = `#CHROM`, pos = POS, snp_id = ID, ref = REF, alt = ALT) %>%
         dplyr::select(-c(QUAL, FILTER, INFO, FORMAT))
 
@@ -73,7 +40,36 @@ vcf_to_eigenstrat <- function(vcf_file, prefix) {
 }
 
 
-# Genotype conversion utility functions -----------------------------------
+
+#' @rdname vcf_to_eigenstrat
+#' @export
+eigenstrat_to_vcf <- function(prefix, vcf, compress = TRUE, index = TRUE) {
+    geno <- read_geno(paste0(prefix, ".geno"))
+    snp <- read_snp(paste0(prefix, ".snp"))
+
+    # construct a minimal VCF header
+    header <- c(
+      "##fileformat=VCFv4.1",
+      "##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">",
+      sapply(unique(snp$chrom), function(chrom) {
+        paste0("##contig=<ID=", chrom, ">")
+      })
+    )
+
+    # generate a dataframe with the "body" of the VCF file (info and GT columns)
+    info_cols <-
+      dplyr::mutate(snp, ID = snp$id, QUAL = "0", FILTER = ".", INFO = ".", FORMAT = "GT") %>%
+      dplyr::select(`#CHROM` = chrom, POS = pos, ID, REF = ref, ALT = alt, QUAL, FILTER, INFO, FORMAT)
+    gt_cols <- dplyr::mutate_all(geno, eigenstrat_to_gt)
+    body_cols <- dplyr::bind_cols(info_cols, gt_cols)
+
+    writeLines(header, vcf)
+    readr::write_tsv(body_cols, vcf, col_names = TRUE, append = TRUE)
+
+    if (compress) system(paste("bgzip", vcf))
+    if (index) system(paste("tabix", paste0(vcf, ".gz")))
+}
+
 
 
 # Convert VCF-like GT string(s) into EIGENSTRAT genotypes.
@@ -94,6 +90,7 @@ gt_to_eigenstrat <- function(gts) {
 
     gts
 }
+
 
 
 # Convert VCF-like GT string(s) into EIGENSTRAT genotypes.

@@ -2,16 +2,31 @@
 % Please edit documentation in R/vcf_eigenstrat.R
 \name{vcf_to_eigenstrat}
 \alias{vcf_to_eigenstrat}
-\title{Convert VCF file into three-file EIGENSTRAT format.}
+\alias{eigenstrat_to_vcf}
+\title{Conversion between VCF and EIGENSTRAT file formats}
 \usage{
-vcf_to_eigenstrat(vcf_file, prefix)
+vcf_to_eigenstrat(vcf, prefix)
+
+eigenstrat_to_vcf(prefix, vcf, compress = TRUE, index = TRUE)
 }
 \arguments{
-\item{vcf_file}{Path to the VCF file.}
+\item{vcf}{Path to a VCF file.}
 
-\item{prefix}{Prefix of the geno/snp/ind files (including the whole
-path) that will be generated.}
+\item{prefix}{EIGENSTRAT geno/snp/ind output prefix.}
+
+\item{compress}{Compress the VCF with bgzip?}
+
+\item{index}{Index the VCF with tabix?}
 }
 \description{
-Convert VCF file into three-file EIGENSTRAT format.
+These functions parse input in either VCF or EIGENSTRAT format and convert it.
+}
+\details{
+Please note that processing of large data sets (such as whole-genome data)
+using these functions will be very inefficient, because they first load all
+data into memory first, perform the conversion, and only then save the
+output file.
+
+Compressing and indexing is performed by default, and requires having
+bgzip and tabix commands in $PATH.
 }
