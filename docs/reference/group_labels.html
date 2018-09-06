@@ -126,18 +126,18 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>group_labels</span>(<span class='no'>ind</span>, <span class='no'>modified_ind</span>, <span class='no'>labels</span>)</pre>
+    <pre class="usage"><span class='fu'>group_labels</span>(<span class='no'>prefix</span>, <span class='no'>ind_suffix</span>, <span class='no'>labels</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ind</th>
-      <td><p>Path to an original ind file.</p></td>
+      <th>prefix</th>
+      <td><p>EIGENSTRAT prefix.</p></td>
     </tr>
     <tr>
-      <th>modified_ind</th>
-      <td><p>Path to a final modified ind file.</p></td>
+      <th>ind_suffix</th>
+      <td><p>Suffix of a modified ind file.</p></td>
     </tr>
     <tr>
       <th>labels</th>
@@ -148,16 +148,17 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div><span class='co'># NOT RUN {</span>
-<span class='co'># This will create a new ind file with labels in the 3rd column replaced by</span>
-<span class='co'># Europe", "EastAfrica" and "WestAfrica", respectively.</span>
-<span class='fu'>group_labels</span>(
-    <span class='kw'>ind</span> <span class='kw'>=</span> <span class='no'>IND_FILE</span>,
-    <span class='kw'>modified_ind</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='no'>IND_FILE</span>, <span class='st'>".merged"</span>),
-    <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>Europe</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Czech"</span>),
-                  <span class='kw'>WestAfrica</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Yoruba"</span>, <span class='st'>"Mende"</span>))
+</div># NOT RUN {
+# This will create a new ind file with labels in the 3rd column replaced by
+# Europe", "EastAfrica" and "WestAfrica", respectively.
+group_labels(
+    prefix = <path_to_eigenstrat>
+    ind_suffix = ".populations", # will create ind file '<path_to_eigenstrat>.populations'
+    labels = list(Europe = c("French", "Sardinian", "Czech"),
+                  WestAfrica = c("Yoruba", "Mende"))
 )
-<span class='co'># }</span><div class='input'>
+# }
+<div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

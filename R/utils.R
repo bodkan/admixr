@@ -28,7 +28,7 @@ group_labels <- function(prefix, ind_suffix, labels) {
     lines <- stringr::str_replace(lines, regex, merge_into)
   }
 
-  writeLines(lines, paste0(prefix, ind_suffix))
+  writeLines(lines, paste0(prefix, ".ind", ind_suffix))
 }
 
 
