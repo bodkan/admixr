@@ -43,7 +43,7 @@ test_that("Merging of population labels", {
   # compare both generated ind tables
   expect_equal(read_ind(shell_ind), read_ind(paste0(prefix, ".ind", ind_suffix)))
 
-  unlink(admixr_ind)
+  unlink(paste0(prefix, ".ind", ind_suffix))
 })
 
 # SNP counting ------------------------------------------------------------
