@@ -38,11 +38,10 @@ test_that("Merging of population labels", {
 
   # merge labels using
   ind_suffix <- ".merged_populations"
-  admixr_ind <- paste0(prefix, ind_suffix)
   group_labels(prefix, ind_suffix, labels = merge_list)
 
   # compare both generated ind tables
-  expect_equal(read_ind(shell_ind), read_ind(admixr_ind))
+  expect_equal(read_ind(shell_ind), read_ind(paste0(prefix, ".ind", ind_suffix)))
 
   unlink(admixr_ind)
 })
