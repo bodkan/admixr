@@ -374,7 +374,7 @@ the inner workings of $f_4$-ratio statistic. However, in general, when we are
 interested in estimating the *proportion* of ancestry in a population $X$
 coming some parental lineage $B$, we can use a ratio of two $f_4$ statistics.
 
-$$f_4\textrm{-ratio} = \frac{f_4(A, O; X, C}{f_4(A, O; B, C}.$$
+$$f_4\textrm{-ratio} = \frac{f_4(A, O; X, C)}{f_4(A, O; B, C)}.$$
 
 Using `amidxr`, we can calculate $f_4$-ratios using the following code (`X`
 being a vector of samples for which we want to estimate Neanderthal ancestry):
@@ -436,14 +436,14 @@ whenever we want to:
 As an example, imagine we are interested in relative divergence times between
 pairs of present-day human populations, and want to know in which approximate
 order they split of from each other. To address this problem, we could use
-$f_3$ statistic by fixing the $C$ outgroup as Chimp, and calculating pairwise
+$f_3$ statistic by fixing the $C$ outgroup as San, and calculating pairwise
 $f_3$ statistics between all pairs of present-day modern humans.
 
 
 ```{r pops2}
-pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka", "Yoruba")
+pops <- c("French", "Sardinian", "Han", "Papuan", "Mbuti", "Dinka", "Yoruba")
 
-result <- f3(A = pops, B = pops, C = "Chimp", prefix = eigenstrat_prefix)
+result <- f3(A = pops, B = pops, C = "Khomani_San", prefix = eigenstrat_prefix)
 ```
 
 ```{r, eval=FALSE}
@@ -456,7 +456,7 @@ knitr::kable(head(result))
 
 ```{r f3_plot, fig.width = 8, fig.height = 6}
 # sort the population labels according to an increasing f3 value relative to French
-ordered <- filter(result, A == "French") %>% arrange(f3) %>% .[["B"]] %>% c("French")
+ordered <- filter(result, A == "Mbuti") %>% arrange(f3) %>% .[["B"]] %>% c("Mbuti")
 
 # plot heatmap of pairwise f3 values
 result %>%
