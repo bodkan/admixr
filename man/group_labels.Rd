@@ -4,12 +4,12 @@
 \alias{group_labels}
 \title{Merge multiple samples/populations under a single label}
 \usage{
-group_labels(ind, modified_ind, labels)
+group_labels(prefix, ind_suffix, labels)
 }
 \arguments{
-\item{ind}{Path to an original ind file.}
+\item{prefix}{EIGENSTRAT prefix.}
 
-\item{modified_ind}{Path to a final modified ind file.}
+\item{ind_suffix}{Suffix of a modified ind file.}
 
 \item{labels}{A named list of labels to merge.}
 }
@@ -22,8 +22,8 @@ Merge multiple samples/populations under a single label
 # This will create a new ind file with labels in the 3rd column replaced by
 # Europe", "EastAfrica" and "WestAfrica", respectively.
 group_labels(
-    ind = IND_FILE,
-    modified_ind = paste0(IND_FILE, ".merged"),
+    prefix = <path_to_eigenstrat>
+    ind_suffix = ".populations", # will create ind file '<path_to_eigenstrat>.populations'
     labels = list(Europe = c("French", "Sardinian", "Czech"),
                   WestAfrica = c("Yoruba", "Mende"))
 )

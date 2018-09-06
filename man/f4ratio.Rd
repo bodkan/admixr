@@ -7,26 +7,20 @@
 \alias{f3}
 \title{Calculate the D, f4, f4-ratio, or f3 statistic.}
 \usage{
-f4ratio(X, A, B, C, O, prefix = NULL, geno = NULL, snp = NULL,
-  ind = NULL, exclude = NULL, outdir = NULL)
-
-d(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-  exclude = NULL, outdir = NULL, f4mode = FALSE)
-
-f4(W, X, Y, Z, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+f4ratio(X, A, B, C, O, prefix = NULL, ind_suffix = NULL,
   exclude = NULL, outdir = NULL)
 
-f3(A, B, C, prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
-  exclude = NULL, outdir = NULL, inbreed = FALSE)
+d(W, X, Y, Z, prefix = NULL, ind_suffix = NULL, exclude = NULL,
+  outdir = NULL, f4mode = FALSE)
+
+f4(W, X, Y, Z, prefix = NULL, ind_suffix = NULL, exclude = NULL,
+  outdir = NULL)
+
+f3(A, B, C, prefix = NULL, ind_suffix = NULL, exclude = NULL,
+  outdir = NULL, inbreed = FALSE)
 }
 \arguments{
 \item{prefix}{An EIGENSTRAT prefix (shared by the geno/snp/ind trio).}
-
-\item{geno}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
-
-\item{snp}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
-
-\item{ind}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
 
 \item{exclude}{Path to file in a snp format with SNPs to exclude from the calculation.}
 

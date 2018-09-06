@@ -7,9 +7,9 @@
 #'
 #' @export
 f4ratio <- function(X, A, B, C, O,
-                    prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+                    prefix = NULL, ind_suffix = NULL,
                     exclude = NULL, outdir = NULL) {
-    check_presence(c(X, A, B, C, O), prefix, ind)
+    check_presence(c(X, A, B, C, O), prefix, ind_suffix)
 
     # get the path to the population, parameter and log files
     setup <- paste0("qpF4ratio__", A, "_", B, "_", C, "_", O)
@@ -17,7 +17,7 @@ f4ratio <- function(X, A, B, C, O,
     files <- get_files(outdir, config_prefix)
 
     create_qpF4ratio_pop_file(X = X, A = A, B = B, C = C, O = O, file = files[["pop_file"]])
-    create_par_file(files, prefix, geno, snp, ind, exclude)
+    create_par_file(files, prefix, ind_suffix, exclude)
 
     run_cmd("qpF4ratio", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
@@ -31,9 +31,9 @@ f4ratio <- function(X, A, B, C, O,
 #'
 #' @export
 d <- function(W, X, Y, Z,
-              prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+              prefix = NULL, ind_suffix = NULL,
               exclude = NULL, outdir = NULL, f4mode = FALSE) {
-    check_presence(c(W, X, Y, Z), prefix, ind)
+    check_presence(c(W, X, Y, Z), prefix, ind_suffix)
 
     # get the path to the population, parameter and log files
     setup <- paste0("qpDstat")
@@ -41,7 +41,7 @@ d <- function(W, X, Y, Z,
     files <- get_files(outdir, config_prefix)
 
     create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
-    create_par_file(files, prefix, geno, snp, ind, exclude)
+    create_par_file(files, prefix, ind_suffix, exclude)
 
     if (f4mode) {
         write("f4mode: YES", file = files[["par_file"]], append = TRUE)
@@ -61,9 +61,9 @@ d <- function(W, X, Y, Z,
 #'
 #' @export
 f4 <- function(W, X, Y, Z,
-              prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+              prefix = NULL, ind_suffix = NULL,
               exclude = NULL, outdir = NULL) {
-  d(W, X, Y, Z, prefix, geno, snp, ind, exclude, outdir, f4mode = TRUE)
+  d(W, X, Y, Z, prefix, ind_suffix, exclude, outdir, f4mode = TRUE)
 }
 
 
@@ -74,9 +74,9 @@ f4 <- function(W, X, Y, Z,
 #'
 #' @export
 f3 <- function(A, B, C,
-               prefix = NULL, geno = NULL, snp = NULL, ind = NULL, exclude = NULL,
+               prefix = NULL, ind_suffix = NULL, exclude = NULL,
                outdir = NULL, inbreed = FALSE) {
-    check_presence(c(A, B, C), prefix, ind)
+    check_presence(c(A, B, C), prefix, ind_suffix)
 
     # get the path to the population, parameter and log files
     setup <- paste0("qp3Pop")
@@ -84,7 +84,7 @@ f3 <- function(A, B, C,
     files <- get_files(outdir, config_prefix)
 
     create_qp3Pop_pop_file(A, B, C, file = files[["pop_file"]])
-    create_par_file(files, prefix, geno, snp, ind, exclude)
+    create_par_file(files, prefix, ind_suffix, exclude)
 
     if (inbreed) {
         write("inbreed: YES", file = files[["par_file"]], append = TRUE)
@@ -108,9 +108,9 @@ f3 <- function(A, B, C,
 #'
 #' @export
 qpAdm <- function(target, references, outgroups,
-                  prefix = NULL, geno = NULL, snp = NULL, ind = NULL,
+                  prefix = NULL, ind_suffix = NULL,
                   exclude = NULL, outdir = NULL) {
-  check_presence(c(target, references, outgroups), prefix, ind)
+  check_presence(c(target, references, outgroups), prefix, ind_suffix)
   
   dplyr::bind_rows(lapply(target, function(X) {
     # get the path to the population, parameter and log files
@@ -123,7 +123,7 @@ qpAdm <- function(target, references, outgroups,
     files[["pop_file"]] <- NULL
   
     create_qpAdm_pop_files(c(X, references), outgroups, files)
-    create_par_file(files, prefix, geno, snp, ind, exclude)
+    create_par_file(files, prefix, ind_suffix, exclude)
     
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
     

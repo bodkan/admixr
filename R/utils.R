@@ -1,7 +1,7 @@
 #' Merge multiple samples/populations under a single label
 #'
-#' @param ind Path to an original ind file.
-#' @param modified_ind Path to a final modified ind file.
+#' @param prefix EIGENSTRAT prefix.
+#' @param ind_suffix Suffix of a modified ind file.
 #' @param labels A named list of labels to merge.
 #'
 #' @examples
@@ -10,16 +10,16 @@
 #' # This will create a new ind file with labels in the 3rd column replaced by
 #' # Europe", "EastAfrica" and "WestAfrica", respectively.
 #' group_labels(
-#'     ind = IND_FILE,
-#'     modified_ind = paste0(IND_FILE, ".merged"),
+#'     prefix = <path_to_eigenstrat>
+#'     ind_suffix = ".populations", # will create ind file '<path_to_eigenstrat>.populations'
 #'     labels = list(Europe = c("French", "Sardinian", "Czech"),
 #'                   WestAfrica = c("Yoruba", "Mende"))
 #' )
 #' }
 #'
 #' @export
-group_labels <- function(ind, modified_ind, labels) {
-  lines <- readLines(ind)
+group_labels <- function(prefix, ind_suffix, labels) {
+  lines <- readLines(paste0(prefix, ".ind"))
 
   # iterate over the lines in the "ind" file, replacing population
   # labels with their substitutes
@@ -28,7 +28,7 @@ group_labels <- function(ind, modified_ind, labels) {
     lines <- stringr::str_replace(lines, regex, merge_into)
   }
 
-  writeLines(lines, modified_ind)
+  writeLines(lines, paste0(prefix, ind_suffix))
 }
 
 
@@ -121,16 +121,13 @@ get_files <- function(dir_name, prefix) {
 
 # Check for the presence of a given set of labels in an 'ind' file.
 # Fail if there a sample was not found.
-check_presence <- function(labels, prefix = NULL, ind = NULL) {
-    if (!is.null(ind)) {
-        path <- ind
-    } else {
-        path <- paste0(prefix, ".ind")
-    }
+check_presence <- function(labels, prefix = NULL, ind_suffix = NULL) {
+    path <- paste0(prefix, ".ind")
+    if (!is.null(ind_suffix)) path <- paste0(path, ind_suffix)
 
     not_present <- setdiff(labels, suppressMessages(read_ind(path)$label))
     if (length(not_present) > 0) {
-        stop("The following samples are not present in '", ind, "': ",
+        stop("The following samples are not present in '", path, "': ",
              paste(not_present, collapse = ", "))
     }
 }

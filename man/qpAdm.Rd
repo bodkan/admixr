@@ -4,8 +4,8 @@
 \alias{qpAdm}
 \title{Calculate ancestry proportions in target populations using qpAdm.}
 \usage{
-qpAdm(target, references, outgroups, prefix = NULL, geno = NULL,
-  snp = NULL, ind = NULL, exclude = NULL, outdir = NULL)
+qpAdm(target, references, outgroups, prefix = NULL, ind_suffix = NULL,
+  exclude = NULL, outdir = NULL)
 }
 \arguments{
 \item{target}{Vector of target populations (evaluated one at a time).}
@@ -16,11 +16,11 @@ qpAdm(target, references, outgroups, prefix = NULL, geno = NULL,
 
 \item{prefix}{An EIGENSTRAT prefix (shared by the geno/snp/ind trio).}
 
-\item{geno, snp, ind}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
-
 \item{exclude}{Path to file in a snp format with SNPs to exclude from the calculation.}
 
 \item{outdir}{Where to put all generated files (temporary directory by default).}
+
+\item{geno, snp, ind}{Paths to individual EIGENSTRAT files. Each overrides the 'prefix' argument.}
 }
 \description{
 Calculate ancestry proportions in target populations using qpAdm.

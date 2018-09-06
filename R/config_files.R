@@ -1,28 +1,15 @@
 # Generate a parameter file.
-create_par_file <- function(files,
-                            prefix = NULL,
-                            geno_file = NULL, snp_file = NULL, ind_file = NULL,
-                            exclude = NULL) {
-    if (all(is.null(c(prefix, geno_file, snp_file, ind_file)))) {
-        stop("EIGENSTRAT prefix geno/snp/ind paths must be specified")
-    }
+create_par_file <- function(files, prefix, ind_suffix = NULL, exclude = NULL) {
+    prefix <- path.expand(prefix)
 
-    # if the user specified EIGENSTRAT prefix, set only paths to unspecified
-    # geno/snp/ind files
-    if (!is.null(prefix)) {
-      prefix <- path.expand(prefix)
-      if (is.null(geno_file)) geno_file <- paste0(prefix, ".geno")
-      if (is.null(snp_file)) snp_file <- paste0(prefix, ".snp")
-      if (is.null(ind_file)) ind_file <- paste0(prefix, ".ind")
-    } else {
-      ind_file <- path.expand(ind_file)
-      snp_file <- path.expand(snp_file)
-      geno_file <- path.expand(geno_file)
-    }
+    geno <- paste0(prefix, ".geno")
+    snp <- paste0(prefix, ".snp")
+    ind <- paste0(prefix, ".ind")
+    # overwrite default ind if user provided an alternative
+    if (!is.null(ind_suffix)) ind <- paste0(ind, ind_suffix)
 
-    writeLines(sprintf("genotypename: %s\nsnpname: %s\nindivname: %s\n",
-                       geno_file, snp_file, ind_file),
-               con = files$par_file)
+    sprintf("genotypename: %s\nsnpname: %s\nindivname: %s\n", geno, snp, ind) %>%
+        writeLines(con = files$par_file)
 
     if (!is.null(files[["pop_file"]])) {
         write(sprintf("popfilename: %s\n", files$pop_file), file = files$par_file, append = TRUE)
@@ -65,6 +52,6 @@ create_qp3Pop_pop_file <- function(A, B, C, file) {
 
 # Generate a file with populations for a qpDstat run.
 create_qpAdm_pop_files <- function(left, right, files) {
-  writeLines(left, files$popleft)
-  writeLines(right, files$popright)
+    writeLines(left, files$popleft)
+    writeLines(right, files$popright)
 }

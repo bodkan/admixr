@@ -87,7 +87,7 @@
             
             <h4 class="date">2018-09-06</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/R/vignettes/tutorial.Rmd"><code>R/vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
 
     </div>
@@ -150,12 +150,12 @@
 <p>As such, all main <code>admixr</code> functions accept a <code>prefix</code> argument, which specifies the path and prefix of all three EIGENSTRAT files (you can still work with individual files if you need to - using <code>ind</code>, <code>snp</code> and <code>geno</code> arguments of each <code>admixr</code> function - but try to avoid that because it makes your code mode verbose).</p>
 <p>Let’s first download a small testing SNP dataset using a built-in <code>admixr</code> function. We will be using this dataset in the rest of this vignette. For our convenience, the function returns a prefix of the whole dataset for future reference. (The function downloads the data into a temporary directory, feel free to change the final destination using it’s <code>dirname</code> parameter).</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">(eigenstrat_prefix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/download_data.html">download_data</a></span>(<span class="dt">dirname =</span> <span class="kw">tempdir</span>()))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] "/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpHGuptX/snps/snps"</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] "/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpvz0ST7/snps/snps"</span></a></code></pre></div>
 <p>We can verify that there are three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">dir</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(eigenstrat_prefix), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpHGuptX/snps/snps.geno"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpHGuptX/snps/snps.ind" </span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpHGuptX/snps/snps.snp"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpvz0ST7/snps/snps.geno"</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [2] "/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpvz0ST7/snps/snps.ind" </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [3] "/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpvz0ST7/snps/snps.snp"</span></a></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
