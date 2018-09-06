@@ -47,10 +47,10 @@ ADMIXTOOLS programs, allowing users to focus on the analysis itself.
 
 **Note (2018/09/06):** This package is currently in the last phase of testing
 and polishing the API before I submit it to [CRAN](https://cran.r-project.org).
-It's mostly stable now and you can definitely use it for your own work, but if
-you decide to use it, please make sure to check back here for instructions on
-how to install the officially released version. You can also follow me on
-[Twitter](https://www.twitter.com/fleventy5) if you want to stay updated.
+You can definitely safely use it for your own work, but please make sure to
+check back here for instructions on how to install the officially released
+version. You can also follow me on [Twitter](https://www.twitter.com/fleventy5)
+if you want to stay updated.
 
 To install `admixr` from Github you need to install the package `devtools`
 first. You can simply run:
