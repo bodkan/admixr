@@ -80,3 +80,38 @@ filter_damage <- function(data, outfile = tempfile()) {
     data
 }
 
+
+
+filter_columns <- function(data, ..., outfile = tempfile()) {
+    filtered_snp <- read_snp(data$snp) %>% dplyr::filter(...)
+    data <- process_filter(data, filtered_snp, outfile)
+    data
+}
+
+
+#' Merge multiple samples/populations under a single label
+#'
+#' @param data EIGENSTRAT trio.
+#' @param labels A named list of labels to merge.
+#' @param outfile Where to write the modified ind file.
+#'
+#' @export
+relabel <- function(data, labels, outfile = tempfile()) {
+  new_lines <- lines <- ifelse(!is.null(data$group), data$group, data$ind) %>% readLines
+
+  # iterate over the lines in the "ind" file, replacing population
+  # labels with their substitutes
+  for (label in names(labels)) {
+    regex <- paste0("(", paste(labels[[label]], collapse = "|"), ")$")
+    new_lines <- stringr::str_replace(new_lines, regex, label)
+  }
+
+  if (!all(new_lines == lines)) {
+      writeLines(new_lines, outfile)
+      data$group <- outfile
+  } else {
+     warning("No labels have been changed")
+  }
+  data
+}
+
