@@ -13,35 +13,8 @@
 #'
 #' @export
 filter_sites <- function(prefix, bed, outsnp, remove = FALSE) {
-    # process BED file
-    dt_bed <- data.table::fread(
-        bed,
-        col.names = c("chrom", "start", "end"),
-        colClasses = c("character", "integer", "integer")
-    )
-    data.table::setkey(dt_bed, chrom, start, end)
 
-    # process SNP file from the prefix
-    snp <- paste0(prefix, ".snp")
-    dt_snp <- read_snp(snp) %>%
-        dplyr::mutate(chrom = as.character(chrom), start = pos - 1, end = pos) %>%
-        data.table::setDT()
-    data.table::setkey(dt_snp, chrom, start, end)                                          
 
-    # get data.table indices of SNPs within/outside given BED regions                   
-    overlap <- data.table::foverlaps(dt_snp, dt_bed, which = TRUE)                            
-    # filter the result based on whether an overlap or a complement is needed           
-    if (remove)                                                                        
-        overlap <- overlap[is.na(overlap$yid), ]                                         
-    else
-        overlap <- overlap[!is.na(overlap$yid), ]
-
-    # extract only those sites passing the filter
-    site_idx <- unique(overlap$xid)
-    if (!length(site_idx)) stop("No sites remaining after the overlap!")
-    snp_subset <- dt_snp[site_idx, ]
-
-    dplyr::select(snp_subset, -c(start, end)) %>% write_snp(outsnp)
 }
 
 
@@ -55,14 +28,4 @@ filter_sites <- function(prefix, bed, outsnp, remove = FALSE) {
 #' @param outsnp Path to an output snp file with coordinates of excluded sites.
 #'
 #' @export
-filter_damage <- function(prefix, outsnp) {
-    read_snp(paste0(prefix, ".snp")) %>%
-        dplyr::filter(
-            (ref == "C" & alt == "T") |
-            (ref == "T" & alt == "C") |
-            (ref == "G" & alt == "A") |
-            (ref == "A" & alt == "G")
-        ) %>%
-        write_snp(outsnp)
-}
 
