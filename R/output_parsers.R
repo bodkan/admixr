@@ -4,14 +4,14 @@ read_output <- function(file) {
   cmd <- readLines(file) %>%
     stringr::str_match("^## (\\w+) version:") %>%
     .[stats::complete.cases(.)] %>% .[2]
-  
+
   parsers <- list(
     qp3Pop = read_qp3Pop,
     qpDstat = read_qpDstat,
     qpF4ratio = read_qpF4ratio,
     qpAdm = read_qpAdm
   )
-  
+
   # it feels a little dumb, re-reading the whole output file a 2nd time,
   # there must be a cleaner way to do this
   as.data.frame(parsers[[cmd]](file))
@@ -20,89 +20,88 @@ read_output <- function(file) {
 
 # Read output log file from a qpF4ratio run.
 read_qpF4ratio <- function(file) {
-    log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
+  log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
 
-    # extract the number of analyzed test populations/individuals
-    # (corresponding to the number of rows of the results table)
-    n_pops <- log_lines[which(stringr::str_detect(log_lines, "^nplist:"))] %>%
-        stringr::str_extract("[0-9]+$") %>%
-        as.integer
+  # extract the number of analyzed test populations/individuals
+  # (corresponding to the number of rows of the results table)
+  n_pops <- log_lines[which(stringr::str_detect(log_lines, "^nplist:"))] %>%
+    stringr::str_extract("[0-9]+$") %>%
+    as.integer
 
-    # parse the lines of the results section and extract the names of
-    # tested populations/individuals, estimated admixture proportions
-    # alpha, std. errors and Z-score
-    res_lines <- log_lines[(length(log_lines) - n_pops) : (length(log_lines) - 1)] %>%
-        stringr::str_replace("result: ", "") %>%
-        stringr::str_replace_all(":", "") %>%
-        stringr::str_replace_all(" +", " ") %>%
-        stringr::str_replace("^ ", "")
+  # parse the lines of the results section and extract the names of
+  # tested populations/individuals, estimated admixture proportions
+  # alpha, std. errors and Z-score
+  res_lines <- log_lines[(length(log_lines) - n_pops) : (length(log_lines) - 1)] %>%
+    stringr::str_replace("result: ", "") %>%
+    stringr::str_replace_all(":", "") %>%
+    stringr::str_replace_all(" +", " ") %>%
+    stringr::str_replace("^ ", "")
 
-    res_df <- res_lines %>%
-        paste0("\n", collapse = "\n") %>%
-        readr::read_delim(delim = " ", col_names = FALSE) %>%
-        stats::setNames(c("A", "O", "X", "C", "A", "O", "B", "C", "alpha", "stderr", "Zscore")) %>%
-        .[c("A", "B", "X", "C", "O", "alpha", "stderr", "Zscore")]
+  res_df <- res_lines %>%
+    paste0("\n", collapse = "\n") %>%
+    readr::read_delim(delim = " ", col_names = FALSE) %>%
+    stats::setNames(c("A", "O", "X", "C", "A", "O", "B", "C", "alpha", "stderr", "Zscore")) %>%
+    .[c("A", "B", "X", "C", "O", "alpha", "stderr", "Zscore")]
 
-    res_df
+  res_df
 }
 
 
 # Read output log file from a qpDstat run.
 read_qpDstat <- function(file) {
-    log_lines <- readLines(file) %>%
-      .[!stringr::str_detect(., "warning")] %>%
-      .[!stringr::str_detect(., "nodata")]
+  log_lines <- readLines(file) %>%
+    .[!stringr::str_detect(., "warning")] %>%
+    .[!stringr::str_detect(., "nodata")]
 
-    # extract the number of analyzed population quadruples
-    n_quads <- length(log_lines) - (which(stringr::str_detect(log_lines, "^nrows, ncols:"))) - 1
+  # extract the number of analyzed population quadruples
+  n_quads <- length(log_lines) - (which(stringr::str_detect(log_lines, "^nrows, ncols:"))) - 1
 
-    # parse the lines of the results section and extract the names of
-    # tested populations/individuals, estimated admixture proportions
-    # alpha, std. errors and Z-score
-    res_lines <- log_lines[(length(log_lines) - n_quads) : (length(log_lines) - 1)] %>%
-        stringr::str_replace("result: ", "") %>%
-        stringr::str_replace_all(" +", " ") %>%
-        stringr::str_replace_all("^ | $", "")
+  # parse the lines of the results section and extract the names of
+  # tested populations/individuals, estimated admixture proportions
+  # alpha, std. errors and Z-score
+  res_lines <- log_lines[(length(log_lines) - n_quads) : (length(log_lines) - 1)] %>%
+    stringr::str_replace("result: ", "") %>%
+    stringr::str_replace_all(" +", " ") %>%
+    stringr::str_replace_all("^ | $", "")
 
-    result_col <- ifelse(any(stringr::str_detect(log_lines, "f4mode: YES")), "f4", "D")
+  result_col <- ifelse(any(stringr::str_detect(log_lines, "f4mode: YES")), "f4", "D")
 
-    raw_cols <- res_lines %>%
-        paste0("\n", collapse = "\n") %>%
-        readr::read_delim(delim = " ", col_names = FALSE)
+  raw_cols <- res_lines %>%
+    paste0("\n", collapse = "\n") %>%
+    readr::read_delim(delim = " ", col_names = FALSE)
 
-    # remove the weird "best" column first, then add an optional stderr column
-    # (if it's present)
-    res_df <-
-      raw_cols[, !sapply(raw_cols,
-                         function(col) any(stringr::str_detect(col, "best")))] %>%
-      {
-        stats::setNames(., c("W", "X", "Y", "Z", result_col,
-                      if (ncol(.) > 9) { "stderr" } else{ NULL },
-                     "Zscore", "BABA", "ABBA", "nsnps"))
-      }
+  # remove the weird "best" column first, then add an optional stderr column
+  # (if it's present)
+  res_df <-
+    raw_cols[, !sapply(raw_cols, function(col) any(stringr::str_detect(col, "best")))] %>%
+    {
+      stats::setNames(., c("W", "X", "Y", "Z", result_col,
+                           if (ncol(.) > 9) { "stderr" } else{ NULL },
+                           "Zscore", "BABA", "ABBA", "nsnps"))
+    }
 
-    res_df
+  res_df
 }
 
 
 # Read output log file from a qp3Pop run.
 read_qp3Pop <- function(file) {
-    log_lines <- readLines(file)
+  log_lines <- readLines(file)
 
-    # parse the lines of the results section and extract the names of
-    # tested populations/individuals, estimated admixture proportions
-    # alpha, std. errors and Z-score
-    res_lines <- log_lines[stringr::str_detect(log_lines, "result:")] %>%
-        stringr::str_replace("result: ", "") %>%
-        stringr::str_replace_all(" +", " ") %>%
-        stringr::str_replace_all("^ | $", "")
+  # parse the lines of the results section and extract the names of
+  # tested populations/individuals, estimated admixture proportions
+  # alpha, std. errors and Z-score
+  res_lines <- log_lines[stringr::str_detect(log_lines, "result:")] %>%
+    stringr::str_replace("result: ", "") %>%
+    stringr::str_replace_all(" +", " ") %>%
+    stringr::str_replace_all("^ | $", "")
 
-    res_df <- res_lines %>%
-        paste0("\n", collapse = "\n") %>%
-        readr::read_delim(delim = " ", col_names = FALSE) %>%
-        stats::setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "nsnps"))
+  res_df <- res_lines %>%
+    paste0("\n", collapse = "\n") %>%
+    readr::read_delim(delim = " ", col_names = FALSE) %>%
+    stats::setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "nsnps"))
 
-    res_df
+  res_df
 }
 
 

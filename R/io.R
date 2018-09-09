@@ -10,8 +10,8 @@
 #'
 #' @export
 read_ind <- function(data) {
-    path <- ifelse(is.null(data$group), data$ind, data$group)
-    readr::read_table2(path, col_names = c("id", "sex", "label"), col_types = "ccc")
+  path <- ifelse(is.null(data$group), data$ind, data$group)
+  readr::read_table2(path, col_names = c("id", "sex", "label"), col_types = "ccc")
 }
 
 
@@ -20,28 +20,28 @@ read_ind <- function(data) {
 #'
 #' @export
 read_snp <- function(data, exclude = FALSE) {
-    readr::read_table2(
-      ifelse(exclude, data$exclude, data$snp),
-      col_names = c("id", "chrom", "gen", "pos", "ref", "alt"),
-      col_types = "ccdicc",
-      progress = FALSE
-    )
+  readr::read_table2(
+    ifelse(exclude, data$exclude, data$snp),
+    col_names = c("id", "chrom", "gen", "pos", "ref", "alt"),
+    col_types = "ccdicc",
+    progress = FALSE
+  )
 }
 
 
 #' @rdname read_ind
 #' @export
 read_geno <- function(data) {
-    ind <- read_ind(data)$id
+  ind <- read_ind(data)$id
 
-    # get the number of samples in the geno file
-    n <- nchar(readLines(data$geno, 1))
-    readr::read_fwf(
-      data$geno,
-      col_positions = readr::fwf_widths(rep(1, n), ind),
-      col_types = readr::cols(.default = "i"),
-      progress = FALSE
-    )
+  # get the number of samples in the geno file
+  n <- nchar(readLines(data$geno, 1))
+  readr::read_fwf(
+    data$geno,
+    col_positions = readr::fwf_widths(rep(1, n), ind),
+    col_types = readr::cols(.default = "i"),
+    progress = FALSE
+  )
 }
 
 
@@ -53,19 +53,20 @@ read_geno <- function(data) {
 #'
 #' @export
 write_ind <- function(df, file) {
-    readr::write_tsv(df, file, col_names = FALSE)
+  readr::write_tsv(df, file, col_names = FALSE)
 }
 
 
 #' @rdname write_ind
 #' @export
 write_snp <- function(df, file) {
-    readr::write_tsv(df, file, col_names = FALSE)
+  readr::write_tsv(df, file, col_names = FALSE)
 }
 
 
 #' @rdname write_ind
 #' @export
 write_geno <- function(df, file) {
-    writeLines(apply(df, 1, paste, collapse = ""), con = file)
+  writeLines(apply(df, 1, paste, collapse = ""), con = file)
 }
+
