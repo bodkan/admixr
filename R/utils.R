@@ -1,37 +1,3 @@
-#' Merge multiple samples/populations under a single label
-#'
-#' @param prefix EIGENSTRAT prefix.
-#' @param ind_suffix Suffix of a modified ind file.
-#' @param labels A named list of labels to merge.
-#'
-#' @examples
-#'
-#' \dontrun{
-#' # This will create a new ind file with labels in the 3rd column replaced by
-#' # Europe", "EastAfrica" and "WestAfrica", respectively.
-#' group_labels(
-#'     prefix = <path_to_eigenstrat>
-#'     ind_suffix = ".populations", # will create ind file '<path_to_eigenstrat>.populations'
-#'     labels = list(Europe = c("French", "Sardinian", "Czech"),
-#'                   WestAfrica = c("Yoruba", "Mende"))
-#' )
-#' }
-#'
-#' @export
-group_labels <- function(prefix, ind_suffix, labels) {
-  lines <- readLines(paste0(prefix, ".ind"))
-
-  # iterate over the lines in the "ind" file, replacing population
-  # labels with their substitutes
-  for (merge_into in names(labels)) {
-    regex <- paste0("(", paste(labels[[merge_into]], collapse = "|"), ")$")
-    lines <- stringr::str_replace(lines, regex, merge_into)
-  }
-
-  writeLines(lines, paste0(prefix, ".ind", ind_suffix))
-}
-
-
 #' Merge two sets of EIGENSTRAT datasets
 #' 
 #' This function utilizes the 'mergeit' command from ADMIXTOOLS.
