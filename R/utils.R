@@ -1,33 +1,34 @@
 #' Merge two sets of EIGENSTRAT datasets
 #' 
-#' This function utilizes the 'mergeit' command from ADMIXTOOLS.
+#' This function utilizes the 'mergeit' command distributed in ADMIXTOOLS.
 #'
-#' @param prefix A prefix of a final merged EIGENSTRAT dataset.
-#' @param input1,input2 Prefixes of two EIGENSTRAT datasets to merge.
+#' @param merged A prefix of a final merged EIGENSTRAT dataset.
+#' @param a,b Prefixes of two EIGENSTRAT datasets to merge.
 #' @param strandcheck Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.
 #'
 #' @export
-merge_eigenstrat <- function(prefix, input1, input2, strandcheck = "NO") {
+merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
   parfile <- tempfile()
   paste0(
     "outputformat: EIGENSTRAT\n",
     "strandcheck: ", strandcheck, "\n",
-    "geno1: ", input1, ".geno\n",
-    "snp1: ", input1, ".snp\n",
-    "ind1: ", input1, ".ind\n",
-    "geno2: ", input2, ".geno\n",
-    "snp2: ", input2, ".snp\n",
-    "ind2: ", input2, ".ind\n",
-    "genooutfilename: ", prefix, ".geno\n",
-    "snpoutfilename: ", prefix, ".snp\n",
-    "indoutfilename: ", prefix, ".ind"
+    "geno1: ", a$geno, ".geno\n",
+    "snp1: ", a$snp, ".snp\n",
+    "ind1: ", a$ind, ".ind\n",
+    "geno2: ", b$geno, ".geno\n",
+    "snp2: ", b$snp, ".snp\n",
+    "ind2: ", b$ind, ".ind\n",
+    "genooutfilename: ", merged, ".geno\n",
+    "snpoutfilename: ", merged, ".snp\n",
+    "indoutfilename: ", merged, ".ind"
   ) %>% writeLines(text = ., con = parfile)
 
   return_value <- run_cmd("mergeit", parfile, "/dev/null")
   if (return_value) cat("\nMerge command ended with an error -- see above.\n")
+
+  eigenstrat(merged)
 }
 
-# Filtering functions  --------------------------------------------------
 
 
 #' Count the number/proportion of present/missing sites in each sample
@@ -40,7 +41,7 @@ merge_eigenstrat <- function(prefix, input1, input2, strandcheck = "NO") {
 #'
 #' @export
 #' @import rlang
-count_snps <- function(prefix, missing = FALSE, prop = FALSE) {
+count_snps <- function(data, missing = FALSE, prop = FALSE) {
     fn <- ifelse(prop, mean, sum)
     if (missing) {
         op <- `==`
@@ -49,16 +50,18 @@ count_snps <- function(prefix, missing = FALSE, prop = FALSE) {
         op <- `!=`
         col <- "present"
     }
-    eigenstrat <- read_eigenstrat(prefix)
-    dplyr::summarise_all(eigenstrat$geno, dplyr::funs(fn(op(., 9)))) %>%
+    geno <- read_geno(data)
+    dplyr::summarise_all(geno, dplyr::funs(fn(op(., 9)))) %>%
         tidyr::gather(name, !!col)
 }
+
 
 
 # Run a specified ADMIXTOOLS command.
 run_cmd <- function(cmd, par_file, log_file) {
   system(paste(cmd, "-p", par_file, ">", log_file))
 }
+
 
 
 # Create either specified or a temporary directory.
@@ -73,6 +76,7 @@ get_dir <- function(dir_name = NULL) {
 }
 
 
+
 # Generate paths to the population file, parameter file and log file
 # based on a specified directory.
 get_files <- function(dir_name, prefix) {
@@ -85,24 +89,25 @@ get_files <- function(dir_name, prefix) {
 }
 
 
+
 # Check for the presence of a given set of labels in an 'ind' file.
 # Fail if there a sample was not found.
-check_presence <- function(labels, prefix = NULL, ind_suffix = NULL) {
-    path <- paste0(prefix, ".ind")
-    if (!is.null(ind_suffix)) path <- paste0(path, ind_suffix)
-
-    not_present <- setdiff(labels, suppressMessages(read_ind(path)$label))
+check_presence <- function(labels, data) {
+    not_present <- setdiff(labels, suppressMessages(read_ind(data)$label))
     if (length(not_present) > 0) {
-        stop("The following samples are not present in '", path, "': ",
+        stop("The following samples are not present in the data': ",
              paste(not_present, collapse = ", "))
     }
 }
 
 
-# Look for path to the ADMIXTOOLS directory.
+
+# Get path to the ADMIXTOOLS directory.
 admixtools_path <- function() {
   system("which qpDstat", intern = TRUE) %>% stringr::str_replace("/bin.*", "")
 }
+
+
 
 #' Download example SNP data.
 #'
@@ -120,6 +125,7 @@ download_data <- function(dirname = tempdir()) {
     system(paste0("cd ", dirname, "; tar xf ", dest, "; rm snps.tgz"))
     file.path(dirname, "snps", "snps")
 }
+
 
 
 #' Pipe operator

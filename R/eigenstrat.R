@@ -1,3 +1,16 @@
+#' EIGENSTRAT data constructor
+#'
+#' Construct an EIGENSTRAT S3 object from a specified path to the ind/snp/geno
+#' trio.
+#'
+#' The EIGENSTRAT data S3 object encapsulates all paths to data files required
+#' for an analysis.
+#'
+#' @param prefix Shared path to an EIGENSTRAT trio (set of ind/snp/geno files).
+#'
+#' @return S3 object of a class EIGENSTRAT
+#'
+#' @export
 eigenstrat <- function(prefix) {
     prefix <- path.expand(prefix)
     data <- list(
@@ -7,55 +20,56 @@ eigenstrat <- function(prefix) {
         group = NULL,
         exclude = NULL
     )
-    class(data) <- "eigenstrat"
+    class(data) <- "EIGENSTRAT"
     data
 }
 
-print.eigenstrat <- function(.data) {
+
+
+#' EIGENSTRAT print method
+#'
+#' Print EIGENSTRAT object components.
+#'
+#' @param data EIGENSTRAT data object.
+#'
+#' @export
+print.EIGENSTRAT <- function(data) {
     cat(paste(
         "EIGENSTRAT data\n===============",
-        "\nind path:", .data$ind, 
-        "\nsnp path:", .data$snp, 
-        "\ngeno path:", .data$geno,
+        "\nind path:", data$ind, 
+        "\nsnp path:", data$snp, 
+        "\ngeno path:", data$geno,
         "\n\nmodifiers:",
-        "\nlabels:", ifelse(is.null(.data$group), "none", .data$group),
-        "\nexclude:", ifelse(is.null(.data$exclude), "none", .data$exclude),
+        "\nlabels:", ifelse(is.null(data$group), "none", data$group),
+        "\nexclude:", ifelse(is.null(data$exclude), "none", data$exclude),
         "\n"
     ))
 }
 
-process_filter <- function(data, exclude, outfile) {
-    # read a table of previously excluded sites, if present
-    if (!is.null(data$exclude)) {
-        prev_exclude <- read_snp(data$exclude) %>% data.table::setDT()
-    } else {
-        prev_exclude <- NULL
-    }
-
-    # generate a combined set of sites to exclude
-    exclude <- rbind(exclude, prev_exclude) %>% unique(., by = c("chrom", "pos"))
-    if (nrow(exclude) < nrow(read_snp(data$snp))) {
-        write_snp(exclude, outfile)
-        data$exclude <- path.expand(outfile)
-    } else {
-        stop("No sites remaining after the filtering.", call. = FALSE)
-    }
-    data
-}
 
 
-# read_snp(eigenstrat("all_bigyri_YRI")$snp) %>% sample_n(15) %>% arrange(as.integer(chrom), pos) %>% mutate(start = pos - 1, end = pos) %>% select(chrom, start, end) %>% write_tsv("sites.bed", col_names=F)
+#' Filter EIGENSTRAT data based on a given BED file
+#'
+#' Keep (or discard) SNPs that overlap (or lie outside of) regions in a given
+#' BED file.
+#'
+#' @param data EIGENSTRAT data object.
+#' @param bed Path to a BED file.
+#' @param remove Remove sites falling inside the BED file regions? By default,
+#'     sites that do not overlap BED regions are removed.
+#' @param outfile Path to an output snp file with coordinates of excluded sites.
+#'
+#' @return Updated S3 EIGENSTRAT data object.
+#'
+#' @export
 filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile()) {
     # process BED file
-    bed <- data.table::fread(
-        bed,
-        col.names = c("chrom", "start", "end"),
-        colClasses = c("character", "integer", "integer")
-    )
+    bed <- data.table::fread(bed, col.names = c("chrom", "start", "end"),
+                             colClasses = c("character", "integer", "integer"))
     data.table::setkey(bed, chrom, start, end)
 
     # process SNP file from the prefix
-    snp <- read_snp(data$snp) %>% dplyr::mutate(start = pos - 1, end = pos) %>% data.table::setDT()
+    snp <- read_snp(data) %>% dplyr::mutate(start = pos - 1, end = pos) %>% data.table::setDT()
 
     # get data.table indices of SNPs within/outside given BED regions
     overlap <- data.table::foverlaps(snp, bed, which = TRUE)
@@ -75,27 +89,47 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile()) {
     data
 }
 
-filter_damage <- function(data, outfile = tempfile()) {
-    filtered_snp <- read_snp(data$snp) %>%
+
+
+#' Filter out transitions (C->T and G->A substitutions)
+#'
+#' Remove substitutions that are more likely to be a result of ancient DNA
+#' damage (C->T and G->A substitutions).
+#'
+#' @param data EIGENSTRAT data object.
+#' @param outfile Path to an output snp file with coordinates of excluded sites.
+#'
+#' @return Updated S3 EIGENSTRAT data object with an additional 'exclude' slot
+#'     specifying the path to the set of SNPs to be removed from a downstream
+#'     analysis.
+#'
+#' @export
+remove_transitions <- function(data, outfile = tempfile()) {
+    exclude <- read_snp(data) %>%
         dplyr::filter(
             (ref == "C" & alt == "T") |
             (ref == "T" & alt == "C") |
             (ref == "G" & alt == "A") |
             (ref == "A" & alt == "G")
         )
-    data <- process_filter(data, filtered_snp, outfile)
+    data <- process_filter(data, exclude, outfile)
     data
 }
 
 
 
-#' Change labels of several populations or samples
+#' Change labels of populations or samples
 #'
-#' Create a modified EIGENSTRAT ind file with changed population labels.
+#' Replace population/sample names with specified group labels.
 #'
 #' @param data EIGENSTRAT trio.
-#' @param labels A named list of labels to merge.
-#' @param outfile Where to write the modified ind file.
+#' @param labels A named list of labels to merge (each new group defined as a
+#'     character vector).
+#' @param outfile Path to an output snp file with coordinates of excluded sites.
+#'
+#' @return Updated S3 EIGENSTRAT data object with an additional 'group' slot
+#'     specifying the path to a new ind file that will be used in downstream
+#'     analysis.
 #'
 #' @export
 relabel <- function(data, labels, outfile = tempfile()) {
@@ -119,11 +153,40 @@ relabel <- function(data, labels, outfile = tempfile()) {
 
 
 
-#' Reset modifications to an EIGENSTRAT data
+#' Reset modifications to an EIGENSTRAT object
 #'
+#' Set 'exclude' and 'group' modifications of snp and ind files, respectively,
+#' to NULL.
+#'
+#' @param data EIGENSTRAT data object.
+#' @return EIGENSTRAT data S3 object.
+#'
+#' @export
 reset <- function(data) {
     data$group <- NULL
     data$exclude <- NULL
+    data
+}
+
+
+
+# Process the result of SNP filtering and return an updated S3 object
+process_filter <- function(data, exclude, outfile) {
+    # read a table of previously excluded sites, if present
+    if (!is.null(data$exclude)) {
+        prev_exclude <- read_snp(data, exclude = TRUE) %>% data.table::setDT()
+    } else {
+        prev_exclude <- NULL
+    }
+
+    # generate a combined set of sites to exclude
+    exclude <- rbind(exclude, prev_exclude) %>% unique(., by = c("chrom", "pos"))
+    if (nrow(exclude) < nrow(read_snp(data))) {
+        write_snp(exclude, outfile)
+        data$exclude <- path.expand(outfile)
+    } else {
+        stop("No sites remaining after the filtering.", call. = FALSE)
+    }
     data
 }
 

@@ -1,12 +1,9 @@
 # Generate a parameter file.
-create_par_file <- function(files, prefix, ind_suffix = NULL, exclude = NULL) {
-    prefix <- path.expand(prefix)
-
-    geno <- paste0(prefix, ".geno")
-    snp <- paste0(prefix, ".snp")
-    ind <- paste0(prefix, ".ind")
-    # overwrite default ind if user provided an alternative
-    if (!is.null(ind_suffix)) ind <- paste0(ind, ind_suffix)
+create_par_file <- function(files, data) {
+    geno <- data$geno
+    snp <- data$snp
+    ind <- ifelse(is.null(data$group), data$ind, data$group)
+    exclude <- data$exclude
 
     sprintf("genotypename: %s\nsnpname: %s\nindivname: %s\n", geno, snp, ind) %>%
         writeLines(con = files$par_file)

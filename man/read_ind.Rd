@@ -6,14 +6,16 @@
 \alias{read_geno}
 \title{Read an EIGENSTRAT ind/snp/geno file.}
 \usage{
-read_ind(file)
+read_ind(data)
 
-read_snp(file)
+read_snp(data, exclude = FALSE)
 
-read_geno(file)
+read_geno(data)
 }
 \arguments{
-\item{file}{Path to a file.}
+\item{data}{EIGENSTRAT data object.}
+
+\item{exclude}{Read the list of excluded SNPs?}
 }
 \value{
 A data.frame object.
