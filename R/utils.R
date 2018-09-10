@@ -1,36 +1,3 @@
-#' Merge two sets of EIGENSTRAT datasets
-#' 
-#' This function utilizes the 'mergeit' command distributed in ADMIXTOOLS.
-#'
-#' @param merged A final EIGENSTRAT data object.
-#' @param a,b Two EIGENSTRAT datasets to merge.
-#' @param strandcheck Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.
-#'
-#' @export
-merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
-  parfile <- tempfile()
-  paste0(
-   "outputformat: EIGENSTRAT\n",
-    "strandcheck: ", strandcheck, "\n",
-    "geno1: ", a$geno, ".geno\n",
-    "snp1: ", a$snp, ".snp\n",
-    "ind1: ", a$ind, ".ind\n",
-    "geno2: ", b$geno, ".geno\n",
-    "snp2: ", b$snp, ".snp\n",
-    "ind2: ", b$ind, ".ind\n",
-    "genooutfilename: ", merged, ".geno\n",
-    "snpoutfilename: ", merged, ".snp\n",
-    "indoutfilename: ", merged, ".ind"
-  ) %>% writeLines(text = ., con = parfile)
-
-  return_value <- run_cmd("mergeit", parfile, "/dev/null")
-  if (return_value) cat("\nMerge command ended with an error -- see above.\n")
-
-  eigenstrat(merged)
-}
-
-
-
 #' Count the number/proportion of present/missing sites in each sample
 #'
 #' @param data EIGENSTRAT data object.
