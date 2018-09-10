@@ -19,10 +19,10 @@ read_pops <- function(filename, columns) {
 # f3 ----------------------------------------------------------------------
 
 test_that("qp3Pop wrapper produces correct results", {
-  prefix <- file.path(data_dir, "allmap")
+  data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
   expect_equal(
-    f3(A = pops$A, B = pops$B, C = pops$C, prefix = prefix),
+    f3(A = pops$A, B = pops$B, C = pops$C, data = data),
     read_output(file.path(examples_dir, "test_qp3Pop.log"))
   )
 })
@@ -30,10 +30,10 @@ test_that("qp3Pop wrapper produces correct results", {
 # D -----------------------------------------------------------------------
 
 test_that("qpDstat wrapper produces correct results (4 population input version)", {
-  prefix <- file.path(data_dir, "allmap")
+  data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
   expect_equal(
-    dplyr::select(d(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, prefix = prefix), -stderr),
+    dplyr::select(d(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, data = data), -stderr),
     read_output(file.path(examples_dir, "test_qpDstat1.log"))
   )
 })
@@ -41,7 +41,7 @@ test_that("qpDstat wrapper produces correct results (4 population input version)
 # f4-ratio ----------------------------------------------------------------
 
 test_that("qpF4ratio wrapper produces correct results", {
-  prefix <- file.path(data_dir, "allmap")
+  data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- readLines(file.path(examples_dir, "list_qpF4ratio")) %>%
     stringr::str_replace_all(" :+ ", " ") %>%
     stringr::str_replace_all("\\s+", " ") %>%
@@ -55,7 +55,7 @@ test_that("qpF4ratio wrapper produces correct results", {
     dplyr::bind_rows(lapply(seq_len(nrow(pops)), function(i) {
       f4ratio(
         X = pops$X[i], A = pops$A[i], B = pops$B[i], C = pops$C[i], O = pops$O[i],
-        prefix = prefix
+        data = data
       )
     })),
     read_output(file.path(examples_dir, "test_qpF4ratio.log"))
@@ -65,12 +65,12 @@ test_that("qpF4ratio wrapper produces correct results", {
 # qpAdm -------------------------------------------------------------------
 
 test_that("qpAdm wrapper produces correct results", {
-  prefix <- file.path(data_dir, "qpdata")
+  data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
   right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
     stringr::str_subset("^[^#]")
   expect_equal(
-    qpAdm(target = left[1], references = left[-1], outgroups = right, prefix = prefix),
+    qpAdm(target = left[1], references = left[-1], outgroups = right, data = data),
     read_output(file.path(examples_dir, "test_qpAdm.log"))
   )
 })

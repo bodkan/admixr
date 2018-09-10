@@ -12,16 +12,18 @@
 #'
 #' @export
 eigenstrat <- function(prefix) {
-    prefix <- path.expand(prefix)
-    data <- list(
-        ind = paste0(prefix, ".ind"),
-        snp = paste0(prefix, ".snp"),
-        geno = paste0(prefix, ".geno"),
-        group = NULL,
-        exclude = NULL
-    )
-    class(data) <- "EIGENSTRAT"
-    data
+  prefix <- path.expand(prefix)
+  data <- list(
+    ind = paste0(prefix, ".ind"),
+    snp = paste0(prefix, ".snp"),
+    geno = paste0(prefix, ".geno"),
+    group = NULL,
+    exclude = NULL
+  )
+  if (!all(sapply(paste0(prefix, c(".ind", ".snp", ".geno")), file.exists)))
+    stop("Not all three ind/snp/geno files present", .call = FALSE)
+  class(data) <- "EIGENSTRAT"
+  data
 }
 
 
@@ -34,21 +36,53 @@ eigenstrat <- function(prefix) {
 #'
 #' @export
 print.EIGENSTRAT <- function(data) {
-    cat(paste(
-        "EIGENSTRAT data\n===============",
-        "\nind path:", data$ind, 
-        "\nsnp path:", data$snp, 
-        "\ngeno path:", data$geno,
-        "\n\nmodifiers:",
-        "\nlabels:", ifelse(is.null(data$group), "none", data$group),
-        "\nexclude:", ifelse(is.null(data$exclude),
-                             "none",
-                             paste0(data$exclude,
-                                    "\n    (",
-                                    nrow(read_snp(data, exclude = TRUE)),
-                                    " SNPs will be excluded)")),
-        "\n"
-    ))
+  cat(paste(
+    "EIGENSTRAT data\n",
+    "===============",
+    "\nind path:", data$ind, 
+    "\nsnp path:", data$snp, 
+    "\ngeno path:", data$geno,
+    "\n\nmodifiers:",
+    "\nlabels:", ifelse(is.null(data$group), "none", data$group),
+    "\nexclude:", ifelse(is.null(data$exclude),
+                        "none",
+                        paste0(data$exclude,
+                               "\n    (",
+                               nrow(read_snp(data, exclude = TRUE)),
+                               " SNPs will be excluded)")), "\n"))
+}
+
+
+
+#' Merge two sets of EIGENSTRAT datasets
+#' 
+#' This function utilizes the 'mergeit' command distributed in ADMIXTOOLS.
+#'
+#' @param merged Prefix of the final merged EIGENSTRAT object.
+#' @param a,b Two EIGENSTRAT datasets to merge.
+#' @param strandcheck Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.
+#'
+#' @export
+merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
+  parfile <- tempfile()
+  paste0(
+    "outputformat: EIGENSTRAT\n",
+    "strandcheck: ", strandcheck, "\n",
+    "geno1: ", a$geno, "\n",
+    "snp1: ", a$snp, "\n",
+    "ind1: ", a$ind, "\n",
+    "geno2: ", b$geno, "\n",
+    "snp2: ", b$snp, "\n",
+    "ind2: ", b$ind, "\n",
+    "genooutfilename: ", merged, ".geno\n",
+    "snpoutfilename: ", merged, ".snp\n",
+    "indoutfilename: ", merged, ".ind"
+  ) %>% writeLines(text = ., con = parfile)
+
+  return_value <- run_cmd("mergeit", parfile, "/dev/null")
+  if (return_value) cat("\nMerge command ended with an error -- see above.\n")
+
+  eigenstrat(merged)
 }
 
 
@@ -68,30 +102,30 @@ print.EIGENSTRAT <- function(data) {
 #'
 #' @export
 filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile()) {
-    # process BED file
-    bed <- data.table::fread(bed, col.names = c("chrom", "start", "end"),
-                             colClasses = c("character", "integer", "integer"))
-    data.table::setkey(bed, chrom, start, end)
+  # process BED file
+  bed <- data.table::fread(bed, col.names = c("chrom", "start", "end"),
+                           colClasses = c("character", "integer", "integer"))
+  data.table::setkey(bed, chrom, start, end)
 
-    # process SNP file from the prefix
-    snp <- read_snp(data) %>% dplyr::mutate(start = pos - 1, end = pos) %>% data.table::setDT()
+  # process SNP file from the prefix
+  snp <- read_snp(data) %>% dplyr::mutate(start = pos - 1, end = pos) %>% data.table::setDT()
 
-    # get data.table indices of SNPs within/outside given BED regions
-    overlap <- data.table::foverlaps(snp, bed, which = TRUE)
-    # filter the result based on whether an overlap or a complement is needed
-    if (remove) {
-        overlap <- overlap[!is.na(overlap$yid), ]
-    } else {
-        overlap <- overlap[is.na(overlap$yid), ]
-    }
+  # get data.table indices of SNPs within/outside given BED regions
+  overlap <- data.table::foverlaps(snp, bed, which = TRUE)
+  # filter the result based on whether an overlap or a complement is needed
+  if (remove) {
+    overlap <- overlap[is.na(overlap$yid), ]
+  } else {
+    overlap <- overlap[!is.na(overlap$yid), ]
+  }
 
-    # extract only those sites passing the filter
-    site_idx <- unique(overlap$xid)
-    exclude <- snp[site_idx, ] %>% dplyr::select(-c(start, end))
+  # extract only those sites passing the filter
+  site_idx <- unique(overlap$yid)
+  exclude <- snp[site_idx, ] %>% dplyr::select(-c(start, end))
 
-    # modify the eigenstrat object and return it
-    data <- process_filter(data, exclude, outfile)
-    data
+  # modify the eigenstrat object and return it
+  data <- process_filter(data, exclude, outfile)
+  data
 }
 
 
@@ -110,15 +144,15 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile()) {
 #'
 #' @export
 remove_transitions <- function(data, outfile = tempfile()) {
-    exclude <- read_snp(data) %>%
-        dplyr::filter(
-            (ref == "C" & alt == "T") |
-            (ref == "T" & alt == "C") |
-            (ref == "G" & alt == "A") |
-            (ref == "A" & alt == "G")
-        )
-    data <- process_filter(data, exclude, outfile)
-    data
+  exclude <- read_snp(data) %>%
+    dplyr::filter(
+                  (ref == "C" & alt == "T") |
+                    (ref == "T" & alt == "C") |
+                    (ref == "G" & alt == "A") |
+                    (ref == "A" & alt == "G")
+                  )
+  data <- process_filter(data, exclude, outfile)
+  data
 }
 
 
@@ -148,10 +182,10 @@ relabel <- function(data, labels, outfile = tempfile()) {
   }
 
   if (!all(new_lines == lines)) {
-      writeLines(new_lines, outfile)
-      data$group <- outfile
+    writeLines(new_lines, outfile)
+    data$group <- outfile
   } else {
-     warning("No labels have been changed")
+    warning("No labels have been changed")
   }
   data
 }
@@ -168,30 +202,30 @@ relabel <- function(data, labels, outfile = tempfile()) {
 #'
 #' @export
 reset <- function(data) {
-    data$group <- NULL
-    data$exclude <- NULL
-    data
+  data$group <- NULL
+  data$exclude <- NULL
+  data
 }
 
 
 
 # Process the result of SNP filtering and return an updated S3 object
 process_filter <- function(data, exclude, outfile) {
-    # read a table of previously excluded sites, if present
-    if (!is.null(data$exclude)) {
-        prev_exclude <- read_snp(data, exclude = TRUE) %>% data.table::setDT()
-    } else {
-        prev_exclude <- NULL
-    }
+  # read a table of previously excluded sites, if present
+  if (!is.null(data$exclude)) {
+    prev_exclude <- read_snp(data, exclude = TRUE) %>% data.table::setDT()
+  } else {
+    prev_exclude <- NULL
+  }
 
-    # generate a combined set of sites to exclude
-    exclude <- rbind(exclude, prev_exclude) %>% unique(., by = c("chrom", "pos"))
-    if (nrow(exclude) < nrow(read_snp(data))) {
-        write_snp(exclude, outfile)
-        data$exclude <- path.expand(outfile)
-    } else {
-        stop("No sites remaining after the filtering.", call. = FALSE)
-    }
-    data
+  # generate a combined set of sites to exclude
+  exclude <- rbind(exclude, prev_exclude) %>% unique(., by = c("chrom", "pos"))
+  if (nrow(exclude) < nrow(read_snp(data))) {
+    write_snp(exclude, outfile)
+    data$exclude <- path.expand(outfile)
+  } else {
+    stop("No sites remaining after the filtering.", call. = FALSE)
+  }
+  data
 }
 

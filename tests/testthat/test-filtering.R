@@ -1,45 +1,50 @@
 context("Filtering of sites")
 
-prefix <- file.path(admixtools_path(), "convertf", "example")
-snp <- paste0(prefix, ".snp")
+data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
 
-write_bed <- function(snp, bed) {
-    read_snp(snp) %>%
+read_snp_file <- function(path) {
+  readr::read_table2(
+    path,
+    col_types = "ccdicc",
+    col_names = c("id", "chrom", "gen", "pos", "ref", "alt")
+  )
+}
+
+snp_to_bed <- function(snp, bed) {
+  read_snp_file(snp) %>%
         dplyr::mutate(start = pos - 1, end = pos) %>%
         dplyr::select(chrom, start, end) %>%
         readr::write_tsv(bed, col_names = FALSE)
 }
 
-test_that("filter_sites correctly handles complete overlap", {
-    # create a BED file that has the same positions as the original EIGENSTRAT
-    bed <- tempfile()
-    write_bed(snp, bed)
-
-    # generate a "subset" based on that BED file
-    output <- tempfile()
-    filter_sites(prefix, bed, output)
-
-    # verify that both EIGENSTRAT datasets are the same
-    orig_snp <- read_snp(snp)
-    output_snp <- read_snp(output)
-    expect_equal(orig_snp, output_snp)
-})
-
 test_that("filter_sites correctly fails at no overlap", {
     # create a BED file that has the same positions as the original EIGENSTRAT
     bed <- tempfile()
-    write_bed(snp, bed)
+    snp_to_bed(data$snp, bed)
 
     # verify that no overlaps leads to error
-    expect_error(filter_sites(prefix, bed, "blah", remove = TRUE))
+    expect_error(filter_bed(data, bed))
+})
+
+test_that("filter_sites correctly handles complete overlap", {
+    # create a BED file that has the same positions as the original EIGENSTRAT
+    bed <- tempfile()
+    snp_to_bed(data$snp, bed)
+
+    # generate a "subset" based on that BED file
+    output <- tempfile()
+    new_data <- filter_bed(data = data, bed = bed, remove = TRUE)
+
+    # verify that both EIGENSTRAT datasets are the same
+    expect_true(nrow(read_snp_file(new_data$exclude)) == 0)
 })
 
 test_that("Overlap returns a correct number of sites", {
-    snp <- read_snp(snp)
+    snp <- read_snp_file(data$snp)
 
     # resample a BED file a number of times, verifying that we get the correct
     # number of sites after the overlap operation
-    successes <- sapply(seq_len(nrow(snp)), function(n) {
+    successes <- sapply(seq_len(nrow(snp) - 1), function(n) {
         # create a BED file that has a subset of sites from the original snp file
         bed <- tempfile()
         snp %>%
@@ -49,11 +54,9 @@ test_that("Overlap returns a correct number of sites", {
           dplyr::arrange() %>%
           readr::write_tsv(bed, col_names = FALSE)
         # generate a "subset" based on thad BED file
-        output <- tempfile()
-        filter_sites(prefix, bed, output)
-        output_snp <- read_snp(output)
+        new_data <- filter_bed(data, bed)
 
-        nrow(output_snp) == n
+        nrow(read_snp_file(new_data$exclude)) == n
     })
     expect_true(all(successes))
 })

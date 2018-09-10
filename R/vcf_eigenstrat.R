@@ -11,7 +11,7 @@
 #' bgzip and tabix commands in $PATH.
 #'
 #' @param vcf Path to a VCF file.
-#' @param data EIGENSTRAT data object.
+#' @param eigenstrat EIGENSTRAT data object.
 #' @param compress Compress the VCF with bgzip?
 #' @param index Index the VCF with tabix?
 #'
@@ -34,9 +34,9 @@ vcf_to_eigenstrat <- function(vcf, eigenstrat) {
     dplyr::mutate_all(gt_to_eigenstrat)
 
   # write all three EIGENSTRAT files
-  readr::write_tsv(eigenstrat$snp, paste0(prefix, ".snp"), col_names = FALSE)
-  readr::write_tsv(eigenstrat$ind, paste0(prefix, ".ind"), col_names = FALSE)
-  writeLines(apply(eigenstrat$geno, 1, paste, collapse = ""), paste0(prefix, ".geno"))
+  readr::write_tsv(snp, eigenstrat$snp, col_names = FALSE)
+  readr::write_tsv(ind, eigenstrat$ind, col_names = FALSE)
+  writeLines(apply(geno, 1, paste, collapse = ""), eigenstrat$geno)
 }
 
 
