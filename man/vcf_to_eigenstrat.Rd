@@ -12,11 +12,11 @@ eigenstrat_to_vcf(eigenstrat, vcf, compress = TRUE, index = TRUE)
 \arguments{
 \item{vcf}{Path to a VCF file.}
 
+\item{eigenstrat}{EIGENSTRAT data object.}
+
 \item{compress}{Compress the VCF with bgzip?}
 
 \item{index}{Index the VCF with tabix?}
-
-\item{data}{EIGENSTRAT data object.}
 }
 \description{
 These functions parse input in either VCF or EIGENSTRAT format and convert it.
