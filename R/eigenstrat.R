@@ -41,7 +41,12 @@ print.EIGENSTRAT <- function(data) {
         "\ngeno path:", data$geno,
         "\n\nmodifiers:",
         "\nlabels:", ifelse(is.null(data$group), "none", data$group),
-        "\nexclude:", ifelse(is.null(data$exclude), "none", data$exclude),
+        "\nexclude:", ifelse(is.null(data$exclude),
+                             "none",
+                             paste0(data$exclude,
+                                    "\n    (",
+                                    nrow(read_snp(data, exclude = TRUE)),
+                                    " SNPs will be excluded)")),
         "\n"
     ))
 }
