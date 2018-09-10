@@ -7,11 +7,11 @@
 count_snps(data, missing = FALSE, prop = FALSE)
 }
 \arguments{
+\item{data}{EIGENSTRAT data object.}
+
 \item{missing}{Count present SNPs or missing SNPs?}
 
 \item{prop}{Calculate the proportion instead of counts?}
-
-\item{prefix}{An EIGENSTRAT prefix.}
 }
 \value{
 A data.frame object with SNP counts/proportions.

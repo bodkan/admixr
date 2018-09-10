@@ -7,9 +7,9 @@
 merge_eigenstrat(merged, a, b, strandcheck = "NO")
 }
 \arguments{
-\item{merged}{A prefix of a final merged EIGENSTRAT dataset.}
+\item{merged}{A final EIGENSTRAT data object.}
 
-\item{a, b}{Prefixes of two EIGENSTRAT datasets to merge.}
+\item{a, b}{Two EIGENSTRAT datasets to merge.}
 
 \item{strandcheck}{Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.}
 }

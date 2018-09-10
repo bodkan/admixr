@@ -5,18 +5,18 @@
 \alias{eigenstrat_to_vcf}
 \title{Conversion between VCF and EIGENSTRAT file formats}
 \usage{
-vcf_to_eigenstrat(vcf, prefix)
+vcf_to_eigenstrat(vcf, eigenstrat)
 
-eigenstrat_to_vcf(prefix, vcf, compress = TRUE, index = TRUE)
+eigenstrat_to_vcf(eigenstrat, vcf, compress = TRUE, index = TRUE)
 }
 \arguments{
 \item{vcf}{Path to a VCF file.}
 
-\item{prefix}{EIGENSTRAT geno/snp/ind output prefix.}
-
 \item{compress}{Compress the VCF with bgzip?}
 
 \item{index}{Index the VCF with tabix?}
+
+\item{data}{EIGENSTRAT data object.}
 }
 \description{
 These functions parse input in either VCF or EIGENSTRAT format and convert it.
