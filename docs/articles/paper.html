@@ -85,7 +85,7 @@
       <h1>admixr - paper</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/R/vignettes/paper.Rmd"><code>R/vignettes/paper.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/vignettes/paper.Rmd"><code>vignettes/vignettes/paper.Rmd</code></a></small>
       <div class="hidden name"><code>paper.Rmd</code></div>
 
     </div>
@@ -113,12 +113,13 @@
 <p><span class="math display">\[f_4(\textrm{Altai}, \textrm{Chimp}; \textrm{X}, \textrm{Mbuti}) /
   f_4(\textrm{Altai}, \textrm{Chimp}; \textrm{Vindija}, \textrm{Mbuti}),\]</span></p>
 <p>that is, to estimate the proportion of Neandertal ancestry in a set of individuals <span class="math inline">\(X\)</span>, the user needs to create parameter files and population list files, tailored for this specific analysis, run the <code>qpF4ratio</code> program on the command-line, and to parse the log file to obtain relevant information (see Supplementary Information for an example of performing the complete analysis using a traditional ADMIXTOOLS command-line-based workflow). Note that changing the analysis setup in a slightly different way or including a different set of samples requires re-generating all files again.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eigenstrat.html">eigenstrat</a></span>(<span class="kw"><a href="../reference/download_data.html">download_data</a></span>())</a></code></pre></div>
 <p>In contrast, the same analysis using the <em>admixr</em> package can be performed using just a single R command:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="dt">X =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Yoruba"</span>),</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="dt">A =</span> <span class="st">"Altai"</span>, <span class="dt">B =</span> <span class="st">"Vindija"</span>, <span class="dt">C =</span> <span class="st">"Mbuti"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>,</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="dt">prefix =</span> path_to_eigenstrat</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="dt">X =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Yoruba"</span>),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">A =</span> <span class="st">"Altai"</span>, <span class="dt">B =</span> <span class="st">"Vindija"</span>, <span class="dt">C =</span> <span class="st">"Mbuti"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">data =</span> snp_data</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">)</a></code></pre></div>
 <p>Internally, this code generates all necessary configuration files, runs the <code>qpF4ratio</code> command, parses the output file, and presents the user with the following R <code>data.frame</code> object for further statistical analysis an plotting:</p>
 <table class="table">
 <thead><tr class="header">
@@ -181,11 +182,11 @@
 <a href="#additional-functionality" class="anchor"></a>Additional functionality</h2>
 <p>The fact that ADMIXTOOLS requires data to be in a peculiar EIGENSTRAT file format makes data processing and filtering can be challenging because this format is not supported by most of the standard bioinformatic tools. To simplify handling and processing of EIGENSTRAT datasets, <em>admixr</em> implements a set of complementary functions that can be useful during data-preparation:</p>
 <ul>
-<li>Filtering of SNP data based on a given BED file — <code><a href="../reference/filter_sites.html">filter_sites()</a></code>.</li>
-<li>Filtering out potential ancient DNA damage substitutions — <code><a href="../reference/filter_damage.html">filter_damage()</a></code>.</li>
+<li>Filtering of SNP data based on a given BED file — <code>filter_sites()</code>.</li>
+<li>Filtering out potential ancient DNA damage substitutions — <code>filter_damage()</code>.</li>
 <li>Merging of EIGENSTRAT datasets — <code><a href="../reference/merge_eigenstrat.html">merge_eigenstrat()</a></code>.</li>
 <li>Calculating coverage of sites in each sample — <code><a href="../reference/count_snps.html">count_snps()</a></code>.</li>
-<li>Merging of individual population labels into larger groups — <code><a href="../reference/group_labels.html">group_labels()</a></code>.</li>
+<li>Merging of individual population labels into larger groups — <code>group_labels()</code>.</li>
 <li>VCF-EIGENSTRAT format conversion — <code><a href="../reference/vcf_to_eigenstrat.html">vcf_to_eigenstrat()</a></code>, <code><a href="../reference/vcf_to_eigenstrat.html">eigenstrat_to_vcf()</a></code>.</li>
 </ul>
 </div>

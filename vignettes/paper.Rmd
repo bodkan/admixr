@@ -98,6 +98,10 @@ using a traditional ADMIXTOOLS command-line-based workflow). Note that changing
 the analysis setup in a slightly different way or including a different set of
 samples requires re-generating all files again.
 
+```{r}
+snp_data <- eigenstrat(download_data())
+```
+
 In contrast, the same analysis using the _admixr_ package can be performed
 using just a single R command:
 
@@ -105,7 +109,7 @@ using just a single R command:
 result <- f4ratio(
     X = c("French", "Han", "Papuan", "Yoruba"),
     A = "Altai", B = "Vindija", C = "Mbuti", O = "Chimp",
-    prefix = path_to_eigenstrat
+    data = snp_data
 )
 ```
 

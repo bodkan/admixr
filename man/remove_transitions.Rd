@@ -4,7 +4,7 @@
 \alias{remove_transitions}
 \title{Filter out transitions (C->T and G->A substitutions)}
 \usage{
-remove_transitions(data, outfile = tempfile())
+remove_transitions(data, outfile = tempfile(fileext = ".snp"))
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}

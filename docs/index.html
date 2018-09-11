@@ -123,13 +123,13 @@
 <p>This is all the code that you need to perform ADMIXTOOLS analyses using this package! No shell scripting, no copy-pasting and manual editing of text files. The only thing you need is a working ADMIXTOOLS installation and a path to EIGENSTRAT data (a trio of ind/snp/geno files), which we call <code>prefix</code> here.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># download a small testing dataset to a temporary directory and return its</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># EIGENSTRAT prefix (i.e. shared path to the trio of ind/snp/geno files)</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">eigenstrat_prefix &lt;-<span class="st"> </span><span class="kw"><a href="reference/download_data.html">download_data</a></span>()</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># download a small testing dataset to a temporary directory and</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># process it for use in R</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">snp_data &lt;-<span class="st"> </span><span class="kw"><a href="reference/eigenstrat.html">eigenstrat</a></span>(<span class="kw"><a href="reference/download_data.html">download_data</a></span>())</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">result &lt;-<span class="st"> </span><span class="kw"><a href="reference/f4ratio.html">d</a></span>(</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="dt">W =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>), <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="dt">prefix =</span> eigenstrat_prefix</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">W =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>), <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">  <span class="dt">data =</span> snp_data</a>
 <a class="sourceLine" id="cb2-10" data-line-number="10">)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">result</a>

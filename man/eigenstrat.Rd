@@ -10,13 +10,9 @@ eigenstrat(prefix)
 \item{prefix}{Shared path to an EIGENSTRAT trio (set of ind/snp/geno files).}
 }
 \value{
-S3 object of a class EIGENSTRAT
+S3 object of the EIGENSTRAT class.
 }
 \description{
-Construct an EIGENSTRAT S3 object from a specified path to the ind/snp/geno
-trio.
-}
-\details{
-The EIGENSTRAT data S3 object encapsulates all paths to data files required
-for an analysis.
+This function creates an instance of the EIGENSTRAT S3 class, which
+encapsulates all paths to data files required for an ADMIXTOOLS analysis.
 }

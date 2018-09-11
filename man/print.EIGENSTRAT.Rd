@@ -4,10 +4,12 @@
 \alias{print.EIGENSTRAT}
 \title{EIGENSTRAT print method}
 \usage{
-\method{print}{EIGENSTRAT}(data)
+\method{print}{EIGENSTRAT}(x, ...)
 }
 \arguments{
-\item{data}{EIGENSTRAT data object.}
+\item{x}{EIGENSTRAT data object.}
+
+\item{...}{Further arguments passed to or from other methods.}
 }
 \description{
 Print EIGENSTRAT object components.

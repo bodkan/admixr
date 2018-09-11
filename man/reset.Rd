@@ -13,6 +13,6 @@ reset(data)
 EIGENSTRAT data S3 object.
 }
 \description{
-Set 'exclude' and 'group' modifications of snp and ind files, respectively,
-to NULL.
+Set 'exclude' and 'group' modifications of snp and ind files, effectively
+resetting the dataset into its original state.
 }

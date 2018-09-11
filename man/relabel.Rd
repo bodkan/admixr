@@ -4,7 +4,7 @@
 \alias{relabel}
 \title{Change labels of populations or samples}
 \usage{
-relabel(data, labels, outfile = tempfile())
+relabel(data, labels, outfile = tempfile(fileext = ".ind"))
 }
 \arguments{
 \item{data}{EIGENSTRAT trio.}

@@ -1,12 +1,12 @@
 #' EIGENSTRAT data constructor
 #'
 #'
-#' The EIGENSTRAT data S3 object encapsulates all paths to data files required
-#' for an analysis.
+#' This function creates an instance of the EIGENSTRAT S3 class, which
+#' encapsulates all paths to data files required for an ADMIXTOOLS analysis.
 #'
 #' @param prefix Shared path to an EIGENSTRAT trio (set of ind/snp/geno files).
 #'
-#' @return S3 object of a class EIGENSTRAT
+#' @return S3 object of the EIGENSTRAT class.
 #'
 #' @export
 eigenstrat <- function(prefix) {
@@ -30,25 +30,27 @@ eigenstrat <- function(prefix) {
 #'
 #' Print EIGENSTRAT object components.
 #'
-#' @param data EIGENSTRAT data object.
+#' @param x EIGENSTRAT data object.
+#' @param ... Further arguments passed to or from other methods.
 #'
 #' @export
-print.EIGENSTRAT <- function(data) {
+print.EIGENSTRAT <- function(x, ...) {
   cat(paste0(
     "EIGENSTRAT object\n",
     "=================\n",
     "components:",
-    "\n  ind file: ", data$ind, 
-    "\n  snp file: ", data$snp, 
-    "\n  geno file: ", data$geno,
+    "\n  ind file: ", x$ind, 
+    "\n  snp file: ", x$snp, 
+    "\n  geno file: ", x$geno,
     "\n\nmodifiers:",
-    "\n  groups: ", ifelse(is.null(data$group), "none", data$group),
-    "\n  excluded sites: ", ifelse(is.null(data$exclude),
-                        "none",
-                        paste0(data$exclude,
-                               "\n    (",
-                               nrow(read_snp(data, exclude = TRUE)),
-                               " SNPs will be excluded)")), "\n"))
+    "\n  groups: ", ifelse(is.null(x$group), "none", x$group),
+    "\n  excluded sites: ",
+      ifelse(is.null(x$exclude),
+                     "none",
+                     paste0(x$exclude,
+                            "\n    (",
+                            nrow(read_snp(x, exclude = TRUE)),
+                            " SNPs will be excluded)")), "\n"))
 }
 
 
@@ -202,8 +204,8 @@ relabel <- function(data, labels, outfile = tempfile(fileext = ".ind")) {
 
 #' Reset modifications to an EIGENSTRAT object
 #'
-#' Set 'exclude' and 'group' modifications of snp and ind files, respectively,
-#' to NULL.
+#' Set 'exclude' and 'group' modifications of snp and ind files, effectively
+#' resetting the dataset into its original state.
 #'
 #' @param data EIGENSTRAT data object.
 #' @return EIGENSTRAT data S3 object.
@@ -221,7 +223,7 @@ reset <- function(data) {
 process_filter <- function(data, exclude, outfile) {
   # read a table of previously excluded sites, if present
   if (!is.null(data$exclude)) {
-    prev_exclude <- read_snp(data, exclude = TRUE) %>% data.table::setDT()
+    prev_exclude <- read_snp(data, exclude = TRUE)
   } else {
     prev_exclude <- NULL
   }

@@ -84,7 +84,7 @@ admixtools_path <- function() {
 download_data <- function(dirname = tempdir()) {
   dest <- file.path(dirname, "snps.tgz")
   utils::download.file(
-    "https://www.dropbox.com/s/bw1eswcp2domisv/snps.tgz?dl=0",
+    "https://www.dropbox.com/s/tst0xd9qx005yaj/snps.tar.gz?dl=0",
     destfile = dest,
     method = "wget",
     quiet = TRUE
