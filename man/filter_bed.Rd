@@ -4,7 +4,8 @@
 \alias{filter_bed}
 \title{Filter EIGENSTRAT data based on a given BED file}
 \usage{
-filter_bed(data, bed, remove = FALSE, outfile = tempfile())
+filter_bed(data, bed, remove = FALSE, outfile = tempfile(fileext =
+  ".snp"))
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}
@@ -22,4 +23,9 @@ Updated S3 EIGENSTRAT data object.
 \description{
 Keep (or discard) SNPs that overlap (or lie outside of) regions in a given
 BED file.
+}
+\details{
+This function requires a functioning bedtools installation! See:
+  - https://github.com/arq5x/bedtools2
+  - https://bedtools.readthedocs.io/en/latest/content/installation.html
 }

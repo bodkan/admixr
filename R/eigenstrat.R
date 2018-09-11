@@ -92,6 +92,10 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #' Keep (or discard) SNPs that overlap (or lie outside of) regions in a given
 #' BED file.
 #'
+#' This function requires a functioning bedtools installation! See:
+#'   - https://github.com/arq5x/bedtools2
+#'   - https://bedtools.readthedocs.io/en/latest/content/installation.html
+#'
 #' @param data EIGENSTRAT data object.
 #' @param bed Path to a BED file.
 #' @param remove Remove sites falling inside the BED file regions? By default,
@@ -101,27 +105,32 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #' @return Updated S3 EIGENSTRAT data object.
 #'
 #' @export
-filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile()) {
-  # process BED file
-  bed <- data.table::fread(bed, col.names = c("chrom", "start", "end"),
-                           colClasses = c("character", "integer", "integer"))
-  data.table::setkey(bed, chrom, start, end)
+filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp")) {
+  if(system("bedtools", ignore.stdout = TRUE) != 0)
+    stop("bedtools is required for filtering, but is not in your $PATH")
 
-  # process SNP file from the prefix
-  snp <- read_snp(data) %>% dplyr::mutate(start = pos - 1, end = pos) %>% data.table::setDT()
+  snp <- read_snp(data)
 
-  # get data.table indices of SNPs within/outside given BED regions
-  overlap <- data.table::foverlaps(snp, bed, which = TRUE)
-  # filter the result based on whether an overlap or a complement is needed
-  if (remove) {
-    overlap <- overlap[is.na(overlap$yid), ]
-  } else {
-    overlap <- overlap[!is.na(overlap$yid), ]
-  }
+  tmpbed <- tempfile()
+  snp %>%
+    dplyr::mutate(start = pos - 1, end = pos) %>%
+    dplyr::select(chrom, start, pos) %>%
+    readr::write_tsv(tmpbed, col_names = FALSE)
+
+  # get positions of SNPs within/outside given BED regions (the -c
+  # argument counts how many times does a site from `a` overlap anything in `b`;
+  # for our purposes, this means either 0 (no overlap) or 1 (overlap)
+  output <- tempfile()
+  # run bedtools
+  sprintf("bedtools intersect %s -c -a %s -b %s > %s",
+          ifelse(remove, "-v", ""), tmpbed, bed, output) %>% system()
+  # collect the results
+  snp_hits <- readr::read_tsv(output,
+                              col_names = c("chrom", "start", "end", "hit"),
+                              col_types = "ciii")
 
   # extract only those sites passing the filter
-  site_idx <- unique(overlap$yid)
-  exclude <- snp[site_idx, ] %>% dplyr::select(-c(start, end))
+  exclude <- snp[snp_hits$hit == as.integer(remove), ]
 
   # modify the eigenstrat object and return it
   data <- process_filter(data, exclude, outfile)

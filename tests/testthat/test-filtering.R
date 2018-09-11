@@ -1,6 +1,14 @@
 context("Filtering of sites")
 
-data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
+orig_data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
+
+# ADMIXTOOLS example data is broken and it's first SNP has a position 0,
+# although snp files have to be 0-based - let's remove the first SNP entirely
+data <- orig_data
+data$snp <- tempfile()
+data$geno <- tempfile()
+system(sprintf("tail -n+2 %s > %s", orig_data$snp, data$snp))
+system(sprintf("tail -n+2 %s > %s", orig_data$geno, data$geno))
 
 read_snp_file <- function(path) {
   readr::read_table2(
@@ -23,7 +31,7 @@ test_that("filter_sites correctly fails at no overlap", {
     snp_to_bed(data$snp, bed)
 
     # verify that no overlaps leads to error
-    expect_error(filter_bed(data, bed))
+    expect_error(filter_bed(data, bed, remove = TRUE))
 })
 
 test_that("filter_sites correctly handles complete overlap", {
@@ -33,7 +41,7 @@ test_that("filter_sites correctly handles complete overlap", {
 
     # generate a "subset" based on that BED file
     output <- tempfile()
-    new_data <- filter_bed(data = data, bed = bed, remove = TRUE)
+    new_data <- filter_bed(data = data, bed = bed)
 
     # verify that both EIGENSTRAT datasets are the same
     expect_true(nrow(read_snp_file(new_data$exclude)) == 0)
@@ -50,7 +58,7 @@ test_that("Overlap returns a correct number of sites", {
         snp %>%
           dplyr::mutate(start = pos - 1, end = pos) %>%
           dplyr::select(chrom, start, end) %>%
-          dplyr::sample_n(n) %>%
+          dplyr::sample_n(nrow(snp) - n) %>%
           dplyr::arrange() %>%
           readr::write_tsv(bed, col_names = FALSE)
         # generate a "subset" based on thad BED file
