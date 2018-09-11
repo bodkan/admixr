@@ -1,7 +1,5 @@
 #' EIGENSTRAT data constructor
 #'
-#' Construct an EIGENSTRAT S3 object from a specified path to the ind/snp/geno
-#' trio.
 #'
 #' The EIGENSTRAT data S3 object encapsulates all paths to data files required
 #' for an analysis.
@@ -36,15 +34,16 @@ eigenstrat <- function(prefix) {
 #'
 #' @export
 print.EIGENSTRAT <- function(data) {
-  cat(paste(
-    "EIGENSTRAT data\n",
-    "===============",
-    "\nind path:", data$ind, 
-    "\nsnp path:", data$snp, 
-    "\ngeno path:", data$geno,
+  cat(paste0(
+    "EIGENSTRAT object\n",
+    "=================\n",
+    "components:",
+    "\n  ind file: ", data$ind, 
+    "\n  snp file: ", data$snp, 
+    "\n  geno file: ", data$geno,
     "\n\nmodifiers:",
-    "\nlabels:", ifelse(is.null(data$group), "none", data$group),
-    "\nexclude:", ifelse(is.null(data$exclude),
+    "\n  groups: ", ifelse(is.null(data$group), "none", data$group),
+    "\n  excluded sites: ", ifelse(is.null(data$exclude),
                         "none",
                         paste0(data$exclude,
                                "\n    (",
