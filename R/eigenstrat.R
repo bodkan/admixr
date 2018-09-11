@@ -151,7 +151,7 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = "
 #'     analysis.
 #'
 #' @export
-remove_transitions <- function(data, outfile = tempfile()) {
+remove_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
   exclude <- read_snp(data) %>%
     dplyr::filter(
                   (ref == "C" & alt == "T") |
@@ -179,7 +179,7 @@ remove_transitions <- function(data, outfile = tempfile()) {
 #'     analysis.
 #'
 #' @export
-relabel <- function(data, labels, outfile = tempfile()) {
+relabel <- function(data, labels, outfile = tempfile(fileext = ".ind")) {
   new_lines <- lines <- ifelse(!is.null(data$group), data$group, data$ind) %>% readLines
 
   # iterate over the lines in the "ind" file, replacing population
