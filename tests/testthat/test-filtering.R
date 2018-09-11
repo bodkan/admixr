@@ -69,3 +69,14 @@ test_that("Overlap returns a correct number of sites", {
     expect_true(all(successes))
 })
 
+test_that("Resetting returns an EIGENSTRAT object to an original state", {
+  new_data <- data
+  new_data$exclude <- "exclude.snp"
+  new_data$group <- "new_labels.ind"
+  new_data <- reset(new_data)
+
+  expect_true(all(sapply(c("ind", "snp", "geno"),
+                         function(i) data[[i]] == new_data[[i]])))
+  expect_true(is.null(new_data$groups))
+  expect_true(is.null(new_data$exclude))
+})
