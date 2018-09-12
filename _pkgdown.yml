@@ -9,16 +9,18 @@ reference:
 
   - title: Data processing and filtering
     contents:
+    - eigenstrat
+    - filter_bed
+    - remove_transitions
+    - relabel
+    - reset
     - merge_eigenstrat
-    - group_labels
     - count_snps
-    - filter_sites
-    - filter_damage
 
   - title: Reading/writing EIGENSTRAT data
     contents:
-    - starts_with("read_(eigenstrat|geno|ind|snp)")
-    - starts_with("write_(eigenstrat|geno|ind|snp)")
+    - starts_with("read_(geno|ind|snp)")
+    - starts_with("write_(geno|ind|snp)")
 
   - title: VCF-EIGENSTRAT conversion
     contents:

@@ -116,7 +116,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read an EIGENSTRAT ind/snp/geno file.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/eigenstrat_io.R'><code>R/eigenstrat_io.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/io.R'><code>R/io.R</code></a></small>
     <div class="hidden name"><code>read_ind.Rd</code></div>
     </div>
 
@@ -126,18 +126,22 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>read_ind</span>(<span class='no'>file</span>)
+    <pre class="usage"><span class='fu'>read_ind</span>(<span class='no'>data</span>)
 
-<span class='fu'>read_snp</span>(<span class='no'>file</span>)
+<span class='fu'>read_snp</span>(<span class='no'>data</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>read_geno</span>(<span class='no'>file</span>)</pre>
+<span class='fu'>read_geno</span>(<span class='no'>data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>Path to a file.</p></td>
+      <th>data</th>
+      <td><p>EIGENSTRAT data object.</p></td>
+    </tr>
+    <tr>
+      <th>exclude</th>
+      <td><p>Read the list of excluded SNPs?</p></td>
     </tr>
     </table>
     

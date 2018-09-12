@@ -76,13 +76,13 @@ EIGENSTRAT data (a trio of ind/snp/geno files), which we call `prefix` here.
 ```r
 library(admixr)
 
-# download a small testing dataset to a temporary directory and return its
-# EIGENSTRAT prefix (i.e. shared path to the trio of ind/snp/geno files)
-eigenstrat_prefix <- download_data()
+# download a small testing dataset to a temporary directory and
+# process it for use in R
+snp_data <- eigenstrat(download_data())
 
 result <- d(
-    W = c("French", "Sardinian"), X = "Yoruba", Y = "Vindija", Z = "Chimp",
-    prefix = eigenstrat_prefix
+  W = c("French", "Sardinian"), X = "Yoruba", Y = "Vindija", Z = "Chimp",
+  data = snp_data
 )
 
 result

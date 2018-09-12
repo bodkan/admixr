@@ -4,10 +4,10 @@
 \alias{count_snps}
 \title{Count the number/proportion of present/missing sites in each sample}
 \usage{
-count_snps(prefix, missing = FALSE, prop = FALSE)
+count_snps(data, missing = FALSE, prop = FALSE)
 }
 \arguments{
-\item{prefix}{An EIGENSTRAT prefix.}
+\item{data}{EIGENSTRAT data object.}
 
 \item{missing}{Count present SNPs or missing SNPs?}
 

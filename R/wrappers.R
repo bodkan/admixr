@@ -6,23 +6,22 @@
 #' @inheritParams qpAdm
 #'
 #' @export
-f4ratio <- function(X, A, B, C, O,
-                    prefix = NULL, ind_suffix = NULL,
-                    exclude = NULL, outdir = NULL) {
-    check_presence(c(X, A, B, C, O), prefix, ind_suffix)
+f4ratio <- function(data, X, A, B, C, O, outdir = NULL) {
+  check_presence(c(X, A, B, C, O), data)
 
-    # get the path to the population, parameter and log files
-    setup <- paste0("qpF4ratio__", A, "_", B, "_", C, "_", O)
-    config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
-    files <- get_files(outdir, config_prefix)
+  # get the path to the population, parameter and log files
+  setup <- paste0("qpF4ratio__", A, "_", B, "_", C, "_", O)
+  config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
+  files <- get_files(outdir, config_prefix)
 
-    create_qpF4ratio_pop_file(X = X, A = A, B = B, C = C, O = O, file = files[["pop_file"]])
-    create_par_file(files, prefix, ind_suffix, exclude)
+  create_qpF4ratio_pop_file(X = X, A = A, B = B, C = C, O = O, file = files[["pop_file"]])
+  create_par_file(files, data)
 
-    run_cmd("qpF4ratio", par_file = files[["par_file"]], log_file = files[["log_file"]])
+  run_cmd("qpF4ratio", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_output(files[["log_file"]])
+  read_output(files[["log_file"]])
 }
+
 
 
 #' @rdname f4ratio
@@ -30,29 +29,27 @@ f4ratio <- function(X, A, B, C, O,
 #' @param f4mode Calculate the f4 statistic instead of the D statistic.
 #'
 #' @export
-d <- function(W, X, Y, Z,
-              prefix = NULL, ind_suffix = NULL,
-              exclude = NULL, outdir = NULL, f4mode = FALSE) {
-    check_presence(c(W, X, Y, Z), prefix, ind_suffix)
+d <- function(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE) {
+  check_presence(c(W, X, Y, Z), data)
 
-    # get the path to the population, parameter and log files
-    setup <- paste0("qpDstat")
-    config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
-    files <- get_files(outdir, config_prefix)
+  # get the path to the population, parameter and log files
+  setup <- paste0("qpDstat")
+  config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
+  files <- get_files(outdir, config_prefix)
 
-    create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
-    create_par_file(files, prefix, ind_suffix, exclude)
+  create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
+  create_par_file(files, data)
 
-    if (f4mode) {
-        write("f4mode: YES", file = files[["par_file"]], append = TRUE)
-    }
+  if (f4mode) {
+    write("f4mode: YES", file = files[["par_file"]], append = TRUE)
+  }
 
-    # automatically calculate standard errors
-    write("printsd: YES", file = files[["par_file"]], append = TRUE)
+  # automatically calculate standard errors
+  write("printsd: YES", file = files[["par_file"]], append = TRUE)
 
-    run_cmd("qpDstat", par_file = files[["par_file"]], log_file = files[["log_file"]])
+  run_cmd("qpDstat", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_output(files[["log_file"]])
+  read_output(files[["log_file"]])
 }
 
 
@@ -60,10 +57,8 @@ d <- function(W, X, Y, Z,
 #' @rdname f4ratio
 #'
 #' @export
-f4 <- function(W, X, Y, Z,
-              prefix = NULL, ind_suffix = NULL,
-              exclude = NULL, outdir = NULL) {
-  d(W, X, Y, Z, prefix, ind_suffix, exclude, outdir, f4mode = TRUE)
+f4 <- function(data, W, X, Y, Z, outdir = NULL) {
+  d(data, W, X, Y, Z, outdir, f4mode = TRUE)
 }
 
 
@@ -73,27 +68,27 @@ f4 <- function(W, X, Y, Z,
 #' @param inbreed See README.3PopTest in ADMIXTOOLS for an explanation.
 #'
 #' @export
-f3 <- function(A, B, C,
-               prefix = NULL, ind_suffix = NULL, exclude = NULL,
-               outdir = NULL, inbreed = FALSE) {
-    check_presence(c(A, B, C), prefix, ind_suffix)
+f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
+  check_presence(c(A, B, C), data)
 
-    # get the path to the population, parameter and log files
-    setup <- paste0("qp3Pop")
-    config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
-    files <- get_files(outdir, config_prefix)
+  # get the path to the population, parameter and log files
+  setup <- paste0("qp3Pop")
+  config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
+  files <- get_files(outdir, config_prefix)
 
-    create_qp3Pop_pop_file(A, B, C, file = files[["pop_file"]])
-    create_par_file(files, prefix, ind_suffix, exclude)
+  create_qp3Pop_pop_file(A, B, C, file = files[["pop_file"]])
+  create_par_file(files, data)
 
-    if (inbreed) {
-        write("inbreed: YES", file = files[["par_file"]], append = TRUE)
-    }
+  if (inbreed) {
+    write("inbreed: YES", file = files[["par_file"]], append = TRUE)
+  }
 
-    run_cmd("qp3Pop", par_file = files[["par_file"]], log_file = files[["log_file"]])
+  run_cmd("qp3Pop", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_output(files[["log_file"]])
+  read_output(files[["log_file"]])
 }
+
+
 
 #' Calculate ancestry proportions in target populations using qpAdm.
 #'
@@ -101,32 +96,29 @@ f3 <- function(A, B, C,
 #' @param references Reference source populations related to true ancestors.
 #' @param outgroups Outgroup populations.
 #'
-#' @param prefix An EIGENSTRAT prefix (shared by the geno/snp/ind trio).
-#' @param ind_suffix Suffix of a modified ind file (generated by group_labels).
-#' @param exclude Path to file in a snp format with SNPs to exclude from the calculation.
+#' @param data EIGENSTRAT data object.
 #' @param outdir Where to put all generated files (temporary directory by default).
 #'
 #' @export
-qpAdm <- function(target, references, outgroups,
-                  prefix = NULL, ind_suffix = NULL,
-                  exclude = NULL, outdir = NULL) {
-  check_presence(c(target, references, outgroups), prefix, ind_suffix)
-  
+qpAdm <- function(data, target, references, outgroups, outdir = NULL) {
+  check_presence(c(target, references, outgroups), data)
+
   dplyr::bind_rows(lapply(target, function(X) {
     # get the path to the population, parameter and log files
     setup <- paste0("qpAdm")
     config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
     files <- get_files(outdir, config_prefix)
-  
+
     files[["popleft"]] <-  stringr::str_replace(files[["pop_file"]], "$", "left")
     files[["popright"]] <-  stringr::str_replace(files[["pop_file"]], "$", "right")
     files[["pop_file"]] <- NULL
-  
+
     create_qpAdm_pop_files(c(X, references), outgroups, files)
-    create_par_file(files, prefix, ind_suffix, exclude)
-    
+    create_par_file(files, data)
+
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
-    
+
     read_output(files[["log_file"]])
   }))
 }
+

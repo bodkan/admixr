@@ -6,7 +6,9 @@ cache:
 before_install:
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
+    # enter directory for installing all dependencies
   - pushd /tmp/deps
+    # install ADMIXTOOLS
   - curl -LO https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
   - tar xf v5.0.tar.gz
   - cd AdmixTools-5.0
@@ -14,6 +16,13 @@ before_install:
   - curl -LO https://www.dropbox.com/s/2m53dharng61ou9/AdmixTools_Example_Data.tar_.gz
   - tar xf AdmixTools_Example_Data.tar_.gz
   - export PATH=$PATH:$PWD/bin
+  - cd ../
+    # install bedtools
+  - curl -LO https://github.com/arq5x/bedtools2/releases/download/v2.27.1/bedtools-2.27.1.tar.gz
+  - tar -zxvf bedtools-2.27.1.tar.gz
+  - pushd bedtools2 && make && popd
+  - export PATH=$PATH:$PWD/bedtools2/bin/
+    # return to the top directory
   - popd
 after_success:
   - Rscript -e 'covr::codecov()'

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Merge two sets of EIGENSTRAT datasets — merge_eigenstrat • admixr</title>
+<title>EIGENSTRAT print method — print.EIGENSTRAT • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Merge two sets of EIGENSTRAT datasets — merge_eigenstrat" />
+<meta property="og:title" content="EIGENSTRAT print method — print.EIGENSTRAT" />
 
-<meta property="og:description" content="This function utilizes the 'mergeit' command distributed in ADMIXTOOLS." />
+<meta property="og:description" content="Print EIGENSTRAT object components." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,33 +115,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Merge two sets of EIGENSTRAT datasets</h1>
+    <h1>EIGENSTRAT print method</h1>
     <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/eigenstrat.R'><code>R/eigenstrat.R</code></a></small>
-    <div class="hidden name"><code>merge_eigenstrat.Rd</code></div>
+    <div class="hidden name"><code>print.EIGENSTRAT.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function utilizes the 'mergeit' command distributed in ADMIXTOOLS.</p>
+    <p>Print EIGENSTRAT object components.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>merge_eigenstrat</span>(<span class='no'>merged</span>, <span class='no'>a</span>, <span class='no'>b</span>, <span class='kw'>strandcheck</span> <span class='kw'>=</span> <span class='st'>"NO"</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for EIGENSTRAT</span>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>merged</th>
-      <td><p>Prefix of the final merged EIGENSTRAT object.</p></td>
+      <th>x</th>
+      <td><p>EIGENSTRAT data object.</p></td>
     </tr>
     <tr>
-      <th>a, b</th>
-      <td><p>Two EIGENSTRAT datasets to merge.</p></td>
-    </tr>
-    <tr>
-      <th>strandcheck</th>
-      <td><p>Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.</p></td>
+      <th>...</th>
+      <td><p>Further arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     
