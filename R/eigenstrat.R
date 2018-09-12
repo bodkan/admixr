@@ -172,7 +172,7 @@ remove_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
 #' Replace population/sample names with specified group labels.
 #'
 #' @param data EIGENSTRAT trio.
-#' @param labels A named list of labels to merge (each new group defined as a
+#' @param ... Population/sample names to merge (each new group defined as a
 #'     character vector).
 #' @param outfile Path to an output snp file with coordinates of excluded sites.
 #'
@@ -181,11 +181,12 @@ remove_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'     analysis.
 #'
 #' @export
-relabel <- function(data, labels, outfile = tempfile(fileext = ".ind")) {
-  new_lines <- lines <- ifelse(!is.null(data$group), data$group, data$ind) %>% readLines
+relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
+  labels <- list(...)
 
   # iterate over the lines in the "ind" file, replacing population
   # labels with their substitutes
+  new_lines <- lines <- ifelse(!is.null(data$group), data$group, data$ind) %>% readLines
   for (label in names(labels)) {
     regex <- paste0("(", paste(labels[[label]], collapse = "|"), ")$")
     new_lines <- stringr::str_replace(new_lines, regex, label)
