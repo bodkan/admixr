@@ -85,7 +85,7 @@
       <h1>admixr - tutorial</h1>
                         <h4 class="author">Martin Petr</h4>
             
-            <h4 class="date">2018-09-11</h4>
+            <h4 class="date">2018-09-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/vignettes/tutorial.Rmd"><code>vignettes/vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -149,12 +149,12 @@
 <p>As you can see, a VCF file is essentially a combination of all three files in a single package. Luckily for us, all three EIGENSTRAT files usually share a common path and prefix, or it’s easy to make it that way. To make handling of EIGENSTRAT datasets in R easier without having to worry about keeping track of each individual file separately we can use this fact and work with all necessary files at once.</p>
 <p>Let’s first download a small testing SNP dataset using a built-in <em>admixr</em> function <code><a href="../reference/download_data.html">download_data()</a></code>. This function downloads the data into a temporary directory (you can specify the destination using its <code>dirname</code> argument). In addition to this, the function returns a shared prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">(prefix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/download_data.html">download_data</a></span>())</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps"</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps"</span></a></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(prefix), <span class="dt">pattern =</span> <span class="kw">basename</span>(prefix), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.geno"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.ind"</span> </a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.snp"</span> </a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.geno"</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.ind"</span> </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.snp"</span> </a></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
@@ -221,9 +221,9 @@ Denisova     U  Denisova</code></pre>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.geno</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.geno</span></a>
 <a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; modifiers:</span></a>
 <a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;   groups: none</span></a>
@@ -735,21 +735,20 @@ Denisova     U  Denisova</code></pre>
 <p>To merge several individual samples under a combined label we can call <code>group_labels</code> like this:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># paths to the original ind file and a new modified ind file, which will</span></a>
 <a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co"># contain merged population labels</span></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">modif_snp_data &lt;-</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/relabel.html">relabel</a></span>(snp_data,</a>
-<a class="sourceLine" id="cb26-5" data-line-number="5">          <span class="dt">labels =</span> <span class="kw">list</span>(<span class="dt">European =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>),</a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">                        <span class="dt">African =</span> <span class="kw">c</span>(<span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Khomani_San"</span>),</a>
-<a class="sourceLine" id="cb26-7" data-line-number="7">                        <span class="dt">Archaic =</span> <span class="kw">c</span>(<span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>)))</a></code></pre></div>
+<a class="sourceLine" id="cb26-3" data-line-number="3">modif_snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/relabel.html">relabel</a></span>(snp_data,</a>
+<a class="sourceLine" id="cb26-4" data-line-number="4">                          <span class="dt">European =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>),</a>
+<a class="sourceLine" id="cb26-5" data-line-number="5">                          <span class="dt">African =</span> <span class="kw">c</span>(<span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Khomani_San"</span>),</a>
+<a class="sourceLine" id="cb26-6" data-line-number="6">                          <span class="dt">Archaic =</span> <span class="kw">c</span>(<span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">modif_snp_data</a>
 <a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb27-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/snps/snps.geno</span></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/snps/snps.geno</span></a>
 <a class="sourceLine" id="cb27-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb27-9" data-line-number="9"><span class="co">#&gt; modifiers:</span></a>
-<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt;   groups: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpyvNAoK/fileee055b0ca48f.ind</span></a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt;   groups: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpgWyJfZ/file15ea33d8c5aa4.ind</span></a>
 <a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co">#&gt;   excluded sites: none</span></a></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified <code>EIGENSTRAT</code> object, which contains a new item in the “modifiers” section - the path to a new ind file that will be used in downstream analyses. Let’s look at its contents:</p>
 <pre><code>Chimp        U  Chimp
