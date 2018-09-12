@@ -1,9 +1,5 @@
 context("Presence of ADMIXTOOLS on the system")
 
-admixtools_present <- function() {
-  system("which qpDstat", ignore.stdout = TRUE) == 0
-}
-
 path <- admixtools_path()
 data_dir <- file.path(path, "data")
 

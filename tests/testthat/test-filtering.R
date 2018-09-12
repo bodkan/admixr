@@ -1,20 +1,5 @@
 context("Filtering of sites")
 
-read_snp_file <- function(path) {
-  readr::read_table2(
-    path,
-    col_types = "ccdicc",
-    col_names = c("id", "chrom", "gen", "pos", "ref", "alt")
-  )
-}
-
-snp_to_bed <- function(snp, bed) {
-  read_snp_file(snp) %>%
-        dplyr::mutate(start = pos - 1, end = pos) %>%
-        dplyr::select(chrom, start, end) %>%
-        readr::write_tsv(bed, col_names = FALSE)
-}
-
 test_that("Potential aDNA SNPs are correctly removed", {
   data <- eigenstrat(file.path(admixtools_path(), "data/allmap"))
   output <- tempfile()

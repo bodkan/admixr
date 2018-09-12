@@ -11,11 +11,6 @@ examples_dir <- file.path(path, "examples")
 
 setwd(examples_dir)
 
-read_pops <- function(filename, columns) {
-  df <- setNames(read.table(filename, stringsAsFactors = FALSE), columns)
-  lapply(df, function(col) unique(col))
-}
-
 # f3 ----------------------------------------------------------------------
 
 test_that("qp3Pop wrapper produces correct results", {
