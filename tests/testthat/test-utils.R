@@ -2,15 +2,17 @@ context("Utility functions")
 
 # Checking for presence of a sample in an ind file ------------------------
 
-data <- eigenstrat(file.path(admixtools_path(), "data", "allmap"))
-
 test_that("Fails to find a missing sample", {
+  data <- eigenstrat(file.path(admixtools_path(), "data", "allmap"))
+
   expect_error(check_presence("blah", data))
   expect_error(check_presence(c("blah1", "blah2"), data))
   expect_error(check_presence(c("blah1", "blah2", "French"), data))
 })
 
 test_that("Succeeds in finding a sample in an ind file", {
+  data <- eigenstrat(file.path(admixtools_path(), "data", "allmap"))
+
   expect_silent(check_presence("French", data))
   expect_silent(check_presence(c("French", "Neander"), data))
 })
@@ -18,6 +20,8 @@ test_that("Succeeds in finding a sample in an ind file", {
 # Merging population labels -----------------------------------------------
 
 test_that("Merging of population labels", {
+  data <- eigenstrat(file.path(admixtools_path(), "data", "allmap"))
+
   # list of labels to merge
   merge_list <- list(
     Europe = c("French", "Sardinian", "Czech"),
@@ -35,7 +39,10 @@ test_that("Merging of population labels", {
   ))
 
   # merge labels using
-  relabeled <- relabel(data = data, labels = merge_list)
+  relabeled <- relabel(data = data,
+                       Europe = merge_list$Europe,
+                       WestAfrica = merge_list$WestAfrica,
+                       outfile = tempfile())
 
   # compare both generated ind tables
   expect_equal(
@@ -48,6 +55,7 @@ test_that("Merging of population labels", {
 
 test_that("SNP counts correspond to numbers from CLI utilities", {
   data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
+
   sample_names <- read_ind(data)$id
   shell_counts <- seq_along(sample_names) %>%
     lapply(function(i) {

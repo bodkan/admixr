@@ -4,12 +4,12 @@
 \alias{relabel}
 \title{Change labels of populations or samples}
 \usage{
-relabel(data, labels, outfile = tempfile(fileext = ".ind"))
+relabel(data, ..., outfile = tempfile(fileext = ".ind"))
 }
 \arguments{
 \item{data}{EIGENSTRAT trio.}
 
-\item{labels}{A named list of labels to merge (each new group defined as a
+\item{...}{Population/sample names to merge (each new group defined as a
 character vector).}
 
 \item{outfile}{Path to an output snp file with coordinates of excluded sites.}

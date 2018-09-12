@@ -597,11 +597,10 @@ To merge several individual samples under a combined label we can call
 ```{r relabel}
 # paths to the original ind file and a new modified ind file, which will
 # contain merged population labels
-modif_snp_data <-
-  relabel(snp_data,
-          labels = list(European = c("French", "Sardinian"),
-                        African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
-                        Archaic = c("Vindija", "Altai", "Denisova")))
+modif_snp_data <- relabel(snp_data,
+                          European = c("French", "Sardinian"),
+                          African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
+                          Archaic = c("Vindija", "Altai", "Denisova"))
 ```
 
 ```{r, comment = "#>"}
