@@ -1,15 +1,5 @@
 context("Filtering of sites")
 
-orig_data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
-
-# ADMIXTOOLS example data is broken and it's first SNP has a position 0,
-# although snp files have to be 0-based - let's remove the first SNP entirely
-data <- orig_data
-data$snp <- tempfile()
-data$geno <- tempfile()
-system(sprintf("tail -n+2 %s > %s", orig_data$snp, data$snp))
-system(sprintf("tail -n+2 %s > %s", orig_data$geno, data$geno))
-
 read_snp_file <- function(path) {
   readr::read_table2(
     path,
@@ -24,6 +14,31 @@ snp_to_bed <- function(snp, bed) {
         dplyr::select(chrom, start, end) %>%
         readr::write_tsv(bed, col_names = FALSE)
 }
+
+test_that("Potential aDNA SNPs are correctly removed", {
+  data <- eigenstrat(file.path(admixtools_path(), "data/allmap"))
+  output <- tempfile()
+  system(
+    sprintf("awk '($5 == \"C\" && $6 == \"T\") ||
+                  ($5 == \"T\" && $6 == \"C\") ||
+                  ($5 == \"G\" && $6 == \"A\") ||
+                   ($5 == \"A\" && $6 == \"G\")' %s > %s", data$snp, output)
+  )
+  n_shell <- nrow(read_snp_file(output))
+  n_admixr <- nrow(read_snp_file(remove_transitions(data)$exclude))
+  expect_equal(n_shell, n_admixr)
+})
+
+
+orig_data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
+
+# ADMIXTOOLS example data is broken and it's first SNP has a position 0,
+# although snp files have to be 0-based - let's remove the first SNP entirely
+data <- orig_data
+data$snp <- tempfile()
+data$geno <- tempfile()
+system(sprintf("tail -n+2 %s > %s", orig_data$snp, data$snp))
+system(sprintf("tail -n+2 %s > %s", orig_data$geno, data$geno))
 
 test_that("filter_sites correctly fails at no overlap", {
     # create a BED file that has the same positions as the original EIGENSTRAT
