@@ -156,11 +156,11 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = "
 remove_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
   exclude <- read_snp(data) %>%
     dplyr::filter(
-                  (ref == "C" & alt == "T") |
-                    (ref == "T" & alt == "C") |
-                    (ref == "G" & alt == "A") |
-                    (ref == "A" & alt == "G")
-                  )
+      (ref == "C" & alt == "T") |
+      (ref == "T" & alt == "C") |
+      (ref == "G" & alt == "A") |
+      (ref == "A" & alt == "G")
+    )
   data <- process_filter(data, exclude, outfile)
   data
 }
