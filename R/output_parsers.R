@@ -9,6 +9,7 @@ read_output <- function(file) {
     qp3Pop = read_qp3Pop,
     qpDstat = read_qpDstat,
     qpF4ratio = read_qpF4ratio,
+    qpWave = read_qpWave,
     qpAdm = read_qpAdm
   )
 
@@ -103,6 +104,55 @@ read_qp3Pop <- function(file) {
 
   res_df
 }
+
+
+
+parse_matrix <- function(lines) {
+  m <- lines %>%
+    stringr::str_replace_all("^ +| +$", "") %>%
+    stringr::str_replace_all(" +", "\t") %>%
+    paste0(collapse = "\n") %>%
+    readr::read_tsv(col_names = FALSE) %>%
+    t
+
+  # rename columns and reset rownames
+  colnames(m) <- unlist(m[1, ])
+  m <- m[-1, ]
+  rownames(m) <- NULL
+  class(m) <- "numeric"
+
+  m
+}
+
+
+
+# Read output log file from a qp3Pop run.
+read_qpWave <- function(file) {
+  log_lines <- readLines(file)
+
+  test_pos  <- which(stringr::str_detect(log_lines, "f4info:"))
+  b_pos <- which(stringr::str_detect(log_lines, "B:"))
+  a_pos <- which(stringr::str_detect(log_lines, "A:"))
+  a_end <- c(test_pos[-c(1, 2)], which(stringr::str_detect(log_lines, "## end of run")))
+
+  test_df <- log_lines[test_pos + 1] %>%
+    stringr::str_replace_all(" *[a-z0-9]+: ", "") %>%
+    stringr::str_replace_all(" +", "\t") %>%
+    paste0(collapse = "\n") %>%
+    readr::read_tsv(col_names = c("rank", "df", "chisq", "tail", "dfdiff",
+                                  "chisqdiff", "taildiff"))
+
+  B_matrix <- lapply(seq_along(b_pos), function(i) {
+    parse_matrix(log_lines[(b_pos[i] + 1) : (a_pos[i] - 1)])
+  }) %>% setNames(paste0("rank", seq_along(.)))
+
+  A_matrix <- lapply(seq_along(a_pos), function(i) {
+    parse_matrix(log_lines[(a_pos[i] + 1) : (a_end[i] - 2)])
+  }) %>% setNames(paste0("rank", seq_along(.)))
+
+  list(rank_tests = test_df, A = A_matrix, B = B_matrix)
+}
+
 
 
 # Read output log file from a qp3Pop run.
