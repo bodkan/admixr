@@ -71,7 +71,7 @@ check_presence <- function(labels, data) {
 
 # Get path to the ADMIXTOOLS directory.
 admixtools_path <- function() {
-  system("which qpDstat", intern = TRUE) %>% stringr::str_replace("/bin.*", "")
+  system("readlink `which qpDstat`", intern = TRUE) %>% stringr::str_replace("/bin.*", "")
 }
 
 
