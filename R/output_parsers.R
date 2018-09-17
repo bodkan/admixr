@@ -175,25 +175,24 @@ read_qpAdm <- function(file) {
   leftpops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
     .[, 1] %>%  { !is.na(.) } %>% which
 
-  target_pop <- log_lines[leftpops[1] + 1]
-  source_pops <- log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)]
+  target <- log_lines[leftpops[1] + 1]
+  source <- log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)]
 
-  snp_count <- stringr::str_subset(log_lines, paste0("coverage: +", target_pop)) %>%
-    stringr::str_replace(paste0("coverage: +", target_pop, " +"), "") %>%
-    as.numeric
+  # snp_count <- stringr::str_subset(log_lines, paste0("coverage: +", target_pop)) %>%
+  #   stringr::str_replace(paste0("coverage: +", target_pop, " +"), "") %>%
+  #   as.numeric
 
   # wide format
-  rbind(c(target_pop, snp_count, stats$proportion, stats$stderr)) %>%
-    tibble::as_tibble() %>%
-    stats::setNames(c("target", "nsnps", source_pops, paste0("stderr_", source_pops))) %>%
-    dplyr::mutate_at(dplyr::vars(-target), as.numeric)
+  # rbind(c(target, stats$proportion, stats$stderr)) %>%
+  #   tibble::as_tibble() %>%
+  #   stats::setNames(c("target", source, paste0("stderr_", source))) %>%
+  #   dplyr::mutate_at(dplyr::vars(-target), as.numeric) %>% return
 
-  # # long format
-  # tibble::tibble(
-  #   target_pop,
-  #   snp_count,
-  #   source_pops,
-  #   proportion = stats$proportion,
-  #   stderr = stats$stderr
-  # )
+  # long format
+  tibble::tibble(
+    target,
+    source,
+    proportion = stats$proportion,
+    stderr = stats$stderr
+  )
 }
