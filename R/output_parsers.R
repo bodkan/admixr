@@ -1,5 +1,5 @@
 # Read an output file from one of the ADMIXTOOLS programs.
-read_output <- function(file) {
+read_output <- function(file, ...) {
   # extract ADMIXTOOLS command name from the output file
   cmd <- readLines(file) %>%
     stringr::str_match("^## (\\w+) version:") %>%
@@ -15,7 +15,7 @@ read_output <- function(file) {
 
   # it feels a little dumb, re-reading the whole output file a 2nd time,
   # there must be a cleaner way to do this
-  as.data.frame(parsers[[cmd]](file))
+  parsers[[cmd]](file, ...)
 }
 
 
@@ -117,7 +117,7 @@ parse_matrix <- function(lines) {
 
   # rename columns and reset rownames
   colnames(m) <- unlist(m[1, ])
-  m <- m[-1, ]
+  m <- m[-1, , drop = FALSE]
   rownames(m) <- NULL
   class(m) <- "numeric"
 
@@ -127,7 +127,7 @@ parse_matrix <- function(lines) {
 
 
 # Read output log file from a qp3Pop run.
-read_qpWave <- function(file) {
+read_qpWave <- function(file, matrices = FALSE) {
   log_lines <- readLines(file)
 
   test_pos  <- which(stringr::str_detect(log_lines, "f4info:"))
@@ -142,15 +142,18 @@ read_qpWave <- function(file) {
     readr::read_tsv(col_names = c("rank", "df", "chisq", "tail", "dfdiff",
                                   "chisqdiff", "taildiff"))
 
-  B_matrix <- lapply(seq_along(b_pos), function(i) {
-    parse_matrix(log_lines[(b_pos[i] + 1) : (a_pos[i] - 1)])
-  }) %>% setNames(paste0("rank", seq_along(.)))
+  if (!matrices) return(test_df)
+  else {
+    B_matrix <- lapply(seq_along(b_pos), function(i) {
+      parse_matrix(log_lines[(b_pos[i] + 1) : (a_pos[i] - 1)])
+    }) %>% setNames(paste0("rank", seq_along(.)))
 
-  A_matrix <- lapply(seq_along(a_pos), function(i) {
-    parse_matrix(log_lines[(a_pos[i] + 1) : (a_end[i] - 2)])
-  }) %>% setNames(paste0("rank", seq_along(.)))
+    A_matrix <- lapply(seq_along(a_pos), function(i) {
+      parse_matrix(log_lines[(a_pos[i] + 1) : (a_end[i] - 2)])
+    }) %>% setNames(paste0("rank", seq_along(.)))
 
-  list(rank_tests = test_df, A = A_matrix, B = B_matrix)
+    return(list(rank_tests = test_df, A = A_matrix, B = B_matrix))
+  }
 }
 
 

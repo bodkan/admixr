@@ -1,5 +1,4 @@
 #' Calculate the D, f4, f4-ratio, or f3 statistic.
-#'
 #' @param W,X,Y,Z,A,B,C,O Population names according to the nomenclature used in
 #'     Patterson et al., 2012.
 #'
@@ -113,12 +112,46 @@ qpAdm <- function(data, target, references, outgroups, outdir = NULL) {
     files[["popright"]] <-  stringr::str_replace(files[["pop_file"]], "$", "right")
     files[["pop_file"]] <- NULL
 
-    create_qpAdm_pop_files(c(X, references), outgroups, files)
+    create_leftright_pop_files(c(X, references), outgroups, files)
     create_par_file(files, data)
 
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
     read_output(files[["log_file"]])
   }))
+}
+
+
+
+#' Find the most likely number of ancestry waves.
+#'
+#' @param left,right Character vectors of populations labels.
+#' @param maxrank Maximum rank to test for.
+#' @param matrices Return the A, B matrices used in the rank calculations?
+#' @inheritParams qpAdm
+#'
+#' @export
+qpWave <- function(data, left, right, maxrank = NULL, matrices = FALSE, outdir = NULL) {
+  check_presence(c(left, right), data)
+
+  # get the path to the population, parameter and log files
+  setup <- paste0("qpWave")
+  config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
+  files <- get_files(outdir, config_prefix)
+
+  files[["popleft"]] <-  stringr::str_replace(files[["pop_file"]], "$", "left")
+  files[["popright"]] <-  stringr::str_replace(files[["pop_file"]], "$", "right")
+  files[["pop_file"]] <- NULL
+
+  create_leftright_pop_files(left, right, files)
+  create_par_file(files, data)
+
+  if (!is.null(maxrank)) {
+    write(sprintf("maxrank: %d", maxrank), file = files[["par_file"]], append = TRUE)
+  }
+
+  run_cmd("qpWave", par_file = files[["par_file"]], log_file = files[["log_file"]])
+
+  read_output(files[["log_file"]], matrices)
 }
 
