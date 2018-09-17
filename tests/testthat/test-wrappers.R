@@ -70,3 +70,17 @@ test_that("qpAdm wrapper produces correct results", {
   )
 })
 
+
+# qpWave ------------------------------------------------------------------
+
+test_that("qpWave wrapper produces correct results", {
+  data <- eigenstrat(file.path(data_dir, "qpdata"))
+  left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
+  right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
+    stringr::str_subset("^[^#]")
+  expect_equal(
+    qpWave(left = left, right = right, data = data),
+    read_output(file.path(examples_dir, "test_qpWave.log"))
+  )
+})
+
