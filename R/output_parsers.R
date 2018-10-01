@@ -146,13 +146,13 @@ read_qpWave <- function(file, matrices = FALSE) {
   else {
     B_matrix <- lapply(seq_along(b_pos), function(i) {
       parse_matrix(log_lines[(b_pos[i] + 1) : (a_pos[i] - 1)])
-    }) %>% setNames(paste0("rank", seq_along(.)))
+    }) %>% setNames(paste0(seq_along(.)))
 
     A_matrix <- lapply(seq_along(a_pos), function(i) {
       parse_matrix(log_lines[(a_pos[i] + 1) : (a_end[i] - 2)])
-    }) %>% setNames(paste0("rank", seq_along(.)))
+    }) %>% setNames(paste0(seq_along(.)))
 
-    return(list(rank_tests = test_df, A = A_matrix, B = B_matrix))
+    return(list(ranks = test_df, A = A_matrix, B = B_matrix))
   }
 }
 

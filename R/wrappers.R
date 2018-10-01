@@ -127,7 +127,7 @@ qpAdm <- function(data, target, references, outgroups, outdir = NULL) {
 #'
 #' @param left,right Character vectors of populations labels.
 #' @param maxrank Maximum rank to test for.
-#' @param matrices Return the A, B matrices used in the rank calculations?
+#' @param matrices Return the A, B matrices used in rank calculations?
 #' @inheritParams qpAdm
 #'
 #' @export
