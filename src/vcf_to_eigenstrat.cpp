@@ -5,7 +5,7 @@
 
 #include <Rcpp.h>
 
-// [[Rcpp::plugins(cpp11)]]
+// [[Rcpp::plugins(cpp14)]]
 // [[Rcpp::depends(BH)]]
 
 #include <boost/iostreams/filtering_streambuf.hpp>
