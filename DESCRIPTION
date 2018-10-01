@@ -25,7 +25,8 @@ Imports:
     tidyr,
     stats,
     rlang,
-    utils
+    utils,
+    Rcpp
 Suggests:
     covr,
     testthat,
@@ -35,3 +36,5 @@ Suggests:
 Encoding: UTF-8
 RoxygenNote: 6.1.0
 VignetteBuilder: knitr
+LinkingTo:
+    Rcpp
