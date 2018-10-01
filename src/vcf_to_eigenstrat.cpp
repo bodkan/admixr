@@ -93,7 +93,7 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
                   snp_file(std::string(eigenstrat) + ".snp"),
                   geno_file(std::string(eigenstrat) + ".geno");
 
-    std::istream* vcf_file;
+    std::unique_ptr<std::istream> vcf_file;
 
     // setup boost machinery that will be used for reading gzipped input
     boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
@@ -103,9 +103,9 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
 
     // check whether the VCF is gzipped and setup the input stream accordingly
     if (std::regex_search(vcf, std::regex(".vcf.gz"))) {
-        vcf_file = new std::istream(&in);
+        vcf_file = std::make_unique<std::istream>(&in);
     } else {
-        vcf_file = new std::ifstream(vcf);
+        vcf_file = std::make_unique<std::ifstream>(vcf);
     }
 
     std::string line;
