@@ -36,6 +36,4 @@ Suggests:
 Encoding: UTF-8
 RoxygenNote: 6.1.0
 VignetteBuilder: knitr
-LinkingTo:
-    Rcpp
-SystemRequirements: C++11
+LinkingTo: Rcpp, BH

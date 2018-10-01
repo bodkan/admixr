@@ -2,13 +2,14 @@
 #include <sstream>
 #include <fstream>
 #include <regex>
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/iostreams/copy.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
 
 #include <Rcpp.h>
 
 // [[Rcpp::plugins(cpp11)]]
+// [[Rcpp::depends(BH)]]
+
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 
 std::vector<std::string> split_line(std::string& line)
 {
