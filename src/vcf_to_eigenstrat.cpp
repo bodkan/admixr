@@ -11,6 +11,9 @@
 #include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
 
+
+
+// Split a single VCF line into individual tab-separated elements.
 std::vector<std::string> split_line(std::string& line)
 {
     std::istringstream ss(line);
@@ -21,6 +24,9 @@ std::vector<std::string> split_line(std::string& line)
     return tokens;
 }
 
+
+
+// Write a single row of a snp file.
 void write_snp(std::ofstream& file, const std::vector<std::string>& tokens)
 {
     file << tokens[2] << "\t" << // ID
@@ -31,10 +37,15 @@ void write_snp(std::ofstream& file, const std::vector<std::string>& tokens)
             tokens[4] << "\n";
 }
 
+
+
+// Write VCF sample names in an ind file format.
 void write_ind(std::ofstream& file, const std::vector<std::string> inds)
 {
     for (auto const & ind : inds) file << ind << "\tU\t" << ind << "\n";
 }
+
+
 
 // test case for VCF GT -> EIGENSTRAT conversion
 /* std::vector<std::string> gts{".|.", "./.", ".", "0|0", "0/0", "0", "0|1", "1|0", "0/1", "1|1", "1/1", "1", ".|.", "./.", ".", "0|0", "0/0", "0", "0|1", "1|0", "0/1", "1|1", "1/1", "1"}; */
@@ -46,6 +57,7 @@ void write_ind(std::ofstream& file, const std::vector<std::string> inds)
 /* ); */
 /* std::cout << str_gts << "\n"; */
 /* std::cout << convert_genotypes(str_gts) << "\n"; */
+// Convert genotypes from a VCF format into an EIGENSTRAT format.
 std::string convert_genotypes(const std::string& s)
 {
     std::string converted(s);
@@ -69,6 +81,9 @@ std::string convert_genotypes(const std::string& s)
     return converted;
 }
 
+
+
+// Write a single row of a geno file.
 void write_geno(std::ofstream& file, const std::string& line)
 {
     // extract part of the line after the GT format field
@@ -79,6 +94,8 @@ void write_geno(std::ofstream& file, const std::string& line)
     std::string converted = convert_genotypes(l);
     file << std::regex_replace(converted, std::regex("\t"), "") << "\n";
 }
+
+
 
 //' Convert VCF file into an EIGENSTRAT format
 //'
