@@ -6,6 +6,10 @@
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
 
+#include <Rcpp.h>
+
+// [[Rcpp::plugins(cpp11)]]
+
 std::vector<std::string> split_line(std::string& line)
 {
     std::istringstream ss(line);
@@ -75,30 +79,38 @@ void write_geno(std::ofstream& file, const std::string& line)
     file << std::regex_replace(converted, std::regex("\t"), "") << "\n";
 }
 
-void vcf_to_eigenstrat(std::string vcf_path, std::string eigenstrat_prefix) {
-    std::ofstream ind_file(eigenstrat_prefix + ".ind"),
-                  snp_file(eigenstrat_prefix + ".snp"),
-                  geno_file(eigenstrat_prefix + ".geno");
+//' Convert VCF file into an EIGENSTRAT format
+//'
+//' @param vcf A path to a VCF file.
+//' @param eigenstrat A path to an output EIGENSTRAT triplet.
+//'
+//' @export
+//'
+// [[Rcpp::export]]
+void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
+    std::ofstream ind_file(std::string(eigenstrat) + ".ind"),
+                  snp_file(std::string(eigenstrat) + ".snp"),
+                  geno_file(std::string(eigenstrat) + ".geno");
 
-    std::istream* vcf;
+    std::istream* vcf_file;
 
     // setup boost machinery that will be used for reading gzipped input
     boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
-    std::ifstream file(vcf_path, std::ios_base::in | std::ios_base::binary);
+    std::ifstream file(vcf, std::ios_base::in | std::ios_base::binary);
     in.push(boost::iostreams::gzip_decompressor());
     in.push(file);
 
     // check whether the VCF is gzipped and setup the input stream accordingly
-    if (std::regex_search(vcf_path, std::regex(".vcf.gz"))) {
-        vcf = new std::istream(&in);
+    if (std::regex_search(vcf, std::regex(".vcf.gz"))) {
+        vcf_file = new std::istream(&in);
     } else {
-        vcf = new std::ifstream(vcf_path);
+        vcf_file = new std::ifstream(vcf);
     }
 
     std::string line;
 
     // parse the header part of the VCF
-    while (std::getline(*vcf, line)) {
+    while (std::getline(*vcf_file, line)) {
         // skip the header
         if (line.find("##") == 0) continue;
 
@@ -112,7 +124,7 @@ void vcf_to_eigenstrat(std::string vcf_path, std::string eigenstrat_prefix) {
     }
 
     // parse the genotype part of the VCF
-    while (std::getline(*vcf, line)) {
+    while (std::getline(*vcf_file, line)) {
         auto elems = split_line(line);
 
         // write snp and geno records

@@ -16,7 +16,7 @@
 #' @param index Index the VCF with tabix?
 #'
 #' @export
-vcf_to_eigenstrat <- function(vcf, eigenstrat) {
+xvcf_to_eigenstrat <- function(vcf, eigenstrat) {
   vcf <- readr::read_tsv(vcf, comment = "##", progress = FALSE) %>%
     dplyr::rename(chrom = `#CHROM`, pos = POS, snp_id = ID, ref = REF, alt = ALT) %>%
     dplyr::select(-c(QUAL, FILTER, INFO, FORMAT))
@@ -43,7 +43,7 @@ vcf_to_eigenstrat <- function(vcf, eigenstrat) {
 
 #' @rdname vcf_to_eigenstrat
 #' @export
-eigenstrat_to_vcf <- function(eigenstrat, vcf, compress = TRUE, index = TRUE) {
+xeigenstrat_to_vcf <- function(eigenstrat, vcf, compress = TRUE, index = TRUE) {
   geno <- read_geno(eigenstrat)
   snp <- read_snp(eigenstrat)
 
