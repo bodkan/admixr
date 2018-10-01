@@ -95,6 +95,11 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
 
     std::unique_ptr<std::istream> vcf_file;
 
+    if (!std::ifstream(vcf)) {
+        std::cout << "File '" << vcf << "' not found.\n";
+        return;
+    }
+
     // setup boost machinery that will be used for reading gzipped input
     boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
     std::ifstream file(vcf, std::ios_base::in | std::ios_base::binary);
@@ -142,6 +147,7 @@ int main(int argc, char* argv[])
         std::cout << "Usage:\n\t./vcf_to_eigenstrat <path to VCF> <output EIGENSTRAT prefix>\n";
         return 0;
     }
+
     vcf_to_eigenstrat(argv[1], argv[2]);
     return 0;
 }
