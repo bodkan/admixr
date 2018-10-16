@@ -127,7 +127,7 @@ parse_matrix <- function(lines) {
 
 
 # Read output log file from a qp3Pop run.
-read_qpWave <- function(file, details) {
+read_qpWave <- function(file, details = FALSE) {
   log_lines <- readLines(file)
 
   test_pos  <- which(stringr::str_detect(log_lines, "f4info:"))
@@ -165,7 +165,7 @@ read_qpWave <- function(file, details) {
 
 
 # Read output log file from a qp3Pop run.
-read_qpAdm <- function(file, details = FALSE) {
+read_qpAdm <- function(file) {
   log_lines <- readLines(file)
 
   # parse the admixture proportions and standard errors
@@ -188,6 +188,11 @@ read_qpAdm <- function(file, details = FALSE) {
     stringr::str_replace(paste0("coverage: +", target, " +"), "") %>%
     as.numeric
 
+  proportions <- rbind(c(target, stats$proportion, stats$stderr, snp_count)) %>%
+    tibble::as_tibble() %>%
+    stats::setNames(c("target", source, paste0("stderr_", source), "nsnps")) %>%
+    dplyr::mutate_at(dplyr::vars(-target), as.numeric)
+
   # parse the population combination patterns into a data.frame
   pat_start <- stringr::str_detect(log_lines, "fixed pat") %>% which
   pat_end <- stringr::str_detect(log_lines, "best pat") %>% which
@@ -201,20 +206,15 @@ read_qpAdm <- function(file, details = FALSE) {
   if (any(stringr::str_detect(patterns, "infeasible"))) {
     pat_header <- c(pat_header, "comment")
     patterns[-1] <- sapply(patterns[-1], USE.NAMES = FALSE, function(l)
-                           if (stringr::str_detect(l, "infeasible")) l else paste0(l, " -"))
+      if (stringr::str_detect(l, "infeasible")) l else paste0(l, " -"))
   }
   pat_df <- patterns[-1] %>%
     paste0(collapse = "\n") %>%
     readr::read_delim(delim = " ", col_names = FALSE) %>%
     setNames(pat_header)
-
+  
   # parse the rank test results
-  ranks <- read_qpWave(file, details)
-
-  proportions <- rbind(c(target, stats$proportion, stats$stderr, snp_count)) %>%
-    tibble::as_tibble() %>%
-    stats::setNames(c("target", source, paste0("stderr_", source), "nsnps")) %>%
-    dplyr::mutate_at(dplyr::vars(-target), as.numeric)
+  ranks <- read_qpWave(file, TRUE)
 
   list(proportions = proportions, ranks = ranks, patterns = pat_df)
 }

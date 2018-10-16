@@ -117,7 +117,7 @@ qpAdm <- function(data, target, references, outgroups, details = FALSE, outdir =
 
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_output(files[["log_file"]], details)
+    read_output(files[["log_file"]])
   })
 
   # process the complex list of lists of dataframes into a more readable form
