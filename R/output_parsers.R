@@ -127,7 +127,7 @@ parse_matrix <- function(lines) {
 
 
 # Read output log file from a qp3Pop run.
-read_qpWave <- function(file, matrices = FALSE) {
+read_qpWave <- function(file, details) {
   log_lines <- readLines(file)
 
   test_pos  <- which(stringr::str_detect(log_lines, "f4info:"))
@@ -142,29 +142,33 @@ read_qpWave <- function(file, matrices = FALSE) {
     readr::read_tsv(col_names = c("rank", "df", "chisq", "tail", "dfdiff",
                                   "chisqdiff", "taildiff"))
 
-  if (!matrices) return(test_df)
-  else {
+  if (details) {
     B_matrix <- lapply(seq_along(b_pos), function(i) {
       parse_matrix(log_lines[(b_pos[i] + 1) : (a_pos[i] - 1)])
     }) %>% setNames(paste0(seq_along(.)))
-
+  
     A_matrix <- lapply(seq_along(a_pos), function(i) {
       parse_matrix(log_lines[(a_pos[i] + 1) : (a_end[i] - 2)])
     }) %>% setNames(paste0(seq_along(.)))
+  
+    matrices <- lapply(seq_along(B_matrix), function(rank) {
+      list(A = A_matrix[[rank]], B = B_matrix[[rank]])
+    })
 
-    return(list(ranks = test_df, A = A_matrix, B = B_matrix))
+    return(list(ranks = test_df, matrices = matrices))
+  } else {
+    return(test_df)
   }
+    
 }
 
 
 
 # Read output log file from a qp3Pop run.
-read_qpAdm <- function(file) {
+read_qpAdm <- function(file, details = FALSE) {
   log_lines <- readLines(file)
 
-  # parse the lines of the results section and extract the names of
-  # tested populations/individuals, estimated admixture proportions
-  # alpha, std. errors and Z-score
+  # parse the admixture proportions and standard errors
   stats <- stringr::str_subset(log_lines, "(Jackknife mean|std. errors):") %>%
     stringr::str_replace("(Jackknife mean|std. errors): +", "") %>%
     stringr::str_replace_all(" +", " ") %>%
@@ -172,27 +176,45 @@ read_qpAdm <- function(file) {
     stringr::str_split(" ") %>%
     lapply(as.numeric) %>%
     stats::setNames(c("proportion", "stderr"))
+
+  # parse the population names
   leftpops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
     .[, 1] %>%  { !is.na(.) } %>% which
-
   target <- log_lines[leftpops[1] + 1]
   source <- log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)]
 
-  # snp_count <- stringr::str_subset(log_lines, paste0("coverage: +", target_pop)) %>%
-  #   stringr::str_replace(paste0("coverage: +", target_pop, " +"), "") %>%
-  #   as.numeric
+  # parse the SNP count
+  snp_count <- stringr::str_subset(log_lines, paste0("coverage: +", target)) %>%
+    stringr::str_replace(paste0("coverage: +", target, " +"), "") %>%
+    as.numeric
 
-  # wide format
-  # rbind(c(target, stats$proportion, stats$stderr)) %>%
-  #   tibble::as_tibble() %>%
-  #   stats::setNames(c("target", source, paste0("stderr_", source))) %>%
-  #   dplyr::mutate_at(dplyr::vars(-target), as.numeric) %>% return
+  # parse the population combination patterns into a data.frame
+  pat_start <- stringr::str_detect(log_lines, "fixed pat") %>% which
+  pat_end <- stringr::str_detect(log_lines, "best pat") %>% which
+  patterns <- log_lines[pat_start : (pat_end[1] - 1)] %>%
+    stringr::str_replace(" fixed", "") %>%
+    stringr::str_replace(" prob", "") %>%
+    stringr::str_replace(" pattern", "") %>%
+    stringr::str_replace_all(" +", " ") %>%
+    stringr::str_replace_all("^ | $", "")
+  pat_header <- c(strsplit(patterns[1], " ")[[1]], source)
+  if (any(stringr::str_detect(patterns, "infeasible"))) {
+    pat_header <- c(pat_header, "comment")
+    patterns[-1] <- sapply(patterns[-1], USE.NAMES = FALSE, function(l)
+                           if (stringr::str_detect(l, "infeasible")) l else paste0(l, " -"))
+  }
+  pat_df <- patterns[-1] %>%
+    paste0(collapse = "\n") %>%
+    readr::read_delim(delim = " ", col_names = FALSE) %>%
+    setNames(pat_header)
 
-  # long format
-  tibble::tibble(
-    target,
-    source,
-    proportion = stats$proportion,
-    stderr = stats$stderr
-  )
+  # parse the rank test results
+  ranks <- read_qpWave(file, details)
+
+  proportions <- rbind(c(target, stats$proportion, stats$stderr, snp_count)) %>%
+    tibble::as_tibble() %>%
+    stats::setNames(c("target", source, paste0("stderr_", source), "nsnps")) %>%
+    dplyr::mutate_at(dplyr::vars(-target), as.numeric)
+
+  list(proportions = proportions, ranks = ranks, patterns = pat_df)
 }

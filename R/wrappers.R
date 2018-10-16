@@ -89,7 +89,7 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
 
 
 
-#' Calculate ancestry proportions in target populations using qpAdm.
+#' Calculate ancestry proportions in a set of target populations.
 #'
 #' @param target Vector of target populations (evaluated one at a time).
 #' @param references Reference source populations related to true ancestors.
@@ -99,10 +99,10 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
 #' @param outdir Where to put all generated files (temporary directory by default).
 #'
 #' @export
-qpAdm <- function(data, target, references, outgroups, outdir = NULL) {
+qpAdm <- function(data, target, references, outgroups, details = FALSE, outdir = NULL) {
   check_presence(c(target, references, outgroups), data)
 
-  dplyr::bind_rows(lapply(target, function(X) {
+  results <- lapply(target, function(X) {
     # get the path to the population, parameter and log files
     setup <- paste0("qpAdm")
     config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
@@ -117,13 +117,44 @@ qpAdm <- function(data, target, references, outgroups, outdir = NULL) {
 
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-    read_output(files[["log_file"]])
-  }))
+    read_output(files[["log_file"]], details)
+  })
+
+  # process the complex list of lists of dataframes into a more readable form
+  # by concatenating all internal dataframes and returning a simple list
+  # of three dataframes
+  proportions <- dplyr::bind_rows(lapply(results, function(x) x$proportions))
+  
+  if (details) {
+    ranks <- lapply(seq_along(target), function(i) { results[[i]]$ranks %>% dplyr::mutate(target = target[i]) }) %>%
+      dplyr::bind_rows() %>%
+      dplyr::select(target, dplyr::everything())
+    patterns <- lapply(seq_along(target), function(i) { results[[i]]$patterns %>% dplyr::mutate(target = target[i]) }) %>%
+      dplyr::bind_rows() %>%
+      dplyr::select(target, dplyr::everything())
+    return(list(
+      proportions = proportions,
+      ranks = ranks,
+      patterns = patterns
+    ))
+  } else {
+    return(proportions)
+  }
 }
 
 
 
-#' Find the most likely number of ancestry waves.
+#' Find the most likely number of ancestry waves using the qpWave method.
+#'
+#' Given a set of 'left' populations, estimate the lowest number of necessary
+#' admixture sources related to the set of 'right' populations.
+#'
+#' It has been shown (Reich, Nature 2012 - Reconstructing Native American
+#' population history) that if the 'left' populations are mixtures of N
+#' different sources related to the set of 'right' populations, the rank of the
+#' matrix of the form \eqn{f_4(left_i, left_j; right_k, right_l)} will have a
+#' rank N - 1. This function uses the ADMIXTOOLS command qpWave to find the
+#' lowest possible rank of this matrix that is consistent with the data.
 #'
 #' @param left,right Character vectors of populations labels.
 #' @param maxrank Maximum rank to test for.
@@ -131,7 +162,7 @@ qpAdm <- function(data, target, references, outgroups, outdir = NULL) {
 #' @inheritParams qpAdm
 #'
 #' @export
-qpWave <- function(data, left, right, maxrank = NULL, matrices = FALSE, outdir = NULL) {
+qpWave <- function(data, left, right, maxrank = NULL, details = FALSE, outdir = NULL) {
   check_presence(c(left, right), data)
 
   # get the path to the population, parameter and log files
@@ -152,6 +183,6 @@ qpWave <- function(data, left, right, maxrank = NULL, matrices = FALSE, outdir =
 
   run_cmd("qpWave", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
-  read_output(files[["log_file"]], matrices)
+  read_output(files[["log_file"]], details)
 }
 

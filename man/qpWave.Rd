@@ -2,9 +2,9 @@
 % Please edit documentation in R/wrappers.R
 \name{qpWave}
 \alias{qpWave}
-\title{Find the most likely number of ancestry waves.}
+\title{Find the most likely number of ancestry waves using the qpWave method.}
 \usage{
-qpWave(data, left, right, maxrank = NULL, matrices = FALSE,
+qpWave(data, left, right, maxrank = NULL, details = FALSE,
   outdir = NULL)
 }
 \arguments{
@@ -14,10 +14,19 @@ qpWave(data, left, right, maxrank = NULL, matrices = FALSE,
 
 \item{maxrank}{Maximum rank to test for.}
 
-\item{matrices}{Return the A, B matrices used in the rank calculations?}
-
 \item{outdir}{Where to put all generated files (temporary directory by default).}
+
+\item{matrices}{Return the A, B matrices used in rank calculations?}
 }
 \description{
-Find the most likely number of ancestry waves.
+Given a set of 'left' populations, estimate the lowest number of necessary
+admixture sources related to the set of 'right' populations.
+}
+\details{
+It has been shown (Reich, Nature 2012 - Reconstructing Native American
+population history) that if the 'left' populations are mixtures of N
+different sources related to the set of 'right' populations, the rank of the
+matrix of the form \eqn{f_4(left_i, left_j; right_k, right_l)} will have a
+rank N - 1. This function uses the ADMIXTOOLS command qpWave to find the
+lowest possible rank of this matrix that is consistent with the data.
 }
