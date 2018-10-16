@@ -214,7 +214,7 @@ read_qpAdm <- function(file) {
     setNames(pat_header)
   
   # parse the rank test results
-  ranks <- read_qpWave(file, TRUE)
+  ranks <- read_qpWave(file)
 
   list(proportions = proportions, ranks = ranks, patterns = pat_df)
 }
