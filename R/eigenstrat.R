@@ -136,7 +136,8 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = "
   # collect the results
   snp_hits <- readr::read_tsv(output,
                               col_names = c("chrom", "start", "end", "hit"),
-                              col_types = "ciii")
+                              col_types = "ciii",
+                              progress = FALSE)
 
   # extract only those sites passing the filter
   exclude <- snp[snp_hits$hit == as.integer(remove), ]
