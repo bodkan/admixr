@@ -18,8 +18,9 @@ count_snps <- function(data, missing = FALSE, prop = FALSE) {
     col <- "present"
   }
   geno <- read_geno(data)
-  dplyr::summarise_all(geno, dplyr::funs(fn(op(., 9)))) %>%
-    tidyr::gather(name, !!col)
+  result <- read_ind(data)
+  result[[col]] <- as.vector(t(dplyr::summarise_all(geno, dplyr::funs(fn(op(., 9))))))
+  result
 }
 
 
@@ -71,7 +72,8 @@ check_presence <- function(labels, data) {
 
 # Get path to the ADMIXTOOLS directory.
 admixtools_path <- function() {
-  system("which qpDstat", intern = TRUE) %>% stringr::str_replace("/bin.*", "")
+  system("realpath `which qpDstat`", intern = TRUE) %>%
+    stringr::str_replace("/bin.*", "")
 }
 
 

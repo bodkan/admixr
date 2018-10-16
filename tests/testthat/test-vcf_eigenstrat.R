@@ -1,10 +1,9 @@
 context("EIGENSTRAT-VCF conversion")
 
 test_that("vcf_to_eigenstrat and eigenstrat_to_vcf are inverse functions", {
-  data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
-  file.copy(from = paste0(stringr::str_replace(data$geno, ".geno", ".eigenstratgeno")),
-            to = data$geno, overwrite = TRUE)
-
+  data <- eigenstrat(prefix = file.path(admixtools_path(), "convertf", "example"),
+                     geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno"))
+  
   # create VCF from EIGENSTRAT
   new_vcf <- tempfile()
   eigenstrat_to_vcf(eigenstrat = data, vcf = new_vcf, compress = FALSE, index = FALSE)

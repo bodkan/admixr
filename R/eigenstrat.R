@@ -5,21 +5,26 @@
 #' encapsulates all paths to data files required for an ADMIXTOOLS analysis.
 #'
 #' @param prefix Shared path to an EIGENSTRAT trio (set of ind/snp/geno files).
+#' @param ind,snp,geno Paths to individual EIGENSTRAT components.
 #'
 #' @return S3 object of the EIGENSTRAT class.
 #'
 #' @export
-eigenstrat <- function(prefix) {
-  prefix <- path.expand(prefix)
+eigenstrat <- function(prefix = NULL, ind = NULL, snp = NULL, geno = NULL) {
+  if (is.null(prefix) & any(is.null(c(ind, snp, geno))))
+    stop("Insufficient information to get paths to ind/snp/geno files")
+
   data <- list(
-    ind = paste0(prefix, ".ind"),
-    snp = paste0(prefix, ".snp"),
-    geno = paste0(prefix, ".geno"),
+    ind = path.expand(ifelse(!is.null(ind), ind, paste0(prefix, ".ind"))),
+    snp = path.expand(ifelse(!is.null(snp), snp, paste0(prefix, ".snp"))),
+    geno = path.expand(ifelse(!is.null(geno), geno, paste0(prefix, ".geno"))),
     group = NULL,
     exclude = NULL
   )
-  if (!all(sapply(paste0(prefix, c(".ind", ".snp", ".geno")), file.exists)))
-    stop("Not all three ind/snp/geno files present", .call = FALSE)
+
+  if (!all(sapply(c(data$ind, data$snp, data$geno), file.exists)))
+    stop("Not all three ind/snp/geno files present", call. = FALSE)
+
   class(data) <- "EIGENSTRAT"
   data
 }
@@ -35,6 +40,11 @@ eigenstrat <- function(prefix) {
 #'
 #' @export
 print.EIGENSTRAT <- function(x, ...) {
+  if (!is.null(x$exclude)) {
+    excluded_n <- nrow(read_snp(x, exclude = TRUE))
+    included_n <- nrow(read_snp(x)) - excluded_n
+  }
+
   cat(paste0(
     "EIGENSTRAT object\n",
     "=================\n",
@@ -45,12 +55,10 @@ print.EIGENSTRAT <- function(x, ...) {
     "\n\nmodifiers:",
     "\n  groups: ", ifelse(is.null(x$group), "none", x$group),
     "\n  excluded sites: ",
-      ifelse(is.null(x$exclude),
-                     "none",
-                     paste0(x$exclude,
-                            "\n    (",
-                            nrow(read_snp(x, exclude = TRUE)),
-                            " SNPs will be excluded)")), "\n"))
+    ifelse(is.null(x$exclude),
+           "none",
+           paste0(x$exclude,"\n    (", excluded_n, " SNPs will be excluded, ",
+                                       included_n, " SNPs remaining)\n"))))
 }
 
 
