@@ -70,13 +70,6 @@ check_presence <- function(labels, data) {
 
 
 
-# Get path to the ADMIXTOOLS directory.
-admixtools_path <- function() {
-  system("realpath `which qpDstat`", intern = TRUE) %>%
-    stringr::str_replace("/bin.*", "")
-}
-
-
 
 #' Download example SNP data.
 #'

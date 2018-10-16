@@ -22,3 +22,7 @@ snp_to_bed <- function(snp, bed) {
         readr::write_tsv(bed, col_names = FALSE)
 }
 
+admixtools_path <- function() {
+  system("which qpDstat", intern = TRUE) %>%
+    stringr::str_replace("/bin.*", "")
+}
