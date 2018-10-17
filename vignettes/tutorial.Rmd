@@ -550,8 +550,8 @@ Assuming all of that, we can run qpAdm with:
 
 ```{r qpAdm}
 result <- qpAdm(
-  target = c("French", "Sardinian", "Mbuti", "Dinka"),
-  references = c("Vindija", "Yoruba"),
+  target = c("French", "Sardinian"),
+  references = c("Vindija", "Mbuti"),
   outgroups = c("Chimp", "Denisova", "Altai"),
   data = snp_data
 )
@@ -587,12 +587,18 @@ Test, making U={U, Test}, showing that it does not increase the rank, and can
 thus be modelled as a mixture of the initial pair.
 
 ```{r}
-qpWave(left = c("French", "Sardinian", "Han", "Papuan"),
-       right = c("Mbuti", "Yoruba", "Dinka"),
-       data = snps)
+# rank 0
+qpWave(left = c("French", "Sardinian", "Han"),
+       right = c("Dinka", "Altai", "Denisova", "Yoruba", "Mbuti"),
+       data = snp_data)
 ```
 
-
+```{r}
+# rank 1
+qpWave(left = c("Papuan", "French", "Sardinian", "Han"),
+       right = c("Dinka", "Altai", "Denisova", "Yoruba", "Mbuti"),
+       data = snp_data)
+```
 
 
 

@@ -145,11 +145,11 @@ read_qpWave <- function(file, details = FALSE) {
   if (details) {
     B_matrix <- lapply(seq_along(b_pos), function(i) {
       parse_matrix(log_lines[(b_pos[i] + 1) : (a_pos[i] - 1)])
-    }) %>% setNames(paste0(seq_along(.)))
+    }) %>% stats::setNames(paste0(seq_along(.)))
   
     A_matrix <- lapply(seq_along(a_pos), function(i) {
       parse_matrix(log_lines[(a_pos[i] + 1) : (a_end[i] - 2)])
-    }) %>% setNames(paste0(seq_along(.)))
+    }) %>% stats::setNames(paste0(seq_along(.)))
   
     matrices <- lapply(seq_along(B_matrix), function(rank) {
       list(A = A_matrix[[rank]], B = B_matrix[[rank]])
@@ -211,7 +211,7 @@ read_qpAdm <- function(file) {
   pat_df <- patterns[-1] %>%
     paste0(collapse = "\n") %>%
     readr::read_delim(delim = " ", col_names = FALSE) %>%
-    setNames(pat_header)
+    stats::setNames(pat_header)
   
   # parse the rank test results
   ranks <- read_qpWave(file)

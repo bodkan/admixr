@@ -94,12 +94,14 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
 #' @param target Vector of target populations (evaluated one at a time).
 #' @param references Reference source populations related to true ancestors.
 #' @param outgroups Outgroup populations.
+#' @param details Include detailed information about model fit? Otherwise
+#'   return just admixture proportions.
 #'
 #' @param data EIGENSTRAT data object.
 #' @param outdir Where to put all generated files (temporary directory by default).
 #'
 #' @export
-qpAdm <- function(data, target, references, outgroups, details = FALSE, outdir = NULL) {
+qpAdm <- function(data, target, references, outgroups, details = TRUE, outdir = NULL) {
   check_presence(c(target, references, outgroups), data)
 
   results <- lapply(target, function(X) {
@@ -158,7 +160,7 @@ qpAdm <- function(data, target, references, outgroups, details = FALSE, outdir =
 #'
 #' @param left,right Character vectors of populations labels.
 #' @param maxrank Maximum rank to test for.
-#' @param matrices Return the A, B matrices used in rank calculations?
+#' @param details Return the A, B matrices used in rank calculations?
 #' @inheritParams qpAdm
 #'
 #' @export

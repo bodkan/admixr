@@ -14,9 +14,9 @@ qpWave(data, left, right, maxrank = NULL, details = FALSE,
 
 \item{maxrank}{Maximum rank to test for.}
 
-\item{outdir}{Where to put all generated files (temporary directory by default).}
+\item{details}{Return the A, B matrices used in rank calculations?}
 
-\item{matrices}{Return the A, B matrices used in rank calculations?}
+\item{outdir}{Where to put all generated files (temporary directory by default).}
 }
 \description{
 Given a set of 'left' populations, estimate the lowest number of necessary
