@@ -1,3 +1,7 @@
+# admixr 0.5.0
+
+* Added full implementations of qpWave and qpAdm methods.
+
 # admixr 0.4.1
 
 * Fixed missing `group_labels()` update.
