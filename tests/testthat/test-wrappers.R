@@ -64,10 +64,9 @@ test_that("qpAdm wrapper produces correct results", {
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
   right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
     stringr::str_subset("^[^#]")
-  expect_equal(
-    qpAdm(target = left[1], references = left[-1], outgroups = right, details = FALSE, data = data),
-    read_output(file.path(examples_dir, "test_qpAdm.log"))$proportions
-  )
+  props1 <- qpAdm(target = left[1], references = left[-1], outgroups = right, details = TRUE, data = data)$proportions
+  props2 <- read_output(file.path(examples_dir, "test_qpAdm.log"))$proportions
+  expect_equal(props1, props2)
 })
 
 
