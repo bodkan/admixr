@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate ancestry proportions in a set of target populations. — qpAdm • admixr</title>
+<title>Find the most likely number of ancestry waves using the qpWave method. — qpWave • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Calculate ancestry proportions in a set of target populations. — qpAdm" />
+<meta property="og:title" content="Find the most likely number of ancestry waves using the qpWave method. — qpWave" />
 
-<meta property="og:description" content="Calculate ancestry proportions in a set of target populations." />
+<meta property="og:description" content="Given a set of 'left' populations, estimate the lowest number of necessary
+admixture sources related to the set of 'right' populations." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,18 +116,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate ancestry proportions in a set of target populations.</h1>
+    <h1>Find the most likely number of ancestry waves using the qpWave method.</h1>
     <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
-    <div class="hidden name"><code>qpAdm.Rd</code></div>
+    <div class="hidden name"><code>qpWave.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Calculate ancestry proportions in a set of target populations.</p>
+    <p>Given a set of 'left' populations, estimate the lowest number of necessary
+admixture sources related to the set of 'right' populations.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>qpAdm</span>(<span class='no'>data</span>, <span class='no'>target</span>, <span class='no'>references</span>, <span class='no'>outgroups</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>qpWave</span>(<span class='no'>data</span>, <span class='no'>left</span>, <span class='no'>right</span>, <span class='kw'>maxrank</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -137,22 +139,31 @@
       <td><p>EIGENSTRAT data object.</p></td>
     </tr>
     <tr>
-      <th>target</th>
-      <td><p>Vector of target populations (evaluated one at a time).</p></td>
+      <th>left, right</th>
+      <td><p>Character vectors of populations labels.</p></td>
     </tr>
     <tr>
-      <th>references</th>
-      <td><p>Reference source populations related to true ancestors.</p></td>
-    </tr>
-    <tr>
-      <th>outgroups</th>
-      <td><p>Outgroup populations.</p></td>
+      <th>maxrank</th>
+      <td><p>Maximum rank to test for.</p></td>
     </tr>
     <tr>
       <th>outdir</th>
       <td><p>Where to put all generated files (temporary directory by default).</p></td>
     </tr>
+    <tr>
+      <th>matrices</th>
+      <td><p>Return the A, B matrices used in rank calculations?</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>It has been shown (Reich, Nature 2012 - Reconstructing Native American
+population history) that if the 'left' populations are mixtures of N
+different sources related to the set of 'right' populations, the rank of the
+matrix of the form \(f_4(left_i, left_j; right_k, right_l)\) will have a
+rank N - 1. This function uses the ADMIXTOOLS command qpWave to find the
+lowest possible rank of this matrix that is consistent with the data.</p>
     
 
   </div>
@@ -160,7 +171,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

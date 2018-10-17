@@ -5,6 +5,7 @@ reference:
     - d
     - f4
     - f4ratio
+    - qpWave
     - qpAdm
 
   - title: Data processing and filtering

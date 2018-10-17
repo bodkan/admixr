@@ -70,7 +70,6 @@ check_presence <- function(labels, data) {
 
 
 
-
 #' Download example SNP data.
 #'
 #' @param dirname Directory in which to put the data (EIGENSTRAT trio of snp/geno/ind files).
