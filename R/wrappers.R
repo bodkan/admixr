@@ -9,8 +9,7 @@ f4ratio <- function(data, X, A, B, C, O, outdir = NULL) {
   check_presence(c(X, A, B, C, O), data)
 
   # get the path to the population, parameter and log files
-  setup <- paste0("qpF4ratio__", A, "_", B, "_", C, "_", O)
-  config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
+  config_prefix <- paste0("qpF4ratio__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
   files <- get_files(outdir, config_prefix)
 
   create_qpF4ratio_pop_file(X = X, A = A, B = B, C = C, O = O, file = files[["pop_file"]])
@@ -32,8 +31,7 @@ d <- function(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE) {
   check_presence(c(W, X, Y, Z), data)
 
   # get the path to the population, parameter and log files
-  setup <- paste0("qpDstat")
-  config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
+  config_prefix <- paste0("qpDstat__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
   files <- get_files(outdir, config_prefix)
 
   create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
@@ -71,8 +69,7 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
   check_presence(c(A, B, C), data)
 
   # get the path to the population, parameter and log files
-  setup <- paste0("qp3Pop")
-  config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
+  config_prefix <- paste0("qp3Pop__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
   files <- get_files(outdir, config_prefix)
 
   create_qp3Pop_pop_file(A, B, C, file = files[["pop_file"]])
@@ -106,8 +103,7 @@ qpAdm <- function(data, target, references, outgroups, details = TRUE, outdir = 
 
   results <- lapply(target, function(X) {
     # get the path to the population, parameter and log files
-    setup <- paste0("qpAdm")
-    config_prefix <- paste0(setup, "__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
+    config_prefix <- paste0("qpAdm__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
     files <- get_files(outdir, config_prefix)
 
     files[["popleft"]] <-  stringr::str_replace(files[["pop_file"]], "$", "left")
