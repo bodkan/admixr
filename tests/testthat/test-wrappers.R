@@ -66,7 +66,7 @@ test_that("qpAdm wrapper produces correct results", {
     stringr::str_subset("^[^#]")
   expect_equal(
     qpAdm(target = left[1], references = left[-1], outgroups = right, data = data),
-    read_output(file.path(examples_dir, "test_qpAdm.log"))
+    read_output(file.path(examples_dir, "test_qpAdm.log"))$proportions
   )
 })
 
