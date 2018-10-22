@@ -1,6 +1,6 @@
 # admixr 0.5.0
 
-* Added full implementations of qpWave and qpAdm methods.
+* Added full implementations of `qpWave()` and `qpAdm()` functions.
 
 # admixr 0.4.1
 
