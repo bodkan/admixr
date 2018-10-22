@@ -9,3 +9,4 @@ vignettes/*.R
 vignettes/*.docx
 vignettes/*.md
 vignettes/figure
+*.html
