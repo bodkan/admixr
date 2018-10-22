@@ -113,7 +113,7 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
     std::unique_ptr<std::istream> vcf_file;
 
     if (!std::ifstream(vcf)) {
-        std::cout << "File '" << vcf << "' not found.\n";
+        Rcpp::Rcerr << "File '" << vcf << "' not found.\n";
         return;
     }
 
@@ -158,14 +158,13 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
     }
 }
 
-int main(int argc, char* argv[])
-{
-    if (argc != 3) {
-        std::cout << "Usage:\n\t./vcf_to_eigenstrat <path to VCF> <output EIGENSTRAT prefix>\n";
-        return 0;
-    }
-
-    vcf_to_eigenstrat(argv[1], argv[2]);
-    return 0;
-}
-
+// int main(int argc, char* argv[])
+// {
+//     if (argc != 3) {
+//         std::cout << "Usage:\n\t./vcf_to_eigenstrat <path to VCF> <output EIGENSTRAT prefix>\n";
+//         return 0;
+//     }
+// 
+//     vcf_to_eigenstrat(argv[1], argv[2]);
+//     return 0;
+// }
