@@ -163,6 +163,7 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
         
         auto elems = split_line(line);
 
+        // keep only biallelic SNPs
         if (elems[3].length() != 1 || elems[4].length() != 1 || elems[4] == ".")
             continue;
 
