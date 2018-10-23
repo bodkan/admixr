@@ -62,6 +62,9 @@ std::string convert_genotypes(const std::string& s)
 {
     std::string converted(s);
 
+    // remove all fields except the GT field
+    converted = std::regex_replace(converted, std::regex("(^|\t)([^:\t]+)[^\t]*"), "$1$2");
+
     converted = std::regex_replace(converted, std::regex("\t0(\t|$)"),         "\t2$1");
     converted = std::regex_replace(converted, std::regex("\t1(\t|$)"),         "\t0$1");
     converted = std::regex_replace(converted, std::regex("\t\\./\\.(\t|$)"),   "\t9$1");
@@ -111,6 +114,13 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
                   geno_file(std::string(eigenstrat) + ".geno");
 
     std::unique_ptr<std::istream> vcf_file;
+
+   //  std::string str("\t0:ad:qe:bt\t1:zc:sf\t0|0:qwe:duh\t.\n");
+   //  Rcpp::Rcout << str;
+   //  Rcpp::Rcout << std::regex_replace(str,
+   //                     std::regex("(^|\t)([^:\t]+)[^\t]*"),
+   //                     "$1$2");
+   // return;
 
     if (!std::ifstream(vcf)) {
         Rcpp::Rcerr << "File '" << vcf << "' not found.\n";
