@@ -54,7 +54,8 @@ test_that("Merging of population labels", {
 # SNP counting ------------------------------------------------------------
 
 test_that("SNP counts correspond to numbers from CLI utilities", {
-  data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
+  data <- eigenstrat(prefix = file.path(admixtools_path(), "convertf", "example"),
+                     geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno"))
 
   sample_names <- read_ind(data)$id
   shell_counts <- seq_along(sample_names) %>%
@@ -78,7 +79,8 @@ test_that("SNP counts correspond to numbers from CLI utilities", {
 # EIGENSTRAT merging--------------------------------------------------------
 
 test_that("Merging produces correct results", {
-  data <- eigenstrat(file.path(admixtools_path(), "convertf", "example"))
+  data <- eigenstrat(prefix = file.path(admixtools_path(), "convertf", "example"),
+                     geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno"))
 
   # read a testing EIGENSTRAT dataset and split it in two parts
   geno <- read_geno(data)

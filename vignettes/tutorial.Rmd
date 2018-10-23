@@ -550,8 +550,8 @@ Assuming all of that, we can run qpAdm with:
 
 ```{r qpAdm}
 result <- qpAdm(
-  target = c("French", "Sardinian", "Mbuti", "Dinka"),
-  references = c("Vindija", "Yoruba"),
+  target = c("French", "Sardinian"),
+  references = c("Vindija", "Mbuti"),
   outgroups = c("Chimp", "Denisova", "Altai"),
   data = snp_data
 )
@@ -571,6 +571,34 @@ that the qpAdm estimates are very close to what we got earlier.
 
 
 
+
+
+
+
+## qpWave
+
+
+From Haak et al.:
+
+first testing a pair of source populations (left list U) to ensure that they
+have rank=1 with respect to the outgroups, which shows that they are descended
+from two independent streams of ancestry. We will then add a third population
+Test, making U={U, Test}, showing that it does not increase the rank, and can
+thus be modelled as a mixture of the initial pair.
+
+```{r}
+# rank 0
+qpWave(left = c("French", "Sardinian", "Han"),
+       right = c("Dinka", "Altai", "Denisova", "Yoruba", "Mbuti"),
+       data = snp_data)
+```
+
+```{r}
+# rank 1
+qpWave(left = c("Papuan", "French", "Sardinian", "Han"),
+       right = c("Dinka", "Altai", "Denisova", "Yoruba", "Mbuti"),
+       data = snp_data)
+```
 
 
 

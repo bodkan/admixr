@@ -12,3 +12,4 @@ vignettes/figure
 src/*.o
 src/*.so
 src/*.dll
+*.html

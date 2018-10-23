@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate ancestry proportions in target populations using qpAdm. — qpAdm • admixr</title>
+<title>Calculate ancestry proportions in a set of target populations. — qpAdm • admixr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Calculate ancestry proportions in target populations using qpAdm. — qpAdm" />
+<meta property="og:title" content="Calculate ancestry proportions in a set of target populations. — qpAdm" />
 
-<meta property="og:description" content="Calculate ancestry proportions in target populations using qpAdm." />
+<meta property="og:description" content="Calculate ancestry proportions in a set of target populations." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
       </span>
     </div>
 
@@ -115,18 +115,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate ancestry proportions in target populations using qpAdm.</h1>
+    <h1>Calculate ancestry proportions in a set of target populations.</h1>
     <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
     <div class="hidden name"><code>qpAdm.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Calculate ancestry proportions in target populations using qpAdm.</p>
+    <p>Calculate ancestry proportions in a set of target populations.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>qpAdm</span>(<span class='no'>data</span>, <span class='no'>target</span>, <span class='no'>references</span>, <span class='no'>outgroups</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>qpAdm</span>(<span class='no'>data</span>, <span class='no'>target</span>, <span class='no'>references</span>, <span class='no'>outgroups</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,6 +147,11 @@
     <tr>
       <th>outgroups</th>
       <td><p>Outgroup populations.</p></td>
+    </tr>
+    <tr>
+      <th>details</th>
+      <td><p>Include detailed information about model fit? Otherwise
+return just admixture proportions.</p></td>
     </tr>
     <tr>
       <th>outdir</th>

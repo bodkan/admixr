@@ -2,9 +2,10 @@
 % Please edit documentation in R/wrappers.R
 \name{qpAdm}
 \alias{qpAdm}
-\title{Calculate ancestry proportions in target populations using qpAdm.}
+\title{Calculate ancestry proportions in a set of target populations.}
 \usage{
-qpAdm(data, target, references, outgroups, outdir = NULL)
+qpAdm(data, target, references, outgroups, details = TRUE,
+  outdir = NULL)
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}
@@ -15,8 +16,11 @@ qpAdm(data, target, references, outgroups, outdir = NULL)
 
 \item{outgroups}{Outgroup populations.}
 
+\item{details}{Include detailed information about model fit? Otherwise
+return just admixture proportions.}
+
 \item{outdir}{Where to put all generated files (temporary directory by default).}
 }
 \description{
-Calculate ancestry proportions in target populations using qpAdm.
+Calculate ancestry proportions in a set of target populations.
 }
