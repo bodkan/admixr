@@ -31,6 +31,6 @@ before_install:
     # return to the top directory
   - popd
   - mkdir ~/.R/
-  - echo "CXX=g++-7" > ~/.R/Makevars
+  - echo "CXX=g++-7 -Wno-deprecated-declarations" > ~/.R/Makevars
 after_success:
   - Rscript -e 'covr::codecov()'
