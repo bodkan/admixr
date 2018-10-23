@@ -155,17 +155,19 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
             break;
         }
     }
-    
-    long i = 0;
+
+    long n(0), passed(0);
     // parse the genotype part of the VCF
     while (std::getline(*vcf_file, line)) {
-        if (i++ % 10000) Rcpp::checkUserInterrupt();
+        if (n++ % 10000) Rcpp::checkUserInterrupt();
         
         auto elems = split_line(line);
 
         // keep only biallelic SNPs
         if (elems[3].length() != 1 || elems[4].length() != 1 || elems[4] == ".")
             continue;
+        else
+            passed++;
 
         // write snp and geno records
         if (line.find("#") != 0) {
@@ -173,6 +175,9 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
             write_geno(geno_file, line);
         }
     }
+
+    Rcpp::Rcout << "Total number of variants processed: " << n << "\n";
+    Rcpp::Rcout << "Number of bi-allelic variants saved to EIGENSTRAT: " << passed << "\n";
 }
 
 // int main(int argc, char* argv[])
