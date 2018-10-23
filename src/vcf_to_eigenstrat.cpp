@@ -62,11 +62,13 @@ std::string convert_genotypes(const std::string& s)
 {
     std::string converted(s);
 
-    converted = std::regex_replace(converted, std::regex("\t0(\t|$)"),         "\t2$1");
-    converted = std::regex_replace(converted, std::regex("\t1(\t|$)"),         "\t0$1");
-    converted = std::regex_replace(converted, std::regex("\t\\./\\.(\t|$)"),   "\t9$1");
+    converted = std::regex_replace(converted, std::regex("(^|\t)0(\t|$)"), "$1#$2");
+    converted = std::regex_replace(converted, std::regex("(^|\t)1(\t|$)"), "$1%$2");
+    converted = std::regex_replace(converted, std::regex("#"), "2");
+    converted = std::regex_replace(converted, std::regex("%"), "0");
 
     converted = std::regex_replace(converted, std::regex("\\.\\|\\."), "9");
+    converted = std::regex_replace(converted, std::regex("\\./\\."),   "9");
     converted = std::regex_replace(converted, std::regex("\\."),       "9");
 
     converted = std::regex_replace(converted, std::regex("0\\|0"),     "2");
@@ -75,9 +77,11 @@ std::string convert_genotypes(const std::string& s)
     converted = std::regex_replace(converted, std::regex("0\\|1"),     "1");
     converted = std::regex_replace(converted, std::regex("1\\|0"),     "1");
     converted = std::regex_replace(converted, std::regex("0/1"),       "1");
+    converted = std::regex_replace(converted, std::regex("1/0"),       "1");
 
     converted = std::regex_replace(converted, std::regex("1\\|1"),     "0");
     converted = std::regex_replace(converted, std::regex("1/1"),       "0");
+
     return converted;
 }
 
