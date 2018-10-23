@@ -8,6 +8,9 @@
 # admixr 0.5.0
 
 * Added full implementations of `qpWave()` and `qpAdm()` functions.
+* `filter_bed()` now implemented simply by calling `bedtools` in the background.
+  This turned out to be way faster and memory efficient than the previous
+  data.table-based solution.
 
 # admixr 0.4.1
 

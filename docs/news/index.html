@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.6.0</span>
       </span>
     </div>
 
@@ -116,11 +116,21 @@
       <small>Source: <a href='https://github.com/bodkan/admixr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="admixr-0-6-0" class="section level1">
+<h1 class="page-header">
+<a href="#admixr-0-6-0" class="anchor"></a>admixr 0.6.0</h1>
+<ul>
+<li>Conversion of VCF to EIGENSTRAT format is now implemented in C++ and should be approximately infinitely faster than the old conversion function written in pure R.</li>
+<li>Conversion of EIGENSTRAT <em>into</em> VCF has been removed.</li>
+</ul>
+</div>
     <div id="admixr-0-5-0" class="section level1">
 <h1 class="page-header">
 <a href="#admixr-0-5-0" class="anchor"></a>admixr 0.5.0</h1>
 <ul>
 <li>Added full implementations of <code><a href="../reference/qpWave.html">qpWave()</a></code> and <code><a href="../reference/qpAdm.html">qpAdm()</a></code> functions.</li>
+<li>
+<code><a href="../reference/filter_bed.html">filter_bed()</a></code> now implemented simply by calling <code>bedtools</code> in the background. This turned out to be way faster and memory efficient than the previous data.table-based solution.</li>
 </ul>
 </div>
     <div id="admixr-0-4-1" class="section level1">
@@ -176,6 +186,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#admixr-0-6-0">0.6.0</a></li>
         <li><a href="#admixr-0-5-0">0.5.0</a></li>
         <li><a href="#admixr-0-4-1">0.4.1</a></li>
         <li><a href="#admixr-0-4-0">0.4.0</a></li>
