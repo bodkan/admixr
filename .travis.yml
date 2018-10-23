@@ -3,6 +3,12 @@ sudo: false
 cache:
   directories: /tmp/deps
   packages: true
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-6
 before_install:
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
