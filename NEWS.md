@@ -1,3 +1,10 @@
+# admixr 0.6.0
+
+* Conversion of VCF to EIGENSTRAT format is now implemented in C++ and should
+  be approximately infinitely faster than the old conversion function written
+  in pure R.
+* Conversion of EIGENSTRAT _into_ VCF has been removed.
+
 # admixr 0.5.0
 
 * Added full implementations of `qpWave()` and `qpAdm()` functions.
