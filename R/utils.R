@@ -89,6 +89,17 @@ download_data <- function(dirname = tempdir()) {
 
 
 
+# this looks incredibly hacky, but seems to be a solution to my R CMD check
+# "missing global variable" NOTE woes caused by dplyr code (the following
+# are not actually global variables)
+utils::globalVariables(
+  names = c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
+            "FORMAT", "chrom", "pos", "snp_id", "ref", "alt", "gen_dist",
+            "sample_id", "name", "target", ".", "start", "end"),
+            package = "admixr")
+
+
+
 #' Pipe operator
 #' 
 #' Added via usethis::use_pipe().
@@ -104,12 +115,8 @@ download_data <- function(dirname = tempdir()) {
 NULL
 
 
-# this looks incredibly hacky, but seems to be a solution to my R CMD check
-# "missing global variable" NOTE woes caused by dplyr code (the following
-# are not actually global variables)
-utils::globalVariables(
-  names = c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
-            "FORMAT", "chrom", "pos", "snp_id", "ref", "alt", "gen_dist",
-            "sample_id", "name", "target", ".", "start", "end"),
-            package = "admixr")
+
+#' @useDynLib admixr, .registration = TRUE
+#' @importFrom Rcpp sourceCpp
+NULL
 

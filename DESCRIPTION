@@ -15,7 +15,7 @@ License: MIT + file LICENSE
 URL: https://github.com/bodkan/admixr
 BugReports: https://github.com/bodkan/admixr/issues
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.4.0)
 Imports:
     dplyr,
     magrittr,
@@ -25,7 +25,8 @@ Imports:
     tidyr,
     stats,
     rlang,
-    utils
+    utils,
+    Rcpp
 Suggests:
     covr,
     testthat,
@@ -35,3 +36,4 @@ Suggests:
 Encoding: UTF-8
 RoxygenNote: 6.1.0
 VignetteBuilder: knitr
+LinkingTo: Rcpp, BH
