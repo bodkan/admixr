@@ -30,5 +30,7 @@ before_install:
   - export PATH=$PATH:$PWD/bedtools2/bin/
     # return to the top directory
   - popd
+  - mkdir ~/.R/
+  - echo "CXX=g++-7" > ~/.R/Makevars
 after_success:
   - Rscript -e 'covr::codecov()'
