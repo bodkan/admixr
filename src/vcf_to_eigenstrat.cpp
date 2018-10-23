@@ -62,9 +62,6 @@ std::string convert_genotypes(const std::string& s)
 {
     std::string converted(s);
 
-    // remove all fields except the GT field
-    converted = std::regex_replace(converted, std::regex("(^|\t)([^:\t]+)[^\t]*"), "$1$2");
-
     converted = std::regex_replace(converted, std::regex("\t0(\t|$)"),         "\t2$1");
     converted = std::regex_replace(converted, std::regex("\t1(\t|$)"),         "\t0$1");
     converted = std::regex_replace(converted, std::regex("\t\\./\\.(\t|$)"),   "\t9$1");
@@ -93,6 +90,9 @@ void write_geno(std::ofstream& file, const std::string& line)
     std::string l = line.substr(line.rfind("GT"));
     // remove the GT field and keep just the individual genotypes
     l = l.substr(l.find("\t") + 1);
+    // remove all fields except the GT field
+    l = std::regex_replace(l, std::regex("(^|\t)([^:\t]+)[^\t]*"), "$1$2");
+    
     // convert the genotypes on the line and concatenate them
     std::string converted = convert_genotypes(l);
     file << std::regex_replace(converted, std::regex("\t"), "") << "\n";
@@ -155,10 +155,16 @@ void vcf_to_eigenstrat(const char* vcf, const char* eigenstrat) {
             break;
         }
     }
-
+    
+    long i = 0;
     // parse the genotype part of the VCF
     while (std::getline(*vcf_file, line)) {
+        if (i++ % 10000) Rcpp::checkUserInterrupt();
+        
         auto elems = split_line(line);
+
+        if (elems[3].length() != 1 || elems[4].length() != 1 || elems[4] == ".")
+            continue;
 
         // write snp and geno records
         if (line.find("#") != 0) {
