@@ -113,10 +113,3 @@ utils::globalVariables(
 #' @importFrom magrittr %>%
 #' @usage lhs \%>\% rhs
 NULL
-
-
-
-#' @useDynLib admixr, .registration = TRUE
-#' @importFrom Rcpp sourceCpp
-NULL
-
