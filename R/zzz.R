@@ -10,7 +10,3 @@
     )
   }
 }
-
-.onUnload <- function (libpath) {
-   library.dynam.unload("admixr", libpath)
-}

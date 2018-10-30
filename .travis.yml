@@ -3,16 +3,6 @@ sudo: false
 cache:
   directories: /tmp/deps
   packages: true
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    # g++-6 compiler was finding warnings in Boos which were interpreted
-    # as errors by the R check process - switching to Clang toolchain fixes this
-    - clang-3.8 
-    - libboost-iostreams-dev
-    - libc++-dev
 before_install:
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
@@ -34,8 +24,5 @@ before_install:
   - export PATH=$PATH:$PWD/bedtools2/bin/
     # return to the top directory
   - popd
-    # set compiler options
-  - mkdir ~/.R/
-  - echo "CXX=clang-3.8 -std=c++14 -stdlib=libc++ -lstdc++" > ~/.R/Makevars
 after_success:
   - Rscript -e 'covr::codecov()'

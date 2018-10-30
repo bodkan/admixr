@@ -1,3 +1,13 @@
+# admixr 0.6.1
+
+* It turned out that dragging along Rcpp and Boost dependencies just for the
+  VCF -> EIGENSTRAT conversion function causes unnecessary complications in
+  the installation process. It's not worth having it in the package if it
+  would be used only by a small fraction of potential users.
+
+  This function has been removed and the `vcf2eigenstrat` program is maintained
+  in its own repository.
+
 # admixr 0.6.0
 
 * Conversion of VCF to EIGENSTRAT format is now implemented in C++ and should
