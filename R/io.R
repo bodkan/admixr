@@ -11,7 +11,8 @@
 #' @export
 read_ind <- function(data) {
   path <- ifelse(is.null(data$group), data$ind, data$group)
-  read.table(path, col.names = c("id", "sex", "label"), stringsAsFactors = FALSE)
+  read.table(path, col.names = c("id", "sex", "label"), stringsAsFactors = FALSE) %>%
+    tibble::as_tibble()
 }
 
 

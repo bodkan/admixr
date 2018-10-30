@@ -1,8 +1,7 @@
 context("EIGENSTRAT file I/O functionality")
 
 prefix <- file.path(admixtools_path(), "convertf", "example")
-file.copy(from = paste0(prefix, ".eigenstratgeno"), to = paste0(prefix, ".geno"), overwrite = TRUE)
-data <- eigenstrat(prefix)
+data <- eigenstrat(prefix, geno = paste0(prefix, ".eigenstratgeno"))
 
 # read_ind / write_ind ----------------------------------------------------
 
