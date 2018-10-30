@@ -11,7 +11,7 @@
 #' @export
 read_ind <- function(data) {
   path <- ifelse(is.null(data$group), data$ind, data$group)
-  readr::read_table2(path, col_names = c("id", "sex", "label"), col_types = "ccc")
+  read.table(path, col.names = c("id", "sex", "label"))
 }
 
 

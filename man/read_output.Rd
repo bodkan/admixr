@@ -8,6 +8,8 @@ read_output(file, ...)
 }
 \arguments{
 \item{file}{A path to an output file.}
+
+\item{...}{See the 'details' argument of qpWave.}
 }
 \value{
 A tibble with the results.
