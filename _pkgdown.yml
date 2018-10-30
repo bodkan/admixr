@@ -22,8 +22,4 @@ reference:
     contents:
     - starts_with("read_(geno|ind|snp)")
     - starts_with("write_(geno|ind|snp)")
-
-  - title: VCF-EIGENSTRAT conversion
-    contents:
-    - vcf_to_eigenstrat
-    - eigenstrat_to_vcf
+    - read_output

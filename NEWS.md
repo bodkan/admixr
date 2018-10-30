@@ -1,3 +1,9 @@
+# admixr 0.6.2
+
+* `read_output()` made public.
+* Fixed issues with parsing of mis-formatted ind files (tabs at the ends of
+  lines etc.).
+
 # admixr 0.6.1
 
 * It turned out that dragging along Rcpp and Boost dependencies just for the
