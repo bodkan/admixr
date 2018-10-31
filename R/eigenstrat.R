@@ -56,7 +56,7 @@ print.EIGENSTRAT <- function(x, ...) {
     "\n  groups: ", ifelse(is.null(x$group), "none", x$group),
     "\n  excluded sites: ",
     ifelse(is.null(x$exclude),
-           "none",
+           "none\n",
            paste0(x$exclude,"\n    (", excluded_n, " SNPs will be excluded, ",
                                        included_n, " SNPs remaining)\n"))))
 }
