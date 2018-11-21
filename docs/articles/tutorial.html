@@ -117,14 +117,14 @@
 <p>When everything is ready, you can run the following code to make functions in both packages available:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">── Attaching packages ─────────────────────────────────────────────────── tidyverse <span class="dv">1</span>.<span class="fl">2.1</span> ──</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">── Attaching packages ──────────────────────────────────────────────────── tidyverse <span class="dv">1</span>.<span class="fl">2.1</span> ──</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">✔ ggplot2 <span class="dv">3</span>.<span class="fl">0.0</span>     ✔ purrr   <span class="dv">0</span>.<span class="fl">2.5</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">✔ tibble  <span class="dv">1</span>.<span class="fl">4.2</span>     ✔ dplyr   <span class="dv">0</span>.<span class="fl">7.8</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">✔ tidyr   <span class="dv">0</span>.<span class="fl">8.2</span>     ✔ stringr <span class="dv">1</span>.<span class="fl">3.1</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">✔ readr   <span class="dv">1</span>.<span class="fl">1.1</span>     ✔ forcats <span class="dv">0</span>.<span class="fl">3.0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">── Conflicts ────────────────────────────────────────────────────── <span class="kw">tidyverse_conflicts</span>() ──</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">✖ dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>() masks stats<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>()</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">✖ dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/lead-lag.html">lag</a></span>()    masks stats<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stats/topics/lag">lag</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb3-8" data-line-number="8">── Conflicts ─────────────────────────────────────────────────────── <span class="kw">tidyverse_conflicts</span>() ──</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">✖ dplyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/filter">filter</a></span>() masks stats<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>()</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">✖ dplyr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/dplyr/topics/lead-lag">lag</a></span>()    masks stats<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stats/topics/lag">lag</a></span>()</a></code></pre></div>
 </div>
 <div id="a-note-about-eigenstrat-format" class="section level2">
 <h2 class="hasAnchor">
@@ -149,12 +149,12 @@
 <p>As you can see, a VCF file is essentially a combination of all three files in a single package. Luckily for us, all three EIGENSTRAT files usually share a common path and prefix, or it’s easy to make it that way. To make handling of EIGENSTRAT datasets in R easier without having to worry about keeping track of each individual file separately we can use this fact and work with all necessary files at once.</p>
 <p>Let’s first download a small testing SNP dataset using a built-in <em>admixr</em> function <code><a href="../reference/download_data.html">download_data()</a></code>. This function downloads the data into a temporary directory (you can specify the destination using its <code>dirname</code> argument). In addition to this, the function returns a shared prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">(prefix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/download_data.html">download_data</a></span>())</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps"</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps"</span></a></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(prefix), <span class="dt">pattern =</span> <span class="kw">basename</span>(prefix), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.geno"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.ind"</span> </a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.snp"</span> </a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.geno"</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.ind"</span> </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.snp"</span> </a></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
@@ -221,9 +221,9 @@ Denisova     U  Denisova</code></pre>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.geno</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.geno</span></a>
 <a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; modifiers:</span></a>
 <a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;   groups: none</span></a>
@@ -580,6 +580,15 @@ Denisova     U  Denisova</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">French</td>
+<td align="left">French</td>
+<td align="left">Khomani_San</td>
+<td align="right">0.000000</td>
+<td align="right">-1.000000</td>
+<td align="right">0.000</td>
+<td align="right">-1</td>
+</tr>
+<tr class="even">
+<td align="left">French</td>
 <td align="left">Sardinian</td>
 <td align="left">Khomani_San</td>
 <td align="right">0.353447</td>
@@ -587,7 +596,7 @@ Denisova     U  Denisova</code></pre>
 <td align="right">28.215</td>
 <td align="right">249760</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">French</td>
 <td align="left">Han</td>
 <td align="left">Khomani_San</td>
@@ -596,7 +605,7 @@ Denisova     U  Denisova</code></pre>
 <td align="right">26.604</td>
 <td align="right">253158</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">French</td>
 <td align="left">Papuan</td>
 <td align="left">Khomani_San</td>
@@ -605,7 +614,7 @@ Denisova     U  Denisova</code></pre>
 <td align="right">26.218</td>
 <td align="right">251648</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">French</td>
 <td align="left">Mbuti</td>
 <td align="left">Khomani_San</td>
@@ -614,7 +623,7 @@ Denisova     U  Denisova</code></pre>
 <td align="right">14.119</td>
 <td align="right">271501</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">French</td>
 <td align="left">Dinka</td>
 <td align="left">Khomani_San</td>
@@ -623,25 +632,17 @@ Denisova     U  Denisova</code></pre>
 <td align="right">18.922</td>
 <td align="right">276964</td>
 </tr>
-<tr class="even">
-<td align="left">French</td>
-<td align="left">Yoruba</td>
-<td align="left">Khomani_San</td>
-<td align="right">0.175306</td>
-<td align="right">0.009699</td>
-<td align="right">18.075</td>
-<td align="right">285438</td>
-</tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># sort the population labels according to an increasing f3 value relative to French</span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">ordered &lt;-<span class="st"> </span><span class="kw">filter</span>(result, A <span class="op">==</span><span class="st"> "Mbuti"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(f3) <span class="op">%&gt;%</span><span class="st"> </span>.[[<span class="st">"B"</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"Mbuti"</span>)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">ordered &lt;-<span class="st"> </span><span class="kw">filter</span>(result, A <span class="op">==</span><span class="st"> "Mbuti"</span>, B <span class="op">!=</span><span class="st"> "Mbuti"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(f3) <span class="op">%&gt;%</span><span class="st"> </span>.[[<span class="st">"B"</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"Mbuti"</span>)</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co"># plot heatmap of pairwise f3 values</span></a>
 <a class="sourceLine" id="cb22-5" data-line-number="5">result <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">A =</span> <span class="kw">factor</span>(A, <span class="dt">levels =</span> ordered),</a>
-<a class="sourceLine" id="cb22-7" data-line-number="7">         <span class="dt">B =</span> <span class="kw">factor</span>(B, <span class="dt">levels =</span> ordered)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(A, B)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> f3))</a></code></pre></div>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(A <span class="op">!=</span><span class="st"> </span>B) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">A =</span> <span class="kw">factor</span>(A, <span class="dt">levels =</span> ordered),</a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">         <span class="dt">B =</span> <span class="kw">factor</span>(B, <span class="dt">levels =</span> ordered)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(A, B)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> f3))</a></code></pre></div>
 <p><img src="tutorial_files/figure-html/f3_plot-1.png" width="768"></p>
 <p>We can see that when we order the heatmap labels based on values of pairwise <span class="math inline">\(f_3\)</span> statistics, the (already known) order of population splits pops up beautifully (i.e. San separated first, followed by Mbuti, etc.).</p>
 </div>
@@ -890,12 +891,12 @@ Denisova     U  Denisova</code></pre>
 <a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/snps/snps.geno</span></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/snps/snps.geno</span></a>
 <a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt; modifiers:</span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt;   groups: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpOhMjs7/file1010b36c1dbdf.ind</span></a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt;   groups: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpDO9eGh/file93306d87b7ec.ind</span></a>
 <a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co">#&gt;   excluded sites: none</span></a></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified <code>EIGENSTRAT</code> object, which contains a new item in the “modifiers” section - the path to a new ind file that will be used in downstream analyses. Let’s look at its contents:</p>
 <pre><code>Chimp        U  Chimp
@@ -1079,14 +1080,14 @@ Denisova     U  Archaic</code></pre>
 <a href="#filtering-out-potential-ancient-dna-damage-snps" class="anchor"></a>Filtering out potential ancient DNA damage SNPs</h3>
 <p>In an ancient DNA world, we often need to repeat an analysis on a subset of data that is less likely to be influenced by ancient DNA damage, to verify that our results are not caused by artifacts in the data (due to biochemical properties of DNA degradation, ancient DNA damage will lead to an increase in C→T and G→A substitutions). Using a similar method described in the BED filtering section above, we can use the <code>filter_damage()</code> function to generate a snp file with positions that carry transitions (C→T and G→A sites), that can be removed using the <code>exclude =</code> argument of the main <em>admixr</em> functions.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># generate snp file with positions of transitions</span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">new_snp_data &lt;-<span class="st"> </span><span class="kw">remove_transitions</span>(snp_data)</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">new_snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/transversions_only.html">transversions_only</a></span>(snp_data)</a>
 <a class="sourceLine" id="cb38-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb38-4" data-line-number="4"><span class="co"># perform the calculation only on transversions</span></a>
 <a class="sourceLine" id="cb38-5" data-line-number="5"><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"French"</span>, <span class="dt">X =</span> <span class="st">"Dinka"</span>, <span class="dt">Y =</span> <span class="st">"Altai"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> new_snp_data)</a></code></pre></div>
 <p>Again, we could combine several filtering steps into one pipeline:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">snp_data <span class="op">%&gt;%</span><span class="st">                                     </span><span class="co"># take the original data</span></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(<span class="st">"regions.bed"</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># remove sites not in specified regions</span></a>
-<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="st">  </span><span class="kw">remove_transitions</span>() <span class="op">%&gt;%</span><span class="st">                       </span><span class="co"># remove potential false SNPs due to aDNA damage</span></a>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">snp_data <span class="op">%&gt;%</span><span class="st">                                    </span><span class="co"># take the original data</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(<span class="st">"regions.bed"</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># remove sites not in specified regions</span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transversions_only.html">transversions_only</a></span>() <span class="op">%&gt;%</span><span class="st">                      </span><span class="co"># remove potential false SNPs due to aDNA damage</span></a>
 <a class="sourceLine" id="cb39-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"French"</span>, <span class="dt">X =</span> <span class="st">"Dinka"</span>, <span class="dt">Y =</span> <span class="st">"Altai"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>) <span class="co"># calculate D on the filtered dataset</span></a></code></pre></div>
 </div>
 </div>

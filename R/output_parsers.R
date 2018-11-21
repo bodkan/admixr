@@ -4,8 +4,12 @@
 #'@return A tibble with the results.
 #'@export
 read_output <- function(file, ...) {
+  log_lines <- readLines(file)
+
+  check_warnings(log_lines)
+
   # extract ADMIXTOOLS command name from the output file
-  cmd <- readLines(file) %>%
+  cmd <- log_lines %>%
     stringr::str_match("^## (\\w+) version:") %>%
     .[stats::complete.cases(.)] %>% .[2]
 
@@ -19,14 +23,26 @@ read_output <- function(file, ...) {
 
   # it feels a little dumb, re-reading the whole output file a 2nd time,
   # there must be a cleaner way to do this
-  parsers[[cmd]](file, ...)
+  parsers[[cmd]](log_lines, ...)
+}
+
+
+
+check_warnings <- function(log_lines) {
+  if (any(stringr::str_detect(log_lines, "warning"))) {
+    msg <- paste0(
+      "ADMIXTOOLS returned the following warning:\n",
+      (stringr::str_subset(log_lines, "warning") %>%
+       stringr::str_replace_all("\\*\\*\\*warning: ", "") %>%
+       paste0("'", ., "'"))
+    )
+    stop(msg, call. = FALSE)
+  }
 }
 
 
 # Read output log file from a qpF4ratio run.
-read_qpF4ratio <- function(file) {
-  log_lines <- readLines(file) %>% .[!stringr::str_detect(., "warning")]
-
+read_qpF4ratio <- function(log_lines) {
   # extract the number of analyzed test populations/individuals
   # (corresponding to the number of rows of the results table)
   n_pops <- log_lines[which(stringr::str_detect(log_lines, "^nplist:"))] %>%
@@ -53,11 +69,7 @@ read_qpF4ratio <- function(file) {
 
 
 # Read output log file from a qpDstat run.
-read_qpDstat <- function(file) {
-  log_lines <- readLines(file) %>%
-    .[!stringr::str_detect(., "warning")] %>%
-    .[!stringr::str_detect(., "nodata")]
-
+read_qpDstat <- function(log_lines) {
   # extract the number of analyzed population quadruples
   n_quads <- length(log_lines) - (which(stringr::str_detect(log_lines, "^nrows, ncols:"))) - 1
 
@@ -90,14 +102,12 @@ read_qpDstat <- function(file) {
 
 
 # Read output log file from a qp3Pop run.
-read_qp3Pop <- function(file) {
-  log_lines <- readLines(file)
-
+read_qp3Pop <- function(log_lines) {
   # parse the lines of the results section and extract the names of
   # tested populations/individuals, estimated admixture proportions
   # alpha, std. errors and Z-score
-  res_lines <- log_lines[stringr::str_detect(log_lines, "result:")] %>%
-    stringr::str_replace("result: ", "") %>%
+  res_lines <- log_lines[stringr::str_detect(log_lines, "result:|no data")] %>%
+    stringr::str_replace("result: |no data", "") %>%
     stringr::str_replace_all(" +", " ") %>%
     stringr::str_replace_all("^ | $", "")
 
@@ -131,9 +141,7 @@ parse_matrix <- function(lines) {
 
 
 # Read output log file from a qp3Pop run.
-read_qpWave <- function(file, details = FALSE) {
-  log_lines <- readLines(file)
-
+read_qpWave <- function(log_lines, details = FALSE) {
   test_pos  <- which(stringr::str_detect(log_lines, "f4info:"))
   b_pos <- which(stringr::str_detect(log_lines, "B:"))
   a_pos <- which(stringr::str_detect(log_lines, "A:"))
@@ -169,9 +177,7 @@ read_qpWave <- function(file, details = FALSE) {
 
 
 # Read output log file from a qp3Pop run.
-read_qpAdm <- function(file) {
-  log_lines <- readLines(file)
-
+read_qpAdm <- function(log_lines) {
   # parse the admixture proportions and standard errors
   stats <- stringr::str_subset(log_lines, "(Jackknife mean|std. errors):") %>%
     stringr::str_replace("(Jackknife mean|std. errors): +", "") %>%
@@ -218,7 +224,7 @@ read_qpAdm <- function(file) {
     stats::setNames(pat_header)
   
   # parse the rank test results
-  ranks <- read_qpWave(file)
+  ranks <- read_qpWave(log_lines)
 
   list(proportions = proportions, ranks = ranks, patterns = pat_df)
 }
