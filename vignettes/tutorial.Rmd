@@ -489,10 +489,11 @@ knitr::kable(head(result))
 
 ```{r f3_plot, fig.width = 8, fig.height = 6}
 # sort the population labels according to an increasing f3 value relative to French
-ordered <- filter(result, A == "Mbuti") %>% arrange(f3) %>% .[["B"]] %>% c("Mbuti")
+ordered <- filter(result, A == "Mbuti", B != "Mbuti") %>% arrange(f3) %>% .[["B"]] %>% c("Mbuti")
 
 # plot heatmap of pairwise f3 values
 result %>%
+  filter(A != B) %>%
   mutate(A = factor(A, levels = ordered),
          B = factor(B, levels = ordered)) %>%
   ggplot(aes(A, B)) + geom_tile(aes(fill = f3))
@@ -811,7 +812,7 @@ function to generate a snp file with positions that carry transitions
 
 ```{r, eval = FALSE}
 # generate snp file with positions of transitions
-new_snp_data <- remove_transitions(snp_data)
+new_snp_data <- transversions_only(snp_data)
 
 # perform the calculation only on transversions
 d(W = "French", X = "Dinka", Y = "Altai", Z = "Chimp", data = new_snp_data)
@@ -820,9 +821,9 @@ d(W = "French", X = "Dinka", Y = "Altai", Z = "Chimp", data = new_snp_data)
 Again, we could combine several filtering steps into one pipeline:
 
 ```{r, eval = FALSE}
-snp_data %>%                                     # take the original data
-  filter_bed("regions.bed", remove = TRUE) %>%   # remove sites not in specified regions
-  remove_transitions() %>%                       # remove potential false SNPs due to aDNA damage
+snp_data %>%                                    # take the original data
+  filter_bed("regions.bed", remove = TRUE) %>%  # remove sites not in specified regions
+  transversions_only() %>%                      # remove potential false SNPs due to aDNA damage
   d(W = "French", X = "Dinka", Y = "Altai", Z = "Chimp") # calculate D on the filtered dataset
 ```
 
