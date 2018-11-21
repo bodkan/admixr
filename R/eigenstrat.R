@@ -48,11 +48,15 @@ print.EIGENSTRAT <- function(x, ...) {
     "\n  snp file: ", x$snp, 
     "\n  geno file: ", x$geno))
 
-  if (any(!is.null(c(x$group, x$exclude)))) cat("\n\nmodifiers:\n")
+  if (any(!is.null(c(x[["group"]], x[["exclude"]])))) cat("\n\nmodifiers:\n")
 
-  if (!is.null(x$group)) cat("  groups: ", x$group, "\n")
+  if (!is.null(x$group)) cat("  groups: ", x[["group"]], "\n")
 
-  if (!is.null(x$exclude)) cat("  excluded sites: ", x$exclude, "\n")
+  if (!is.null(x[["exclude"]])) {
+    cat("  excluded sites: ", x[["exclude"]], "\n")
+    cat("      (SNPs excluded: ", x$excluded_n,
+             ", SNPs remaining: ", x$included_n, ")", sep = "")
+  }
 }
 
 
@@ -218,6 +222,8 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
 reset <- function(data) {
   data$group <- NULL
   data$exclude <- NULL
+  data$excluded_n <- NULL
+  data$included_n <- NULL
   data
 }
 
@@ -237,6 +243,8 @@ process_filter <- function(data, exclude, outfile) {
   if (nrow(exclude) < nrow(read_snp(data))) {
     write_snp(exclude, outfile)
     data$exclude <- path.expand(outfile)
+    data$excluded_n <- nrow(read_snp(data, exclude = TRUE))
+    data$included_n <- nrow(read_snp(x)) - data$excluded_n
   } else {
     stop("No sites remaining after the filtering.", call. = FALSE)
   }
