@@ -23,6 +23,12 @@ snp_to_bed <- function(snp, bed) {
 }
 
 admixtools_path <- function() {
+  # ugly hack to enable testing on my macOS where I have ADMIXTOOLS
+  # binaries symlinked to ~/local/bin
+  if (system("uname", intern = TRUE) == "Darwin") {
+    return("~/local/AdmixTools-5.0/")
+  }
+
   system("which qpDstat", intern = TRUE) %>%
     stringr::str_replace("/bin.*", "")
 }

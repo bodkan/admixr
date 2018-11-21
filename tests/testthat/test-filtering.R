@@ -10,7 +10,7 @@ test_that("Potential aDNA SNPs are correctly removed", {
                    ($5 == \"A\" && $6 == \"G\")' %s > %s", data$snp, output)
   )
   n_shell <- nrow(read_snp_file(output))
-  n_admixr <- nrow(read_snp_file(remove_transitions(data)$exclude))
+  n_admixr <- nrow(read_snp_file(transversions_only(data)$exclude))
   expect_equal(n_shell, n_admixr)
 })
 
@@ -88,6 +88,6 @@ test_that("Filtering works when data is piped into a calculation", {
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
   expect_silent(
-    data %>% remove_transitions %>% d(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z)
+    data %>% transversions_only %>% d(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z)
   )
 })

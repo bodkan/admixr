@@ -149,33 +149,6 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = "
 
 
 
-#' Filter out transitions (C->T and G->A substitutions)
-#'
-#' Remove substitutions that are more likely to be a result of ancient DNA
-#' damage (C->T and G->A substitutions).
-#'
-#' @param data EIGENSTRAT data object.
-#' @param outfile Path to an output snp file with coordinates of excluded sites.
-#'
-#' @return Updated S3 EIGENSTRAT data object with an additional 'exclude' slot
-#'     specifying the path to the set of SNPs to be removed from a downstream
-#'     analysis.
-#'
-#' @export
-remove_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
-  exclude <- read_snp(data) %>%
-    dplyr::filter(
-      (ref == "C" & alt == "T") |
-      (ref == "T" & alt == "C") |
-      (ref == "G" & alt == "A") |
-      (ref == "A" & alt == "G")
-    )
-  data <- process_filter(data, exclude, outfile)
-  data
-}
-
-
-
 #' Remove transversions (C->T and G->A substitutions)
 #'
 #' Remove substitutions that are more likely to be a result of ancient DNA
