@@ -12,7 +12,7 @@ reference:
     contents:
     - eigenstrat
     - filter_bed
-    - remove_transitions
+    - transversions_only
     - relabel
     - reset
     - merge_eigenstrat

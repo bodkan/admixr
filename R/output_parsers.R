@@ -1,7 +1,10 @@
 #' Read an output file from one of the ADMIXTOOLS programs.
+#'
 #'@param file A path to an output file.
 #'@param ... See the 'details' argument of qpWave.
+#'
 #'@return A tibble with the results.
+#'
 #'@export
 read_output <- function(file, ...) {
   log_lines <- readLines(file)

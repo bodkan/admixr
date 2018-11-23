@@ -1,6 +1,7 @@
 # admixr 0.6.3
 
-* Rename `keep_transversions()` to `transversions_only()`.
+* Rename `keep_transversions()` to `transversions_only()`. The old function is
+  now deprecated.
 * `print.EIGENSTRAT()` now uses a pre-calculated numbers of removed/remaining
   sites, instead of calculating them each and every time.
 * Printing EIGENSTRAT objects now also shows "group" and "exclude" modifiers

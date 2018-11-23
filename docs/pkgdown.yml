@@ -2,6 +2,5 @@ pandoc: 2.3.1
 pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
-  paper: paper.html
   tutorial: tutorial.html
 
