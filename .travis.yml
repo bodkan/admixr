@@ -3,6 +3,8 @@ sudo: false
 cache:
   directories: /tmp/deps
   packages: true
+env:
+  - NOT_CRAN=true
 before_install:
   - sudo apt-get update
   - sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev
