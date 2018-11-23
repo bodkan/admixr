@@ -14,6 +14,8 @@ setwd(examples_dir)
 # f3 ----------------------------------------------------------------------
 
 test_that("qp3Pop wrapper produces correct results", {
+  skip_on_cran()
+
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
   expect_equal(
@@ -25,6 +27,8 @@ test_that("qp3Pop wrapper produces correct results", {
 # D -----------------------------------------------------------------------
 
 test_that("qpDstat wrapper produces correct results (4 population input version)", {
+  skip_on_cran()
+
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
   expect_equal(
@@ -36,6 +40,8 @@ test_that("qpDstat wrapper produces correct results (4 population input version)
 # f4-ratio ----------------------------------------------------------------
 
 test_that("qpF4ratio wrapper produces correct results", {
+  skip_on_cran()
+
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- readLines(file.path(examples_dir, "list_qpF4ratio")) %>%
     stringr::str_replace_all(" :+ ", " ") %>%
@@ -60,6 +66,8 @@ test_that("qpF4ratio wrapper produces correct results", {
 # qpAdm -------------------------------------------------------------------
 
 test_that("qpAdm wrapper produces correct results", {
+  skip_on_cran()
+
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
   right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
@@ -73,6 +81,8 @@ test_that("qpAdm wrapper produces correct results", {
 # qpWave ------------------------------------------------------------------
 
 test_that("qpWave wrapper produces correct results", {
+  skip_on_cran()
+
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
   right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%

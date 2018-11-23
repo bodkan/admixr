@@ -8,6 +8,8 @@ data_dir <- file.path(path, "data")
 examples_dir <- file.path(path, "examples")
 
 test_that("qpDstat test passes (4 population input version)", {
+  skip_on_cran()
+
   setwd(examples_dir)
   expect_silent(run_cmd("qpDstat",
                         par_file = file.path(examples_dir, "parqpDstat1"),
@@ -15,6 +17,8 @@ test_that("qpDstat test passes (4 population input version)", {
 })
 
 test_that("qp3Pop test passes", {
+  skip_on_cran()
+
   setwd(examples_dir)
   expect_silent(run_cmd("qp3Pop",
                         par_file = file.path(examples_dir, "parqp3Pop"),
@@ -22,6 +26,8 @@ test_that("qp3Pop test passes", {
 })
 
 test_that("qpF4ratio test passes", {
+  skip_on_cran()
+
   setwd(examples_dir)
   expect_silent(run_cmd("qpF4ratio",
                         par_file = file.path(examples_dir, "parqpF4ratio"),
@@ -29,6 +35,8 @@ test_that("qpF4ratio test passes", {
 })
 
 test_that("qpAdm test passes", {
+  skip_on_cran()
+
   setwd(examples_dir)
   expect_silent(run_cmd("qpAdm",
                         par_file = file.path(examples_dir, "parqpAdm"),
@@ -36,6 +44,8 @@ test_that("qpAdm test passes", {
 })
 
 test_that("qpWave test passes", {
+  skip_on_cran()
+
   setwd(examples_dir)
   expect_silent(run_cmd("qpWave",
                         par_file = file.path(examples_dir, "parqpWave"),

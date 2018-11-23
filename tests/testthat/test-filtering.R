@@ -1,6 +1,8 @@
 context("Filtering of sites")
 
 test_that("Potential aDNA SNPs are correctly removed", {
+  skip_on_cran()
+
   data <- eigenstrat(file.path(admixtools_path(), "data/allmap"))
   output <- tempfile()
   system(
@@ -26,6 +28,8 @@ system(sprintf("tail -n+2 %s > %s", orig_data$snp, data$snp))
 system(sprintf("tail -n+2 %s > %s", orig_data$geno, data$geno))
 
 test_that("filter_sites correctly fails at no overlap", {
+  skip_on_cran()
+
   # create a BED file that has the same positions as the original EIGENSTRAT
   bed <- tempfile()
   snp_to_bed(data$snp, bed)
@@ -35,6 +39,8 @@ test_that("filter_sites correctly fails at no overlap", {
 })
 
 test_that("filter_sites correctly handles complete overlap", {
+  skip_on_cran()
+
   # create a BED file that has the same positions as the original EIGENSTRAT
   bed <- tempfile()
   snp_to_bed(data$snp, bed)
@@ -48,6 +54,8 @@ test_that("filter_sites correctly handles complete overlap", {
 })
 
 test_that("Overlap returns a correct number of sites", {
+  skip_on_cran()
+
   snp <- read_snp_file(data$snp)
 
   # resample a BED file a number of times, verifying that we get the correct
@@ -70,6 +78,8 @@ test_that("Overlap returns a correct number of sites", {
 })
 
 test_that("Resetting returns an EIGENSTRAT object to an original state", {
+  skip_on_cran()
+
   new_data <- data
   new_data$exclude <- "exclude.snp"
   new_data$group <- "new_labels.ind"
@@ -82,6 +92,8 @@ test_that("Resetting returns an EIGENSTRAT object to an original state", {
 })
 
 test_that("Filtering works when data is piped into a calculation", {
+  skip_on_cran()
+
   data_dir <- file.path(admixtools_path(), "data")
   examples_dir <- file.path(admixtools_path(), "examples")
 
