@@ -1,15 +1,11 @@
 context("Presence of ADMIXTOOLS on the system")
 
-path <- admixtools_path()
-data_dir <- file.path(path, "data")
-
-test_that(paste0("ADMIXTOOLS is present", "\n\n\n",
+test_that("ADMIXTOOLS is present", {
   skip_on_cran()
+  expect_true(admixtools_present())
+})
 
-                 Sys.getenv("PATH"), "\n\n\n",
-                 system("ls", intern = TRUE), "\n\n\n",
-                 system("pwd", intern = TRUE), "\n\n\n"
-                 ), { expect_true(admixtools_present()) })
-test_that("ADMIXTOOLS data is present", { expect_true(dir.exists(data_dir)) })
+test_that("ADMIXTOOLS data is present", {
   skip_on_cran()
-
+  expect_true(dir.exists(file.path(admixtools_path(), "data")))
+})
