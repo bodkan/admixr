@@ -7,9 +7,7 @@
 #'
 #'@export
 read_output <- function(file, ...) {
-  log_lines <- readLines(file)
-
-  check_warnings(log_lines)
+  log_lines <- readLines(file) %>% .[!stringr::str_detect(., "nodata")]
 
   # extract ADMIXTOOLS command name from the output file
   cmd <- log_lines %>%
@@ -29,19 +27,6 @@ read_output <- function(file, ...) {
   parsers[[cmd]](log_lines, ...)
 }
 
-
-
-check_warnings <- function(log_lines) {
-  if (any(stringr::str_detect(log_lines, "warning"))) {
-    msg <- paste0(
-      "ADMIXTOOLS returned the following warning:\n",
-      (stringr::str_subset(log_lines, "warning") %>%
-       stringr::str_replace_all("\\*\\*\\*warning: ", "") %>%
-       paste0("'", ., "'"))
-    )
-    stop(msg, call. = FALSE)
-  }
-}
 
 
 # Read output log file from a qpF4ratio run.
@@ -71,8 +56,20 @@ read_qpF4ratio <- function(log_lines) {
 }
 
 
+
 # Read output log file from a qpDstat run.
 read_qpDstat <- function(log_lines) {
+  # check for duplicated populations:
+  #   - if there is no "result" row, issue a warning
+  #   - otherwise ignore the "repeated populations" warning
+  if (!any(stringr::str_detect(log_lines, "result: "))) {
+    warning("ADMIXTOOLS does not allow duplicated population names when calculating a single f4 or D statistic.\nReturning an empty dataframe...",
+            call. = FALSE)
+    return(tibble::tibble())
+  } else {
+    log_lines <- log_lines %>% .[!stringr::str_detect(., "warning")]
+  }
+
   # extract the number of analyzed population quadruples
   n_quads <- length(log_lines) - (which(stringr::str_detect(log_lines, "^nrows, ncols:"))) - 1
 
@@ -102,6 +99,7 @@ read_qpDstat <- function(log_lines) {
 
   res_df
 }
+
 
 
 # Read output log file from a qp3Pop run.
