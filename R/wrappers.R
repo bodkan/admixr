@@ -162,6 +162,11 @@ qpAdm <- function(data, target, references, outgroups, details = TRUE, outdir = 
 #' @export
 qpWave <- function(data, left, right, maxrank = NULL, details = FALSE, outdir = NULL) {
   check_presence(c(left, right), data)
+  if (length(intersect(left, right))) {
+    stop("Duplicated populations in both left and right population sets not allowed: ",
+         paste(intersect(left, right), collapse = " "),
+         call. = FALSE)
+  }
 
   # get the path to the population, parameter and log files
   setup <- paste0("qpWave")
