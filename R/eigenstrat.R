@@ -46,9 +46,10 @@ print.EIGENSTRAT <- function(x, ...) {
     "components:",
     "\n  ind file: ", x$ind, 
     "\n  snp file: ", x$snp, 
-    "\n  geno file: ", x$geno))
+    "\n  geno file: ", x$geno,
+    "\n"))
 
-  if (any(!is.null(c(x$group, x$exclude)))) cat("\n\nmodifiers:\n")
+  if (any(!is.null(c(x$group, x$exclude)))) cat("\nmodifiers:\n")
 
   if (!is.null(x$group)) cat("  groups: ", x[["group"]], "\n")
 
