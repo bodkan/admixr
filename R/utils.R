@@ -63,7 +63,7 @@ get_files <- function(dir_name, prefix) {
 check_presence <- function(labels, data) {
   not_present <- setdiff(labels, suppressMessages(read_ind(data)$label))
   if (length(not_present) > 0) {
-    stop("The following samples are not present in the data': ",
+    stop("The following samples are not present in the data: ",
          paste(not_present, collapse = ", "), call. = FALSE)
   }
 }
