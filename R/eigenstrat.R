@@ -56,7 +56,7 @@ print.EIGENSTRAT <- function(x, ...) {
   if (!is.null(x$exclude)) {
     cat("  excluded sites: ", x$exclude, "\n")
     cat("      (SNPs excluded: ", x$n_excluded,
-             ", SNPs remaining: ", x$n_included, ")", sep = "")
+             ", SNPs remaining: ", x$n_included, ")\n", sep = "")
   }
 }
 
