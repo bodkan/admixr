@@ -42,7 +42,8 @@ read_geno <- function(data) {
     col_positions = readr::fwf_widths(rep(1, n), ind),
     col_types = readr::cols(.default = "i"),
     progress = FALSE
-  )
+  ) %>%
+    replace(., . == 9, NA)
 }
 
 
@@ -68,6 +69,7 @@ write_snp <- function(df, file) {
 #' @rdname write_ind
 #' @export
 write_geno <- function(df, file) {
+  df <- replace(df, is.na(df), NA)
   writeLines(apply(df, 1, paste, collapse = ""), con = file)
 }
 

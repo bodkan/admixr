@@ -9,17 +9,17 @@
 #' @export
 #' @import rlang
 count_snps <- function(data, missing = FALSE, prop = FALSE) {
-  fn <- ifelse(prop, mean, sum)
+  summary_fun <- ifelse(prop, mean, sum)
   if (missing) {
-    op <- `==`
+    fun <- function(x) as.integer(is.na(x))
     col <- "missing"
   } else {
-    op <- `!=`
+    fun <- function(x) as.integer(!is.na(x))
     col <- "present"
   }
   geno <- read_geno(data)
   result <- read_ind(data)
-  result[[col]] <- as.vector(t(dplyr::summarise_all(geno, dplyr::funs(fn(op(., 9))))))
+  result[[col]] <- as.vector(t(dplyr::summarise_all(geno, dplyr::funs(summary_fun(fun(.))))))
   result
 }
 
