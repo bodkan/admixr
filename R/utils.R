@@ -61,7 +61,12 @@ get_files <- function(dir_name, prefix) {
 # Check for the presence of a given set of labels in an 'ind' file.
 # Fail if there a sample was not found.
 check_presence <- function(labels, data) {
-  not_present <- setdiff(labels, suppressMessages(read_ind(data)$label))
+  if (class(data) == "EIGENSTRAT")
+    inds <- read_ind(data)$label
+  else
+    inds <- colnames(inds)
+  
+  not_present <- setdiff(labels, inds)
   if (length(not_present) > 0) {
     stop("The following samples are not present in the data: ",
          paste(not_present, collapse = ", "), call. = FALSE)
