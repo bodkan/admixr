@@ -213,7 +213,8 @@ read_qpAdm <- function(log_lines) {
     stringr::str_replace(" pattern", "") %>%
     stringr::str_replace_all(" +", " ") %>%
     stringr::str_replace_all("^ | $", "")
-  pat_header <- c(strsplit(patterns[1], " ")[[1]], source)
+  pat_header <- c(strsplit(patterns[1], " ")[[1]], source) %>%
+    stringr::str_replace("pat", "pattern")
   if (any(stringr::str_detect(patterns, "infeasible"))) {
     pat_header <- c(pat_header, "comment")
     patterns[-1] <- sapply(patterns[-1], USE.NAMES = FALSE, function(l)

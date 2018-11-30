@@ -682,13 +682,18 @@ estimated using a block jackknife:
 result$proportions
 ```
 
-```{r qpAdm_kable, echo=FALSE}
+```{r, echo=FALSE}
 knitr::kable(result$proportions)
 ```
 
 If we compare this result to the $f_4$-ratio values calculated above, we see
 that the _qpAdm_ estimates are very close to what we got earlier. 
 
+The third element in the list of results shows the outcome of an "all subsets"
+analysis, which involves testing all subsets of potential source populations.
+Each 1 in the "pattern" column means that the proportion of ancestry from that
+particular source population (in the order specified originally by the user) was
+forced to 0.0.
 
 ```{r, eval = FALSE}
 result$subsets
@@ -697,7 +702,6 @@ result$subsets
 ```{r, echo=FALSE}
 knitr::kable(result$subsets)
 ```
-
 
 
 

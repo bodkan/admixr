@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.6.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.7.0</span>
       </span>
     </div>
 
@@ -145,12 +145,12 @@
 <p>Therefore, a VCF file is essentially a combination of all three files in a single package. Luckily for us, all three EIGENSTRAT files usually share a common path and prefix and should be placed in a single directory.</p>
 <p>Let’s first download a small testing SNP dataset using a built-in <em>admixr</em> function <code><a href="../reference/download_data.html">download_data()</a></code>. This function downloads the data into a temporary directory (you can specify the destination using its <code>dirname</code> argument). In addition to this, the function returns a shared prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">(prefix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/download_data.html">download_data</a></span>())</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps"</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps"</span></a></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(prefix), <span class="dt">pattern =</span> <span class="kw">basename</span>(prefix), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.geno"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.ind"</span> </a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.snp"</span> </a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.geno"</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.ind"</span> </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.snp"</span> </a></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
@@ -218,9 +218,9 @@ Denisova     U  Denisova</code></pre>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.geno</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.geno</span></a></code></pre></div>
 <p>This object simply encapsulates the paths to all three EIGENSTRAT components and makes it easy to pass the data to different <em>admixr</em> functions.</p>
 <p>The following couple of sections describe how to use the <em>admixr</em> package on a set of example analyses.</p>
 </div>
@@ -899,7 +899,112 @@ Denisova     U  Denisova</code></pre>
 </tbody>
 </table>
 <p>If we compare this result to the <span class="math inline">\(f_4\)</span>-ratio values calculated above, we see that the <em>qpAdm</em> estimates are very close to what we got earlier.</p>
+<p>The third element in the list of results shows the outcome of an “all subsets” analysis, which involves testing all subsets of potential source populations. Each 1 in the “pattern” column means that the proportion of ancestry from that particular source population (in the order specified originally by the user) was forced to 0.0.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">result<span class="op">$</span>subsets</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">target</th>
+<th align="left">pattern</th>
+<th align="right">wt</th>
+<th align="right">dof</th>
+<th align="right">chisq</th>
+<th align="right">tail</th>
+<th align="right">Vindija</th>
+<th align="right">Yoruba</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Sardinian</td>
+<td align="left">00</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.006</td>
+<td align="right">0.9362610</td>
+<td align="right">0.025</td>
+<td align="right">0.975</td>
+</tr>
+<tr class="even">
+<td align="left">Sardinian</td>
+<td align="left">01</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">15953.171</td>
+<td align="right">0.0000000</td>
+<td align="right">1.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">Sardinian</td>
+<td align="left">10</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">16.564</td>
+<td align="right">0.0002530</td>
+<td align="right">0.000</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="even">
+<td align="left">Han</td>
+<td align="left">00</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2.144</td>
+<td align="right">0.1431160</td>
+<td align="right">0.021</td>
+<td align="right">0.979</td>
+</tr>
+<tr class="odd">
+<td align="left">Han</td>
+<td align="left">01</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">14965.791</td>
+<td align="right">0.0000000</td>
+<td align="right">1.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">Han</td>
+<td align="left">10</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">14.454</td>
+<td align="right">0.0007269</td>
+<td align="right">0.000</td>
+<td align="right">1.000</td>
+</tr>
+<tr class="odd">
+<td align="left">French</td>
+<td align="left">00</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3.814</td>
+<td align="right">0.0508171</td>
+<td align="right">0.022</td>
+<td align="right">0.978</td>
+</tr>
+<tr class="even">
+<td align="left">French</td>
+<td align="left">01</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">15441.258</td>
+<td align="right">0.0000000</td>
+<td align="right">1.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="odd">
+<td align="left">French</td>
+<td align="left">10</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">16.028</td>
+<td align="right">0.0003308</td>
+<td align="right">0.000</td>
+<td align="right">1.000</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="grouping-samples" class="section level2">
@@ -932,12 +1037,12 @@ Denisova     U  Denisova</code></pre>
 <a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.geno</span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/snps/snps.geno</span></a>
 <a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co">#&gt; modifiers:</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#&gt;   groups:  /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/file8737340fbeb0.ind</span></a></code></pre></div>
+<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#&gt;   groups:  /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpYL5fQl/filea4f614217c3.ind</span></a></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified <code>EIGENSTRAT</code> object, which contains a new item in the “modifiers” section - the path to a new ind file that will be used in downstream analyses. Let’s look at its contents:</p>
 <pre><code>Chimp        U  Chimp
 Mbuti        U  African
