@@ -227,5 +227,5 @@ read_qpAdm <- function(log_lines) {
   # parse the rank test results
   ranks <- read_qpWave(log_lines)
 
-  list(proportions = proportions, ranks = ranks, patterns = pat_df)
+  list(proportions = proportions, ranks = ranks, subsets = pat_df)
 }

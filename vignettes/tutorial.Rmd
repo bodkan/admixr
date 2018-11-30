@@ -538,7 +538,7 @@ an idea about the number of migration waves from _right_ to _left_ (with no
 back-migration from _left_ to _right_!). This is done by estimating the
 rank of a matrix of all possible $f_4$ statistics
 
-$f_4(\textrm{left}_1, \textrm{left}_i; \textrm{right}_1, \textrm{right}_i),$
+$$f_4(\textrm{left}_1, \textrm{left}_i; \textrm{right}_1, \textrm{right}_i),$$
 
 where $\textrm{left}_1$ and $\textrm{right}_1$ are some fixed populations and
 the $i$ and $j$ indices run over all other possible choices of populations.
@@ -555,10 +555,11 @@ result <- qpWave(
 )
 ```
 
-The `qpWave()` function returns a data frame which shows the results of a series of
-matrix rank tests. The `rank` column is the matrix rank tested, `df`, `chisq` and
-`tail` give ..., and `dfdiff`, `chisqdiff` and `taildiff` give the same, but always
-comparing the fit to the fit of a rank immediately lower.
+The `qpWave()` function returns a data frame which shows the results of 
+a series of matrix rank tests. The `rank` column is the matrix rank tested,
+`df`, `chisq` and `tail` give ..., and `dfdiff`, `chisqdiff` and `taildiff`
+give the same, but always comparing the fit to the fit of a rank
+immediately lower.
 
 ```{r, eval = FALSE}
 result
@@ -627,7 +628,7 @@ Having defined all three population sets, we can run qpAdm with:
 ```{r qpAdm}
 result <- qpAdm(
   target = c("Sardinian", "Han", "French"),
-  references = c("Vindija", "Yoruba"),
+  sources = c("Vindija", "Yoruba"),
   outgroups = c("Chimp", "Denisova", "Altai"),
   data = snps
 )
@@ -640,8 +641,8 @@ the function return a list of three elements:
   care about;
 * `ranks` - results of rank tests performed by _qpWave_ - these evaluate how well
   does the assumed traget-references-outgroups population model match the data;
-* `patterns` evaluation of different admixture patterns (to my knowledge, this
-  is not particularly useful).
+* `subsets` - results of the "all subsets" analysis (see the [documentation](https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf) for
+  more details.
 
 Let's start with the `ranks` element:
 
@@ -689,6 +690,14 @@ If we compare this result to the $f_4$-ratio values calculated above, we see
 that the _qpAdm_ estimates are very close to what we got earlier. 
 
 
+```{r, eval = FALSE}
+result$subsets
+```
+
+```{r, echo=FALSE}
+knitr::kable(result$subsets)
+```
+
 
 
 
@@ -714,10 +723,12 @@ To merge several individual samples under a combined label we can call
 ```{r relabel}
 # paths to the original ind file and a new modified ind file, which will
 # contain merged population labels
-modif_snps <- relabel(snps,
-                          European = c("French", "Sardinian"),
-                          African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
-                          Archaic = c("Vindija", "Altai", "Denisova"))
+modif_snps <- relabel(
+  snps,
+  European = c("French", "Sardinian"),
+  African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
+  Archaic = c("Vindija", "Altai", "Denisova")
+)
 ```
 
 ```{r, comment = "#>"}

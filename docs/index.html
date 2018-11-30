@@ -133,7 +133,7 @@
 <a class="sourceLine" id="cb2-12" data-line-number="12">result</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; # A tibble: 2 x 10</span></a>
 <a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753</span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646</span></a></code></pre></div>
 <p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns the result as a <code>data.frame</code> object. It does all of this behind the scenes, without the user having to deal with low-level technical details.</p>

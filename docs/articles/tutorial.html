@@ -82,7 +82,7 @@
       <h1>admixr - tutorial</h1>
                         <h4 class="author">Martin Petr</h4>
             
-            <h4 class="date">2018-11-23</h4>
+            <h4 class="date">2018-11-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -91,15 +91,14 @@
 
     
     
-<p>This vignette describes how to calculate various population admixture statistics (<span class="math inline">\(D\)</span>, <span class="math inline">\(f_4\)</span>, etc.) using the <em>admixr</em> package, and how to use it to do simple filtering and processing of EIGENSTRAT datasets.</p>
-<p><strong>A friendly warning</strong>: many of the statistics implemented here can be quite sensitive to assumptions about population histories or to errors in the data (causiing spurious correlations between similarly processed samples, especially in case of ancient DNA). If you want to use these methods, you should really understand the theory behind them first! I highly recommend reading Benjamin Peter’s <a href="http://www.genetics.org/content/early/2016/02/03/genetics.115.183913">wonderful overview</a> of the subject and Nick Patterson’s <a href="http://www.genetics.org/content/192/3/1065">original ADMIXTOOLS paper</a>.</p>
+<p>This vignette describes how to perform various population admixture analyses with the <em>admixr</em> package, using the ADMIXTOOLS software suite for the underlying calculations.</p>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p><a href="https://github.com/DReichLab/AdmixTools/">ADMIXTOOLS</a> is a widely used software package for calculating admixture statistics and testing population admixture hypotheses. However, although powerful and comprehensive, it is not exactly known for being user-friendly.</p>
 <p>A typical ADMIXTOOLS workflow often involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS commands, and control how to run a particular analysis. The results are then redirected to another file, which has to be parsed by the user to extract values of interest, often using command-line utilities again or (worse) by manual copy-pasting. Finally, the processed results are analysed in R, Excel or another program.</p>
-<p>This workflow is very cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow the rules of best practice for reproducible science, as it is nearly impossible to construct reproducible automated “pipelines”.</p>
-<p>This R package makes it possible to perform all stages of an ADMIXTOOLS analysis entirely from R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
+<p>This workflow is very cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow the rules of best practice for reproducible science, as it is nearly impossible to construct fully automated reproducible “pipelines”.</p>
+<p>This R package makes it possible to perform all stages of ADMIXTOOLS analyses entirely from R, completely removing the need for “low level” configuration of individual ADMIXTOOLS programs and allowing users to focus on the analysis itself.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -109,17 +108,17 @@
 <p>To install <em>admixr</em> from GitHub you need to install the package <code>devtools</code> first. To do this, you can simply run (in R):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</a></code></pre></div>
-<p>Furthermore, if you want to follow the examples in this vignette, you will need the <a href="https://www.tidyverse.org">tidyverse</a> collection of packages for convenient data analysis, which you can install with:</p>
+<p>Furthermore, if you want to follow the examples in this vignette, you will need the <a href="https://www.tidyverse.org">tidyverse</a> collection of packages for convenient manipulation and plotting of data, which you can install with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</a></code></pre></div>
 <p>When everything is ready, you can run the following code to make functions in both packages available:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">── Attaching packages ─────────────────────────────────────────────────────────────────────────── tidyverse <span class="dv">1</span>.<span class="fl">2.1</span> ──</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">── Attaching packages ────────────────────────────────────────────────────────────── tidyverse <span class="dv">1</span>.<span class="fl">2.1</span> ──</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">✔ ggplot2 <span class="dv">3</span>.<span class="fl">0.0</span>     ✔ purrr   <span class="dv">0</span>.<span class="fl">2.5</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">✔ tibble  <span class="dv">1</span>.<span class="fl">4.2</span>     ✔ dplyr   <span class="dv">0</span>.<span class="fl">7.8</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">✔ tidyr   <span class="dv">0</span>.<span class="fl">8.2</span>     ✔ stringr <span class="dv">1</span>.<span class="fl">3.1</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">✔ readr   <span class="dv">1</span>.<span class="fl">1.1</span>     ✔ forcats <span class="dv">0</span>.<span class="fl">3.0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">── Conflicts ────────────────────────────────────────────────────────────────────────────── <span class="kw">tidyverse_conflicts</span>() ──</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">✔ readr   <span class="dv">1</span>.<span class="fl">2.1</span>     ✔ forcats <span class="dv">0</span>.<span class="fl">3.0</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">── Conflicts ───────────────────────────────────────────────────────────────── <span class="kw">tidyverse_conflicts</span>() ──</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">✖ dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>() masks stats<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>()</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">✖ dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/lead-lag.html">lag</a></span>()    masks stats<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stats/topics/lag">lag</a></span>()</a></code></pre></div>
 </div>
@@ -130,9 +129,9 @@
 <p>EIGENSTRAT datasets always contain three kinds of files:</p>
 <ul>
 <li>
-<code>ind</code> file - specifies the name, sex and population assignment of each sample</li>
+<code>ind</code> file - specifies a unique name, sex (optional - can be simply “U” for “undefined”) and label (such as population assignment) of each sample;</li>
 <li>
-<code>snp</code> file - specifies the positions of SNPs, REF/ALT alleles etc.</li>
+<code>snp</code> file - specifies the positions of SNPs, REF/ALT alleles etc.;</li>
 <li>
 <code>geno</code> file - contains SNP data (one row per site, one character per sample) in a dense string-based format:
 <ul>
@@ -143,15 +142,15 @@
 </ul>
 </li>
 </ul>
-<p>As you can see, a VCF file is essentially a combination of all three files in a single package. Luckily for us, all three EIGENSTRAT files usually share a common path and prefix, or it’s easy to make it that way. To make handling of EIGENSTRAT datasets in R easier without having to worry about keeping track of each individual file separately we can use this fact and work with all necessary files at once.</p>
+<p>Therefore, a VCF file is essentially a combination of all three files in a single package. Luckily for us, all three EIGENSTRAT files usually share a common path and prefix and should be placed in a single directory.</p>
 <p>Let’s first download a small testing SNP dataset using a built-in <em>admixr</em> function <code><a href="../reference/download_data.html">download_data()</a></code>. This function downloads the data into a temporary directory (you can specify the destination using its <code>dirname</code> argument). In addition to this, the function returns a shared prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">(prefix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/download_data.html">download_data</a></span>())</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps"</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps"</span></a></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(prefix), <span class="dt">pattern =</span> <span class="kw">basename</span>(prefix), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.geno"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.ind"</span> </a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.snp"</span> </a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.geno"</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.ind"</span> </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.snp"</span> </a></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
@@ -168,7 +167,7 @@ French       U  French
 Vindija      U  Vindija
 Altai        U  Altai
 Denisova     U  Denisova</code></pre>
-<p>The first column (sample name) and the third column (population label) are generally not the same (sample names often have numerical suffixes, etc.), but we kept them the same for simplicity. Importantly, when specifying population/sample arguments in <em>admixr</em> functions, the information in the third column is what is used. For example, if you have individuals such as “French1”, “French2”, “French3” in the first column of an <code>ind</code> file, all three sharing a “French” population label in the third column, specifying “French” in an <em>admixr</em> function will combine all three samples in a single population and work with it as a whole.</p>
+<p>The first column (sample name) and the third column (population label) are generally not the same (sample names often have numerical suffixes to make them unique, etc.), but we kept them the same for simplicity. Importantly, when specifying population/sample arguments in <em>admixr</em> functions, the information in the third column is what is used. For example, if you have individuals such as “French1”, “French2”, “French3” in the first column of an <code>ind</code> file, all three sharing a “French” population label in the third column, specifying “French” in an <em>admixr</em> function will combine all three samples in a single population and work with it as a whole, instead of working with each individual separately.</p>
 </div>
 <div id="snp-file-first-3-lines" class="section level4">
 <h4 class="hasAnchor">
@@ -198,7 +197,7 @@ Denisova     U  Denisova</code></pre>
 <h2 class="hasAnchor">
 <a href="#philosophy-of-admixr" class="anchor"></a>Philosophy of <em>admixr</em>
 </h2>
-<p>The goal of <em>admixr</em> is to make ADMIXTOOLS analyses as trivial to perform as possible, without having to worry about par/pop/left/right configuration files (as they are known in ADMIXTOOLS’ jargon) and other low-level details.</p>
+<p>The goal of <em>admixr</em> is to make ADMIXTOOLS analyses as trivial to run as possible, without having to worry about par/pop/left/right configuration files (as they are known in the jargon of ADMIXTOOLS) and other low-level details.</p>
 <p>The only interface between you and ADMIXTOOLS is the following set of R functions:</p>
 <ul>
 <li><code><a href="../reference/f4ratio.html">d()</a></code></li>
@@ -206,6 +205,7 @@ Denisova     U  Denisova</code></pre>
 <li><code><a href="../reference/f4ratio.html">f4ratio()</a></code></li>
 <li><code><a href="../reference/f4ratio.html">f3()</a></code></li>
 <li><code><a href="../reference/qpAdm.html">qpAdm()</a></code></li>
+<li><code><a href="../reference/qpWave.html">qpWave()</a></code></li>
 </ul>
 <p>Anything that would normally require <a href="https://gaworkshop.readthedocs.io/en/latest/contents/06_f3/f3.html">dozens of lines of shell scripts</a> can be often accomplished by running a single line of R code.</p>
 </div>
@@ -213,16 +213,16 @@ Denisova     U  Denisova</code></pre>
 <h2 class="hasAnchor">
 <a href="#internal-representation-of-eigenstrat-data" class="anchor"></a>Internal representation of EIGENSTRAT data</h2>
 <p>As we saw above, each EIGENSTRAT dataset has three components. The way this data is internally represented in <em>admixr</em> is using a small S3 R object created using the <code>eigenstrat</code> constructor function. This function accepts the path and prefix of a trio of EIGENSTRAT snp/ind/geno files and returns an R object of the <code>EIGENSTRAT</code> class:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eigenstrat.html">eigenstrat</a></span>(prefix)</a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">snp_data</a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">snps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eigenstrat.html">eigenstrat</a></span>(prefix)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">snps</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.geno</span></a></code></pre></div>
-<p>This object simply encapsulates the paths to all three EIGENSTRAT components and makes it easy to pass the data to different <em>admixr</em> functions. (We can ignore the fields in the “modifiers:” section for now).</p>
-<p>The following couple of sections describe the usage of <em>admixr</em> on a set of example analyses that one might be interested in doing.</p>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.geno</span></a></code></pre></div>
+<p>This object simply encapsulates the paths to all three EIGENSTRAT components and makes it easy to pass the data to different <em>admixr</em> functions.</p>
+<p>The following couple of sections describe how to use the <em>admixr</em> package on a set of example analyses.</p>
 </div>
 <div id="d-statistic" class="section level2">
 <h2 class="hasAnchor">
@@ -232,11 +232,11 @@ Denisova     U  Denisova</code></pre>
 <p><span class="math inline">\(D\)</span> statistics are based on comparing the proportions of BABA and ABBA sites patterns observed in data:</p>
 <p><span class="math display">\[D = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# BABA sites + # ABBA sites}}.\]</span></p>
 <p>Significant departure of <span class="math inline">\(D\)</span> from zero indicates an excess of allele sharing between the first and the third population (positive <span class="math inline">\(D\)</span>), or an excess of allele sharing between the second and the third population (negative <span class="math inline">\(D\)</span>). If we get <span class="math inline">\(D\)</span> that is not significantly different from 0, this suggests that the first and second populations form a clade, and don’t differ in their genetic affinity to the third population (this is the null hypothesis that the data is compared against).</p>
-<p>Therefore, our <span class="math inline">\(D\)</span> statistic above simply tests whether some modern humans today admixed with Neanderthals, which would increase their genetic affinity to this archaic group compared to West Africans (whose ancestors never met Neanderthals).</p>
-<p>Let’s save the population names first to make the code below more readable:</p>
+<p>Therefore, our <span class="math inline">\(D\)</span> statistic above simply tests whether some modern humans today admixed with Neanderthals, which would increase their genetic affinity to this archaic group compared to Africans (whose ancestors never met Neanderthals).</p>
+<p>Let’s save some population names first to make the code below more readable:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">pops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>)</a></code></pre></div>
 <p>Using the <em>admixr</em> package we can then calculate the <span class="math inline">\(D\)</span> statistic above simply by running:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> snp_data)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> snps)</a></code></pre></div>
 <p>The result is a following <code>data.frame</code>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
@@ -336,7 +336,7 @@ Denisova     U  Denisova</code></pre>
 <li>
 <code>Zscore</code> - <span class="math inline">\(Z\)</span>-zscore value (number of standard errors the <span class="math inline">\(D\)</span> is from 0, i.e. how strongly do we reject the null hypothesis of no admixture)</li>
 <li>
-<code>BABA</code>/<code>ABBA</code> - counts of observed site patterns</li>
+<code>BABA</code>, <code>ABBA</code> - counts of observed site patterns</li>
 <li>
 <code>nsnps</code> - number of SNPs used for a give calculation</li>
 </ul>
@@ -357,7 +357,7 @@ Denisova     U  Denisova</code></pre>
 <p><span class="math display">\[ f_4 = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# sites}}\]</span></p>
 <p>Again, significant departure of <span class="math inline">\(f_4\)</span> from 0 is informative about gene flow, in a way analogous to <span class="math inline">\(D\)</span> statistic.</p>
 <p>To repeat the previous analysis using <span class="math inline">\(f_4\)</span> statistic, we can run:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> snp_data)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4</a></span>(<span class="dt">W =</span> pops, <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> snps)</a></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -457,7 +457,7 @@ Denisova     U  Denisova</code></pre>
 <p>Unfortunately, we don’t have enough space here to explain all the details about the inner workings of <span class="math inline">\(f_4\)</span>-ratio statistic. However, in general, when we are interested in estimating the <em>proportion</em> of ancestry in a population <span class="math inline">\(X\)</span> coming some parental lineage <span class="math inline">\(B\)</span>, we can use a ratio of two <span class="math inline">\(f_4\)</span> statistics.</p>
 <p><span class="math display">\[f_4\textrm{-ratio} = \frac{f_4(A, O; X, C)}{f_4(A, O; B, C)}.\]</span></p>
 <p>Using <code>amidxr</code>, we can calculate <span class="math inline">\(f_4\)</span>-ratios using the following code (<code>X</code> being a vector of samples for which we want to estimate Neanderthal ancestry):</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(<span class="dt">X =</span> pops, <span class="dt">A =</span> <span class="st">"Altai"</span>, <span class="dt">B =</span> <span class="st">"Vindija"</span>, <span class="dt">C =</span> <span class="st">"Yoruba"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> snp_data)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f4ratio</a></span>(<span class="dt">X =</span> pops, <span class="dt">A =</span> <span class="st">"Altai"</span>, <span class="dt">B =</span> <span class="st">"Vindija"</span>, <span class="dt">C =</span> <span class="st">"Yoruba"</span>, <span class="dt">O =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> snps)</a></code></pre></div>
 <p>The ancestry proportion (a number between 0 and 1) is given in the <code>alpha</code> column:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
@@ -558,7 +558,7 @@ Denisova     U  Denisova</code></pre>
 <p>As an example, imagine we are interested in relative divergence times between pairs of present-day human populations, and want to know in which approximate order they split of from each other. To address this problem, we could use <span class="math inline">\(f_3\)</span> statistic by fixing the <span class="math inline">\(C\)</span> outgroup as San, and calculating pairwise <span class="math inline">\(f_3\)</span> statistics between all pairs of present-day modern humans.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">pops &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>)</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f3</a></span>(<span class="dt">A =</span> pops, <span class="dt">B =</span> pops, <span class="dt">C =</span> <span class="st">"Khomani_San"</span>, <span class="dt">data =</span> snp_data)</a></code></pre></div>
+<a class="sourceLine" id="cb20-3" data-line-number="3">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">f3</a></span>(<span class="dt">A =</span> pops, <span class="dt">B =</span> pops, <span class="dt">C =</span> <span class="st">"Khomani_San"</span>, <span class="dt">data =</span> snps)</a></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -639,62 +639,151 @@ Denisova     U  Denisova</code></pre>
 <p><img src="tutorial_files/figure-html/f3_plot-1.png" width="768"></p>
 <p>We can see that when we order the heatmap labels based on values of pairwise <span class="math inline">\(f_3\)</span> statistics, the (already known) order of population splits pops up beautifully (i.e. San separated first, followed by Mbuti, etc.).</p>
 </div>
-<div id="qpadm-method" class="section level2">
+<div id="qpwave-and-qpadm" class="section level2">
 <h2 class="hasAnchor">
-<a href="#qpadm-method" class="anchor"></a>qpAdm method</h2>
-<p>The last ADMIXTOOLS method implemented in <em>admixr</em> is qpAdm. Unfortunately, it is also one that is the most complex and has not been properly described and peer-reviewed yet. Nevertheless, it seems to have a lot of power to disentangle complex admixture scenarios, and so we included it in our package as well.</p>
-<p>Very briefly, qpAdm can be used to estimate admixture proportions coming from a series of <span class="math inline">\(N\)</span> source <em>ancestral</em> populations, assuming we have reference populations that form clades with those <em>source</em> populations that are closer to them than to any of the specified <em>outgroup</em> populations.</p>
-<p>Formally, if a Test population has ancestry coming from <span class="math inline">\(N\)</span> ancestral source populations, with Reference populations being closer to them than are outgroup populations <span class="math inline">\(O_i\)</span>, we can write:</p>
-<p><span class="math display">\[f_4(\textrm{Test}, O_a, O_b, O_c) \approx \sum_{i=1}^N \alpha_i f_4(\textrm{Reference}_i, O_a; O_b, O_c),\]</span></p>
-<p>where <span class="math inline">\(\sum_{i=1}^N \alpha_i = 1\)</span> and <span class="math inline">\(\alpha_i \geq 1\)</span> for all <span class="math inline">\(i = 1, ..., N\)</span>.</p>
-<p>If this looks like black magic to you, I feel your pain and direct you to the Supplementary Section 9 of <a href="http://www.nature.com/articles/nature14317">Haak et al. 2015</a>, and an <a href="https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf">informal write-up</a> distributed with the ADMIXTOOLS software. While the method does not have a dedicated paper yet, it’s not so complicated to understand the basic principles.</p>
-<p>Probably the simplest possible case to show that qpAdm works is by returning to the question of estimating Neanderthal ancestry proportions. Let’s define:</p>
+<a href="#qpwave-and-qpadm" class="anchor"></a>qpWave and qpAdm</h2>
+<p>Both <em>qpWave</em> and <em>qpAdm</em> can be though of as more complex and powerful extensions of the basic idea behind a simple <span class="math inline">\(f_4\)</span> statistic. Building upon this idea and generalizing it, the <em>qpWave</em> method makes it possible to find the lowest number of “streams of ancestry” between two groups of populations that is consistent with the data. Extending the concept of <span class="math inline">\(f_4\)</span> statistics even further, <em>qpAdm</em> allows to find the proportions of ancestry from a set of ancestral populations that contributed ancestry to our sample or population of interest.</p>
+<p>Unfortunately, both methods represent a rather advanced topic that still lacks a proper documentation and beginner-friendly tutorials, and explaining them in detail is beyond the scope of this vignette. If you want to use them, it’s highly recommended that you read the official documentation decribing the basic ideas of both methods (<a href="https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf">distributed with ADMIXTOOLS</a>), <em>and</em> that you read the relevant supplementary sections of papers published by David Reich’s group. At the very least, I recommend reading:</p>
 <ul>
-<li>Europeans as the <em>target</em> samples to estimate ancestry proportions for</li>
-<li>Vindija Neanderthal and an African as two <em>reference</em> populations (two potential sources of ancestries in Europeans today)</li>
-<li>
-<em>outgroup</em> populations - Chimp, Altai Neanderthal and Denisovan (which are all further from the true ancestral populations - Vindija and African - than the <em>reference</em> populations)</li>
+<li><p>Note S6 of <em>“<a href="https://www.nature.com/articles/nature11258">Reconstructing Native American population history</a>”</em> by Reich et al. This paper first introduced the theoretical background of what later became <em>qpWave</em>.</p></li>
+<li><p>Supplementary Information 10 of <em>“<a href="https://www.nature.com/articles/nature14317">Massive migration from the steppe was a source for Indo-European languages in Europe</a>”</em> by Haak et al., which gives a more consise overview of the <em>qpWave</em> method than S6 of Reich et al. 2012, and also introduces the <em>qpAdm</em> methodology for estimating admixture proportions.</p></li>
 </ul>
-<p>Assuming all of that, we can run qpAdm with:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qpAdm.html">qpAdm</a></span>(</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">  <span class="dt">target =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>),</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">  <span class="dt">references =</span> <span class="kw">c</span>(<span class="st">"Vindija"</span>, <span class="st">"Mbuti"</span>),</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">  <span class="dt">outgroups =</span> <span class="kw">c</span>(<span class="st">"Chimp"</span>, <span class="st">"Denisova"</span>, <span class="st">"Altai"</span>),</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5">  <span class="dt">data =</span> snp_data</a>
-<a class="sourceLine" id="cb23-6" data-line-number="6">)</a></code></pre></div>
+<p>If you read these papers and the tutorial distributed with the ADMIXTOOLS carefully, you will have a solid understanding of both <em>qpWave</em> and <em>qpAdm</em>.</p>
+<p>In the remainder of this section, I will assume that you are familiar with both methods, and will only explain how <em>admixr</em> makes running them much easier.</p>
+<div id="qpwave" class="section level3">
+<h3 class="hasAnchor">
+<a href="#qpwave" class="anchor"></a><em>qpWave</em>
+</h3>
+<p>To run <em>qpWave</em>, you must provide a list of <em>left</em> and <em>right</em> populations (using the terminology of Haak et al. 2015 above). The aim of the method is to get an idea about the number of migration waves from <em>right</em> to <em>left</em> (with no back-migration from <em>left</em> to <em>right</em>!). This is done by estimating the rank of a matrix of all possible <span class="math inline">\(f_4\)</span> statistics</p>
+<p><span class="math display">\[f_4(\textrm{left}_1, \textrm{left}_i; \textrm{right}_1, \textrm{right}_i),\]</span></p>
+<p>where <span class="math inline">\(\textrm{left}_1\)</span> and <span class="math inline">\(\textrm{right}_1\)</span> are some fixed populations and the <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> indices run over all other possible choices of populations.</p>
+<p>As an example, let’s try to find the number of admixture waves from <em>right</em> = {Yoruba, Mbuti, Alta} into <em>left</em> = {French, Sardinian, Han}. We can do this using the function <code><a href="../reference/qpWave.html">qpWave()</a></code>, setting its arguments appropriately:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qpWave.html">qpWave</a></span>(</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"> <span class="dt">left =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>),</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"> <span class="dt">right =</span> <span class="kw">c</span>(<span class="st">"Altai"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>),</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"> <span class="dt">data =</span> snps</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">)</a></code></pre></div>
+<p>The <code><a href="../reference/qpWave.html">qpWave()</a></code> function returns a data frame which shows the results of a series of matrix rank tests. The <code>rank</code> column is the matrix rank tested, <code>df</code>, <code>chisq</code> and <code>tail</code> give …, and <code>dfdiff</code>, <code>chisqdiff</code> and <code>taildiff</code> give the same, but always comparing the fit to the fit of a rank immediately lower.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">result</a></code></pre></div>
-<table class="table"><tbody><tr>
-<td>
 <table class="table">
 <thead><tr class="header">
-<th align="left">target</th>
-<th align="right">Vindija</th>
-<th align="right">Mbuti</th>
-<th align="right">stderr_Vindija</th>
-<th align="right">stderr_Mbuti</th>
-<th align="right">nsnps</th>
+<th align="right">rank</th>
+<th align="right">df</th>
+<th align="right">chisq</th>
+<th align="right">tail</th>
+<th align="right">dfdiff</th>
+<th align="right">chisqdiff</th>
+<th align="right">taildiff</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">French</td>
-<td align="right">0.0201810</td>
-<td align="right">0.9798190</td>
-<td align="right">0.006</td>
-<td align="right">0.006</td>
-<td align="right">499434</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">1.758</td>
+<td align="right">0.7801969</td>
+<td align="right">0</td>
+<td align="right">0.000</td>
+<td align="right">1.0000000</td>
 </tr>
 <tr class="even">
-<td align="left">Sardinian</td>
-<td align="right">0.0235496</td>
-<td align="right">0.9764504</td>
-<td align="right">0.006</td>
-<td align="right">0.006</td>
-<td align="right">499314</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.192</td>
+<td align="right">0.6614221</td>
+<td align="right">3</td>
+<td align="right">1.566</td>
+<td align="right">0.6671280</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0.000</td>
+<td align="right">1.0000000</td>
+<td align="right">1</td>
+<td align="right">0.192</td>
+<td align="right">0.6614221</td>
 </tr>
 </tbody>
 </table>
-</td>
-<td>
+<p>In this example, we see that matrix <span class="math inline">\(r = 0\)</span> cannot be rejected (<code>tail</code> <span class="math inline">\(p\)</span>-value = 0.684 - not rejected). Because Reich et al. 2012 showed that <span class="math inline">\(r + 1 \le n\)</span>, where <span class="math inline">\(n\)</span> is the number of admixture waves, we can interpret this as <em>left</em> populations having at least <span class="math inline">\(n = 1\)</span> streams of ancestry from the set of <em>right</em> populations. In this case, the most likely explanation is Neandertal admixture in non-Africans today.</p>
+<p>Now, what happens if we add Papuans to the <em>left</em> group?</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qpWave.html">qpWave</a></span>(</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"> <span class="dt">left =</span> <span class="kw">c</span>(<span class="st">"Papuan"</span>, <span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>),</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"> <span class="dt">right =</span> <span class="kw">c</span>(<span class="st">"Altai"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>),</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"> <span class="dt">data =</span> snps</a>
+<a class="sourceLine" id="cb25-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">result</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">rank</th>
+<th align="right">df</th>
+<th align="right">chisq</th>
+<th align="right">tail</th>
+<th align="right">dfdiff</th>
+<th align="right">chisqdiff</th>
+<th align="right">taildiff</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">29.150</td>
+<td align="right">0.0000570</td>
+<td align="right">0</td>
+<td align="right">0.000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0.603</td>
+<td align="right">0.7395638</td>
+<td align="right">4</td>
+<td align="right">28.547</td>
+<td align="right">0.0000097</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0.000</td>
+<td align="right">1.0000000</td>
+<td align="right">2</td>
+<td align="right">0.603</td>
+<td align="right">0.7395638</td>
+</tr>
+</tbody>
+</table>
+<p>We can now clearly reject rank <span class="math inline">\(r = 0\)</span>, but we see that the data is consistent with rank <span class="math inline">\(r = 1\)</span>, meaning that there must have been at least <span class="math inline">\(n = 2\)</span> streams of ancestry from <em>right</em> to <em>left</em> populations (<span class="math inline">\(r + 1 \le n\)</span>). Because this happened after we introduced Papuans to the <em>left</em> set, this could indicate a separate pulse of archaic introgression into Papuans, which is not surprising given what we know about the geographical patterns of archaic admixture in non-Africans today, and significantly more introgression observed in Papuans than any other present-day population.</p>
+</div>
+<div id="qpadm" class="section level3">
+<h3 class="hasAnchor">
+<a href="#qpadm" class="anchor"></a><em>qpAdm</em>
+</h3>
+<p>The <em>qpAdm</em> method can be used to find, for a given target population, the proportions of ancestry coming from a set of ancestral populations. Importantly, since we often lack accurate representatives of the true ancestral populations, we can use a set of <em>reference</em> populations instead, under a crucial assumption that the <em>references</em> set is phylogenetically closer to true ancestral populations than a set of specified <em>outgroups</em>. For example, coming back to our example of using <span class="math inline">\(f_4\)</span>-ratio statistics to estimate the proportions of Neandertal ancestry in people today, we could define:</p>
+<ul>
+<li>some Europeans as the <em>target</em>;</li>
+<li>Vindija Neanderthal and an African as two <em>reference</em> populations (two potential sources of ancestries in Europeans today);</li>
+<li>
+<em>outgroup</em> populations as Chimp, Altai Neanderthal and Denisovan (which are all further from the true ancestral populations - here Vindija and African - than the <em>reference</em> populations).</li>
+</ul>
+<p>Having defined all three population sets, we can run qpAdm with:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qpAdm.html">qpAdm</a></span>(</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">  <span class="dt">target =</span> <span class="kw">c</span>(<span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"French"</span>),</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">  <span class="dt">sources =</span> <span class="kw">c</span>(<span class="st">"Vindija"</span>, <span class="st">"Yoruba"</span>),</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">  <span class="dt">outgroups =</span> <span class="kw">c</span>(<span class="st">"Chimp"</span>, <span class="st">"Denisova"</span>, <span class="st">"Altai"</span>),</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">  <span class="dt">data =</span> snps</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">)</a></code></pre></div>
+<p>The <code><a href="../reference/qpAdm.html">qpAdm()</a></code> function has an argument <code>details</code> (default TRUE) which makes the function return a list of three elements:</p>
+<ul>
+<li>
+<code>proportions</code> - data frame with admixture proportions - this is what we care about;</li>
+<li>
+<code>ranks</code> - results of rank tests performed by <em>qpWave</em> - these evaluate how well does the assumed traget-references-outgroups population model match the data;</li>
+<li>
+<code>subsets</code> - results of the “all subsets” analysis (see the <a href="https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf">documentation</a> for more details.</li>
+</ul>
+<p>Let’s start with the <code>ranks</code> element:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">result<span class="op">$</span>ranks</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">target</th>
@@ -708,157 +797,114 @@ Denisova     U  Denisova</code></pre>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">French</td>
+<td align="left">Sardinian</td>
 <td align="right">1</td>
 <td align="right">1</td>
-<td align="right">5.598</td>
-<td align="right">0.0179773</td>
+<td align="right">0.006</td>
+<td align="right">0.9362605</td>
 <td align="right">3</td>
-<td align="right">-5.598</td>
+<td align="right">-0.006</td>
 <td align="right">1.0000000</td>
 </tr>
 <tr class="even">
-<td align="left">French</td>
+<td align="left">Sardinian</td>
 <td align="right">2</td>
 <td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">1.0000000</td>
 <td align="right">1</td>
-<td align="right">5.598</td>
-<td align="right">0.0179773</td>
+<td align="right">0.006</td>
+<td align="right">0.9362605</td>
 </tr>
 <tr class="odd">
-<td align="left">Sardinian</td>
+<td align="left">Han</td>
 <td align="right">1</td>
 <td align="right">1</td>
-<td align="right">0.216</td>
-<td align="right">0.6418536</td>
+<td align="right">2.144</td>
+<td align="right">0.1431157</td>
 <td align="right">3</td>
-<td align="right">-0.216</td>
+<td align="right">-2.144</td>
 <td align="right">1.0000000</td>
 </tr>
 <tr class="even">
-<td align="left">Sardinian</td>
+<td align="left">Han</td>
 <td align="right">2</td>
 <td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">1.0000000</td>
 <td align="right">1</td>
-<td align="right">0.216</td>
-<td align="right">0.6418536</td>
+<td align="right">2.144</td>
+<td align="right">0.1431157</td>
+</tr>
+<tr class="odd">
+<td align="left">French</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3.814</td>
+<td align="right">0.0508171</td>
+<td align="right">3</td>
+<td align="right">-3.814</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">French</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0.000</td>
+<td align="right">1.0000000</td>
+<td align="right">1</td>
+<td align="right">3.814</td>
+<td align="right">0.0508171</td>
 </tr>
 </tbody>
 </table>
-</td>
-<td>
+<p>The row with rank = 1 represents a <em>qpWave</em> test with all <span class="math inline">\(n\)</span> <em>reference</em> populations set as the <em>left</em> set and all <em>outgroups</em> as the <em>right</em> set, and evaluates whether the ancestral sources themselves are descended from <span class="math inline">\(n\)</span> independent streams of ancestry. In our case, <span class="math inline">\(n = 2\)</span> (Mbuti and Vindija), which means that the data would have to be consistent with rank <span class="math inline">\(r = 1\)</span> to satisfy the inequality <span class="math inline">\(r + 1 \le n\)</span> proved by Reich et al., 2012. We see that this is true for all three target populations (<span class="math inline">\(p\)</span>-value &gt; 0.05 for all targets), and the simple model thus seems to be reasonably consistent with the data.</p>
+<p>The rank = 2 row represents a <em>qpWave</em> test after adding a target population to the <em>left</em> group together with the <em>references</em>. This test makes sure that including the target population does not increase the rank of the <span class="math inline">\(f_4\)</span> matrix, meaning that the target can be really modelled as a mixture of ancestries from the <em>reference</em> set. If the <span class="math inline">\(p\)</span>-values turn out to be very low, this indicates that the assumed model does not fit the data very well and that a part of the ancestry in <em>target</em> possibly cannot be traced to any of the <em>references</em>. In our case, however, all rank = 2 test <span class="math inline">\(p\)</span>-values do not appear significant, and we can be reasonably sure that the <em>target</em> samples can be fully modelled as a mixtures of all specified <em>references</em>.</p>
+<p>Having made sure that our model is reasonably correct, we can now have a look at the <code>proportions</code> element, that contains an estimated admixture proportion from all specified sources, as well as standard errors for those proportion estimated using a block jackknife:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">result<span class="op">$</span>proportions</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">target</th>
-<th align="left">pat</th>
-<th align="right">wt</th>
-<th align="right">dof</th>
-<th align="right">chisq</th>
-<th align="right">tail</th>
 <th align="right">Vindija</th>
-<th align="right">Mbuti</th>
+<th align="right">Yoruba</th>
+<th align="right">stderr_Vindija</th>
+<th align="right">stderr_Yoruba</th>
+<th align="right">nsnps</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">French</td>
-<td align="left">00</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">5.598</td>
-<td align="right">0.0179773</td>
-<td align="right">0.020</td>
-<td align="right">0.980</td>
+<td align="left">Sardinian</td>
+<td align="right">0.0246924</td>
+<td align="right">0.9753076</td>
+<td align="right">0.006</td>
+<td align="right">0.006</td>
+<td align="right">499314</td>
 </tr>
 <tr class="even">
-<td align="left">French</td>
-<td align="left">01</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">15433.920</td>
-<td align="right">0.0000000</td>
-<td align="right">1.000</td>
-<td align="right">0.000</td>
+<td align="left">Han</td>
+<td align="right">0.0206268</td>
+<td align="right">0.9793732</td>
+<td align="right">0.006</td>
+<td align="right">0.006</td>
+<td align="right">499654</td>
 </tr>
 <tr class="odd">
 <td align="left">French</td>
-<td align="left">10</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">16.462</td>
-<td align="right">0.0002663</td>
-<td align="right">0.000</td>
-<td align="right">1.000</td>
-</tr>
-<tr class="even">
-<td align="left">Sardinian</td>
-<td align="left">00</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0.216</td>
-<td align="right">0.6418540</td>
-<td align="right">0.024</td>
-<td align="right">0.976</td>
-</tr>
-<tr class="odd">
-<td align="left">Sardinian</td>
-<td align="left">01</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">15891.195</td>
-<td align="right">0.0000000</td>
-<td align="right">1.000</td>
-<td align="right">0.000</td>
-</tr>
-<tr class="even">
-<td align="left">Sardinian</td>
-<td align="left">10</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">14.712</td>
-<td align="right">0.0006388</td>
-<td align="right">0.000</td>
-<td align="right">1.000</td>
+<td align="right">0.0215749</td>
+<td align="right">0.9784251</td>
+<td align="right">0.006</td>
+<td align="right">0.006</td>
+<td align="right">499434</td>
 </tr>
 </tbody>
 </table>
-</td>
-</tr></tbody></table>
-<p>If we compare this result to the <span class="math inline">\(f_4\)</span>-ratio values calculated above, we see that the qpAdm estimates are very close to what we got earlier.</p>
+<p>If we compare this result to the <span class="math inline">\(f_4\)</span>-ratio values calculated above, we see that the <em>qpAdm</em> estimates are very close to what we got earlier.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">result<span class="op">$</span>subsets</a></code></pre></div>
 </div>
-<div id="qpwave" class="section level2">
-<h2 class="hasAnchor">
-<a href="#qpwave" class="anchor"></a>qpWave</h2>
-<p>From Haak et al.:</p>
-<p>first testing a pair of source populations (left list U) to ensure that they have rank=1 with respect to the outgroups, which shows that they are descended from two independent streams of ancestry. We will then add a third population Test, making U={U, Test}, showing that it does not increase the rank, and can thus be modelled as a mixture of the initial pair.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># rank 0</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw"><a href="../reference/qpWave.html">qpWave</a></span>(<span class="dt">left =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>),</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3">       <span class="dt">right =</span> <span class="kw">c</span>(<span class="st">"Dinka"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>),</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">       <span class="dt">data =</span> snp_data)</a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co"># A tibble: 3 x 7</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6">   rank    df  chisq  tail dfdiff chisqdiff taildiff</a>
-<a class="sourceLine" id="cb25-7" data-line-number="7">  <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="dv">1</span>     <span class="dv">0</span>     <span class="dv">8</span> <span class="fl">12.2</span>   <span class="fl">0.141</span>      <span class="dv">0</span>     <span class="dv">0</span>       <span class="dv">1</span>     </a>
-<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="dv">2</span>     <span class="dv">1</span>     <span class="dv">3</span>  <span class="fl">0.672</span> <span class="fl">0.880</span>      <span class="dv">5</span>    <span class="fl">11.6</span>     <span class="fl">0.0412</span></a>
-<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="dv">3</span>     <span class="dv">2</span>     <span class="dv">0</span>  <span class="dv">0</span>     <span class="dv">1</span>          <span class="dv">3</span>     <span class="fl">0.672</span>   <span class="fl">0.880</span> </a></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># rank 1</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw"><a href="../reference/qpWave.html">qpWave</a></span>(<span class="dt">left =</span> <span class="kw">c</span>(<span class="st">"Papuan"</span>, <span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>),</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">       <span class="dt">right =</span> <span class="kw">c</span>(<span class="st">"Dinka"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>),</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4">       <span class="dt">data =</span> snp_data)</a>
-<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co"># A tibble: 4 x 7</span></a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">   rank    df  chisq     tail dfdiff chisqdiff taildiff</a>
-<a class="sourceLine" id="cb26-7" data-line-number="7">  <span class="op">&lt;</span>int<span class="op">&gt;</span><span class="st"> </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">  </span><span class="er">&lt;</span>int<span class="op">&gt;</span><span class="st">     </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span><span class="st">    </span><span class="er">&lt;</span>dbl<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="dv">1</span>     <span class="dv">0</span>    <span class="dv">12</span> <span class="fl">83.8</span>   <span class="fl">7.67e-13</span>      <span class="dv">0</span>     <span class="dv">0</span>     <span class="fl">1.00</span>e<span class="op">+</span><span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="dv">2</span>     <span class="dv">1</span>     <span class="dv">6</span>  <span class="fl">8.80</span>  <span class="fl">1.85</span>e<span class="op">-</span><span class="st"> </span><span class="dv">1</span>      <span class="dv">6</span>    <span class="fl">75.0</span>   <span class="fl">3.80e-14</span></a>
-<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="dv">3</span>     <span class="dv">2</span>     <span class="dv">2</span>  <span class="fl">0.516</span> <span class="fl">7.73</span>e<span class="op">-</span><span class="st"> </span><span class="dv">1</span>      <span class="dv">4</span>     <span class="fl">8.28</span>  <span class="fl">8.18</span>e<span class="op">-</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="dv">4</span>     <span class="dv">3</span>     <span class="dv">0</span>  <span class="dv">0</span>     <span class="fl">1.00</span>e<span class="op">+</span><span class="st"> </span><span class="dv">0</span>      <span class="dv">2</span>     <span class="fl">0.516</span> <span class="fl">7.73</span>e<span class="op">-</span><span class="st"> </span><span class="dv">1</span></a></code></pre></div>
 </div>
-<div id="grouping-population-labels" class="section level2">
+<div id="grouping-samples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#grouping-population-labels" class="anchor"></a>Grouping population labels</h2>
+<a href="#grouping-samples" class="anchor"></a>Grouping samples</h2>
 <p>What we’ve been doing so far was calculating statistics for individual samples. However, it is often useful to treat multiple samples as a single group or population. <em>admixr</em> provides a function called <code>relabel</code> that does just that.</p>
 <p>Here is an example: let’s say we want to run a similar analysis to the one described in the <span class="math inline">\(D\)</span> statistic section, but we want to treat Europeans, Africans and archaics combined populations. But the <code>ind</code> file that we have does not contain grouped labels - each sample stands on its own:</p>
 <pre><code>Chimp        U  Chimp
@@ -874,22 +920,24 @@ Vindija      U  Vindija
 Altai        U  Altai
 Denisova     U  Denisova</code></pre>
 <p>To merge several individual samples under a combined label we can call <code>group_labels</code> like this:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># paths to the original ind file and a new modified ind file, which will</span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co"># contain merged population labels</span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">modif_snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/relabel.html">relabel</a></span>(snp_data,</a>
-<a class="sourceLine" id="cb28-4" data-line-number="4">                          <span class="dt">European =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>),</a>
-<a class="sourceLine" id="cb28-5" data-line-number="5">                          <span class="dt">African =</span> <span class="kw">c</span>(<span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Khomani_San"</span>),</a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">                          <span class="dt">Archaic =</span> <span class="kw">c</span>(<span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">modif_snp_data</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/snps/snps.geno</span></a>
-<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt; modifiers:</span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt;   groups:  /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//Rtmpbhil58/file13c817412ac1a.ind</span></a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># paths to the original ind file and a new modified ind file, which will</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co"># contain merged population labels</span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3">modif_snps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/relabel.html">relabel</a></span>(</a>
+<a class="sourceLine" id="cb32-4" data-line-number="4">  snps,</a>
+<a class="sourceLine" id="cb32-5" data-line-number="5">  <span class="dt">European =</span> <span class="kw">c</span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>),</a>
+<a class="sourceLine" id="cb32-6" data-line-number="6">  <span class="dt">African =</span> <span class="kw">c</span>(<span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Khomani_San"</span>),</a>
+<a class="sourceLine" id="cb32-7" data-line-number="7">  <span class="dt">Archaic =</span> <span class="kw">c</span>(<span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>)</a>
+<a class="sourceLine" id="cb32-8" data-line-number="8">)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">modif_snps</a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/snps/snps.geno</span></a>
+<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co">#&gt; modifiers:</span></a>
+<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#&gt;   groups:  /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpiiUyEO/file8737340fbeb0.ind</span></a></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified <code>EIGENSTRAT</code> object, which contains a new item in the “modifiers” section - the path to a new ind file that will be used in downstream analyses. Let’s look at its contents:</p>
 <pre><code>Chimp        U  Chimp
 Mbuti        U  African
@@ -904,9 +952,9 @@ Vindija      U  Archaic
 Altai        U  Archaic
 Denisova     U  Archaic</code></pre>
 <p>Having the modified <code>EIGENSTRAT</code> object ready, we can then use “European”, “African” and “Archaic” labels in any of the <em>admixr</em> wrapper functions described above. For example:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"European"</span>, <span class="dt">X =</span> <span class="st">"African"</span>, <span class="dt">Y =</span> <span class="st">"Archaic"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> modif_snp_data)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"European"</span>, <span class="dt">X =</span> <span class="st">"African"</span>, <span class="dt">Y =</span> <span class="st">"Archaic"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> modif_snps)</a></code></pre></div>
 <p>Here is the result, showing (as we’ve seen above for individual samples) that Europeans show genetic affinity to archaic humans compared to Africans today:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">head</span>(result)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">W</th>
@@ -935,17 +983,6 @@ Denisova     U  Archaic</code></pre>
 </table>
 <p>Note that the <code><a href="../reference/f4ratio.html">d()</a></code> function correctly picks up the “group modifier” <code>ind</code> file from the provided <code>EIGENSTRAT</code> object and uses it in place of the original <code>ind</code> file.</p>
 </div>
-<div id="merging-eigenstrat-datasets" class="section level2">
-<h2 class="hasAnchor">
-<a href="#merging-eigenstrat-datasets" class="anchor"></a>Merging EIGENSTRAT datasets</h2>
-<p>Another useful data processing function is <code>merge_eigenstrat</code>. This function takes two EIGENSTRAT datasets and merges them, producing a union of samples and intersection of SNPs from both of them. It returns a new <code>EIGENSTRAT</code> object that can be directly used in <em>admixr</em> analyses.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># this is just an example code - it will not run unless you specify the paths</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">merged &lt;-<span class="st"> </span><span class="kw"><a href="../reference/merge_eigenstrat.html">merge_eigenstrat</a></span>(</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">    <span class="dt">merged =</span> <span class="op">&lt;</span>prefix_of_the_merged_dataset<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="st">    </span><span class="dt">a =</span> <span class="op">&lt;</span>first EIGENSTRAT object<span class="op">&gt;</span>,</a>
-<a class="sourceLine" id="cb33-5" data-line-number="5">    <span class="dt">b =</span> <span class="op">&lt;</span>second EIGENSTRAT object<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6">)</a></code></pre></div>
-</div>
 <div id="counting-presentmissing-snps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#counting-presentmissing-snps" class="anchor"></a>Counting present/missing SNPs</h2>
@@ -957,7 +994,7 @@ Denisova     U  Archaic</code></pre>
 <code>missing</code> - controls whether to count missing SNPs instead of present SNPs (set to <code>FALSE</code> by default).</li>
 </ul>
 <p>For each sample, count the SNPs present in that sample:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw"><a href="../reference/count_snps.html">count_snps</a></span>(snp_data)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw"><a href="../reference/count_snps.html">count_snps</a></span>(snps)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">id</th>
@@ -1048,21 +1085,21 @@ Denisova     U  Archaic</code></pre>
 <h3 class="hasAnchor">
 <a href="#filtering-based-on-a-bed-file" class="anchor"></a>Filtering based on a BED file</h3>
 <p>A common situation in genomics is performing an analysis on a subset of the genome. However, EIGENSTRAT is a rather obscure file format which makes it very difficult to find bioinformatics tools that support it. Luckily, <em>admixr</em> includes a function <code><a href="../reference/filter_bed.html">filter_bed()</a></code> that takes an <code>EIGENSTRAT</code> object and a BED file as inputs and produces a new object that contains a “excluded” modifier, describing which sites did not pass the filtering and must be excluded from an analysis later.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">bed &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">dirname</span>(prefix), <span class="st">"regions.bed"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co"># run this if your BED file contains regions to keep in an analysis</span></a>
-<a class="sourceLine" id="cb36-2" data-line-number="2">new_snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(snp_data, bed)</a>
-<a class="sourceLine" id="cb36-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="co"># run this if your BED file contains regions to remove from an analysis</span></a>
-<a class="sourceLine" id="cb36-5" data-line-number="5">new_snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(snp_data, <span class="st">"regions.bed"</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb36-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb36-7" data-line-number="7"><span class="co"># run this if you want the filter_bed function to save the "exclude"</span></a>
-<a class="sourceLine" id="cb36-8" data-line-number="8"><span class="co"># file to a specified location - can be useful for debugging</span></a>
-<a class="sourceLine" id="cb36-9" data-line-number="9">new_snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(snp_data, <span class="st">"regions.bed"</span>, <span class="dt">outfile =</span> <span class="st">"filtered_snps.snp"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">bed &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">dirname</span>(prefix), <span class="st">"regions.bed"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># run this if your BED file contains regions to keep in an analysis</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">new_snps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(snps, bed)</a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="co"># run this if your BED file contains regions to remove from an analysis</span></a>
+<a class="sourceLine" id="cb39-5" data-line-number="5">new_snps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(snps, <span class="st">"regions.bed"</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb39-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb39-7" data-line-number="7"><span class="co"># run this if you want the filter_bed function to save the "exclude"</span></a>
+<a class="sourceLine" id="cb39-8" data-line-number="8"><span class="co"># file to a specified location - can be useful for debugging</span></a>
+<a class="sourceLine" id="cb39-9" data-line-number="9">new_snps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(snps, <span class="st">"regions.bed"</span>, <span class="dt">outfile =</span> <span class="st">"filtered_snps.snp"</span>)</a></code></pre></div>
 <p>If we want to run the whole analysis in a single pipeline, we can use the <code>%&gt;%</code> pipe operator and do the following:</p>
 <p>(The <code>%&gt;%</code> operator simply takes what is on its left side and puts it as a first argument of a function on the right side. While it takes some time to get used to, it is very useful in longer multi-step “pipelines” because it makes more pipelines much more readable. In fact, the resulting code often reads <em>almost</em> like English! The <code>%&gt;%</code> pipe is automatically imported when you load the <code>tidyverse</code> library, and you can read about it more <a href="https://magrittr.tidyverse.org">here</a>.)</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">snp_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(<span class="st">"regions.bed"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"French"</span>, <span class="dt">X =</span> <span class="st">"Mbuti"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">snps <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(<span class="st">"regions.bed"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"French"</span>, <span class="dt">X =</span> <span class="st">"Mbuti"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>)</a></code></pre></div>
 <p>This is because in the formal definitions of <em>admixr</em> function, <code>data =</code> is always the argument, so we don’t have to specify it manually.</p>
 <p><strong>Important:</strong> the set of sites to be removed that is generated after running <code><a href="../reference/filter_bed.html">filter_bed()</a></code> is actually saved into a file (it’s a requirement of the underlying ADMIXTOOLS software)! While the function makes it very easy to do filtering without worrying about locations of intermediate files, it is important to keep in mind that the function still creates them. If you plan to run many <em>independent</em> calculations on a filtered subset of the data, it’s better to save the new <code>EIGENSTRAT</code> object to a variable first and re-use the same object multiple times, rather than running the whole pipeline for each analysis separately (which would create new copies of the intermediate file for each iteration).</p>
 <p>(Note for ADMIXTOOLS powerusers: There is a rather obscure option called <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.ROLLOFF#L48"><code>badsnpfile</code></a>, which specifies the path to a snp file with colrdinates of sites to exclude from the calculation. The file specified in an “exclude” modifier of an <code>EIGENSTRAT</code> object simply fills in the <code>badsnpfile</code> parameter before starting an ADMIXTOOLS command.)</p>
@@ -1071,17 +1108,28 @@ Denisova     U  Archaic</code></pre>
 <h3 class="hasAnchor">
 <a href="#filtering-out-potential-ancient-dna-damage-snps" class="anchor"></a>Filtering out potential ancient DNA damage SNPs</h3>
 <p>In an ancient DNA world, we often need to repeat an analysis on a subset of data that is less likely to be influenced by ancient DNA damage, to verify that our results are not caused by artifacts in the data (due to biochemical properties of DNA degradation, ancient DNA damage will lead to an increase in C→T and G→A substitutions). Using a similar method described in the BED filtering section above, we can use the <code>filter_damage()</code> function to generate a snp file with positions that carry transitions (C→T and G→A sites), that can be removed using the <code>exclude =</code> argument of the main <em>admixr</em> functions.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># generate snp file with positions of transitions</span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">new_snp_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/transversions_only.html">transversions_only</a></span>(snp_data)</a>
-<a class="sourceLine" id="cb38-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="co"># perform the calculation only on transversions</span></a>
-<a class="sourceLine" id="cb38-5" data-line-number="5"><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"French"</span>, <span class="dt">X =</span> <span class="st">"Dinka"</span>, <span class="dt">Y =</span> <span class="st">"Altai"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> new_snp_data)</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co"># generate snp file with positions of transitions</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">new_snps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/transversions_only.html">transversions_only</a></span>(snps)</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="co"># perform the calculation only on transversions</span></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"French"</span>, <span class="dt">X =</span> <span class="st">"Dinka"</span>, <span class="dt">Y =</span> <span class="st">"Altai"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>, <span class="dt">data =</span> new_snps)</a></code></pre></div>
 <p>Again, we could combine several filtering steps into one pipeline:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">snp_data <span class="op">%&gt;%</span><span class="st">                                    </span><span class="co"># take the original data</span></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(<span class="st">"regions.bed"</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># remove sites not in specified regions</span></a>
-<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transversions_only.html">transversions_only</a></span>() <span class="op">%&gt;%</span><span class="st">                      </span><span class="co"># remove potential false SNPs due to aDNA damage</span></a>
-<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"French"</span>, <span class="dt">X =</span> <span class="st">"Dinka"</span>, <span class="dt">Y =</span> <span class="st">"Altai"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>) <span class="co"># calculate D on the filtered dataset</span></a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">snps <span class="op">%&gt;%</span><span class="st">                                    </span><span class="co"># take the original data</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/filter_bed.html">filter_bed</a></span>(<span class="st">"regions.bed"</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># remove sites not in specified regions</span></a>
+<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transversions_only.html">transversions_only</a></span>() <span class="op">%&gt;%</span><span class="st">                      </span><span class="co"># remove potential false SNPs due to aDNA damage</span></a>
+<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/f4ratio.html">d</a></span>(<span class="dt">W =</span> <span class="st">"French"</span>, <span class="dt">X =</span> <span class="st">"Dinka"</span>, <span class="dt">Y =</span> <span class="st">"Altai"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>) <span class="co"># calculate D on the filtered dataset</span></a></code></pre></div>
 </div>
+</div>
+<div id="merging-eigenstrat-datasets" class="section level2">
+<h2 class="hasAnchor">
+<a href="#merging-eigenstrat-datasets" class="anchor"></a>Merging EIGENSTRAT datasets</h2>
+<p>Another useful data processing function is <code>merge_eigenstrat</code>. This function takes two EIGENSTRAT datasets and merges them, producing a union of samples and intersection of SNPs from both of them. It returns a new <code>EIGENSTRAT</code> object that can be directly used in <em>admixr</em> analyses.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># this is just an example code - it will not run unless you specify the paths</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2">merged &lt;-<span class="st"> </span><span class="kw"><a href="../reference/merge_eigenstrat.html">merge_eigenstrat</a></span>(</a>
+<a class="sourceLine" id="cb43-3" data-line-number="3">    <span class="dt">merged =</span> <span class="op">&lt;</span>prefix_of_the_merged_dataset<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="st">    </span><span class="dt">a =</span> <span class="op">&lt;</span>first EIGENSTRAT object<span class="op">&gt;</span>,</a>
+<a class="sourceLine" id="cb43-5" data-line-number="5">    <span class="dt">b =</span> <span class="op">&lt;</span>second EIGENSTRAT object<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb43-6" data-line-number="6">)</a></code></pre></div>
 </div>
   </div>
 
@@ -1099,12 +1147,11 @@ Denisova     U  Archaic</code></pre>
       <li><a href="#f_4-statistic"><span class="math inline">\(f_4\)</span> statistic</a></li>
       <li><a href="#f_4-ratio-statistic"><span class="math inline">\(f_4\)</span>-ratio statistic</a></li>
       <li><a href="#f_3-statistic"><span class="math inline">\(f_3\)</span> statistic</a></li>
-      <li><a href="#qpadm-method">qpAdm method</a></li>
-      <li><a href="#qpwave">qpWave</a></li>
-      <li><a href="#grouping-population-labels">Grouping population labels</a></li>
-      <li><a href="#merging-eigenstrat-datasets">Merging EIGENSTRAT datasets</a></li>
+      <li><a href="#qpwave-and-qpadm">qpWave and qpAdm</a></li>
+      <li><a href="#grouping-samples">Grouping samples</a></li>
       <li><a href="#counting-presentmissing-snps">Counting present/missing SNPs</a></li>
       <li><a href="#data-filtering">Data filtering</a></li>
+      <li><a href="#merging-eigenstrat-datasets">Merging EIGENSTRAT datasets</a></li>
       </ul>
 </div>
       </div>

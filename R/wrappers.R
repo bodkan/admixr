@@ -89,7 +89,7 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
 #' Calculate ancestry proportions in a set of target populations.
 #'
 #' @param target Vector of target populations (evaluated one at a time).
-#' @param references Reference source populations related to true ancestors.
+#' @param sources Source populations related to true ancestors.
 #' @param outgroups Outgroup populations.
 #' @param details Include detailed information about model fit? Otherwise
 #'   return just admixture proportions.
@@ -98,8 +98,8 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
 #' @param outdir Where to put all generated files (temporary directory by default).
 #'
 #' @export
-qpAdm <- function(data, target, references, outgroups, details = TRUE, outdir = NULL) {
-  check_presence(c(target, references, outgroups), data)
+qpAdm <- function(data, target, sources, outgroups, details = TRUE, outdir = NULL) {
+  check_presence(c(target, sources, outgroups), data)
 
   results <- lapply(target, function(X) {
     # get the path to the population, parameter and log files
@@ -110,7 +110,7 @@ qpAdm <- function(data, target, references, outgroups, details = TRUE, outdir = 
     files[["popright"]] <-  stringr::str_replace(files[["pop_file"]], "$", "right")
     files[["pop_file"]] <- NULL
 
-    create_leftright_pop_files(c(X, references), outgroups, files)
+    create_leftright_pop_files(c(X, sources), outgroups, files)
     create_par_file(files, data)
 
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
@@ -127,13 +127,15 @@ qpAdm <- function(data, target, references, outgroups, details = TRUE, outdir = 
     ranks <- lapply(seq_along(target), function(i) { results[[i]]$ranks %>% dplyr::mutate(target = target[i]) }) %>%
       dplyr::bind_rows() %>%
       dplyr::select(target, dplyr::everything())
-    patterns <- lapply(seq_along(target), function(i) { results[[i]]$patterns %>% dplyr::mutate(target = target[i]) }) %>%
+    subsets <- lapply(seq_along(target), function(i) {
+        results[[i]]$subsets %>% dplyr::mutate(target = target[i])
+      }) %>%
       dplyr::bind_rows() %>%
       dplyr::select(target, dplyr::everything())
     return(list(
       proportions = proportions,
       ranks = ranks,
-      patterns = patterns
+      subsets = subsets
     ))
   } else {
     return(proportions)
