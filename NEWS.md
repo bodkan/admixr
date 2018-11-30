@@ -1,3 +1,10 @@
+# admixr 0.7.0
+
+* Fixed handling of warnings when dealing with duplicated populations.
+* 9s are now replaced with NAs in `read_geno()` and `write_geno()`, which makes
+  it more convenient to write custom analytic code working on data.frames.
+* Renamed `qpAdm()` output elements and changed its function signature.
+
 # admixr 0.6.3
 
 * Rename `keep_transversions()` to `transversions_only()`. The old function is

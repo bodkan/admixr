@@ -1,6 +1,6 @@
 Package: admixr
 Title: An Interface for Running ADMIXTOOLS Analyses Directly from R
-Version: 0.6.3
+Version: 0.7.0
 Authors@R: person("Martin", "Petr", email = "mp@bodkan.net", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0003-4879-8421"))
 Description: A convenient interface for performing all stages of ADMIXTOOLS
