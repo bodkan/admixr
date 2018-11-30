@@ -10,8 +10,6 @@ knitr::opts_chunk$set( collapse = TRUE, comment = "#>", fig.path = "README-")
 
 # admixr
 
-_**"Make ADMIXTOOLS fun again!"**_
-
 **TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to deal
 with par/pop/log files ever again.
 
@@ -43,7 +41,7 @@ ADMIXTOOLS programs, allowing users to focus on the analysis itself.
 
 ## Installation instructions
 
-**Note (2018/10/22):** This package is currently in the last phase of testing
+**Note (2018/10/30):** This package is currently in the last phase of testing
 and polishing the API before I submit it to [CRAN](https://cran.r-project.org).
 You can definitely safely use it for your own work, but please make sure to
 check back here for instructions on how to install the officially released
