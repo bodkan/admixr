@@ -1,3 +1,8 @@
+# admixr 0.7.1
+
+* Parse admixture proportions from the "best coefficients" line of the qpAdm
+  output file.
+
 # admixr 0.7.0
 
 * Fixed handling of warnings when dealing with duplicated populations.
