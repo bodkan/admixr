@@ -82,7 +82,7 @@
       <h1>admixr - tutorial</h1>
                         <h4 class="author">Martin Petr</h4>
             
-            <h4 class="date">2018-11-30</h4>
+            <h4 class="date">2018-12-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/tutorial.Rmd"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -113,12 +113,12 @@
 <p>When everything is ready, you can run the following code to make functions in both packages available:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(admixr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">── Attaching packages ────────────────────────────────────────────────────────────── tidyverse <span class="dv">1</span>.<span class="fl">2.1</span> ──</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">── Attaching packages ────────────────────────────────────────── tidyverse <span class="dv">1</span>.<span class="fl">2.1</span> ──</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">✔ ggplot2 <span class="dv">3</span>.<span class="fl">0.0</span>     ✔ purrr   <span class="dv">0</span>.<span class="fl">2.5</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">✔ tibble  <span class="dv">1</span>.<span class="fl">4.2</span>     ✔ dplyr   <span class="dv">0</span>.<span class="fl">7.8</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">✔ tidyr   <span class="dv">0</span>.<span class="fl">8.2</span>     ✔ stringr <span class="dv">1</span>.<span class="fl">3.1</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">✔ readr   <span class="dv">1</span>.<span class="fl">2.1</span>     ✔ forcats <span class="dv">0</span>.<span class="fl">3.0</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">── Conflicts ───────────────────────────────────────────────────────────────── <span class="kw">tidyverse_conflicts</span>() ──</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">── Conflicts ───────────────────────────────────────────── <span class="kw">tidyverse_conflicts</span>() ──</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">✖ dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>() masks stats<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>()</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">✖ dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/lead-lag.html">lag</a></span>()    masks stats<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/stats/topics/lag">lag</a></span>()</a></code></pre></div>
 </div>
@@ -145,12 +145,12 @@
 <p>Therefore, a VCF file is essentially a combination of all three files in a single package. Luckily for us, all three EIGENSTRAT files usually share a common path and prefix and should be placed in a single directory.</p>
 <p>Let’s first download a small testing SNP dataset using a built-in <em>admixr</em> function <code><a href="../reference/download_data.html">download_data()</a></code>. This function downloads the data into a temporary directory (you can specify the destination using its <code>dirname</code> argument). In addition to this, the function returns a shared prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">(prefix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/download_data.html">download_data</a></span>())</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps"</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps"</span></a></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="kw">dirname</span>(prefix), <span class="dt">pattern =</span> <span class="kw">basename</span>(prefix), <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.geno"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.ind"</span> </a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.snp"</span> </a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">[<span class="dv">1</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.geno"</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">[<span class="dv">2</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.ind"</span> </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">[<span class="dv">3</span>] <span class="st">"/var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.snp"</span> </a></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
@@ -218,9 +218,9 @@ Denisova     U  Denisova</code></pre>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.geno</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.geno</span></a></code></pre></div>
 <p>This object simply encapsulates the paths to all three EIGENSTRAT components and makes it easy to pass the data to different <em>admixr</em> functions.</p>
 <p>The following couple of sections describe how to use the <em>admixr</em> package on a set of example analyses.</p>
 </div>
@@ -874,24 +874,24 @@ Denisova     U  Denisova</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">Sardinian</td>
-<td align="right">0.0246924</td>
-<td align="right">0.9753076</td>
+<td align="right">0.025</td>
+<td align="right">0.975</td>
 <td align="right">0.006</td>
 <td align="right">0.006</td>
 <td align="right">499314</td>
 </tr>
 <tr class="even">
 <td align="left">Han</td>
-<td align="right">0.0206268</td>
-<td align="right">0.9793732</td>
+<td align="right">0.021</td>
+<td align="right">0.979</td>
 <td align="right">0.006</td>
 <td align="right">0.006</td>
 <td align="right">499654</td>
 </tr>
 <tr class="odd">
 <td align="left">French</td>
-<td align="right">0.0215749</td>
-<td align="right">0.9784251</td>
+<td align="right">0.022</td>
+<td align="right">0.978</td>
 <td align="right">0.006</td>
 <td align="right">0.006</td>
 <td align="right">499434</td>
@@ -1037,12 +1037,12 @@ Denisova     U  Denisova</code></pre>
 <a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#&gt; EIGENSTRAT object</span></a>
 <a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">#&gt; =================</span></a>
 <a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; components:</span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.ind</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.snp</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/snps/snps.geno</span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt;   ind file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.ind</span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt;   snp file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.snp</span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;   geno file: /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/snps/snps.geno</span></a>
 <a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co">#&gt; modifiers:</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#&gt;   groups:  /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpxCsmEX/fileafb6477af501.ind</span></a></code></pre></div>
+<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#&gt;   groups:  /var/folders/kk/s4cwdkx90pscz314mp0hhz480000gn/T//RtmpkO1AZM/file4fc351adae1d.ind</span></a></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified <code>EIGENSTRAT</code> object, which contains a new item in the “modifiers” section - the path to a new ind file that will be used in downstream analyses. Let’s look at its contents:</p>
 <pre><code>Chimp        U  Chimp
 Mbuti        U  African

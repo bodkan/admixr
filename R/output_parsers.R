@@ -180,8 +180,8 @@ read_qpWave <- function(log_lines, details = FALSE) {
 # Read output log file from a qp3Pop run.
 read_qpAdm <- function(log_lines) {
   # parse the admixture proportions and standard errors
-  stats <- stringr::str_subset(log_lines, "(Jackknife mean|std. errors):") %>%
-    stringr::str_replace("(Jackknife mean|std. errors): +", "") %>%
+  stats <- stringr::str_subset(log_lines, "(best coefficients|std. errors):") %>%
+    stringr::str_replace("(best coefficients|std. errors): +", "") %>%
     stringr::str_replace_all(" +", " ") %>%
     stringr::str_replace_all("^ | $", "") %>%
     stringr::str_split(" ") %>%
