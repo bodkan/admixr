@@ -8,11 +8,6 @@
 
 # admixr
 
-_**"Make ADMIXTOOLS fun again!"**_
-
-**TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to deal
-with par/pop/log files ever again.
-
 ## Introduction
 
 [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools/) is a widely used
@@ -41,7 +36,7 @@ ADMIXTOOLS programs, allowing users to focus on the analysis itself.
 
 ## Installation instructions
 
-**Note (2018/09/06):** This package is currently in the last phase of testing
+**Note (2018/10/30):** This package is currently in the last phase of testing
 and polishing the API before I submit it to [CRAN](https://cran.r-project.org).
 You can definitely safely use it for your own work, but please make sure to
 check back here for instructions on how to install the officially released
@@ -56,6 +51,9 @@ first. You can simply run:
 install.packages("devtools")
 devtools::install_github("bodkan/admixr")
 ```
+
+If you want to **update** _admixr_ to a newer version, simply run
+`devtools::install_github("bodkan/admixr")` again.
 
 **Note that in order to use the `admixr` package, you need a working
 installation of ADMIXTOOLS!** You can find installation instructions
@@ -86,9 +84,11 @@ result <- d(
 )
 
 result
-#>           W      X       Y     Z      D   stderr Zscore  BABA  ABBA  nsnps
-#> 1    French Yoruba Vindija Chimp 0.0313 0.006933  4.510 15802 14844 487753
-#> 2 Sardinian Yoruba Vindija Chimp 0.0287 0.006792  4.222 15729 14852 487646
+#> # A tibble: 2 x 10
+#>   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps
+#>   <chr>     <chr>  <chr>   <chr>  <dbl>   <dbl>  <dbl> <dbl> <dbl>  <dbl>
+#> 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753
+#> 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646
 ```
 
 Note that a single call to the `d` function generates all required intermediate
