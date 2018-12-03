@@ -10,9 +10,6 @@ knitr::opts_chunk$set( collapse = TRUE, comment = "#>", fig.path = "README-")
 
 # admixr
 
-**TL;DR** Perform ADMIXTOOLS analyses directly from R, without having to deal
-with par/pop/log files ever again.
-
 ## Introduction
 
 [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools/) is a widely used

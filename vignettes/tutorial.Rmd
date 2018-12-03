@@ -1,5 +1,5 @@
 ---
-title: "admixr - tutorial"
+title: "admixr - Tutorial"
 author: "Martin Petr"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -19,15 +19,6 @@ knitr::opts_chunk$set(
 
 
 
-
-
-
-This vignette describes how to perform various population admixture
-analyses with the *admixr* package, using the ADMIXTOOLS software suite for
-the underlying calculations.
-
-
-
 ## Introduction
 
 [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools/) is a widely used
@@ -35,23 +26,24 @@ software package for calculating admixture statistics and testing population
 admixture hypotheses. However, although powerful and comprehensive, it is not
 exactly known for being user-friendly.
 
-A typical ADMIXTOOLS workflow often involves a combination of `sed`/`awk`/shell
-scripting and manual editing to create different configuration files. These are
-then passed as command-line arguments to one of ADMIXTOOLS commands, and
-control how to run a particular analysis. The results are then redirected to
-another file, which has to be parsed by the user to extract values of interest,
-often using command-line utilities again or (worse) by manual copy-pasting.
-Finally, the processed results are analysed in R, Excel or another program.
+A typical ADMIXTOOLS workflow generally involves a combination of
+`sed`/`awk`/shell scripting and manual editing to create text configuration
+files. These are then passed as command-line arguments to one of ADMIXTOOLS
+commands, and control how to run a particular analysis. The results are then
+redirected to another file, which has to be parsed by the user to extract
+values of interest, often using command-line utilities again or (worse) by
+manual copy-pasting. Finally, the processed results are analysed in R, Excel or
+another program.
 
-This workflow is very cumbersome, especially if one wants to explore many
+This workflow is quite cumbersome, especially if one wants to explore many
 hypotheses involving different combinations of populations. Most importantly,
-however, it makes it difficult to follow the rules of best practice for
-reproducible science, as it is nearly impossible to construct fully
-automated reproducible "pipelines".
+however, it makes it difficult to coduct reproducible research, as it is nearly
+impossible to construct fully automated "pipelines" that don't require user
+intervention.
 
 This R package makes it possible to perform all stages of ADMIXTOOLS analyses
 entirely from R, completely removing the need for "low level" configuration of
-individual ADMIXTOOLS programs and allowing users to focus on the analysis itself.
+individual ADMIXTOOLS programs.
 
 
 
@@ -67,6 +59,8 @@ individual ADMIXTOOLS programs and allowing users to focus on the analysis itsel
 **Note that in order to use the *admixr* package, you need a working
 installation of ADMIXTOOLS!** You can find installation instructions
 [here](https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL).
+The software runs on Linux and macOS and these are the two systems that
+_admixr_ is tested on.
 
 **Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the
 `$PATH`.** If this is not the case, running `library(admixr)` will show a
@@ -82,16 +76,20 @@ devtools::install_github("bodkan/admixr")
 
 Furthermore, if you want to follow the examples in this vignette, you will need
 the [tidyverse](https://www.tidyverse.org) collection of packages for
-convenient manipulation and plotting of data, which you can install with:
+data manipulation manipulation and plotting, which you can install with:
 
 ```{r, eval = FALSE}
 install.packages("tidyverse")
 ```
 
-When everything is ready, you can run the following code to make functions in
-both packages available:
+You definitely don't need tidyverse for working with _admixr_ but it really
+makes data manipulation and plotting things much easier. I recommend at least
+giving it a shot.
 
-```{r libraries}
+When everything is ready, you can run the following code to load both
+packages:
+
+```{r libraries, message = FALSE, warning = FALSE}
 library(admixr)
 library(tidyverse)
 ```
@@ -104,16 +102,16 @@ library(tidyverse)
 
 ADMIXTOOLS software uses a peculiar set of genetic file formats, which may seem
 strange if you are used to working with [VCF
-files](http://samtools.github.io/hts-specs/VCFv4.3.pdf). However, the basic
-idea remains the same - we want to store and access SNP data (REF/ALT alleles)
+files](http://samtools.github.io/hts-specs/VCFv4.3.pdf). However, the basic 
+idea remains the same: we want to store and access SNP data (REF/ALT alleles) 
 of a set of individuals at a defined set of genomic positions.
 
 EIGENSTRAT datasets always contain three kinds of files:
 
-- `ind` file - specifies a unique name, sex (optional - can be simply "U" for "undefined")
-  and label (such as population assignment) of each sample;
-- `snp` file - specifies the positions of SNPs, REF/ALT alleles etc.;
-- `geno` file - contains SNP data (one row per site, one character per sample)
+* `ind` file - specifies a unique name, sex (optional - can be simply "U" for 
+  "undefined") and label (such as population assignment) of each sample;
+* `snp` file - specifies the positions of SNPs, REF/ALT alleles etc.;
+* `geno` file - contains SNP data (one row per site, one character per sample)
   in a dense string-based format:
   - 0: individual is homozygous ALT
   - 1: individual is a heterozygote
@@ -121,13 +119,13 @@ EIGENSTRAT datasets always contain three kinds of files:
   - 9: missing data
   
 Therefore, a VCF file is essentially a combination of all three files in a
-single package. Luckily for us, all three EIGENSTRAT files usually share a
-common path and prefix and should be placed in a single directory.
+single package.
 
 Let's first download a small testing SNP dataset using a built-in *admixr*
 function `download_data()`. This function downloads the data into a temporary
-directory (you can specify the destination using its `dirname` argument).
-In addition to this, the function returns a shared prefix of the whole dataset.
+directory (you can specify the destination using its `dirname` argument, in 
+case you want to place it elsewhere). In addition to this, the function returns
+a shared path/prefix of the whole dataset.
 
 ```{r eigenstrat_path}
 (prefix <- download_data())
@@ -148,13 +146,13 @@ cat(system(paste0("column -t ", prefix, ".ind"), intern = TRUE), sep = "\n")
 
 The first column (sample name) and the third column (population label) are
 generally not the same (sample names often have numerical suffixes to make them
-unique, etc.), but we kept them the same for simplicity. Importantly, when
-specifying population/sample arguments in *admixr* functions, the information in
-the third column is what is used. For example, if you have individuals such as
+unique, etc.), but were kept the same here for simplicity. Importantly, when
+specifying population/sample names in *admixr* functions, the information in the
+third column is what is used. For example, if you have individuals such as
 "French1", "French2", "French3" in the first column of an `ind` file, all three
 sharing a "French" population label in the third column, specifying "French" in
-an *admixr* function will combine all three samples in a single population and
-work with it as a whole, instead of working with each individual separately.
+an *admixr* function will combine all three samples in a single population,
+instead of working with each individual separately.
 
 #### `snp` file (first 3 lines)
 ```{r snp_file, echo = FALSE}
@@ -175,7 +173,7 @@ The columns of this file are, in order:
 cat(system(paste0("head -n 3 ", prefix, ".geno"), intern = TRUE), sep = "\n")
 ```
 
-
+Each row is one genomic site, each column is a genotype in one individual.
 
 
 
@@ -217,7 +215,7 @@ As we saw above, each EIGENSTRAT dataset has three components. The way this
 data is internally represented in *admixr* is using a small S3 R object created
 using the `eigenstrat` constructor function. This function accepts the path and
 prefix of a trio of EIGENSTRAT snp/ind/geno files and returns an R object of
-the `EIGENSTRAT` class:
+the class `EIGENSTRAT`:
 
 ```{r}
 snps <- eigenstrat(prefix)
@@ -227,8 +225,8 @@ snps <- eigenstrat(prefix)
 snps
 ```
 
-This object simply encapsulates the paths to all three EIGENSTRAT components
-and makes it easy to pass the data to different _admixr_ functions.
+This object encapsulates the paths to all three EIGENSTRAT components and makes
+it easy to pass the data to different _admixr_ functions.
 
 
 
@@ -240,8 +238,8 @@ and makes it easy to pass the data to different _admixr_ functions.
 
 
 
-The following couple of sections describe how to use the _admixr_ package on a set of
-example analyses.
+The following couple of sections describe how to use the _admixr_ package using
+simple example analyses.
 
 
 
@@ -259,37 +257,36 @@ One way of looking at this is using the following D statistic:
 $$D(\textrm{present-day human W}, \textrm{African}, \textrm{Neanderthal}, \textrm{Chimp}).$$
 
 $D$ statistics are based on comparing the proportions of BABA and ABBA sites
-patterns observed in data:
+patterns observed in the data:
 
 $$D = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# BABA sites + # ABBA sites}}.$$
 
 Significant departure of $D$ from zero indicates an excess of allele sharing
 between the first and the third population (positive $D$), or an excess of
-allele sharing between the second and the third population (negative $D$). If
-we get $D$ that is not significantly different from 0, this suggests that the
-first and second populations form a clade, and don't differ in their genetic
-affinity to the third population (this is the null hypothesis that the data is
-compared against).
+allele sharing between the second and the third population (negative $D$). If 
+we get $D$ that is not significantly different from 0, this suggests that the 
+first and second populations form a clade, and don't differ in the rate of 
+allele sharing with the third population (this is the null hypothesis that the 
+data is compared against).
 
-Therefore, our $D$ statistic above simply tests whether some modern humans
-today admixed with Neanderthals, which would increase their genetic affinity to
-this archaic group compared to Africans (whose ancestors never met
-Neanderthals).
+Therefore, our $D$ statistic above tests whether some modern humans today
+admixed with Neanderthals, which would increase their genetic affinity to this
+archaic group compared to Africans (whose ancestors never met Neanderthals).
 
-Let's save some population names first to make the code below more readable:
+Let's save some population names first to make our code more concise:
 
 ```{r pop_def1}
 pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka")
 ```
 
-Using the *admixr* package we can then calculate the $D$ statistic above simply
-by running:
+Using the *admixr* package we can then calculate our $D$ statistic simply by
+running:
 
 ```{r d}
 result <- d(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", data = snps)
 ```
 
-The result is a following `data.frame`:
+The result is a following data frame:
 ```{r eval = FALSE}
 head(result)
 ```
@@ -298,8 +295,8 @@ head(result)
 knitr::kable(head(result))
 ```
 
-We can see that in addition to the input information, this `data.frame`
-contains additional columns:
+We can see that in addition to the specified population names, the output
+table contains additional columns:
 
 - `D` - $D$ statistic value
 - `stderr` - standard error of the $D$ statistic calculated using the block
@@ -307,13 +304,11 @@ contains additional columns:
 - `Zscore` - $Z$-zscore value (number of standard errors the $D$ is from 0,
   i.e. how strongly do we reject the null hypothesis of no admixture)
 - `BABA`, `ABBA` - counts of observed site patterns
-- `nsnps` - number of SNPs used for a give calculation
+- `nsnps` - number of SNPs used for a given calculation
 
-(Output tables from other *admixr* functions follow a very similar format.)
-
-While we could certainly make some inferences by looking at the $Z$-scores,
-tables in general are not the best representation of this kind of data,
-especially as the number of samples increases. This is how we can use the
+While we could certainly make inferences by looking at the $Z$-scores, tables in
+general are not the best representation of this kind of data, especially as the
+number of samples increases. Instead, we can use the
 [`ggplot2`](https://ggplot2.tidyverse.org) package to plot the results:
 
 ```{r d_plot, fig.width = 7, fig.height = 4}
@@ -326,13 +321,11 @@ ggplot(result, aes(fct_reorder(W, D), D, color = abs(Zscore) > 2)) +
 (If you want to more know about data analysis using R, including plotting with
 ggplot2, I highly recommend [this](http://r4ds.had.co.nz) free book.)
 
-We can see that all three Africans have $D$ values not significantly different
-from 0, meaning that the data is consistent with the null hypothesis of no
+We can see that the $D$ values for Africans are not significantly different from
+0, meaning that the data is consistent with the null hypothesis of no
 Neanderthal ancestry in Africans. On the other hand, the test rejects the null
-hypothesis for all non-Africans today, suggesting that Neanderthals admixed
-with the ancestors of present-day non-Africans. In fact, this is a similar test
-to the one that was used as evidence supporting the Neanderthal admixture
-hypothesis in the first place!
+hypothesis for all non-Africans today, suggesting that Neanderthals admixed with
+the ancestors of present-day non-Africans.
 
 
 
@@ -348,10 +341,11 @@ statistic, which is very similar to $D$ statistic and can be calculated as:
 
 $$ f_4 = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# sites}}$$
 
-Again, significant departure of $f_4$ from 0 is informative about gene flow,
-in a way analogous to $D$ statistic.
+Again, significant departure of $f_4$ from 0 can be interpreted as evidence of
+gene flow.
 
-To repeat the previous analysis using $f_4$ statistic, we can run:
+To repeat the previous analysis using $f_4$ statistic, we can run the function
+`f4()`:
 
 ```{r f4}
 result <- f4(W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp", data = snps)
@@ -365,15 +359,15 @@ head(result)
 knitr::kable(head(result))
 ```
 
-We can see by comparing this to the $D$ statistic result above that we can make
-the same conclusions.
+By comparing this result to the $D$ statistic analysis above, we can make the
+same conclusions.
 
 You might be wondering why we have both $f_4$ and $D$ if they are so similar.
 The truth is that $f_4$ is, among other things, directly informative about the
 amount of shared genetic drift ("branch length") between pairs of populations,
-which is, in many cases, a very useful theoretical property. Other than that,
-it's often a matter of personal preference and so *admixr* provides separate
-functions for calculating both.
+which is a very useful theoretical property. Other than that, it's often a
+matter of personal preference and so *admixr* provides functions for calculating
+both.
 
 
 
@@ -387,17 +381,16 @@ functions for calculating both.
 
 Now we know that non-Africans today carry _some_ Neanderthal ancestry. But what if
 we want to know _how much_ Neanderthal ancestry they have? What proportion of their
-genomes is of Neanderthal origin?
-
-Unfortunately, we don't have enough space here to explain all the details about
-the inner workings of $f_4$-ratio statistic. However, in general, when we are
-interested in estimating the *proportion* of ancestry in a population $X$
-coming some parental lineage $B$, we can use a ratio of two $f_4$ statistics.
+genomes is of Neanderthal origin? To answer questions like this, we can use the
+$f_4$-ratio statistic, which can be formulated in the following way (using
+a notation of [Patterson et al., 2012](http://www.genetics.org/content/192/3/1065), who formally described
+its properties).
 
 $$f_4\textrm{-ratio} = \frac{f_4(A, O; X, C)}{f_4(A, O; B, C)}.$$
 
 Using `amidxr`, we can calculate $f_4$-ratios using the following code (`X`
-being a vector of samples for which we want to estimate Neanderthal ancestry):
+being a vector of samples which we want to estimate the Neanderthal ancestry
+in):
 
 ```{r f4ratio}
 result <- f4ratio(X = pops, A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp", data = snps)
@@ -429,7 +422,7 @@ We can make several observations:
   $D$ and $f_4$ above.
 - Present-day non-Africans carry between 2-3% of Neanderthal ancestry.
 - We see a much higher proportion of Neanderthal ancestry in people from Papua
-  New Guinea - more than 4%! This is consistent with earlier studies that
+  New Guinea - more than 4%. This is consistent with earlier studies that
   suggest additional archaic admixture events in the ancestors of present-day
   Papuans.
 
@@ -449,15 +442,15 @@ whenever we want to:
    populations $A$ and $B$ with respect to a common outgroup $C$. In this case,
    the higher the $f_3$ value, the longer the shared evolutionary time between
    $A$ and $B$.
-2. Test whether population $C$ is a mixture of two parental populations $A$ and
-   $B$. Negative value of the $f_3$ statistic then serves as statistical
-   evidence of this admixture.
+2. Test whether population $C$ is a mixture of two populations $A$ and
+   $B$. Significantly negative values of the $f_3$ statistic are then a
+   statistical evidence of this admixture.
 
 As an example, imagine we are interested in relative divergence times between
 pairs of present-day human populations, and want to know in which approximate
 order they split of from each other. To address this problem, we could use
 $f_3$ statistic by fixing the $C$ outgroup as San, and calculating pairwise
-$f_3$ statistics between all pairs of present-day modern humans.
+$f_3$ statistics between all present-day modern humans.
 
 
 ```{r pops2}
@@ -488,7 +481,7 @@ result %>%
 
 We can see that when we order the heatmap labels based on values of pairwise
 $f_3$ statistics, the (already known) order of population splits pops up
-beautifully (i.e. San separated first, followed by Mbuti, etc.).
+nicely (i.e. San separated first, followed by Mbuti, etc.).
 
 
 
@@ -499,18 +492,17 @@ beautifully (i.e. San separated first, followed by Mbuti, etc.).
 ## qpWave and qpAdm
 
 Both _qpWave_ and _qpAdm_ can be though of as more complex and powerful
-extensions of the basic idea behind a simple $f_4$ statistic. Building upon this
-idea and generalizing it, the _qpWave_ method  makes it possible to find the
-lowest number of "streams of ancestry" between two groups of populations that is
+extensions of the basic ideas behind a simple $f_4$ statistic. Building upon the
+$f_4$ theory and generalizing it, _qpWave_ makes it possible to find the lowest
+number of "streams of ancestry" between two groups of populations that is
 consistent with the data. Extending the concept of $f_4$ statistics even
 further, _qpAdm_ allows to find the proportions of ancestry from a set of
-ancestral populations that contributed ancestry to our sample or population of
-interest.
+ancestral populations that contributed ancestry to our population of interest.
 
 Unfortunately, both methods represent a rather advanced topic that still lacks
-a proper documentation and beginner-friendly tutorials, and explaining them in detail 
-is beyond the scope of this vignette. If you want to use them, it's highly recommended
-that you read the official documentation decribing the basic ideas of both methods ([distributed with
+proper documentation and beginner-friendly tutorials, and explaining them in
+detail is beyond the scope of this vignette. If you want to use them, it's
+crucial that you read the official documentation decribing the basic ideas of both methods ([distributed with
 ADMIXTOOLS](https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf)),
 _and_ that you read the relevant supplementary sections of papers published
 by David Reich's group. At the very least, I recommend reading:
@@ -522,11 +514,8 @@ first introduced the theoretical background of what later became _qpWave_.
 overview of the _qpWave_ method than S6 of Reich et al. 2012, and also introduces the
 _qpAdm_ methodology for estimating admixture proportions.
 
-If you read these papers and the tutorial distributed with the ADMIXTOOLS
-carefully, you will have a solid understanding of both _qpWave_ and _qpAdm_.
-
 In the remainder of this section, I will assume that you are familiar with both
-methods, and will only explain how _admixr_ makes running them much easier.
+methods, and will only explain how to use _admixr_ for running them from R.
 
 
 
@@ -544,7 +533,7 @@ where $\textrm{left}_1$ and $\textrm{right}_1$ are some fixed populations and
 the $i$ and $j$ indices run over all other possible choices of populations.
 
 As an example, let's try to find the number of admixture waves from _right_ =
-{Yoruba, Mbuti, Alta} into _left_ = {French, Sardinian, Han}. We can
+{Yoruba, Mbuti, Alta} into _left_ = {French, Sardinian, Han} populations. We can
 do this using the function `qpWave()`, setting its arguments appropriately:
 
 ```{r}
@@ -555,11 +544,13 @@ result <- qpWave(
 )
 ```
 
-The `qpWave()` function returns a data frame which shows the results of 
-a series of matrix rank tests. The `rank` column is the matrix rank tested,
-`df`, `chisq` and `tail` give ..., and `dfdiff`, `chisqdiff` and `taildiff`
-give the same, but always comparing the fit to the fit of a rank
-immediately lower.
+The `qpWave()` function returns a data frame which shows the results of a series
+of matrix rank tests. The `rank` column is the matrix rank tested, `df`, `chisq`
+and `tail` give the degrees of freedom, $\chi^2$ value and $p$-value for the
+comparison with the saturated model (the $p$-value then indicates which matrix
+rank is consistent with the data - see example below), and `dfdiff`, `chisqdiff`
+and `taildiff` give the same, but always comparing a model to the model with one
+rank less.
 
 ```{r, eval = FALSE}
 result
@@ -570,11 +561,11 @@ knitr::kable(result)
 ```
 
 In this example, we see that matrix $r = 0$ cannot be rejected (`tail` $p$-value
-= 0.684 - not rejected). Because Reich et al. 2012 showed that $r + 1 \le n$,
-where $n$ is the number of admixture waves, we can interpret this as _left_
-populations having at least $n = 1$ streams of ancestry from the set of _right_
-populations. In this case, the most likely explanation is Neandertal admixture
-in non-Africans today.
+= 0.78). Because Reich et al. 2012 showed that $r + 1 \le n$, where $n$ is the
+number of admixture waves, we can interpret this as _left_ populations having at
+least $n = 1$ streams of ancestry from the set of _right_ populations. In this
+case, the most likely explanation is Neandertal admixture into non-Africans
+today.
 
 Now, what happens if we add Papuans to the _left_ group?
 
@@ -599,29 +590,26 @@ with rank $r = 1$, meaning that there must have been at least $n = 2$ streams of
 ancestry from _right_ to _left_ populations ($r + 1 \le n$). Because
 this happened after we introduced Papuans to the _left_ set, this could indicate
 a separate pulse of archaic introgression into Papuans, which is not
-surprising given what we know about the geographical patterns of archaic
-admixture in non-Africans today, and significantly more introgression observed
-in Papuans than any other present-day population.
+surprising given what we know about significantly more archaic ancestry
+in Papuans than in any other present-day population.
 
 
 
 ### _qpAdm_
 
 The _qpAdm_ method can be used to find, for a given target population, the
-proportions of ancestry coming from a set of ancestral populations. Importantly,
-since we often lack accurate representatives of the true ancestral populations, we can use
-a set of _reference_ populations instead, under a crucial assumption that
-the _references_ set is phylogenetically closer to true ancestral populations
-than a set of specified _outgroups_. For example, coming back to our example
-of using $f_4$-ratio statistics to estimate the proportions of Neandertal ancestry
-in people today, we could define:
+proportions of ancestry coming from a set of _source_ populations. Importantly,
+since we often lack accurate representatives of the true ancestral populations,
+we can use a set of reference populations instead, under a crucial assumption
+that the references set is phylogenetically closer to true _source_ populations
+than to a set of specified _outgroups_. For example, coming back to our example
+of estimating the proportions of Neandertal ancestry in people today, we could
+define:
 
-- some Europeans as the *target*;
-- Vindija Neanderthal and an African as two *reference* populations (two
-  potential sources of ancestries in Europeans today);
-- *outgroup* populations as Chimp, Altai Neanderthal and Denisovan (which are
-  all further from the true ancestral populations - here Vindija and African - than
-  the *reference* populations).
+- a set of European individuals as the _target_;
+- Vindija Neanderthal and an African as two _source_ populations;
+- _outgroup_ populations as Chimp, Altai Neanderthal and Denisovan (which are
+all further from the true ancestral populations than the specified _sources_).
 
 Having defined all three population sets, we can run qpAdm with:
 
@@ -638,11 +626,14 @@ The `qpAdm()` function has an argument `details` (default TRUE) which makes
 the function return a list of three elements:
 
 * `proportions` - data frame with admixture proportions - this is what we
-  care about;
+  mostly care about;
 * `ranks` - results of rank tests performed by _qpWave_ - these evaluate how well
-  does the assumed traget-references-outgroups population model match the data;
+  does the assumed traget-sources-outgroups population model match the data;
 * `subsets` - results of the "all subsets" analysis (see the [documentation](https://github.com/DReichLab/AdmixTools/blob/master/pdoc.pdf) for
   more details.
+
+If `details` is set to `FALSE`, only the `proportions` components is returned
+by the `qpAdm()` function.
 
 Let's start with the `ranks` element:
 
@@ -653,30 +644,31 @@ result$ranks
 knitr::kable(result$ranks)
 ```
 
-The row with rank = 1 represents a _qpWave_ test with all $n$ _reference_
-populations set as the _left_ set and all _outgroups_ as the _right_ set, and
-evaluates whether the ancestral sources themselves are descended from $n$ independent
-streams of ancestry. In our case, $n = 2$ (Mbuti and Vindija), which means that
-the data would have to be consistent with rank $r = 1$ to satisfy the inequality
-$r + 1 \le n$ proved by Reich et al., 2012. We see that this is true for all
-three target populations ($p$-value > 0.05 for all targets), and the simple
-model thus seems to be reasonably consistent with the data.
+The row with rank = 1 represents a _qpWave_ test with all $n$ _source_
+populations set as the _left_ set and all _outgroups_ as the _right_ set. This
+test evaluates whether the ancestral populations are descended from $n$
+independent streams of ancestry. In our case, $n = 2$ (Mbuti and Vindija), which
+means that the data would have to be consistent with rank $r = 1$ to satisfy the
+inequality $r + 1 \le n$ proved by Reich et al., 2012. We see that this is true
+for all three target populations ($p$-value > 0.05 for all targets), and the
+simple model of Neandertal admixture thus seems to be reasonably consistent with
+the data.
 
 The rank = 2 row represents a _qpWave_ test after adding a target population to
-the _left_ group together with the _references_. This test makes sure that
+the _left_ group together with the _sources_. This test makes sure that
 including the target population does not increase the rank of the $f_4$ matrix,
 meaning that the target can be really modelled as a mixture of ancestries from
-the _reference_ set. If the $p$-values turn out to be very low, this indicates
-that the assumed model does not fit the data very well and that a part of the
-ancestry in _target_ possibly cannot be traced to any of the _references_. In
-our case, however, all rank = 2 test $p$-values do not appear significant, and we
-can be reasonably sure that the _target_ samples can be fully modelled as a
-mixtures of all specified _references_.
+the _sources_. If the $p$-values turn out to be very low, this indicates that
+the assumed model does not fit the data and that a part of the ancestry in a
+_target_ possibly cannot be traced to any of the _sources_. In our case,
+however, all rank = 2 test $p$-values are not significant, and we can be
+reasonably sure that the _target_ samples can be fully modelled as a mixtures of
+all specified _references_.
 
-Having made sure that our model is reasonably correct, we can now have a look
-at the `proportions` element, that contains an estimated admixture proportion
-from all specified sources, as well as standard errors for those proportion
-estimated using a block jackknife:
+Having made sure that our model is reasonably correct, we can now take a look at
+`proportions`, which contains admixture proportion estimates from all specified
+sources, as well as standard errors for those proportions using a block
+jackknife:
 
 ```{r, eval = FALSE}
 result$proportions
@@ -692,8 +684,8 @@ that the _qpAdm_ estimates are very close to what we got earlier.
 The third element in the list of results shows the outcome of an "all subsets"
 analysis, which involves testing all subsets of potential source populations.
 Each 1 in the "pattern" column means that the proportion of ancestry from that
-particular source population (in the order specified originally by the user) was
-forced to 0.0.
+particular source population (in the order as specified by the user) was forced
+to 0.0.
 
 ```{r, eval = FALSE}
 result$subsets
@@ -709,20 +701,21 @@ knitr::kable(result$subsets)
 
 What we've been doing so far was calculating statistics for individual samples.
 However, it is often useful to treat multiple samples as a single group or
-population. *admixr* provides a function called `relabel` that does just
+population. *admixr* provides a function called `relabel()` that does just
 that.
 
 Here is an example: let's say we want to run a similar analysis to the one
-described in the $D$ statistic section, but we want to treat Europeans,
-Africans and archaics combined populations. But the `ind` file that we have
-does not contain grouped labels - each sample stands on its own:
+described in the $D$ statistic section, but we want to treat Europeans, Africans
+and archaics as combined populations, and not as separate individuals. But the
+`ind` file that we have does not contain grouped labels - each sample stands on
+its own:
 
 ```{r orig_ind, echo = FALSE, comment = ""}
 cat(system(paste0("column -t ", snps$ind), intern = TRUE), sep = "\n")
 ```
 
 To merge several individual samples under a combined label we can call
-`group_labels` like this:
+`relabel()` like this:
 
 ```{r relabel}
 # paths to the original ind file and a new modified ind file, which will
@@ -741,22 +734,22 @@ modif_snps
 
 We can see that the function `relabel` returned a modified `EIGENSTRAT` object,
 which contains a new item in the "modifiers" section - the path to a new ind
-file that will be used in downstream analyses. Let's look at its contents:
+file. Let's look at its contents:
 
 ```{r modif_ind, echo = FALSE, comment = ""}
 cat(system(paste0("column -t ", modif_snps$group), intern = TRUE), sep = "\n")
 ```
 
 Having the modified `EIGENSTRAT` object ready, we can then use "European",
-"African" and "Archaic" labels in any of the *admixr* wrapper functions
-described above. For example:
+"African" and "Archaic" names in any of the *admixr* wrapper functions described
+above. For example:
 
 ```{r modif_d}
 result <- d(W = "European", X = "African", Y = "Archaic", Z = "Chimp", data = modif_snps)
 ```
 
-Here is the result, showing (as we've seen above for individual samples) that
-Europeans show genetic affinity to archaic humans compared to Africans today:
+Here is the result, showing again Europeans show genetic affinity to archaic
+humans compared to Africans today:
 
 ```{r eval = FALSE}
 head(result)
@@ -780,7 +773,7 @@ from the provided `EIGENSTRAT` object and uses it in place of the original
 ## Counting present/missing SNPs
 
 The `count_snps` function can be useful for quality control, weighting of
-admixture statistics ($D$, $f_4$, etc.) for regression analyses etc. There are
+admixture statistics ($D$, $f_4$, etc.) in regression analyses etc. There are
 two optional arguments:
 
 - `prop` - changes whether to report SNP counts or proportions (set to `FALSE`
@@ -812,39 +805,39 @@ knitr::kable(count_snps(snps))
 
 ### Filtering based on a BED file
 
-A common situation in genomics is performing an analysis on a subset of the
-genome.  However, EIGENSTRAT is a rather obscure file format which makes it
-very difficult to find bioinformatics tools that support it. Luckily, *admixr*
-includes a function `filter_bed()` that takes an `EIGENSTRAT` object and a BED
-file as inputs and produces a new object that contains a "excluded" modifier,
-describing which sites did not pass the filtering and must be excluded from
-an analysis later.
+It is quite common to repeat a particular analysis only on a subset of the
+genome (such as intergenic sites, etc). However, EIGENSTRAT is a rather obscure
+file format which is generally not supported by standard bioinformatics tools.
+Luckily, *admixr* includes a function `filter_bed()` that takes an `EIGENSTRAT`
+object and a BED file as its inputs and produces a new object that contains a
+modifier called "excluded", linking to a snp file with coordinates of sites that
+did not pass the filtering and will be excluded from later analyses.
 
 ```{r}
 bed <- file.path(dirname(prefix), "regions.bed")
 ```
 
-```{r, eval = FALSE}
-# run this if your BED file contains regions to keep in an analysis
+```{r}
+# BED file contains regions to keep in an analysis
 new_snps <- filter_bed(snps, bed)
 
-# run this if your BED file contains regions to remove from an analysis
-new_snps <- filter_bed(snps, "regions.bed", remove = TRUE)
+# BED file contains regions to remove from an analysis
+new_snps <- filter_bed(snps, bed, remove = TRUE)
+```
 
-# run this if you want the filter_bed function to save the "exclude"
-# file to a specified location - can be useful for debugging
-new_snps <- filter_bed(snps, "regions.bed", outfile = "filtered_snps.snp")
+```{r, comment = "#>"}
+new_snps
 ```
 
 If we want to run the whole analysis in a single pipeline, we can use the
 `%>%` pipe operator and do the following:
 
-(The `%>%` operator simply takes what is on its left side and puts it as a
-first argument of a function on the right side. While it takes some time to get
-used to, it is very useful in longer multi-step "pipelines" because it makes
-more pipelines much more readable. In fact, the resulting code often reads
-*almost* like English! The `%>%` pipe is automatically imported when you load
-the `tidyverse` library, and you can read about it more
+(The `%>%` operator takes what is on its left side and puts it as a first
+argument of a function on the right side. While it takes some time to get used
+to, it is very useful in longer multi-step "pipelines" because it makes more
+pipelines much more readable. In fact, the resulting code often reads _almost_
+like English! The `%>%` pipe is automatically imported when you load the
+`tidyverse` library, and you can read about it more
 [here](https://magrittr.tidyverse.org).)
 
 
@@ -857,41 +850,30 @@ snps %>%
 This is because in the formal definitions of *admixr* function, `data = ` is
 always the argument, so we don't have to specify it manually.
 
-**Important:** the set of sites to be removed that is generated after running
-`filter_bed()` is actually saved into a file (it's a requirement of the
-underlying ADMIXTOOLS software)! While the function makes it very easy to do
-filtering without worrying about locations of intermediate files, it is
-important to keep in mind that the function still creates them. If you plan to
-run many *independent* calculations on a filtered subset of the data, it's
-better to save the new `EIGENSTRAT` object to a variable first and re-use the
-same object multiple times, rather than running the whole pipeline for each
-analysis separately (which would create new copies of the intermediate file for
-each iteration).
-
-(Note for ADMIXTOOLS powerusers: There is a rather obscure option called
-[`badsnpfile`](https://github.com/DReichLab/AdmixTools/blob/master/README.ROLLOFF#L48),
-which specifies the path to a snp file with colrdinates of sites to exclude
-from the calculation. The file specified in an "exclude" modifier of an
-`EIGENSTRAT` object simply fills in the `badsnpfile` parameter before starting
-an ADMIXTOOLS command.)
+**Important:** The `filter_bed()` function makes it very easy to do filtering
+without worrying about locations of intermediate files, but it is important to
+keep in mind that the function still creates temporary files under the hood. If
+you plan to run many independent calculations on a filtered subset of the
+data, it's better to save the new `EIGENSTRAT` object to a variable first and
+re-use the same object multiple times, rather than running the whole pipeline
+for each analysis separately (which would create new copies of intermediate
+files for each iteration).
 
 
 
 
 ### Filtering out potential ancient DNA damage SNPs
 
-In an ancient DNA world, we often need to repeat an analysis on a subset of
+In the field of ancient DNA, we often need to repeat an analysis on a subset of
 data that is less likely to be influenced by ancient DNA damage, to verify that
 our results are not caused by artifacts in the data (due to biochemical
 properties of DNA degradation, ancient DNA damage will lead to an increase in
 C&rightarrow;T and G&rightarrow;A substitutions). Using a similar method
-described in the BED filtering section above, we can use the `filter_damage()`
-function to generate a snp file with positions that carry transitions
-(C&rightarrow;T and G&rightarrow;A sites), that can be removed using the
-`exclude = ` argument of the main *admixr* functions.
+described in the BED filtering section above, we can use the
+`transversions_only()` function to generate a snp file with positions that carry
+transitions (C&rightarrow;T and G&rightarrow;A sites):
 
 ```{r, eval = FALSE}
-# generate snp file with positions of transitions
 new_snps <- transversions_only(snps)
 
 # perform the calculation only on transversions
@@ -922,16 +904,25 @@ snps %>%                                    # take the original data
 
 ## Merging EIGENSTRAT datasets
 
-Another useful data processing function is `merge_eigenstrat`. This function
+Another useful data processing function is `merge_eigenstrat()`. This function
 takes two EIGENSTRAT datasets and merges them, producing a union of samples and
-intersection of SNPs from both of them. It returns a new `EIGENSTRAT` object that
-can be directly used in _admixr_ analyses.
+intersection of SNPs from both of them and returning a new `EIGENSTRAT` object.
 
 ```{r merge_eigenstrat, eval = FALSE}
 # this is just an example code - it will not run unless you specify the paths
 merged <- merge_eigenstrat(
-    merged = <prefix_of_the_merged_dataset>
-    a = <first EIGENSTRAT object>,
-    b = <second EIGENSTRAT object>
+    merged = <"prefix of the merged dataset">
+    a = first_EIGENSTRAT_object,
+    b = second_EIGENSTRAT_object
 )
 ```
+
+
+
+
+
+---
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
