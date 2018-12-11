@@ -1,3 +1,9 @@
+home:
+  strip_header: true
+  links:
+  - text: Learn more
+    href: http://bodkan.net/admixr/articles/tutorial.html
+
 reference:
   - title: Admixture statistics
     contents:
