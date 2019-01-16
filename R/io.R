@@ -69,7 +69,7 @@ write_snp <- function(df, file) {
 #' @rdname write_ind
 #' @export
 write_geno <- function(df, file) {
-  df <- replace(df, is.na(df), NA)
+  df <- replace(df, is.na(df), 9)
   writeLines(apply(df, 1, paste, collapse = ""), con = file)
 }
 
