@@ -114,8 +114,11 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #'
 #' @export
 filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp")) {
-  if(system("bedtools", ignore.stdout = TRUE) != 0)
+  if (system("bedtools", ignore.stdout = TRUE) != 0)
     stop("bedtools is required for filtering, but is not in your $PATH")
+
+  if (!file.exists(bed))
+    stop("BED file '", bed, "' not found", call. = FALSE)
 
   snp <- read_snp(data)
 
