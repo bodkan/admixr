@@ -7,18 +7,20 @@
 \alias{f3}
 \title{Calculate the D, f4, f4-ratio, or f3 statistic.}
 \usage{
-f4ratio(data, X, A, B, C, O, outdir = NULL)
+f4ratio(data, X, A, B, C, O, outdir = NULL, params = NULL)
 
-d(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE)
+d(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE, params = NULL)
 
-f4(data, W, X, Y, Z, outdir = NULL)
+f4(data, W, X, Y, Z, outdir = NULL, params = NULL)
 
-f3(data, A, B, C, outdir = NULL, inbreed = FALSE)
+f3(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL)
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}
 
 \item{outdir}{Where to put all generated files (temporary directory by default).}
+
+\item{params}{Named list of parameters and their values.}
 
 \item{W, X, Y, Z, A, B, C, O}{Population names according to the nomenclature used in
 Patterson et al., 2012.}

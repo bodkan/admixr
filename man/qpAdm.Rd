@@ -4,7 +4,8 @@
 \alias{qpAdm}
 \title{Calculate ancestry proportions in a set of target populations.}
 \usage{
-qpAdm(data, target, sources, outgroups, details = TRUE, outdir = NULL)
+qpAdm(data, target, sources, outgroups, details = TRUE, outdir = NULL,
+  params = NULL)
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}
@@ -19,6 +20,8 @@ qpAdm(data, target, sources, outgroups, details = TRUE, outdir = NULL)
 return just admixture proportions.}
 
 \item{outdir}{Where to put all generated files (temporary directory by default).}
+
+\item{params}{Named list of parameters and their values.}
 }
 \description{
 Calculate ancestry proportions in a set of target populations.

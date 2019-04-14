@@ -5,7 +5,7 @@
 #' @inheritParams qpAdm
 #'
 #' @export
-f4ratio <- function(data, X, A, B, C, O, outdir = NULL) {
+f4ratio <- function(data, X, A, B, C, O, outdir = NULL, params = NULL) {
   check_presence(c(X, A, B, C, O), data)
 
   # get the path to the population, parameter and log files
@@ -13,7 +13,7 @@ f4ratio <- function(data, X, A, B, C, O, outdir = NULL) {
   files <- get_files(outdir, config_prefix)
 
   create_qpF4ratio_pop_file(X = X, A = A, B = B, C = C, O = O, file = files[["pop_file"]])
-  create_par_file(files, data)
+  create_par_file(files, data, params)
 
   run_cmd("qpF4ratio", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
@@ -27,7 +27,7 @@ f4ratio <- function(data, X, A, B, C, O, outdir = NULL) {
 #' @param f4mode Calculate the f4 statistic instead of the D statistic.
 #'
 #' @export
-d <- function(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE) {
+d <- function(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE, params = NULL) {
   check_presence(c(W, X, Y, Z), data)
 
   # get the path to the population, parameter and log files
@@ -35,7 +35,7 @@ d <- function(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE) {
   files <- get_files(outdir, config_prefix)
 
   create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
-  create_par_file(files, data)
+  create_par_file(files, data, params)
 
   if (f4mode) {
     write("f4mode: YES", file = files[["par_file"]], append = TRUE)
@@ -54,7 +54,7 @@ d <- function(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE) {
 #' @rdname f4ratio
 #'
 #' @export
-f4 <- function(data, W, X, Y, Z, outdir = NULL) {
+f4 <- function(data, W, X, Y, Z, outdir = NULL, params = NULL) {
   d(data, W, X, Y, Z, outdir, f4mode = TRUE)
 }
 
@@ -65,7 +65,7 @@ f4 <- function(data, W, X, Y, Z, outdir = NULL) {
 #' @param inbreed See README.3PopTest in ADMIXTOOLS for an explanation.
 #'
 #' @export
-f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
+f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
   check_presence(c(A, B, C), data)
 
   # get the path to the population, parameter and log files
@@ -73,7 +73,7 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
   files <- get_files(outdir, config_prefix)
 
   create_qp3Pop_pop_file(A, B, C, file = files[["pop_file"]])
-  create_par_file(files, data)
+  create_par_file(files, data, params)
 
   if (inbreed) {
     write("inbreed: YES", file = files[["par_file"]], append = TRUE)
@@ -96,9 +96,10 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE) {
 #'
 #' @param data EIGENSTRAT data object.
 #' @param outdir Where to put all generated files (temporary directory by default).
+#' @param params Named list of parameters and their values.
 #'
 #' @export
-qpAdm <- function(data, target, sources, outgroups, details = TRUE, outdir = NULL) {
+qpAdm <- function(data, target, sources, outgroups, details = TRUE, outdir = NULL, params = NULL) {
   check_presence(c(target, sources, outgroups), data)
 
   results <- lapply(target, function(X) {
@@ -111,7 +112,7 @@ qpAdm <- function(data, target, sources, outgroups, details = TRUE, outdir = NUL
     files[["pop_file"]] <- NULL
 
     create_leftright_pop_files(c(X, sources), outgroups, files)
-    create_par_file(files, data)
+    create_par_file(files, data, params)
 
     run_cmd("qpAdm", par_file = files[["par_file"]], log_file = files[["log_file"]])
 
@@ -162,7 +163,7 @@ qpAdm <- function(data, target, sources, outgroups, details = TRUE, outdir = NUL
 #' @inheritParams qpAdm
 #'
 #' @export
-qpWave <- function(data, left, right, maxrank = NULL, details = FALSE, outdir = NULL) {
+qpWave <- function(data, left, right, maxrank = NULL, details = FALSE, outdir = NULL, params = NULL) {
   check_presence(c(left, right), data)
   if (length(intersect(left, right))) {
     stop("Duplicated populations in both left and right population sets not allowed: ",
@@ -180,7 +181,7 @@ qpWave <- function(data, left, right, maxrank = NULL, details = FALSE, outdir = 
   files[["pop_file"]] <- NULL
 
   create_leftright_pop_files(left, right, files)
-  create_par_file(files, data)
+  create_par_file(files, data, params)
 
   if (!is.null(maxrank)) {
     write(sprintf("maxrank: %d", maxrank), file = files[["par_file"]], append = TRUE)

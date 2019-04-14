@@ -5,7 +5,7 @@
 \title{Find the most likely number of ancestry waves using the qpWave method.}
 \usage{
 qpWave(data, left, right, maxrank = NULL, details = FALSE,
-  outdir = NULL)
+  outdir = NULL, params = NULL)
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}
@@ -17,6 +17,8 @@ qpWave(data, left, right, maxrank = NULL, details = FALSE,
 \item{details}{Return the A, B matrices used in rank calculations?}
 
 \item{outdir}{Where to put all generated files (temporary directory by default).}
+
+\item{params}{Named list of parameters and their values.}
 }
 \description{
 Given a set of 'left' populations, estimate the lowest number of necessary

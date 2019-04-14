@@ -1,5 +1,5 @@
 # Generate a parameter file.
-create_par_file <- function(files, data) {
+create_par_file <- function(files, data, params) {
   geno <- data$geno
   snp <- data$snp
   ind <- ifelse(is.null(data$group), data$ind, data$group)
@@ -17,6 +17,11 @@ create_par_file <- function(files, data) {
 
   if (!is.null(exclude)) {
     write(sprintf("badsnpname: %s", exclude), file = files$par_file, append = TRUE)
+  }
+
+  # write user-specified parameters
+  for (par in names(params)) {
+    write(sprintf("%s: %s\n", par, params[[par]]), file = files$par_file, append = TRUE)
   }
 }
 
