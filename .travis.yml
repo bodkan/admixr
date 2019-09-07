@@ -11,9 +11,9 @@ before_install:
     # enter directory for installing all dependencies
   - pushd /tmp/deps
     # install ADMIXTOOLS
-  - curl -LO https://github.com/DReichLab/AdmixTools/archive/v5.0.tar.gz
-  - tar xf v5.0.tar.gz
-  - cd AdmixTools-5.0
+  - curl -LO https://github.com/DReichLab/AdmixTools/archive/v5.1.tar.gz
+  - tar xf v5.1.tar.gz
+  - cd AdmixTools-5.1
   - cd src; make clobber; make LDLIBS="-llapack" all; make install; cd ../
   - curl -LO https://www.dropbox.com/s/2m53dharng61ou9/AdmixTools_Example_Data.tar_.gz
   - tar xf AdmixTools_Example_Data.tar_.gz
