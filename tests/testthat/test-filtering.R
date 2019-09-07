@@ -16,8 +16,10 @@ test_that("Potential aDNA SNPs are correctly removed", {
   expect_equal(n_shell, n_admixr)
 })
 
-orig_data <- eigenstrat(prefix = file.path(admixtools_path(), "convertf", "example"),
-                        geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno"))
+orig_data <- eigenstrat(
+    prefix = file.path(admixtools_path(), "convertf", "example"),
+    geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno")
+)
 
 # ADMIXTOOLS example data is broken and it's first SNP has a position 0,
 # although snp files have to be 0-based - let's remove the first SNP entirely
@@ -98,7 +100,8 @@ test_that("Filtering works when data is piped into a calculation", {
   examples_dir <- file.path(admixtools_path(), "examples")
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
-  pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
+  pops <- read_pops(file.path(examples_dir, "list_qpDstat1"),
+                    c("W", "X", "Y", "Z"))
   expect_silent(
     data %>%
       transversions_only %>%
