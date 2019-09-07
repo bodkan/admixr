@@ -28,6 +28,7 @@ Imports:
     utils
 Suggests:
     covr,
+    glue,
     testthat,
     knitr,
     rmarkdown,
