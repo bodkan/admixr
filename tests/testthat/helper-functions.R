@@ -26,7 +26,7 @@ admixtools_path <- function() {
   # ugly hack to enable testing on my macOS where I have ADMIXTOOLS
   # binaries symlinked to ~/local/bin
   if (system("uname", intern = TRUE) == "Darwin") {
-    return("~/local/AdmixTools-5.0/")
+    return("~/local/AdmixTools-5.1/")
   }
 
   system("which qpDstat", intern = TRUE) %>%
