@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>An Interface for Running ADMIXTOOLS Analyses Directly from R • admixr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="An Interface for Running ADMIXTOOLS Analyses Directly from R">
 <meta property="og:description" content="A convenient interface for performing all stages of ADMIXTOOLS
     analyses entirely from R. Wrapper functions (D, f4, f3, etc.) completely
@@ -25,7 +26,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -45,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -71,7 +72,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/bodkan/admixr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -84,13 +85,10 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+      </header><div class="row">
+  <div class="contents col-md-9">
+
 
 <div id="admixr" class="section level1">
 
@@ -112,37 +110,38 @@
 <a href="#installation-instructions" class="anchor"></a>Installation instructions</h2>
 <p><strong>Note (2019/04/06):</strong> This package is currently in the last phase of testing and polishing the API before I submit it to <a href="https://cran.r-project.org">CRAN</a>. You can definitely safely use it for your own work, but please make sure to check back here for instructions on how to install the officially released version. You can also follow me on <a href="https://www.twitter.com/fleventy5">Twitter</a> if you want to stay updated.</p>
 <p>To install <code>admixr</code> from Github you need to install the package <code>devtools</code> first. You can simply run:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</a></code></pre></div>
-<p>If you want to <strong>update</strong> <em>admixr</em> to a newer version, simply run <code><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("bodkan/admixr")</a></code> again.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</span></code></pre></div>
+<p>If you want to <strong>update</strong> <em>admixr</em> to a newer version, simply run <code><a href="https://rdrr.io/pkg/devtools/man/reexports.html">devtools::install_github("bodkan/admixr")</a></code> again.</p>
 <p><strong>Note that in order to use the <code>admixr</code> package, you need a working installation of ADMIXTOOLS!</strong> You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL">here</a>.</p>
-<p><strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(admixr)</a></code> will show a warning message with instructions on how to fix this.</p>
+<p><strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code><a href="https://rdrr.io/r/base/library.html">library(admixr)</a></code> will show a warning message with instructions on how to fix this.</p>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This is all the code that you need to perform ADMIXTOOLS analyses using this package! No shell scripting, no copy-pasting and manual editing of text files. The only thing you need is a working ADMIXTOOLS installation and a path to EIGENSTRAT data (a trio of ind/snp/geno files), which we call <code>prefix</code> here.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(admixr)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># download a small testing dataset to a temporary directory and</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># process it for use in R</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">snp_data &lt;-<span class="st"> </span><span class="kw"><a href="reference/eigenstrat.html">eigenstrat</a></span>(<span class="kw"><a href="reference/download_data.html">download_data</a></span>())</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">result &lt;-<span class="st"> </span><span class="kw"><a href="reference/f4ratio.html">d</a></span>(</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">W =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>), <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">  <span class="dt">data =</span> snp_data</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">)</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">result</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; # A tibble: 2 x 10</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(admixr)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># download a small testing dataset to a temporary directory and</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># process it for use in R</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>snp_data &lt;-<span class="st"> </span><span class="kw"><a href="reference/eigenstrat.html">eigenstrat</a></span>(<span class="kw"><a href="reference/download_data.html">download_data</a></span>())</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>result &lt;-<span class="st"> </span><span class="kw"><a href="reference/f4ratio.html">d</a></span>(</span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">W =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>), <span class="dt">X =</span> <span class="st">"Yoruba"</span>, <span class="dt">Y =</span> <span class="st">"Vindija"</span>, <span class="dt">Z =</span> <span class="st">"Chimp"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="dt">data =</span> snp_data</span>
+<span id="cb2-10"><a href="#cb2-10"></a>)</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a>result</span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; # A tibble: 2 x 10</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt;   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646</span></span></code></pre></div>
 <p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns the result as a <code>data.frame</code> object. It does all of this behind the scenes, without the user having to deal with low-level technical details.</p>
 <p><strong>To see many more examples, please check out the <a href="https://bodkan.net/admixr/articles/tutorial.html">tutorial vignette</a>.</strong></p>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -167,11 +166,11 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Martin Petr <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-4879-8421" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Martin Petr <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-4879-8421" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/bodkan/admixr"><img src="https://travis-ci.org/bodkan/admixr.svg?branch=master" alt="Travis-CI Build Status"></a></li>
@@ -180,7 +179,6 @@
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -189,12 +187,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

@@ -57,11 +57,11 @@ first. You can simply run:
 
 ```{r installation, eval = FALSE}
 install.packages("devtools")
-devtools::install_github("bodkan/admixr")
+devtools::install_github("bodkan/admixr", ref = "v0.7.1")
 ```
 
-If you want to **update** _admixr_ to a newer version, simply run
-`devtools::install_github("bodkan/admixr")` again.
+If you want to **update** _admixr_ to a more recent version, simply
+run `devtools::install_github("bodkan/admixr", ref = "v0.7.1")` again.
 
 **Note that in order to use the `admixr` package, you need a working
 installation of ADMIXTOOLS!** You can find installation instructions

@@ -1,4 +1,3 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![Travis-CI Build
@@ -7,9 +6,11 @@ Status](https://travis-ci.org/bodkan/admixr.svg?branch=master)](https://travis-c
 status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](https://codecov.io/github/bodkan/admixr?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
-# admixr
+admixr
+======
 
-## Introduction
+Introduction
+------------
 
 [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools/) is a widely used
 software package for calculating admixture statistics and testing
@@ -36,13 +37,15 @@ analysis entirely from R. It provides a set of convenient functions that
 completely remove the need for “low level” configuration of individual
 ADMIXTOOLS programs, allowing users to focus on the analysis itself.
 
-## How to cite
+How to cite
+-----------
 
 *admixr* is now published as an [*Application
 Note*](https://doi.org/10.1093/bioinformatics/btz030) in the journal
-Bioinformatics. If you use it in your work, please cite the paper\!
+Bioinformatics. If you use it in your work, please cite the paper!
 
-## Installation instructions
+Installation instructions
+-------------------------
 
 **Note (2019/04/06):** This package is currently in the last phase of
 testing and polishing the API before I submit it to
@@ -55,49 +58,46 @@ updated.
 To install `admixr` from Github you need to install the package
 `devtools` first. You can simply run:
 
-``` r
-install.packages("devtools")
-devtools::install_github("bodkan/admixr")
-```
+    install.packages("devtools")
+    devtools::install_github("bodkan/admixr", ref = "v0.7.1")
 
-If you want to **update** *admixr* to a newer version, simply run
-`devtools::install_github("bodkan/admixr")` again.
+If you want to **update** *admixr* to a more recent version, simply run
+`devtools::install_github("bodkan/admixr", ref = "v0.7.1")` again.
 
 **Note that in order to use the `admixr` package, you need a working
-installation of ADMIXTOOLS\!** You can find installation instructions
+installation of ADMIXTOOLS!** You can find installation instructions
 [here](https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL).
 
 **Furthermore, you need to make sure that R can find ADMIXTOOLS binaries
 on the `$PATH`.** If this is not the case, running `library(admixr)`
 will show a warning message with instructions on how to fix this.
 
-## Example
+Example
+-------
 
 This is all the code that you need to perform ADMIXTOOLS analyses using
-this package\! No shell scripting, no copy-pasting and manual editing of
+this package! No shell scripting, no copy-pasting and manual editing of
 text files. The only thing you need is a working ADMIXTOOLS installation
 and a path to EIGENSTRAT data (a trio of ind/snp/geno files), which we
 call `prefix` here.
 
-``` r
-library(admixr)
+    library(admixr)
 
-# download a small testing dataset to a temporary directory and
-# process it for use in R
-snp_data <- eigenstrat(download_data())
+    # download a small testing dataset to a temporary directory and
+    # process it for use in R
+    snp_data <- eigenstrat(download_data())
 
-result <- d(
-  W = c("French", "Sardinian"), X = "Yoruba", Y = "Vindija", Z = "Chimp",
-  data = snp_data
-)
+    result <- d(
+      W = c("French", "Sardinian"), X = "Yoruba", Y = "Vindija", Z = "Chimp",
+      data = snp_data
+    )
 
-result
-#> # A tibble: 2 x 10
-#>   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps
-#>   <chr>     <chr>  <chr>   <chr>  <dbl>   <dbl>  <dbl> <dbl> <dbl>  <dbl>
-#> 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753
-#> 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646
-```
+    result
+    #> # A tibble: 2 x 10
+    #>   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps
+    #>   <chr>     <chr>  <chr>   <chr>  <dbl>   <dbl>  <dbl> <dbl> <dbl>  <dbl>
+    #> 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753
+    #> 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646
 
 Note that a single call to the `d` function generates all required
 intermediate config and population files, runs ADMIXTOOLS, parses its
