@@ -110,9 +110,9 @@
 <a href="#installation-instructions" class="anchor"></a>Installation instructions</h2>
 <p><strong>Note (2019/04/06):</strong> This package is currently in the last phase of testing and polishing the API before I submit it to <a href="https://cran.r-project.org">CRAN</a>. You can definitely safely use it for your own work, but please make sure to check back here for instructions on how to install the officially released version. You can also follow me on <a href="https://www.twitter.com/fleventy5">Twitter</a> if you want to stay updated.</p>
 <p>To install <code>admixr</code> from Github you need to install the package <code>devtools</code> first. You can simply run:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</span></code></pre></div>
-<p>If you want to <strong>update</strong> <em>admixr</em> to a newer version, simply run <code><a href="https://rdrr.io/pkg/devtools/man/reexports.html">devtools::install_github("bodkan/admixr")</a></code> again.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"bodkan/admixr"</span>, <span class="dt">ref =</span> <span class="st">"v0.7.1"</span>)</span></code></pre></div>
+<p>If you want to <strong>update</strong> <em>admixr</em> to a more recent version, simply run <code><a href="https://rdrr.io/pkg/devtools/man/reexports.html">devtools::install_github("bodkan/admixr", ref = "v0.7.1")</a></code> again.</p>
 <p><strong>Note that in order to use the <code>admixr</code> package, you need a working installation of ADMIXTOOLS!</strong> You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL">here</a>.</p>
 <p><strong>Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>.</strong> If this is not the case, running <code><a href="https://rdrr.io/r/base/library.html">library(admixr)</a></code> will show a warning message with instructions on how to fix this.</p>
 </div>
@@ -120,7 +120,7 @@
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This is all the code that you need to perform ADMIXTOOLS analyses using this package! No shell scripting, no copy-pasting and manual editing of text files. The only thing you need is a working ADMIXTOOLS installation and a path to EIGENSTRAT data (a trio of ind/snp/geno files), which we call <code>prefix</code> here.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(admixr)</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(admixr)</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co"># download a small testing dataset to a temporary directory and</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co"># process it for use in R</span></span>
