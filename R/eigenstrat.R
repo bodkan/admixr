@@ -6,11 +6,12 @@
 #'
 #' @param prefix Shared path to an EIGENSTRAT trio (set of ind/snp/geno files).
 #' @param ind,snp,geno Paths to individual EIGENSTRAT components.
+#' @param exclude Pre-defined snp file with excluded sites.
 #'
 #' @return S3 object of the EIGENSTRAT class.
 #'
 #' @export
-eigenstrat <- function(prefix = NULL, ind = NULL, snp = NULL, geno = NULL) {
+eigenstrat <- function(prefix = NULL, ind = NULL, snp = NULL, geno = NULL, exclude = NULL) {
   if (is.null(prefix) & any(is.null(c(ind, snp, geno))))
     stop("Insufficient information to get paths to ind/snp/geno files")
 
@@ -24,6 +25,10 @@ eigenstrat <- function(prefix = NULL, ind = NULL, snp = NULL, geno = NULL) {
 
   if (!all(sapply(c(data$ind, data$snp, data$geno), file.exists)))
     stop("Not all three ind/snp/geno files present", call. = FALSE)
+
+  if (!is.null(exclude)) {
+    data <- add_excluded_snps(data, exclude)
+  }
 
   class(data) <- "EIGENSTRAT"
   data
@@ -44,8 +49,8 @@ print.EIGENSTRAT <- function(x, ...) {
     "EIGENSTRAT object\n",
     "=================\n",
     "components:",
-    "\n  ind file: ", x$ind, 
-    "\n  snp file: ", x$snp, 
+    "\n  ind file: ", x$ind,
+    "\n  snp file: ", x$snp,
     "\n  geno file: ", x$geno,
     "\n"))
 
@@ -114,6 +119,12 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #'
 #' @export
 filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp")) {
+  if (file.exists(outfile)) {
+    warning(paste("snp file", outfile, "already exists - adding it to the EIGENSTRAT object directly."), call. = FALSE)
+    data <- add_excluded_snps(data, outfile)
+    return(data)
+  }
+
   if (system("bedtools", ignore.stdout = TRUE) != 0)
     stop("bedtools is required for filtering, but is not in your $PATH")
 
@@ -183,6 +194,12 @@ keep_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'
 #' @export
 transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
+  if (file.exists(outfile)) {
+    warning(paste0("snp file '", outfile, "' already exists - adding it to the EIGENSTRAT object directly..."), call. = FALSE)
+    data <- add_excluded_snps(data, outfile)
+    return(data)
+  }
+
   exclude <- read_snp(data) %>%
     dplyr::filter(
       (ref == "C" & alt == "T") |
@@ -225,7 +242,7 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
     writeLines(new_lines, outfile)
     data$group <- outfile
   } else {
-    warning("No labels have been changed")
+    warning("No labels have been changed", call. = FALSE)
   }
   data
 }
@@ -264,12 +281,20 @@ process_filter <- function(data, exclude, outfile) {
   exclude <- rbind(exclude, prev_exclude) %>% unique(., by = c("chrom", "pos"))
   if (nrow(exclude) < nrow(read_snp(data))) {
     write_snp(exclude, outfile)
-    data$exclude <- path.expand(outfile)
-    data$n_excluded <- nrow(read_snp(data, exclude = TRUE))
-    data$n_included <- nrow(read_snp(data)) - data$n_excluded
+    data <- add_excluded_snps(data, outfile)
   } else {
     stop("No sites remaining after the filtering.", call. = FALSE)
   }
   data
 }
 
+
+
+# Add an 'exclude' field to the EIGENSTRAT object and count remaining
+# and excluded SNPs.
+add_excluded_snps <- function(data, snpfile) {
+    data$exclude <- path.expand(snpfile)
+    data$n_excluded <- nrow(read_snp(data, exclude = TRUE))
+    data$n_included <- nrow(read_snp(data)) - data$n_excluded
+    data
+}
