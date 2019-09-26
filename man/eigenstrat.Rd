@@ -4,12 +4,15 @@
 \alias{eigenstrat}
 \title{EIGENSTRAT data constructor}
 \usage{
-eigenstrat(prefix = NULL, ind = NULL, snp = NULL, geno = NULL)
+eigenstrat(prefix = NULL, ind = NULL, snp = NULL, geno = NULL,
+  exclude = NULL)
 }
 \arguments{
 \item{prefix}{Shared path to an EIGENSTRAT trio (set of ind/snp/geno files).}
 
 \item{ind, snp, geno}{Paths to individual EIGENSTRAT components.}
+
+\item{exclude}{Pre-defined snp file with excluded sites.}
 }
 \value{
 S3 object of the EIGENSTRAT class.
