@@ -294,7 +294,17 @@ process_filter <- function(data, exclude, outfile) {
 # and excluded SNPs.
 add_excluded_snps <- function(data, snpfile) {
     data$exclude <- path.expand(snpfile)
-    data$n_excluded <- nrow(read_snp(data, exclude = TRUE))
-    data$n_included <- nrow(read_snp(data)) - data$n_excluded
+    data$n_excluded <- count_lines(data$exclude)
+    data$n_included <- count_lines(data$snp) - data$n_excluded
     data
+}
+
+
+
+# Quick hack to count lines in a given file.
+# Used just for the purpose of counting the number of SNPs before/after
+# filtering.
+count_lines <- function(file) {
+    wc_out <- system(paste0("wc -l ", file), intern = TRUE)
+    as.integer(gsub("^ +([0-9]+) .*", "\\1", wc_out))
 }
