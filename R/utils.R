@@ -19,7 +19,7 @@ count_snps <- function(data, missing = FALSE, prop = FALSE) {
   }
   geno <- read_geno(data)
   result <- read_ind(data)
-  result[[col]] <- as.vector(t(dplyr::summarise_all(geno, dplyr::funs(summary_fun(fun(.))))))
+  result[[col]] <- as.vector(t(dplyr::summarise_all(geno, list(~ summary_fun(fun(.))))))
   result
 }
 

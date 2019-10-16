@@ -200,7 +200,7 @@ read_qpAdm <- function(log_lines) {
     as.numeric
 
   proportions <- rbind(c(target, stats$proportion, stats$stderr, snp_count)) %>%
-    tibble::as_tibble() %>%
+    tibble::as_tibble(.name_repair = "minimal") %>%
     stats::setNames(c("target", source, paste0("stderr_", source), "nsnps")) %>%
     dplyr::mutate_at(dplyr::vars(-target), as.numeric)
 
