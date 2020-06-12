@@ -93,3 +93,36 @@ test_that("qpWave wrapper produces correct results", {
   )
 })
 
+
+# test that the output object is of the right class ----------------------
+test_that("Output object is of the right class", {
+  skip_on_cran()
+
+  data <- eigenstrat(file.path(data_dir, "allmap"))
+  pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
+  res <- f3(A = pops$A, B = pops$B, C = pops$C, data = data)
+  expect_true(is(res, "admixr_result"))
+})
+
+# test that the output object gets proper annotation ----------------------
+test_that("Output object is properly annotated with the command name", {
+  skip_on_cran()
+
+  data <- eigenstrat(file.path(data_dir, "allmap"))
+  pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
+  res <- f3(A = pops$A, B = pops$B, C = pops$C, data = data)
+  expect_true(attr(res, "command") == "qp3Pop")
+})
+
+# test that the output object contains the whole log ----------------------
+test_that("Output object carries with it the whole log output", {
+  skip_on_cran()
+
+  data <- eigenstrat(file.path(data_dir, "allmap"))
+  pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
+  outdir <- file.path(tempdir(), "log_test")
+  dir.create(outdir)
+  res <- f3(A = pops$A, B = pops$B, C = pops$C, data = data, outdir = outdir)
+  expect_true(all(attr(res, "log_output") == readLines(list.files(outdir, pattern = "*.log$", full.names = TRUE))))
+})
+
