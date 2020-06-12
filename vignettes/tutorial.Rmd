@@ -2,9 +2,9 @@
 title: "admixr - Tutorial"
 author: "Martin Petr"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: html_document
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{admixr - Tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,8 +23,7 @@ knitr::opts_chunk$set(
 
 [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools/) is a widely used
 software package for calculating admixture statistics and testing population
-admixture hypotheses. However, although powerful and comprehensive, it is not
-exactly known for being user-friendly.
+admixture hypotheses.
 
 A typical ADMIXTOOLS workflow generally involves a combination of
 `sed`/`awk`/shell scripting and manual editing to create text configuration
@@ -35,7 +34,7 @@ values of interest, often using command-line utilities again or (worse) by
 manual copy-pasting. Finally, the processed results are analysed in R, Excel or
 another program.
 
-This workflow is quite cumbersome, especially if one wants to explore many
+This workflow can be a little cumbersome, especially if one wants to explore many
 hypotheses involving different combinations of populations. Most importantly,
 however, it makes it difficult to coduct reproducible research, as it is nearly
 impossible to construct fully automated "pipelines" that don't require user
@@ -248,7 +247,7 @@ simple example analyses.
 
 
 
-## $D$ statistic
+## D statistic
 
 Let's say we are interested in the following question: _"Which populations
 today show evidence of Neanderthal admixture?_
@@ -334,7 +333,7 @@ the ancestors of present-day non-Africans.
 
 
 
-## $f_4$ statistic
+## f4 statistic
 
 An alternative way of addressing the previous question is to use the $f_4$
 statistic, which is very similar to $D$ statistic and can be calculated as:
@@ -377,7 +376,7 @@ both.
 
 
 
-## $f_4$-ratio statistic
+## f4-ratio statistic
 
 Now we know that non-Africans today carry _some_ Neanderthal ancestry. But what if
 we want to know _how much_ Neanderthal ancestry they have? What proportion of their
@@ -433,7 +432,7 @@ We can make several observations:
 
 
 
-## $f_3$ statistic
+## f3 statistic
 
 The $f_3$ statistic, also known as the 3-population statistic, is useful
 whenever we want to:
