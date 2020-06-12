@@ -78,7 +78,7 @@ check_presence <- function(labels, data) {
 download_data <- function(dirname = tempdir()) {
   dest <- file.path(dirname, "snps.tgz")
   utils::download.file(
-    "https://www.dropbox.com/s/tst0xd9qx005yaj/snps.tar.gz?dl=0",
+    "https://bioinf.eva.mpg.de/admixr/snps.tar.gz",
     destfile = dest,
     method = "wget",
     quiet = TRUE
