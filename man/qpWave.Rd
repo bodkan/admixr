@@ -4,8 +4,15 @@
 \alias{qpWave}
 \title{Find the most likely number of ancestry waves using the qpWave method.}
 \usage{
-qpWave(data, left, right, maxrank = NULL, details = FALSE,
-  outdir = NULL, params = NULL)
+qpWave(
+  data,
+  left,
+  right,
+  maxrank = NULL,
+  details = FALSE,
+  outdir = NULL,
+  params = NULL
+)
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}

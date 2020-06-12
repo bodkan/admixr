@@ -4,7 +4,7 @@
 #'
 #' @export
 printlog <- function(x) {
-  if (!is(x, "admixr_result")) {
+  if (!inherits(x, "admixr_result")) {
     stop("Object does not contain a result of an admixr function", call. = FALSE)
   }
 
