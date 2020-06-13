@@ -4,16 +4,20 @@
 \alias{printlog}
 \title{Print full output log associated with an admixr output.}
 \usage{
-printlog(x, target = NA, save = FALSE, prefix = NA)
+printlog(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt")
 }
 \arguments{
-\item{x}{Output from one of the admixr wrappers}
+\item{x}{Output from one of the admixr wrappers (d, f4, qpAdm, ...)}
 
-\item{target}{Specify a specific log to examine (relevant multiple target qpAdm run)}
+\item{target}{A specific log to examine (relevant multiple target qpAdm run)}
 
-\item{save}{Save the log output(s) to a file?}
+\item{save}{Save the log output to a disk?}
 
-\item{prefix}{Path prefix to the saved log output (name of the admixr command by default)}
+\item{prefix}{Prefix of the output log file(s) (name of the admixr command by default)}
+
+\item{dir}{In which directory to save the log file(s)?}
+
+\item{suffix}{Suffix of the output log file(s) (".txt" by default)}
 }
 \description{
 Print full output log associated with an admixr output.
