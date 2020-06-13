@@ -44,12 +44,12 @@ as an [_Application Note_](https://doi.org/10.1093/bioinformatics/btz030) in the
 
 ## Installation instructions
 
-**Note (2019/04/06):** This package is currently in the last phase of testing
+**Note (2020/06/14):** This package is currently in the last phase of testing
 and polishing the API before I submit it to [CRAN](https://cran.r-project.org).
-You can definitely safely use it for your own work, but please make sure to
-check back here for instructions on how to install the officially released
-version. You can also follow me on [Twitter](https://www.twitter.com/fleventy5)
-if you want to stay updated.
+You can definitely safely use it for your own work (many laboratories already do),
+but please make sure to check back here for instructions on how to install the
+officially released version. You can also follow me on
+[Twitter](https://www.twitter.com/fleventy5) if you want to stay updated.
 
 To install `admixr` from Github you need to install the package `devtools`
 first. You can simply run:
@@ -57,11 +57,11 @@ first. You can simply run:
 
 ```r
 install.packages("devtools")
-devtools::install_github("bodkan/admixr", ref = "v0.7.1")
+devtools::install_github("bodkan/admixr", ref = "v0.8.0")
 ```
 
 If you want to **update** _admixr_ to a more recent version, simply
-run `devtools::install_github("bodkan/admixr", ref = "v0.7.1")` again.
+run `devtools::install_github("bodkan/admixr", ref = "v0.8.0")` again.
 
 **Note that in order to use the `admixr` package, you need a working
 installation of ADMIXTOOLS!** You can find installation instructions

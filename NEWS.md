@@ -7,11 +7,11 @@ reach version 1.0 in the next couple of months.
 
 New features and improvements:
 
-* New function `loginfo` which operates on any output object from an admixr wrapper
+* New function `loginfo()` which operates on any output object from an admixr wrapper
   and shows the full log output (the "log file" in ADMIXTOOLS jargon)
   associated with the analysis. It also has options for saving the log file to
   a permanent location and to only show a log file for a target sample of interest
-  (relevant for qpAdm analyses with multiple targets at once).
+  (relevant for _qpAdm_ analyses with multiple targets at once).
 * _admixr_ can now (hopefully) detect broken/truncated output files generated
   by ADMIXTOOLS whenever there is some fatal issue with an analysis.
   The package should now detect this and inform the user.

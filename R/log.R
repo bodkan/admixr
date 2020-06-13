@@ -1,7 +1,7 @@
-#' Print full output log associated with an admixr output.
+#' Print the full log output associated with an admixr output object.
 #'
 #' @param x Output from one of the admixr wrappers (d, f4, qpAdm, ...)
-#' @param target A specific log to examine (relevant multiple target qpAdm run)
+#' @param target A specific log to examine (relevant for multiple target qpAdm runs)
 #' @param save Save the log output to a disk?
 #' @param prefix Prefix of the output log file(s) (name of the admixr command by default)
 #' @param dir In which directory to save the log file(s)?

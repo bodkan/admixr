@@ -2,14 +2,14 @@
 % Please edit documentation in R/log.R
 \name{loginfo}
 \alias{loginfo}
-\title{Print full output log associated with an admixr output.}
+\title{Print the full log output associated with an admixr output object.}
 \usage{
 loginfo(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt")
 }
 \arguments{
 \item{x}{Output from one of the admixr wrappers (d, f4, qpAdm, ...)}
 
-\item{target}{A specific log to examine (relevant multiple target qpAdm run)}
+\item{target}{A specific log to examine (relevant for multiple target qpAdm runs)}
 
 \item{save}{Save the log output to a disk?}
 
@@ -20,5 +20,5 @@ loginfo(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt")
 \item{suffix}{Suffix of the output log file(s) (".txt" by default)}
 }
 \description{
-Print full output log associated with an admixr output.
+Print the full log output associated with an admixr output object.
 }
