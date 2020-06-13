@@ -18,7 +18,7 @@ test_that("qp3Pop wrapper produces correct results", {
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
-  expect_equal(
+  expect_equivalent(
     f3(A = pops$A, B = pops$B, C = pops$C, data = data),
     read_output(file.path(examples_dir, "test_qp3Pop.log"))
   )
@@ -31,7 +31,7 @@ test_that("qpDstat wrapper produces correct results (4 population input version)
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
-  expect_equal(
+  expect_equivalent(
     dplyr::select(d(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, data = data), -stderr),
     read_output(file.path(examples_dir, "test_qpDstat1.log"))
   )
@@ -52,7 +52,7 @@ test_that("qpF4ratio wrapper produces correct results", {
       col_names = c("A", "O", "X", "C", "_", "__", "B", "___")
     ) %>%
     dplyr::select(X, A, B, C, O)
-  expect_equal(
+  expect_equivalent(
     dplyr::bind_rows(lapply(seq_len(nrow(pops)), function(i) {
       f4ratio(
         X = pops$X[i], A = pops$A[i], B = pops$B[i], C = pops$C[i], O = pops$O[i],
@@ -87,7 +87,7 @@ test_that("qpWave wrapper produces correct results", {
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
   right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
     stringr::str_subset("^[^#]")
-  expect_equal(
+  expect_equivalent(
     qpWave(left = left, right = right, data = data),
     read_output(file.path(examples_dir, "test_qpWave.log"))
   )

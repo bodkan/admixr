@@ -49,7 +49,9 @@ test_that("filter_sites correctly handles complete overlap", {
 
   # generate a "subset" based on that BED file
   output <- tempfile()
-  new_data <- filter_bed(data = data, bed = bed)
+  # suppress weird tibble deprecation warnings
+  # readr still calls data_frame() function although it is deprecated now
+  suppressWarnings(new_data <- filter_bed(data = data, bed = bed))
 
   # verify that both EIGENSTRAT datasets are the same
   expect_true(nrow(read_snp_file(new_data$exclude)) == 0)
@@ -71,8 +73,9 @@ test_that("Overlap returns a correct number of sites", {
       dplyr::sample_n(nrow(snp) - n) %>%
       dplyr::arrange() %>%
       readr::write_tsv(bed, col_names = FALSE)
-    # generate a "subset" based on thad BED file
-    new_data <- filter_bed(data, bed)
+    # generate a "subset" based on that BED file
+    # FIX WARNINGS due to deprecation (see also above)
+    suppressWarnings(new_data <- filter_bed(data = data, bed = bed))
 
     nrow(read_snp_file(new_data$exclude)) == n
   })
