@@ -4,8 +4,7 @@
 \alias{eigenstrat}
 \title{EIGENSTRAT data constructor}
 \usage{
-eigenstrat(prefix = NULL, ind = NULL, snp = NULL, geno = NULL,
-  exclude = NULL)
+eigenstrat(prefix = NULL, ind = NULL, snp = NULL, geno = NULL, exclude = NULL)
 }
 \arguments{
 \item{prefix}{Shared path to an EIGENSTRAT trio (set of ind/snp/geno files).}

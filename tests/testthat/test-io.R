@@ -15,7 +15,7 @@ test_that("read_ind and write_ind are inverse functions", {
 
   new <- readr::read_tsv(new_file, col_names = c("id", "sex", "label"))
 
-  expect_equal(true, new)
+  expect_equivalent(true, new)
 })
 
 # read_geno / write_geno --------------------------------------------------

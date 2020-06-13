@@ -51,7 +51,7 @@ test_that("Merging of population labels", {
                        outfile = tempfile())
 
   # compare both generated ind tables
-  expect_equal(
+  expect_equivalent(
     readr::read_table(shell_ind, col_names = c("id", "sex", "label")),
     read_ind(relabeled)
   )

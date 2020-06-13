@@ -24,7 +24,14 @@ read_output <- function(file, ...) {
 
   # it feels a little dumb, re-reading the whole output file a 2nd time,
   # there must be a cleaner way to do this
-  parsers[[cmd]](log_lines, ...)
+  result <- parsers[[cmd]](log_lines, ...)
+
+  # annotate the object with metadata and the full log output
+  attr(result, "command") <- cmd
+  attr(result, "log_output") <- log_lines
+  class(result) <- c("admixr_result", class(result))
+
+  result
 }
 
 

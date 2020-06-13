@@ -29,3 +29,7 @@ reference:
     - starts_with("read_(geno|ind|snp)")
     - starts_with("write_(geno|ind|snp)")
     - read_output
+
+  - title: Examining output log information
+    contents:
+    - loginfo

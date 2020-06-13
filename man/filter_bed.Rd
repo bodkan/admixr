@@ -4,8 +4,7 @@
 \alias{filter_bed}
 \title{Filter EIGENSTRAT data based on a given BED file}
 \usage{
-filter_bed(data, bed, remove = FALSE, outfile = tempfile(fileext =
-  ".snp"))
+filter_bed(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp"))
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}
