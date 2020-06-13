@@ -91,15 +91,13 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
 #' @param target Vector of target populations (evaluated one at a time).
 #' @param sources Source populations related to true ancestors.
 #' @param outgroups Outgroup populations.
-#' @param details Include detailed information about model fit? Otherwise
-#'   return just admixture proportions.
 #'
 #' @param data EIGENSTRAT data object.
 #' @param outdir Where to put all generated files (temporary directory by default).
 #' @param params Named list of parameters and their values.
 #'
 #' @export
-qpAdm <- function(data, target, sources, outgroups, details = TRUE, outdir = NULL, params = NULL) {
+qpAdm <- function(data, target, sources, outgroups, outdir = NULL, params = NULL) {
   check_presence(c(target, sources, outgroups), data)
 
   results <- lapply(target, function(X) {
@@ -123,24 +121,29 @@ qpAdm <- function(data, target, sources, outgroups, details = TRUE, outdir = NUL
   # by concatenating all internal dataframes and returning a simple list
   # of three dataframes
   proportions <- dplyr::bind_rows(lapply(results, function(x) x$proportions))
+
+  ranks <- lapply(seq_along(target), function(i) { results[[i]]$ranks %>% dplyr::mutate(target = target[i]) }) %>%
+    dplyr::bind_rows() %>%
+    dplyr::select(target, dplyr::everything())
+  subsets <- lapply(seq_along(target), function(i) {
+      results[[i]]$subsets %>% dplyr::mutate(target = target[i])
+    }) %>%
+    dplyr::bind_rows() %>%
+    dplyr::select(target, dplyr::everything())
   
-  if (details) {
-    ranks <- lapply(seq_along(target), function(i) { results[[i]]$ranks %>% dplyr::mutate(target = target[i]) }) %>%
-      dplyr::bind_rows() %>%
-      dplyr::select(target, dplyr::everything())
-    subsets <- lapply(seq_along(target), function(i) {
-        results[[i]]$subsets %>% dplyr::mutate(target = target[i])
-      }) %>%
-      dplyr::bind_rows() %>%
-      dplyr::select(target, dplyr::everything())
-    return(list(
-      proportions = proportions,
-      ranks = ranks,
-      subsets = subsets
-    ))
-  } else {
-    return(proportions)
-  }
+  res <- list(
+    proportions = proportions,
+    ranks = ranks,
+    subsets = subsets
+  )
+  
+  attr(res, "command") <- "qpAdm"
+  attr(res, "log_output") <- lapply(results, function(i) attr(i, "log_output"))
+  # name the elements of the list of log outputs based on target population
+  names(attr(res, "log_output")) <- target
+  class(res) <- c("admixr_result", class(res))
+
+  res
 }
 
 

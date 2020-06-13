@@ -1,20 +1,3 @@
-#' Print full output log associated with an admixr output.
-#'
-#' @param x Output from one of the admixr wrappers (data.frame)
-#'
-#' @export
-printlog <- function(x) {
-  if (!inherits(x, "admixr_result")) {
-    stop("Object does not contain a result of an admixr function", call. = FALSE)
-  }
-
-  cat(paste0("Full output log of ", attr(x, "command"), ":\n"))
-  cat("=============================\n\n")
-  cat(paste(attr(x, "log"), collapse = "\n"))
-}
-
-
-
 #' Count the number/proportion of present/missing sites in each sample
 #'
 #' @param data EIGENSTRAT data object.
