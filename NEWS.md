@@ -1,3 +1,26 @@
+# admixr 0.8.0
+
+Finally resumed the development of this package again! Apologies to everyone
+for having to wait so long. Thank you for your patience and feedback! I hope
+that things will start moving a little bit faster and we will reach version 1.0
+in the next couple of months.
+
+There are no real dramatic changes in this version, but one new feature (often
+requested) is:
+
+* a new function `loginfo` which operates on any output object from an admixr wrapper
+  and shows the full log output (the "log file" in ADMIXTOOLS jargon)
+  associated with the analysis. It also has options for saving the log file to
+  a permanent location, subset a log file to only a target sample of interest
+  (relevant for qpAdm analyses with multiple targets at once).
+
+Further small updates:
+
+* Removed qpAdm argument `details` with a motivation that the user probably
+  always wants to see the full analysis summary. I don't think
+* The function `download_data()` no longer fetches example snp set from
+  my personal Dropbox account. 🤦
+
 # admixr 0.7.1
 
 * Parse admixture proportions from the "best coefficients" line of the qpAdm

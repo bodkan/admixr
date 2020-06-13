@@ -8,23 +8,29 @@
 
 <title>Changelog • admixr</title>
 
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,7 +38,9 @@
 
 
 
+
 <meta property="og:title" content="Changelog" />
+
 
 
 
@@ -49,7 +57,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -63,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -94,10 +102,9 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/bodkan/admixr">
+  <a href="https://github.com/bodkan/admixr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -115,19 +122,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/bodkan/admixr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="admixr-080" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.0">
+<a href="#admixr-080" class="anchor"></a>admixr 0.8.0</h1>
+<p>Finally resumed the development of this package again! Apologies to everyone for having to wait so long. Thank you for your patience and feedback! I hope that things will start moving a little bit faster and we will reach version 1.0 in the next couple of months.</p>
+<p>There are no real dramatic changes in this version, but one new feature (often requested) is:</p>
+<ul>
+<li>a new function <code>loginfo</code> which operates on any output object from an admixr wrapper and shows the full log output (the “log file” in ADMIXTOOLS jargon) associated with the analysis. It also has options for saving the log file to a permanent location, subset a log file to only a target sample of interest (relevant for qpAdm analyses with multiple targets at once).</li>
+</ul>
+<p>Further small updates:</p>
+<ul>
+<li>Removed qpAdm argument <code>details</code> with a motivation that the user probably always wants to see the full analysis summary.</li>
+<li>The function <code><a href="../reference/download_data.html">download_data()</a></code> no longer fetches example snp set from my personal Dropbox 🤦.</li>
+</ul>
+</div>
     <div id="admixr-071" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.7.1">
 <a href="#admixr-071" class="anchor"></a>admixr 0.7.1</h1>
 <ul>
 <li>Parse admixture proportions from the “best coefficients” line of the qpAdm output file.</li>
 </ul>
 </div>
     <div id="admixr-070" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.7.0">
 <a href="#admixr-070" class="anchor"></a>admixr 0.7.0</h1>
 <ul>
 <li>Fixed handling of warnings when dealing with duplicated populations.</li>
@@ -136,7 +157,7 @@
 </ul>
 </div>
     <div id="admixr-063" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.6.3">
 <a href="#admixr-063" class="anchor"></a>admixr 0.6.3</h1>
 <ul>
 <li>Rename <code>keep_transversions()</code> to <code><a href="../reference/transversions_only.html">transversions_only()</a></code>. The old function is now deprecated.</li>
@@ -146,7 +167,7 @@
 </ul>
 </div>
     <div id="admixr-062" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.6.2">
 <a href="#admixr-062" class="anchor"></a>admixr 0.6.2</h1>
 <ul>
 <li>
@@ -155,7 +176,7 @@
 </ul>
 </div>
     <div id="admixr-061" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.6.1">
 <a href="#admixr-061" class="anchor"></a>admixr 0.6.1</h1>
 <ul>
 <li>
@@ -165,7 +186,7 @@
 </ul>
 </div>
     <div id="admixr-060" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.6.0">
 <a href="#admixr-060" class="anchor"></a>admixr 0.6.0</h1>
 <ul>
 <li>Conversion of VCF to EIGENSTRAT format is now implemented in C++ and should be approximately infinitely faster than the old conversion function written in pure R.</li>
@@ -173,7 +194,7 @@
 </ul>
 </div>
     <div id="admixr-050" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5.0">
 <a href="#admixr-050" class="anchor"></a>admixr 0.5.0</h1>
 <ul>
 <li>Added full implementations of <code><a href="../reference/qpWave.html">qpWave()</a></code> and <code><a href="../reference/qpAdm.html">qpAdm()</a></code> functions.</li>
@@ -182,7 +203,7 @@
 </ul>
 </div>
     <div id="admixr-041" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.4.1">
 <a href="#admixr-041" class="anchor"></a>admixr 0.4.1</h1>
 <ul>
 <li>Fixed missing <code>group_labels()</code> update.</li>
@@ -190,7 +211,7 @@
 </ul>
 </div>
     <div id="admixr-040" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.4.0">
 <a href="#admixr-040" class="anchor"></a>admixr 0.4.0</h1>
 <ul>
 <li>The package now has a tutorial vignette describing the main functionality.</li>
@@ -201,7 +222,7 @@
 </ul>
 </div>
     <div id="admixr-030" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.3.0">
 <a href="#admixr-030" class="anchor"></a>admixr 0.3.0</h1>
 <ul>
 <li>All wrappers have been given simpler names (<code>qpDstat()</code> -&gt; <code><a href="../reference/f4ratio.html">d()</a></code>, <code>qpF4ratio()</code> -&gt; <code><a href="../reference/f4ratio.html">f4ratio()</a></code>, etc).</li>
@@ -210,7 +231,7 @@
 </ul>
 </div>
     <div id="admixr-020" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.0">
 <a href="#admixr-020" class="anchor"></a>admixr 0.2.0</h1>
 <ul>
 <li><p>The package now includes qpAdm functionality.</p></li>
@@ -218,7 +239,7 @@
 </ul>
 </div>
     <div id="admixr-010" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.0">
 <a href="#admixr-010" class="anchor"></a>admixr 0.1.0</h1>
 <p>Implemented:</p>
 <ul>
@@ -230,24 +251,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#admixr-071">0.7.1</a></li>
-        <li><a href="#admixr-070">0.7.0</a></li>
-        <li><a href="#admixr-063">0.6.3</a></li>
-        <li><a href="#admixr-062">0.6.2</a></li>
-        <li><a href="#admixr-061">0.6.1</a></li>
-        <li><a href="#admixr-060">0.6.0</a></li>
-        <li><a href="#admixr-050">0.5.0</a></li>
-        <li><a href="#admixr-041">0.4.1</a></li>
-        <li><a href="#admixr-040">0.4.0</a></li>
-        <li><a href="#admixr-030">0.3.0</a></li>
-        <li><a href="#admixr-020">0.2.0</a></li>
-        <li><a href="#admixr-010">0.1.0</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -259,7 +266,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

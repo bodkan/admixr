@@ -8,7 +8,7 @@
 #' @param suffix Suffix of the output log file(s) (".txt" by default)
 #'
 #' @export
-printlog <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt") {
+loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt") {
   if (!inherits(x, "admixr_result")) {
     stop("Object does not contain a result of an admixr function", call. = FALSE)
   }
@@ -77,7 +77,7 @@ print.admixr_result <- function(x, ...) {
       subsets = x$subsets
     ), ...)
   } else {
-    print.default(tibble::as_tibble(x), ...)
+    print(tibble::as_tibble(x))
   }
 }
 
