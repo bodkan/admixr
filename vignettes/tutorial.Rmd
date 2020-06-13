@@ -4,7 +4,7 @@ author: "Martin Petr"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{admixr - Tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -1008,6 +1008,8 @@ loginfo(qpadm_res, target = "Sardinian", save = TRUE, prefix = "qpAdm_Neandertal
 ```
 
 This will create a file in the current directory named `qpAdm_Neandertal_ancestry_Sardinian.txt`.
+Note that when you call `loginfo()` on a qpAdm run, the name of the target is
+always added to the end of the output log file.
 
 ```{bash remove_log, echo = FALSE}
 rm qpAdm_Neandertal_ancestry_Sardinian.txt
