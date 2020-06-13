@@ -59,3 +59,14 @@ test_that("Specifying target for a non-qpAdm log fails", {
   
   expect_error(loginfo(res, target = "missing_sample"))
 })
+
+
+
+test_that("Detect broken log file and inform the user", {
+  skip_on_cran()
+  
+  data <- eigenstrat(file.path(data_dir, "qpdata"))
+  truncated_log <- tempfile()
+  system(glue::glue('head -n10 {file.path(admixtools_path(), "examples", "qpDstat1.log")} > {truncated_log}'))
+  expect_error(read_output(truncated_log))
+})

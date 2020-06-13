@@ -949,7 +949,7 @@ Each admixr result, such as the data frame object below, contains a (hidden!) at
 which carries the complete log file associate with that particular analysis:
 
 
-```{r d_log}
+```{r d_log, comment = "#>"}
 dres <- d(W = c("French", "Han", "Dinka"), X = "Yoruba", Y = "Vindija", Z = "Chimp", data = snps)
 
 dres
@@ -962,7 +962,7 @@ that it does not contain any other information (it does but it's normally hidden
 as most of the time it's not useful):
 
 
-```{r d_loginfo}
+```{r d_loginfo, comment = "#>"}
 loginfo(dres)
 ```
 
@@ -971,7 +971,7 @@ The situation is a bit more complex for _qpAdm_ which can be evaluated for
 multiple target populations/samples which are then analyzed separately, with
 each analysis having its own log file:
 
-```{r qpAdm_log}
+```{r qpAdm_log, comment = "#>"}
 qpadm_res <- qpAdm(
   target = c("Sardinian", "Han"),
   sources = c("Vindija", "Yoruba"),
@@ -986,7 +986,7 @@ In this case, we could either print all log information (one log output for
 each target we specified in the _qpAdm_ call) by running`loginfo(qpadm_res)` or,
 perhaps more useful, specify which target's log file we want to examine:
 
-```{r qpadm_log_target}
+```{r qpadm_log_target, comment = "#>"}
 loginfo(qpadm_res, target = "Han")
 ```
 

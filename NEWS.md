@@ -1,24 +1,26 @@
 # admixr 0.8.0
 
-Finally resumed the development of this package again! Apologies to everyone
-for having to wait so long. Thank you for your patience and feedback! I hope
-that things will start moving a little bit faster and we will reach version 1.0
-in the next couple of months.
+Finally resumed the development of _admixr_! Apologies to everyone
+for having to wait so long. Thank you for your patience and feedback since the last
+release. I hope that things will start moving a little bit faster and we will
+reach version 1.0 in the next couple of months.
 
-There are no real dramatic changes in this version, but one new feature (often
-requested) is:
+New features and improvements:
 
-* a new function `loginfo` which operates on any output object from an admixr wrapper
+* New function `loginfo` which operates on any output object from an admixr wrapper
   and shows the full log output (the "log file" in ADMIXTOOLS jargon)
   associated with the analysis. It also has options for saving the log file to
-  a permanent location, subset a log file to only a target sample of interest
+  a permanent location and to only show a log file for a target sample of interest
   (relevant for qpAdm analyses with multiple targets at once).
-
-Further small updates:
-
-* Removed qpAdm argument `details` with a motivation that the user probably
-  always wants to see the full analysis summary. I don't think
-* The function `download_data()` no longer fetches example snp set from
+* _admixr_ can now (hopefully) detect broken/truncated output files generated
+  by ADMIXTOOLS whenever there is some fatal issue with an analysis.
+  The package should now detect this and inform the user.
+* Removed _qpAdm_ argument `details` - the user will always want to see the
+  full analysis summary so this option is redundant. It is still kept in
+  _qpWave_ - for now, until I figure out how useful the full output actually is.
+  Given the implementation of `loginfo()` above, we might remove the argument
+  from _qpWave_ too at some point soon.
+* The function `download_data()` no longer fetches example snp data set from
   my personal Dropbox account. 🤦
 
 # admixr 0.7.1

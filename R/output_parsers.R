@@ -9,6 +9,21 @@
 read_output <- function(file, ...) {
   log_lines <- readLines(file) %>% .[!stringr::str_detect(., "nodata")]
 
+  # Sometimes ADMIXTOOLS crashes for various reasons, leaving a truncated
+  # log file - this leads to cryptic nonsensical error messages on our part,
+  # which only confuse the user. Let's make sure that the log file is
+  # complete, informing the user to inspect it in case we see a problem.
+  if (!any(stringr::str_detect(log_lines, "end of"))) {
+    cat("BEGINNING OF OUTPUT FILE\n")
+    cat("==================================================\n\n")
+    cat(paste(log_lines, collapse = "\n"))
+    cat("\n\n==================================================\n")
+    cat("END OF OUTPUT FILE\n\n")
+    stop("The output file we got from ADMIXTOOLS is truncated.
+       Please examine the full output above and check for errors.",
+         call. = FALSE)
+  }
+
   # extract ADMIXTOOLS command name from the output file
   cmd <- log_lines %>%
     stringr::str_match("^## (\\w+) version:") %>%
