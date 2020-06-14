@@ -1,3 +1,8 @@
+# admixr 0.8.1
+
+* Fixed a minor bug in single-source qpAdm analyses. The package now detects
+  this and correctly handles missing "subsets/patterns" information.
+
 # admixr 0.8.0
 
 Finally resumed the development of _admixr_! Apologies to everyone
