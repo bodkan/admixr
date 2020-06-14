@@ -78,6 +78,18 @@ test_that("qpAdm wrapper produces correct results", {
 })
 
 
+test_that("qpAdm with a single source produces NULL subsets dataframe", {
+  skip_on_cran()
+  
+  data <- eigenstrat(file.path(data_dir, "qpdata"))
+  left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)[1:2]
+  right <- scan(file.path(examples_dir, "right1"), what = "character", quiet = TRUE) %>%
+    stringr::str_subset("^[^#]")
+  result <- qpAdm(target = left[1], sources = left[-1], outgroups = right, data = data)
+  expect_true(is.null(result$subsets))
+})
+
+
 # qpWave ------------------------------------------------------------------
 
 test_that("qpWave wrapper produces correct results", {

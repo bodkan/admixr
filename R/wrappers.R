@@ -125,17 +125,22 @@ qpAdm <- function(data, target, sources, outgroups, outdir = NULL, params = NULL
   ranks <- lapply(seq_along(target), function(i) { results[[i]]$ranks %>% dplyr::mutate(target = target[i]) }) %>%
     dplyr::bind_rows() %>%
     dplyr::select(target, dplyr::everything())
-  subsets <- lapply(seq_along(target), function(i) {
-      results[[i]]$subsets %>% dplyr::mutate(target = target[i])
-    }) %>%
-    dplyr::bind_rows() %>%
-    dplyr::select(target, dplyr::everything())
-  
+
   res <- list(
     proportions = proportions,
-    ranks = ranks,
-    subsets = subsets
+    ranks = ranks
   )
+
+  if (!is.null(results[[1]]$subsets)) {
+    subsets <- lapply(seq_along(target), function(i) {
+        results[[i]]$subsets %>% dplyr::mutate(target = target[i])
+      }) %>%
+      dplyr::bind_rows() %>%
+      dplyr::select(target, dplyr::everything())
+    res$subsets <- subsets
+  } else {
+    res$subsets <- NULL
+  }
   
   attr(res, "command") <- "qpAdm"
   attr(res, "log_output") <- lapply(results, function(i) attr(i, "log_output"))
