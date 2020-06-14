@@ -5,11 +5,13 @@
 
 context("Wrapper functionality")
 
-path <- admixtools_path()
-data_dir <- file.path(path, "data")
-examples_dir <- file.path(path, "examples")
+if (.Platform$OS.type == "unix") {
+  path <- admixtools_path()
+  data_dir <- file.path(path, "data")
+  examples_dir <- file.path(path, "examples")
 
-setwd(examples_dir)
+  setwd(examples_dir)
+}
 
 # f3 ----------------------------------------------------------------------
 

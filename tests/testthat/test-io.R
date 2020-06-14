@@ -1,7 +1,9 @@
 context("EIGENSTRAT file I/O functionality")
 
-prefix <- file.path(admixtools_path(), "convertf", "example")
-data <- eigenstrat(prefix, geno = paste0(prefix, ".eigenstratgeno"))
+if (.Platform$OS.type == "unix") {
+  prefix <- file.path(admixtools_path(), "convertf", "example")
+  data <- eigenstrat(prefix, geno = paste0(prefix, ".eigenstratgeno"))
+}
 
 # read_ind / write_ind ----------------------------------------------------
 

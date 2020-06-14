@@ -17,18 +17,20 @@ test_that("Potential aDNA SNPs are correctly removed", {
   expect_equal(n_shell, n_admixr)
 })
 
-orig_data <- eigenstrat(
-    prefix = file.path(admixtools_path(), "convertf", "example"),
-    geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno")
-)
-
-# ADMIXTOOLS example data is broken and it's first SNP has a position 0,
-# although snp files have to be 0-based - let's remove the first SNP entirely
-data <- orig_data
-data$snp <- tempfile()
-data$geno <- tempfile()
-system(sprintf("tail -n+2 %s > %s", orig_data$snp, data$snp))
-system(sprintf("tail -n+2 %s > %s", orig_data$geno, data$geno))
+if(.Platform$OS.type == "unix") {
+  orig_data <- eigenstrat(
+      prefix = file.path(admixtools_path(), "convertf", "example"),
+      geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno")
+  )
+  
+  # ADMIXTOOLS example data is broken and it's first SNP has a position 0,
+  # although snp files have to be 0-based - let's remove the first SNP entirely
+  data <- orig_data
+  data$snp <- tempfile()
+  data$geno <- tempfile()
+  system(sprintf("tail -n+2 %s > %s", orig_data$snp, data$snp))
+  system(sprintf("tail -n+2 %s > %s", orig_data$geno, data$geno))
+}
 
 test_that("filter_sites correctly fails at no overlap", {
   skip_on_cran()
