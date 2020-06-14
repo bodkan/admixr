@@ -4,7 +4,14 @@
 \alias{qpAdm}
 \title{Calculate ancestry proportions in a set of target populations.}
 \usage{
-qpAdm(data, target, sources, outgroups, outdir = NULL, params = NULL)
+qpAdm(
+  data,
+  target,
+  sources,
+  outgroups,
+  outdir = NULL,
+  params = list(allsnps = "YES", summary = "YES", details = "YES")
+)
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}

@@ -17,7 +17,7 @@ test_that("Potential aDNA SNPs are correctly removed", {
   expect_equal(n_shell, n_admixr)
 })
 
-if(.Platform$OS.type == "unix") {
+if (.Platform$OS.type == "unix") {
   orig_data <- eigenstrat(
       prefix = file.path(admixtools_path(), "convertf", "example"),
       geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno")

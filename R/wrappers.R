@@ -97,7 +97,8 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
 #' @param params Named list of parameters and their values.
 #'
 #' @export
-qpAdm <- function(data, target, sources, outgroups, outdir = NULL, params = NULL) {
+qpAdm <- function(data, target, sources, outgroups, outdir = NULL,
+                  params = list(allsnps = "YES", summary = "YES", details = "YES")) {
   check_presence(c(target, sources, outgroups), data)
 
   results <- lapply(target, function(X) {
