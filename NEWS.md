@@ -20,8 +20,7 @@ New features and improvements:
   _qpWave_ - for now, until I figure out how useful the full output actually is.
   Given the implementation of `loginfo()` above, we might remove the argument
   from _qpWave_ too at some point soon.
-* The function `download_data()` no longer fetches example snp data set from
-  my personal Dropbox account. 🤦
+* The function `download_data()` now fetches data from a more stable location.
 
 # admixr 0.7.1
 
