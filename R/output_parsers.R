@@ -227,26 +227,31 @@ read_qpAdm <- function(log_lines) {
     dplyr::mutate_at(dplyr::vars(-target), as.numeric)
 
   # parse the population combination patterns into a data.frame
-  pat_start <- stringr::str_detect(log_lines, "fixed pat") %>% which
-  pat_end <- stringr::str_detect(log_lines, "best pat") %>% which
-  patterns <- log_lines[pat_start : (pat_end[1] - 1)] %>%
-    stringr::str_replace(" fixed", "") %>%
-    stringr::str_replace(" prob", "") %>%
-    stringr::str_replace(" pattern", "") %>%
-    stringr::str_replace_all(" +", " ") %>%
-    stringr::str_replace_all("^ | $", "")
-  pat_header <- c(strsplit(patterns[1], " ")[[1]], source) %>%
-    stringr::str_replace("pat", "pattern")
-  if (any(stringr::str_detect(patterns, "infeasible"))) {
-    pat_header <- c(pat_header, "comment")
-    patterns[-1] <- sapply(patterns[-1], USE.NAMES = FALSE, function(l)
-      if (stringr::str_detect(l, "infeasible")) l else paste0(l, " -"))
+  # (but only if there are multiple sources!)
+  if (any(stringr::str_detect(log_lines, "single source. terminating"))) {
+    pat_df <- NULL
+  } else {
+    pat_start <- stringr::str_detect(log_lines, "fixed pat") %>% which
+    pat_end <- stringr::str_detect(log_lines, "best pat") %>% which
+    patterns <- log_lines[pat_start : (pat_end[1] - 1)] %>%
+      stringr::str_replace(" fixed", "") %>%
+      stringr::str_replace(" prob", "") %>%
+      stringr::str_replace(" pattern", "") %>%
+      stringr::str_replace_all(" +", " ") %>%
+      stringr::str_replace_all("^ | $", "")
+    pat_header <- c(strsplit(patterns[1], " ")[[1]], source) %>%
+      stringr::str_replace("pat", "pattern")
+    if (any(stringr::str_detect(patterns, "infeasible"))) {
+      pat_header <- c(pat_header, "comment")
+      patterns[-1] <- sapply(patterns[-1], USE.NAMES = FALSE, function(l)
+        if (stringr::str_detect(l, "infeasible")) l else paste0(l, " -"))
+    }
+    pat_df <- patterns[-1] %>%
+      paste0(collapse = "\n") %>%
+      readr::read_delim(delim = " ", col_names = FALSE) %>%
+      stats::setNames(pat_header)
   }
-  pat_df <- patterns[-1] %>%
-    paste0(collapse = "\n") %>%
-    readr::read_delim(delim = " ", col_names = FALSE) %>%
-    stats::setNames(pat_header)
-  
+
   # parse the rank test results
   ranks <- read_qpWave(log_lines)
 
