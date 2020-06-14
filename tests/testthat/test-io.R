@@ -7,6 +7,7 @@ data <- eigenstrat(prefix, geno = paste0(prefix, ".eigenstratgeno"))
 
 test_that("read_ind and write_ind are inverse functions", {
   skip_on_cran()
+  skip_on_os("windows")
 
   true <- read_ind(data)
 
@@ -22,6 +23,7 @@ test_that("read_ind and write_ind are inverse functions", {
 
 test_that("read_geno and write_geno are inverse functions", {
   skip_on_cran()
+  skip_on_os("windows")
 
   true <- read_geno(data)
   
@@ -37,6 +39,7 @@ test_that("read_geno and write_geno are inverse functions", {
 
 test_that("read_snp and write_snp are inverse functions", {
   skip_on_cran()
+  skip_on_os("windows")
 
   true <- read_snp(data)
   

@@ -8,6 +8,7 @@ setwd(examples_dir)
 
 test_that("printlog() generates the same log file as ADMIXTOOLS", {
   skip_on_cran()
+  skip_on_os("windows")
   
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
@@ -30,6 +31,7 @@ test_that("printlog() generates the same log file as ADMIXTOOLS", {
 
 test_that("Requesting log for a missing sample fails", {
   skip_on_cran()
+  skip_on_os("windows")
   
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
@@ -47,6 +49,7 @@ test_that("Requesting log for a missing sample fails", {
 
 test_that("Specifying target for a non-qpAdm log fails", {
   skip_on_cran()
+  skip_on_os("windows")
   
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
@@ -64,6 +67,7 @@ test_that("Specifying target for a non-qpAdm log fails", {
 
 test_that("Detect broken log file and inform the user", {
   skip_on_cran()
+  skip_on_os("windows")
   
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   truncated_log <- tempfile()

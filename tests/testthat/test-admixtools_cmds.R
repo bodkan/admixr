@@ -9,6 +9,7 @@ examples_dir <- file.path(path, "examples")
 
 test_that("qpDstat test passes (4 population input version)", {
   skip_on_cran()
+  skip_on_os("windows")
 
   setwd(examples_dir)
   expect_silent(run_cmd("qpDstat",
@@ -18,6 +19,7 @@ test_that("qpDstat test passes (4 population input version)", {
 
 test_that("qp3Pop test passes", {
   skip_on_cran()
+  skip_on_os("windows")
 
   setwd(examples_dir)
   expect_silent(run_cmd("qp3Pop",
@@ -27,6 +29,7 @@ test_that("qp3Pop test passes", {
 
 test_that("qpF4ratio test passes", {
   skip_on_cran()
+  skip_on_os("windows")
 
   setwd(examples_dir)
   expect_silent(run_cmd("qpF4ratio",
@@ -36,6 +39,7 @@ test_that("qpF4ratio test passes", {
 
 test_that("qpAdm test passes", {
   skip_on_cran()
+  skip_on_os("windows")
 
   setwd(examples_dir)
   expect_silent(run_cmd("qpAdm",
@@ -45,6 +49,7 @@ test_that("qpAdm test passes", {
 
 test_that("qpWave test passes", {
   skip_on_cran()
+  skip_on_os("windows")
 
   setwd(examples_dir)
   expect_silent(run_cmd("qpWave",

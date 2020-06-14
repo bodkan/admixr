@@ -4,6 +4,7 @@ context("Utility functions")
 
 test_that("Fails to find a missing sample", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(admixtools_path(), "data", "allmap"))
 
@@ -14,6 +15,7 @@ test_that("Fails to find a missing sample", {
 
 test_that("Succeeds in finding a sample in an ind file", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(admixtools_path(), "data", "allmap"))
 
@@ -25,6 +27,7 @@ test_that("Succeeds in finding a sample in an ind file", {
 
 test_that("Merging of population labels", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(admixtools_path(), "data", "allmap"))
 
@@ -61,6 +64,7 @@ test_that("Merging of population labels", {
 
 test_that("SNP counts correspond to numbers from CLI utilities", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(prefix = file.path(admixtools_path(), "convertf", "example"),
                      geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno"))
@@ -88,6 +92,7 @@ test_that("SNP counts correspond to numbers from CLI utilities", {
 
 test_that("Merging produces correct results", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(prefix = file.path(admixtools_path(), "convertf", "example"),
                      geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno"))

@@ -15,6 +15,7 @@ setwd(examples_dir)
 
 test_that("qp3Pop wrapper produces correct results", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
@@ -28,6 +29,7 @@ test_that("qp3Pop wrapper produces correct results", {
 
 test_that("qpDstat wrapper produces correct results (4 population input version)", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
@@ -41,6 +43,7 @@ test_that("qpDstat wrapper produces correct results (4 population input version)
 
 test_that("qpF4ratio wrapper produces correct results", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- readLines(file.path(examples_dir, "list_qpF4ratio")) %>%
@@ -67,6 +70,7 @@ test_that("qpF4ratio wrapper produces correct results", {
 
 test_that("qpAdm wrapper produces correct results", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
@@ -80,6 +84,7 @@ test_that("qpAdm wrapper produces correct results", {
 
 test_that("qpAdm with a single source produces NULL subsets dataframe", {
   skip_on_cran()
+  skip_on_os("windows")
   
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)[1:2]
@@ -94,6 +99,7 @@ test_that("qpAdm with a single source produces NULL subsets dataframe", {
 
 test_that("qpWave wrapper produces correct results", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   left <- scan(file.path(examples_dir, "left1"), what = "character", quiet = TRUE)
@@ -109,6 +115,7 @@ test_that("qpWave wrapper produces correct results", {
 # test that the output object is of the right class ----------------------
 test_that("Output object is of the right class", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
@@ -119,6 +126,7 @@ test_that("Output object is of the right class", {
 # test that the output object gets proper annotation ----------------------
 test_that("Output object is properly annotated with the command name", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
@@ -129,6 +137,7 @@ test_that("Output object is properly annotated with the command name", {
 # test that the output object contains the whole log ----------------------
 test_that("Output object carries with it the whole log output", {
   skip_on_cran()
+  skip_on_os("windows")
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
