@@ -5,8 +5,9 @@
   if (path_check != 0) {
     packageStartupMessage(
       "ADMIXTOOLS binaries could not be found in your $PATH.\n",
-      "Consider modifying the $PATH variable in your .Renviron file\n",
-      "(you can run 'echo \"PATH=$PATH\" > .Renviron' in the shell)."
+      "Please make sure you have ADMIXTOOLS compiled and that all commands are in $PATH.",
+      "\nThen make sure to modify the $PATH variable in your .Renviron file",
+      " so that R can find the ADMIXTOOLS binaries (you can run 'echo \"PATH=$PATH\" >> .Renviron' in the shell)."
     )
   }
 }
