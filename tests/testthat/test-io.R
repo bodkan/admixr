@@ -1,6 +1,6 @@
 context("EIGENSTRAT file I/O functionality")
 
-if (.Platform$OS.type == "unix") {
+if (admixtools_present()) {
   prefix <- file.path(admixtools_path(), "convertf", "example")
   data <- eigenstrat(prefix, geno = paste0(prefix, ".eigenstratgeno"))
 }

@@ -3,9 +3,11 @@
 
 context("Built-in ADMIXTOOLS test suite")
 
-path <- admixtools_path()
-data_dir <- file.path(path, "data")
-examples_dir <- file.path(path, "examples")
+if (admixtools_present()) {
+  path <- admixtools_path()
+  data_dir <- file.path(path, "data")
+  examples_dir <- file.path(path, "examples")
+}
 
 test_that("qpDstat test passes (4 population input version)", {
   skip_on_cran()

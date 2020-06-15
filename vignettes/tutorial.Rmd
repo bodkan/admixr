@@ -9,15 +9,18 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
 ```{r setup, include = FALSE}
+evaluate <- .Platform$OS.type == "unix" && system("which qpDstat", ignore.stdout = TRUE) == 0
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "",
-  eval = ifelse(.Platform$OS.type == "unix", TRUE, FALSE) # don't evel on Windows
+  eval = evaluate
 )
 ```
 
-
+# eval = ifelse(system("which qpDstat", ignore.stdout = TRUE) == 0, TRUE, FALSE) # don't eval on Windows
 
 
 ## Introduction
