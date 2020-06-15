@@ -1,16 +1,8 @@
-# admixr (development version)
+# admixr 0.8.2-0.8.5
 
-# admixr 0.8.4
-
-* Further cleanup of tests and imports.
-
-# admixr 0.8.3
-
+* Satisfying further checks on various testing servers.
+* Cleanup of tests and imports.
 * Updated license.
-
-# admixr 0.8.2
-
-* Expanded some tests.
 * Prepared for the first CRAN submission.
 
 # admixr 0.8.1
