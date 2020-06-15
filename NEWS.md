@@ -1,3 +1,7 @@
+# admixr 0.8.3
+
+* Updated license.
+
 # admixr 0.8.2
 
 * Expanded some tests.
