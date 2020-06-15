@@ -1,8 +1,26 @@
+# admixr 0.8.7
+
+* qpAdm proportions table now shows p-values and SNP counts (both for overall analysis but also for the target sample).
+
 # admixr 0.8.6
 
 * Satisfying further checks on various testing servers.
-* Cleanup of tests and imports.
+
+# admixr 0.8.5
+
+* Cleaned up build procedure.
+
+# admixr 0.8.4
+
+* Fixed imports.
+
+# admixr 0.8.3
+
 * Updated license.
+
+# admixr 0.8.2
+
+* Expanded some tests.
 * Prepared for the first CRAN submission.
 
 # admixr 0.8.1
