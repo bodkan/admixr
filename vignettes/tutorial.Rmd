@@ -20,8 +20,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# eval = ifelse(system("which qpDstat", ignore.stdout = TRUE) == 0, TRUE, FALSE) # don't eval on Windows
-
 
 ## Introduction
 
