@@ -1,3 +1,8 @@
+# admixr 0.8.2
+
+* Expanded some tests.
+* Prepared for the first CRAN submission.
+
 # admixr 0.8.1
 
 * Fixed a minor bug in single-source qpAdm analyses. The package now detects
