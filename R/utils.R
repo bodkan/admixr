@@ -104,7 +104,6 @@ utils::globalVariables(
 #' 
 #' Added via usethis::use_pipe().
 #'
-#' See \code{magrittr::\link[magrittr]{\%>\%}} for details.
 #'
 #' @name %>%
 #' @rdname pipe
