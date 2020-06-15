@@ -255,5 +255,7 @@ read_qpAdm <- function(log_lines) {
   # parse the rank test results
   ranks <- read_qpWave(log_lines)
 
+  # add a p-value to the proportions dataframe
+  proportions$pvalue <- pat_df[1, "tail", drop = TRUE]
   list(proportions = proportions, ranks = ranks, subsets = pat_df)
 }
