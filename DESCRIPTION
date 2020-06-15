@@ -33,6 +33,7 @@ Suggests:
     covr,
     glue,
     testthat,
+    tidyr,
     knitr,
     rmarkdown,
     tidyverse
