@@ -217,13 +217,17 @@ read_qpAdm <- function(log_lines) {
   source <- log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)]
 
   # parse the SNP count
-  snp_count <- stringr::str_subset(log_lines, paste0("coverage: +", target, " ")) %>%
+  nsnps_target <- stringr::str_subset(log_lines, paste0("coverage: +", target, " ")) %>%
     stringr::str_replace(paste0("coverage: +", target, " +"), "") %>%
-    as.numeric
+    as.integer
 
-  proportions <- rbind(c(target, stats$proportion, stats$stderr, snp_count)) %>%
+  nsnps_used <- stringr::str_subset(log_lines, paste0("numsnps used: +")) %>%
+    stringr::str_replace("numsnps used: +", "") %>%
+    as.integer
+
+  proportions <- rbind(c(target, stats$proportion, stats$stderr, nsnps_used, nsnps_target)) %>%
     tibble::as_tibble(.name_repair = "minimal") %>%
-    stats::setNames(c("target", source, paste0("stderr_", source), "nsnps")) %>%
+    stats::setNames(c("target", source, paste0("stderr_", source), "nsnps_used", "nsnps_target")) %>%
     dplyr::mutate_at(dplyr::vars(-target), as.numeric)
 
   # parse the population combination patterns into a data.frame
