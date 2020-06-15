@@ -1,4 +1,4 @@
-# admixr 0.8.2-0.8.5
+# admixr 0.8.6
 
 * Satisfying further checks on various testing servers.
 * Cleanup of tests and imports.
