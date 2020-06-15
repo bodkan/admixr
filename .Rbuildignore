@@ -12,4 +12,4 @@ figure$
 cran-comments.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
-check_winbuilder.R
+check_servers.R
