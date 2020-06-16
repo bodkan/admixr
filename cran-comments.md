@@ -1,4 +1,15 @@
-This is the first submission of this package to CRAN.
+## Resubmission
+
+This is a resubmission of my first attempt to submit the package.
+
+In this version I have:
+
+* Added single quotes around 'ADMIXTOOLS' in the Title and Description fields
+  as requested.
+
+* Removed the reduntant "directly from R" from the Title as requested.
+
+* Added a URL to the ADMIXTOOLS software to the Description as suggested.
 
 ## Test environments
 
