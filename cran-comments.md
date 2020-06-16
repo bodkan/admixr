@@ -4,8 +4,8 @@ This is a resubmission of my first attempt to submit the package.
 
 In this version I have:
 
-* Added single quotes around 'ADMIXTOOLS' in the Title and Description fields
-  as requested.
+* Added single quotes around 'ADMIXTOOLS' and 'EIGENSTRAT' in the Title and
+  Description fields as requested.
 
 * Removed the reduntant "directly from R" from the Title as requested.
 
