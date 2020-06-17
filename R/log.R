@@ -18,23 +18,23 @@ loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix
   log_output <- attr(x, "log_output")
   targets <- names(log_output)
 
-  if (!is.na(target) && cmd != "qpAdm")
+  if (!is.na(target) && !cmd %in% c("qpAdm", "qpAdm_rotation"))
     stop(glue::glue("Specifying target does not make sense for examining the log output of {cmd}"),
          call. = FALSE)
 
   if (!is.na(target) && !target %in% targets)
-    stop(glue::glue("Target '{target}' is not present in the output (choices are: {paste(targets, collapse = ', ')})"),
+    stop(glue::glue("Target/model '{target}' is not present in the output (choices are: {paste(targets, collapse = ', ')})"),
          call. = FALSE)
 
-  # qpAdm's log output are stored as a list of character vectors but everything
-  # else is simply a character vector - we convert everything to a list to
-  # iterate over log outputs below
+  ## qpAdm's log output are stored as a list of character vectors but everything
+  ## else is simply a character vector - we convert everything to a list to
+  ## iterate over log outputs below
   if (!is.list(log_output))
     log_output <- list(log_output)
 
   for (i in seq_along(log_output)) {
-    # write only single target log if requested by the user
-    if (!is.na(target) && !is.null(targets) && target != targets[i]) next
+      ## write only single target/model log if requested by the user
+      if (!is.na(target) && !is.null(targets) && target != targets[i]) next
 
     if (save) {
       if (is.na(prefix)) prefix <- cmd
@@ -49,14 +49,17 @@ loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix
     } else {
       if (cmd == "qpAdm") {
         title <- glue::glue("qpAdm for target '{targets[i]}'")
+      } else if (cmd == "qpAdm_rotation") {
+        title <- glue::glue("qpAdm rotation for model '{targets[i]}'")
       } else {
         title <- cmd
       }
       
       if (i > 1 && is.na(target)) cat("\n\n")
       cat(paste0("Full output log of ", title, ":\n"))
-      cat("==================================================\n\n")
+      cat("===================================================\n\n")
       cat(paste(log_output[[i]], collapse = "\n"))
+      cat("\n")
     }
   }
 }
@@ -70,7 +73,7 @@ loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix
 #'
 #' @export
 print.admixr_result <- function(x, ...) {
-  if (attr(x, "command") == "qpAdm") {
+    if (attr(x, "command") %in% c("qpAdm", "qpAdm_rotation")) {
     print.default(list(
       proportions = x$proportions,
       ranks = x$ranks,

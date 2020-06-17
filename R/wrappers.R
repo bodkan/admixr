@@ -25,16 +25,25 @@ f4ratio <- function(data, X, A, B, C, O, outdir = NULL, params = NULL) {
 #' @rdname f4ratio
 #'
 #' @param f4mode Calculate the f4 statistic instead of the D statistic.
+#' @param quartets List of character vectors (quartets of population/sample labels)
 #'
 #' @export
-d <- function(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE, params = NULL) {
-  check_presence(c(W, X, Y, Z), data)
+d <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, f4mode = FALSE, params = NULL) {
+  if (is.null(quartets)) {
+    check_presence(c(W, X, Y, Z, data))
+  } else {
+    check_presence(unique(unlist(quartets)), data)
+  }
 
   # get the path to the population, parameter and log files
   config_prefix <- paste0("qpDstat__", as.integer(stats::runif(1, 0, .Machine$integer.max)))
   files <- get_files(outdir, config_prefix)
 
-  create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
+  if (is.null(quartets)) {
+    create_qpDstat_pop_file(W, X, Y, Z, file = files[["pop_file"]])
+  } else {
+    create_qpDstat_pop_file_quartets(quartets, file = files[["pop_file"]])
+  }
   create_par_file(files, data, params)
 
   if (f4mode) {
@@ -54,8 +63,8 @@ d <- function(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE, params = NULL) {
 #' @rdname f4ratio
 #'
 #' @export
-f4 <- function(data, W, X, Y, Z, outdir = NULL, params = NULL) {
-  d(data, W, X, Y, Z, outdir, f4mode = TRUE)
+f4 <- function(data, W, X, Y, Z, quartets, outdir = NULL, params = NULL) {
+  d(data, W, X, Y, Z, quartets, outdir, f4mode = TRUE)
 }
 
 
