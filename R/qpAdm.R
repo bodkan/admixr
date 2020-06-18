@@ -33,6 +33,15 @@ qpAdm_prescreen <- function(data, candidates, left, Zcutoff = 2) {
   list(outgroups = right, screening = result)
 }
 
+
+# Check that the provided object is of the required type
+check_type <- function(x, type) {
+    if (!inherits(x, type)) {
+        stop(glue::glue("Object is not of the type {type}"), call. = FALSE)
+    }
+}
+
+
 #' Fit qpAdm models based on the rotation strategy described in
 #' Harney et al. 2020 (bioRxiv)
 #'
@@ -47,6 +56,8 @@ qpAdm_prescreen <- function(data, candidates, left, Zcutoff = 2) {
 #'
 #' @export
 qpAdm_rotation <- function(data, target, candidates, maxsources = 2, ncores = 1) {
+    check_type(data, "EIGENSTRAT")
+
     ## generate combinations of possible sources and outgroups
     sources <- unlist(lapply(2:maxsources, function(nsrc) {
         srccomb <- t(combn(candidates, nsrc))
