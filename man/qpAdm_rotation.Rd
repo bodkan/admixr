@@ -5,7 +5,7 @@
 \title{Fit qpAdm models based on the rotation strategy described in
 Harney et al. 2020 (bioRxiv)}
 \usage{
-qpAdm_rotation(data, target, candidates, nsources, ncores = 1)
+qpAdm_rotation(data, target, candidates, maxsources = 2, ncores = 1)
 }
 \arguments{
 \item{data}{EIGENSTRAT dataset}
@@ -14,7 +14,7 @@ qpAdm_rotation(data, target, candidates, nsources, ncores = 1)
 
 \item{candidates}{Potential candidates for sources and outgroups}
 
-\item{nsources}{Number of sources to pull from the candidates}
+\item{maxsources}{Maximum number of sources to model (2...maxsources)}
 
 \item{ncores}{Number of CPU cores to utilize for model fitting}
 }

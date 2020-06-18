@@ -39,20 +39,23 @@ qpAdm_prescreen <- function(data, candidates, left, Zcutoff = 2) {
 #' @param data EIGENSTRAT dataset
 #' @param target Target population that is modeled as admixed
 #' @param candidates Potential candidates for sources and outgroups
-#' @param nsources Number of sources to pull from the candidates
+#' @param maxsources Maximum number of sources to model (2...maxsources)
 #' @param ncores Number of CPU cores to utilize for model fitting
 #'
 #' @return qpAdm list with proportions, ranks and subsets elements (as
 #'     with a traditional qpAdm run)
 #'
 #' @export
-qpAdm_rotation <- function(data, target, candidates, nsources, ncores = 1) {
+qpAdm_rotation <- function(data, target, candidates, maxsources = 2, ncores = 1) {
     ## generate combinations of possible sources and outgroups
-    sources <- t(combn(candidates, nsources))
-    sources_outgroups <- lapply(1:nrow(sources), function(i) {
+    sources <- unlist(lapply(2:maxsources, function(nsrc) {
+        srccomb <- t(combn(candidates, nsrc))
+        lapply(1:nrow(srccomb), function(j) srccomb[j, ])
+    }), recursive = FALSE)
+    sources_outgroups <- lapply(sources, function(src) {
         list(
-            sources = sources[i, ],
-            outgroups = setdiff(candidates, sources[i, ])
+            sources = src,
+            outgroups = setdiff(candidates, src)
         )
     })
 
@@ -63,6 +66,7 @@ qpAdm_rotation <- function(data, target, candidates, nsources, ncores = 1) {
             target = target, sources = x$sources, outgroups = x$outgroups
         )
 
+        nsources <- length(x$sources)
         names(x$sources) <- paste0("source", 1:nsources)
         sources_df <- as.data.frame(t(as.matrix(x$sources)))
 
