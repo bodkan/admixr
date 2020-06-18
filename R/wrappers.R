@@ -108,6 +108,11 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
 #' @export
 qpAdm <- function(data, target, sources, outgroups, outdir = NULL,
                   params = list(allsnps = "YES", summary = "YES", details = "YES")) {
+    if (length(outgroups) < length(sources) + 1) {
+        stop("The number of outgroup samples has to be larger or equal than the number of sources + 1",
+             call. = FALSE)
+    }
+
   check_presence(c(target, sources, outgroups), data)
 
   results <- lapply(target, function(X) {
