@@ -34,13 +34,6 @@ qpAdm_prescreen <- function(data, candidates, left, Zcutoff = 2) {
 }
 
 
-# Check that the provided object is of the required type
-check_type <- function(x, type) {
-    if (!inherits(x, type)) {
-        stop(glue::glue("Object is not of the type {type}"), call. = FALSE)
-    }
-}
-
 
 #' Fit qpAdm models based on the rotation strategy described in
 #' Harney et al. 2020 (bioRxiv)
@@ -48,14 +41,18 @@ check_type <- function(x, type) {
 #' @param data EIGENSTRAT dataset
 #' @param target Target population that is modeled as admixed
 #' @param candidates Potential candidates for sources and outgroups
+#' @param minimize Test also all possible subsets of outgroups? (default TRUE)
 #' @param nsources Number of sources to pull from the candidates
 #' @param ncores Number of CPU cores to utilize for model fitting
+#' @param fulloutput Report also 'ranks' and 'subsets' analysis from
+#'     qpAdm in addition to the admixture proportions results? (default FALSE)
 #'
 #' @return qpAdm list with proportions, ranks and subsets elements (as
-#'     with a traditional qpAdm run)
+#'     with a traditional qpAdm run) or just the proportions
+#'     (determined by the value of the 'fulloutput' argument)
 #'
 #' @export
-qpAdm_rotation <- function(data, target, candidates, minimize = FALSE, nsources = 2, ncores = 1) {
+qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources = 2, ncores = 1, fulloutput = FALSE) {
     check_type(data, "EIGENSTRAT")
 
     ## generate combinations of possible sources and outgroups
@@ -92,10 +89,11 @@ qpAdm_rotation <- function(data, target, candidates, minimize = FALSE, nsources 
         names(result$proportions)[4:(3 + nsources)] <- paste0("stderr", 1:nsources)
         ## add source names as two new columns
         result$proportions <- cbind(result$proportions, sources_df) %>%
-            dplyr::mutate(outgroups = paste0(x$outgroups, collapse = " & "))
+            dplyr::mutate(outgroups = paste0(x$outgroups, collapse = " & "),
+                          noutgroups = length(x$outgroups))
         ## rearrange columns
         result$proportions <- dplyr::select(
-            result$proportions, target, names(x$sources), outgroups, pvalue,
+            result$proportions, target, names(x$sources), outgroups, noutgroups, pvalue,
             dplyr::everything()
         )
 
@@ -130,8 +128,12 @@ qpAdm_rotation <- function(data, target, candidates, minimize = FALSE, nsources 
     subsets$model <- sort(rep(models, 1 + 2^(nsources - 1)))
     subsets <- dplyr::as_tibble(subsets) %>% dplyr::select(model, everything())
 
-    ## bind all tables together and add log information
-    results <- list(proportions = proportions, ranks = ranks, subsets = subsets)
+    ## add metadata to the results object
+    if (fulloutput)
+        results <- list(proportions = proportions, ranks = ranks, subsets = subsets)
+    else
+        results <- proportions
+        
     attr(results, "command") <- "qpAdm_rotation"
     attr(results, "log_output") <- log_lines
     class(results) <- c("admixr_result", class(results))
@@ -150,24 +152,35 @@ qpAdm_rotation <- function(data, target, candidates, minimize = FALSE, nsources 
 #'     admixture proportions)
 #'
 #' @return qpAdm_rotation object filtered down based on p-value
-qpAdm_filter <- function(x, p = 0) {
+qpAdm_filter <- function(x, p = 0.05) {
+    check_type(x, "admixr_result")
+    if (length(x) == 3)
+        proportions <- x$proportions
+    else
+        proportions <- x
+
     ## get positions of columns with estimated admixture proportions
-    prop_columns <- stringr::str_which(names(x$proportions), "prop")
-    
+    prop_columns <- stringr::str_which(names(proportions), "prop")
+
     ## find out rows/models for which all proportions are in [0, 1] and
     ## pvalue is larger than the required cutoff
-    pvalue <- x$proportions$pvalue > p
-    constr_0 <- x$proportions[, prop_columns] >= 0
-    constr_1 <- x$proportions[, prop_columns] <= 1
+    pvalue <- proportions$pvalue > p
+    constr_0 <- proportions[, prop_columns] >= 0
+    constr_1 <- proportions[, prop_columns] <= 1
     constr <- apply(pvalue & constr_0 & constr_1, 1, all)
 
     ## filter all three sub-tables to only those models that fit the criteria
-    x$proportions <- dplyr::arrange(x$proportions[constr, ], -pvalue)
-    x$ranks <- x$ranks[x$ranks$model %in% x$proportions$model, ]
-    x$subsets <- x$subsets[x$subsets$model %in% x$proportions$model, ]
+    proportions <- dplyr::arrange(proportions[constr, ], -pvalue)
 
-    ## filter also only to relevant remaining log output information
-    attr(x, "log_output") <- attr(x, "log_output")[unique(x$proportions$model)]
-
-    x
+    if (length(x) == 3) {
+        x$proportions <- proportions
+        x$ranks <- x$ranks[x$ranks$model %in% proportions$model, ]
+        x$subsets <- x$subsets[x$subsets$model %in% proportions$model, ]
+        ## filter also only to relevant remaining log output information
+        attr(x, "log_output") <- attr(x, "log_output")[unique(proportions$model)]
+        return(x)
+    } else {
+        attr(proportions, "log_output") <- attr(x, "log_output")[unique(proportions$model)]
+        return(proportions)
+    }
 }

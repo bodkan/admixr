@@ -58,6 +58,15 @@ get_files <- function(dir_name, prefix) {
 
 
 
+# Check that the provided object is of the required type
+check_type <- function(x, type) {
+    if (!inherits(x, type)) {
+        stop(glue::glue("Object is not of the type {type}"), call. = FALSE)
+    }
+}
+
+
+
 # Check for the presence of a given set of labels in an 'ind' file.
 # Fail if there a sample was not found.
 check_presence <- function(labels, data) {

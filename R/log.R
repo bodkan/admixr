@@ -73,7 +73,7 @@ loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix
 #'
 #' @export
 print.admixr_result <- function(x, ...) {
-    if (attr(x, "command") %in% c("qpAdm", "qpAdm_rotation")) {
+    if (attr(x, "command") %in% c("qpAdm", "qpAdm_rotation") && length(x) == 3) {
     print.default(list(
       proportions = x$proportions,
       ranks = x$ranks,

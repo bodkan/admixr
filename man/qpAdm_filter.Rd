@@ -4,7 +4,7 @@
 \alias{qpAdm_filter}
 \title{Filter qpAdm rotation results for only 'sensible' models}
 \usage{
-qpAdm_filter(x, p = 0)
+qpAdm_filter(x, p = 0.05)
 }
 \arguments{
 \item{x}{Output of a qpAdm_rotation() function}

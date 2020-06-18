@@ -9,9 +9,10 @@ qpAdm_rotation(
   data,
   target,
   candidates,
-  minimize = FALSE,
+  minimize = TRUE,
   nsources = 2,
-  ncores = 1
+  ncores = 1,
+  fulloutput = FALSE
 )
 }
 \arguments{
@@ -21,13 +22,19 @@ qpAdm_rotation(
 
 \item{candidates}{Potential candidates for sources and outgroups}
 
+\item{minimize}{Test also all possible subsets of outgroups? (default TRUE)}
+
 \item{nsources}{Number of sources to pull from the candidates}
 
 \item{ncores}{Number of CPU cores to utilize for model fitting}
+
+\item{fulloutput}{Report also 'ranks' and 'subsets' analysis from
+qpAdm in addition to the admixture proportions results? (default FALSE)}
 }
 \value{
 qpAdm list with proportions, ranks and subsets elements (as
-    with a traditional qpAdm run)
+    with a traditional qpAdm run) or just the proportions
+    (determined by the value of the 'fulloutput' argument)
 }
 \description{
 Fit qpAdm models based on the rotation strategy described in
