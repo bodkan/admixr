@@ -73,10 +73,11 @@ qpAdm_rotation <- function(data, target, candidates, nsources, ncores = 1) {
         names(result$proportions)[2:(1 + nsources)] <- paste0("prop", 1:nsources)
         names(result$proportions)[4:(3 + nsources)] <- paste0("stderr", 1:nsources)
         ## add source names as two new columns
-        result$proportions <- cbind(result$proportions, sources_df)
+        result$proportions <- cbind(result$proportions, sources_df) %>%
+            dplyr::mutate(outgroups = paste0(x$outgroups, collapse = " & "))
         ## rearrange columns
         result$proportions <- dplyr::select(
-            result$proportions, target, names(x$sources), pvalue,
+            result$proportions, target, names(x$sources), outgroups, pvalue,
             dplyr::everything()
         )
 
@@ -127,10 +128,11 @@ qpAdm_rotation <- function(data, target, candidates, nsources, ncores = 1) {
 #' proportions between 0 and 1.
 #'
 #' @param x Output of a qpAdm_rotation() function
-#' @param p p-value cutoff
+#' @param p p-value cutoff (default 0: will only filter for sensible
+#'     admixture proportions)
 #'
 #' @return qpAdm_rotation object filtered down based on p-value
-qpAdm_filter <- function(x, p) {
+qpAdm_filter <- function(x, p = 0) {
     ## get positions of columns with estimated admixture proportions
     prop_columns <- stringr::str_which(names(x$proportions), "prop")
     

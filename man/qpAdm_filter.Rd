@@ -4,12 +4,13 @@
 \alias{qpAdm_filter}
 \title{Filter qpAdm rotation results for only 'sensible' models}
 \usage{
-qpAdm_filter(x, p)
+qpAdm_filter(x, p = 0)
 }
 \arguments{
 \item{x}{Output of a qpAdm_rotation() function}
 
-\item{p}{p-value cutoff}
+\item{p}{p-value cutoff (default 0: will only filter for sensible
+admixture proportions)}
 }
 \value{
 qpAdm_rotation object filtered down based on p-value
