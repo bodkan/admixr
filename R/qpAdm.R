@@ -152,6 +152,8 @@ qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources =
 #'     admixture proportions)
 #'
 #' @return qpAdm_rotation object filtered down based on p-value
+#'
+#' @export
 qpAdm_filter <- function(x, p = 0.05) {
     check_type(x, "admixr_result")
     if (attr(x, "command") != "qpAdm_rotation") {
