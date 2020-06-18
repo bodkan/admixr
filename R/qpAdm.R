@@ -154,6 +154,11 @@ qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources =
 #' @return qpAdm_rotation object filtered down based on p-value
 qpAdm_filter <- function(x, p = 0.05) {
     check_type(x, "admixr_result")
+    if (attr(x, "command") != "qpAdm_rotation") {
+        stop("Filtering implemented only for results of the qpAdm rotation procedure",
+             call. = FALSE)
+    }
+
     if (length(x) == 3)
         proportions <- x$proportions
     else
