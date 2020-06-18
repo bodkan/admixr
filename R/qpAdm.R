@@ -48,27 +48,31 @@ check_type <- function(x, type) {
 #' @param data EIGENSTRAT dataset
 #' @param target Target population that is modeled as admixed
 #' @param candidates Potential candidates for sources and outgroups
-#' @param maxsources Maximum number of sources to model (2...maxsources)
+#' @param nsources Number of sources to pull from the candidates
 #' @param ncores Number of CPU cores to utilize for model fitting
 #'
 #' @return qpAdm list with proportions, ranks and subsets elements (as
 #'     with a traditional qpAdm run)
 #'
 #' @export
-qpAdm_rotation <- function(data, target, candidates, maxsources = 2, ncores = 1) {
+qpAdm_rotation <- function(data, target, candidates, minimize = FALSE, nsources = 2, ncores = 1) {
     check_type(data, "EIGENSTRAT")
 
     ## generate combinations of possible sources and outgroups
-    sources <- unlist(lapply(2:maxsources, function(nsrc) {
-        srccomb <- t(combn(candidates, nsrc))
-        lapply(1:nrow(srccomb), function(j) srccomb[j, ])
+    sources <- t(combn(candidates, nsources))
+    sources_outgroups <- unlist(lapply(1:nrow(sources), function(i) {
+        outgroups <- setdiff(candidates, sources[i, ])
+        if (minimize) {
+            outgroups <- unlist(lapply((nsources + 1):length(outgroups), function(nout) {
+                outcomb <- t(combn(outgroups, nout))
+                lapply(1:nrow(outcomb), function(j) outcomb[j, ])
+            }), recursive = FALSE)
+        } else {
+            outgroups <- list(outgroups)
+        }
+
+        lapply(outgroups, function(out) { list(sources = sources[i, ], outgroups = out) })
     }), recursive = FALSE)
-    sources_outgroups <- lapply(sources, function(src) {
-        list(
-            sources = src,
-            outgroups = setdiff(candidates, src)
-        )
-    })
 
     ## run qpAdm for all combinations of sources and outgroups
     results_list <- parallel::mclapply(sources_outgroups, function(x) {
@@ -77,7 +81,6 @@ qpAdm_rotation <- function(data, target, candidates, maxsources = 2, ncores = 1)
             target = target, sources = x$sources, outgroups = x$outgroups
         )
 
-        nsources <- length(x$sources)
         names(x$sources) <- paste0("source", 1:nsources)
         sources_df <- as.data.frame(t(as.matrix(x$sources)))
 
