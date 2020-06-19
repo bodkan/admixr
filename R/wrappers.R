@@ -30,7 +30,7 @@ f4ratio <- function(data, X, A, B, C, O, outdir = NULL, params = NULL) {
 #' @export
 d <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, f4mode = FALSE, params = NULL) {
   if (is.null(quartets)) {
-    check_presence(c(W, X, Y, Z, data))
+    check_presence(c(W, X, Y, Z), data)
   } else {
     check_presence(unique(unlist(quartets)), data)
   }
