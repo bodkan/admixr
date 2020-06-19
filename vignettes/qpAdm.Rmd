@@ -12,10 +12,10 @@ vignette: >
 ```{r setup, include = FALSE}
 evaluate <- .Platform$OS.type == "unix" && system("which qpDstat", ignore.stdout = TRUE) == 0 && Sys.getenv("TRAVIS_R_VERSION") == ""
 
-Sys.getenv("TRAVIS_R_VERSION")
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = evaluate
 )
 ```
 
