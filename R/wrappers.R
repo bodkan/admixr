@@ -63,7 +63,7 @@ d <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, f4mode = FALSE, 
 #' @rdname f4ratio
 #'
 #' @export
-f4 <- function(data, W, X, Y, Z, quartets, outdir = NULL, params = NULL) {
+f4 <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, params = NULL) {
   d(data, W, X, Y, Z, quartets, outdir, f4mode = TRUE)
 }
 

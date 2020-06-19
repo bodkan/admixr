@@ -21,7 +21,7 @@ d(
   params = NULL
 )
 
-f4(data, W, X, Y, Z, quartets, outdir = NULL, params = NULL)
+f4(data, W, X, Y, Z, quartets = NULL, outdir = NULL, params = NULL)
 
 f3(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL)
 }
