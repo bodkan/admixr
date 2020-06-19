@@ -1,10 +1,10 @@
 ---
-title: "Fitting qpAdm models with a 'rotation method'"
+title: "Fitting qpAdm models with a 'rotation' strategy"
 author: "Martin Petr"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Fitting qpAdm models with a 'rotation' strategy}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,115 +18,117 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-qpAdm model fitting is a very complex topic which relies on a deep
-knowledge of the concepts behind $f$-statistics introduced by Nick
-Patterson and colleagues [in
-2012](https://www.genetics.org/content/192/3/1065). In our
-[tutorial](https://bodkan.net/admixr/articles/tutorial.html#qpwave-and-qpadm-1)
-we have looked at the very basic overview of the qpWave/qpAdm-related
-functionality implemented in _admixr_, without going beyond
-description of functions and function arguments. I have also stressed
-how important it is to learn _how_ does qpAdm works, linking to
-several important references.
+qpAdm model fitting is a complex topic. Navigating it successfuly
+requires solid knowledge of the $f$-statistics theory first introduced
+by Nick Patterson and colleagues [in
+2012](https://www.genetics.org/content/192/3/1065). As part of our
+[tutorial](tutorial.html#qpwave-and-qpadm-1), we have looked at a very
+basic overview of the qpAdm-related functionality implemented in
+_admixr_ and also talked about some important resources for learning
+more the method pioneered by Iosif Lazaridis in
+[2015](https://www.nature.com/articles/nature14317).
 
-Recently, an exciting new preprint was published by Harney _et al._,
-[Assessing the Performance of qpAdm: A Statistical Tool for Studying
+Recently, Harney _et al._ published an exciting new preprint called
+["Assessing the Performance of qpAdm: A Statistical Tool for Studying
 Population
-Admixture](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1). Before
-we go any further, I encourage everyone to read it and also read the
-superb tutorial/guide available in a [supplementary
+Admixture"](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1). Before
+we go any further, I encourage everyone to read it and the superb
+tutorial/guide available as its [supplementary
 pdf](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1.supplementary-material)
-on bioRxiv. There really isn't a better source at the moment on how to
-run and interpret qpAdm analyses and about the pitfals that one needs
-to be aware of.
+on bioRxiv. There really isn't a better source of information on how
+to run and interpret qpAdm analyses.
 
 Please, only attempt to run qpAdm if you have familiarized yoursef
 with all of the above-mentioned resources. I have had many people ask
 questions via email (not only about qpAdm but also other topics) to
 which the only sensible answer was - "you have to read the papers and
-understand the statistics".
+understand the statistics first." I know it's frustrating but there
+really are no shortcuts here.
 
-## _qpAdm_ "rotation scheme"
+## _qpAdm_ "rotation"
 
 If you have ever worked with _qpAdm_, you are well aware of the
 intricacies of finding the most suitable set of models that can
-explain the data. Among other things, we have need to make a decision
-about the number of admixture sources we want to estimate ancestry
-proportions for, which populations are the most appropriate surrogates
-for those source populations because only rarely we have sampled them
-directly. Furthermore, we need to carefully choose a number of so
-called 'outgroup' populations (also called 'references' or 'right'
-populations, depending whom you ask). This is all, of course, in
-addition to other technical decisions we need to make in terms of
-preparing our dataset.
+explain the data. Among other things, we have to make a decision about
+the number of admixture sources and which populations are the most
+appropriate surrogates for those source populations (because only
+rarely we have sampled them directly). Furthermore, we need to
+carefully choose a number of so called 'outgroup' populations (also
+called 'references' or 'right' populations, depending on whom you talk
+to).
 
 The preprint by [Harney _et
 al._](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1)
 described an interesting idea to find a set of the most appropriate
-models (sets of source and outgroup populations) - the so called
-"rotating" population, already successfully used in the past (see
-references in the preprint).
+models (i.e. combinations of source and outgroup populations) which
+has been sucessfully used in the past. They call the method a
+"rotating population" strategy.
 
-Briefly, this strategy involves defining a set of "candidate"
-populations, from which we iteratively sample a defined number of
-"sources" (most commonly two or three) for our "target" population of
-interest. We then take as "outgroups" all candidate populations except
-for these sources. Doing so, we iteratively fit qpAdm models for each
-combination of target, sources and outgroups, extracting $p$-values
-and other statistics of interest. After finishing the exhaustive
-exploration of source-outgroup combinations, we examine all fitted
-models, selecting those that seem most appropriate.
+This approach starts by defining a set of "candidate" populations from
+which we iteratively sample a defined number of "sources" of ancestry
+for our "target" population of interest (most commonly two or three
+sources). After removing the sources from the candidate list, we then
+define all the remaining populations as "outgroups". Finally, we
+iteratively fit qpAdm models for each combination of target, sources
+and outgroups, extracting $p$-values and other statistics of
+interest. After finishing the exhaustive fitting of source-outgroup
+combinations, we examine all explored models, selecting those that
+seem most appropriate.
 
 ## Implementation in _admixr_
 
 In _admixr_, I have implemented a function `qpAdm_rotation()` which
-does exactly what I described in the previous paragraph with one
-additional feature. Given the sensitivity of _qpAdm_ to large numbers
-of potential outgroups (references), we also explore, for each
-combination of sources and outgroups, also models with all possible
-_subsets_ of outgroups. This is to allow finding models which are as
-small as possible, and also to determine which outgroups are
-potentially redundant.
+does exactly what is described paragraph with one additional
+feature. Given the sensitivity of _qpAdm_ to large numbers of
+potential outgroups (references), for each combination of sources and
+outgroups we also explore models for all possible _subsets_ of
+outgroups. This is to find models which are as small as possible,
+possibly determining which outgroups are potentially redundant and not
+actually needed.
 
-In other words, if we have a target _T_ and a set of candidates
-(potential sources and outgroups) _C_ = {a, b, c, d, e, f}. Then, if
-we imagine an iteration of the rotation scheme in which we fix sources
-_S_ = {a, b}, we have remaining candidates _C - S_ = {c, d, e, f}. The
-basic implementation of the rotation procedure would simly take _C -
-S_ as the set of outgroups and fitted a single model:
+Let's say that we have a target population _T_ and a set of candidates
+for potential sources and outgroups _C_ = {a, b, c, d, e, f}. Then, if
+we imagine an iteration of the rotation scheme in which we fixed
+sources _S_ = {a, b}, we have remaining candidates for outgroups _C -
+S_ = {c, d, e, f}. The basic implementation of the rotation procedure
+would simply take _C - S_ as the full set of outgroups and fitted the
+following model:
 
-- model #1: _T_, _S_ = {a, b} and outgroups = {c, d, e, f}
+- model #1: target _T_, sources _S_ = {a, b} and outgroups = {c, d, e, f}
 
-In _admixr_, we would, in this situation, evaluate the following
-models:
+However, in _admixr_, we would evaluate the following models in
+addition to the model #1:
 
-- model #2: _T_, _S_ = {a, b} and outgroups = {c, d, e}
-- model #3: _T_, _S_ = {a, b} and outgroups = {c, d, f}
-- model #4: _T_, _S_ = {a, b} and outgroups = {c, e, f}
-- model #5: _T_, _S_ = {a, b} and outgroups = {d, e, f}.
+- model #2: target _T_, sources _S_ = {a, b} and outgroups = {c, d, e}
+- model #3: target _T_, sources _S_ = {a, b} and outgroups = {c, d, f}
+- model #4: target _T_, sources _S_ = {a, b} and outgroups = {c, e, f}
+- model #5: target _T_, sources _S_ = {a, b} and outgroups = {d, e, f}.
 
-This makes it possible to find the _smallest_ model (in terms of
-outgroup size) that can explain our data.
+Therefore, our implementation in `qpAdm_rotation()` explores all
+posible outgroup combinations, allowing us to look for the _smallest_
+model (in terms of outgroup size) that can explain our data.
 
 ## Concrete example
 
 ### Performing exhaustive search by rotating sources/outgroups
 
-As an example, let's revisit our boring example of estimating the
-level of Neandertal ancestry in a French person. We use it (and not
-some other more interesting example from a vast human population
-history) because:
+As an example, let's revisit the problem of estimating the level of
+Neandertal ancestry in a French person from the main tutorial. We use
+this as an illustration because:
 
-1. It's probably the simplest possible $f$-statistics-related analysis
-   one could do.
+1. It's the simplest possible analysis one could do with _qpAdm_.
 2. It gives us a clear expectation of what the "truth" is.
 3. It gives us a clear expectation of what models we should
    _definitely_ reject.
-4. It's the only thing I know how to do.
 
-Let's first download a small example data set:
+First, let's download and install a development version of _admixr_ to
+get access to the new features, and download a small example data set:
 
-```{r}
+```{r, message = FALSE, warning = FALSE, results = "hide"}
+# install `devtools` if not on already your system by running:
+# install.packages("devtools")
+# this will allow installing 'admixr' from Github
+#devtools::install_github("bodkan/admixr", ref = "qpadm-rotation", force = TRUE)
 library(admixr)
 
 snps <- eigenstrat(download_data())
@@ -140,23 +142,25 @@ read_ind(snps)
 
 The `qpAdm_rotation()` function is very simple. It accepts:
 
-- the name of the target population,
-- the list of candidate populations,
-- a logical parameter `minimize` determining whether to perform the
+- a name of the target population,
+- a list of candidate populations,
+- a logical parameter `minimize`, determining whether to perform the
   "minimization" of the outgroup size described in the previous
   section,
-- the number of sources of ancestry
-- the number of CPU cores to use for an analysis (be careful with this
-  options as many ADMIXTOOLS analyses run in paralle often consume _a
+- the assumed number of sources of ancestry,
+- the number of CPU cores to use for analysis (be careful with this
+  options as many ADMIXTOOLS analyses run in parallel can consume _a
   lot_ of memory!),
 - parameter `fulloutput` specifying whether we want to have all the
-  "ranks" and "subsets/patterns" statistics (see the tutorial for more
-  information) or if we just want the proportions of ancestry and
-  significance values for individual models (this is the default).
+  "ranks" and "subsets/patterns" statistics (see the main tutorial for
+  more information) or if we just want the proportions of ancestry and
+  significance values for individual models (this is the default, i.e.
+  `fulloutput = FALSE`).
 
-Let's say we are interested in finding the proportions of archaic
-human ancestry in a French individual, and also in seeing what sorts
-of possible models we could find that match archaic introgression:
+So, let's say we are interested in finding the proportions of archaic
+human ancestry in a French individual, and we also want to see what
+sorts of possible models we could find that match archaic
+introgression. We would run the following:
 
 ```{r}
 models <- qpAdm_rotation(
@@ -165,16 +169,10 @@ models <- qpAdm_rotation(
     candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija", "Altai", "Denisova", "Chimp"),
     minimize = TRUE,
     nsources = 2,
-    ncores = 30,
+    ncores = 2,
     fulloutput = TRUE
 )
 ```
-
-On my computing cluster this takes only a couple of minutes but note
-that I'm utilizing 30 CPU cores in parallel. On your computer it might
-take a bit more time. If it takes _too_ much time, you might want to
-restrict the set of potential candidates or turn of the minimization
-option.
 
 Here is what the full output looks like:
 
@@ -182,85 +180,84 @@ Here is what the full output looks like:
 models
 ```
 
-We can see that we got a list with three components, as we would
-expect from any other `qpAdm()` run (see the manual page and the
-tutorial for description of all three elements and their meaning). The
-first column is named `model` - this is just a short identifier of
-each individual "rotation" run. It's values don't have any particular
-meaning, but are useful for later filtering and examination.
+We can see a list with three components, as we would expect from any
+other `qpAdm()` run (again, see the manual page and the tutorial for
+description of all three elements and their meaning). The first column
+of each component is always named `model` - this contains a short
+identifier of each individual "rotation" run (i.e., a combination
+target & sources & outgroups). It's values don't have any particular
+meaning - the order is completely arbitrary!, This variable is useful
+for later filtering and examination of individual models in detail.
 
-Let's ignore the `$ranks` and `$subsets` elements, these are not that
-useful in the first step of model selection. We will focus only on the
-first element, `$proportions`.
+Let's ignore the `$ranks` and `$subsets` elements for now. We will
+focus only on the first element, `$proportions` which contains the
+main _qpAdm_ summary.
 
 
 ### Examining and filtering fitted models
 
-The output data.frame contains information about *all* objects,
-regardless of their plausibility. We can see that by examining the
-distributions of p-values (column `pvalue`) and admixture proportions
-(columns `prop1` and `prop2`) of each evaluated model.
+The `$proportions` table shown above contains information about *all*
+models, regardless of their plausibility. We can see that by examining
+the distributions of p-values (column `pvalue`) and admixture
+proportions (columns `prop1` and `prop2`) of each evaluated model in
+the figure below.
 
-Notice two things:
+Notice two things (each dot represents one examined _qpAdm_ model):
 
 - Many models have inferred admixture proportions _way_ outside the
   [0, 1] interval - those are clearly nonsensical.
-- Many models have very low p-values - knowing how qpAdm internally
-  operates, you will know this means these are incompatible with the
-  data and can be rejected.
+- Many models have very low p-values - this means these are
+  incompatible with the data and can be rejected.
 
-```{r}
+```{r, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4}
 library(tidyverse)
 
 select(models$proportions, model, pvalue, prop1, prop2) %>%
     gather(parameter, value, -model) %>%
     ggplot(aes(parameter, value)) +
     geom_jitter() +
-    facet_wrap(~ parameter, scales = "free_y")
+    facet_wrap(~ parameter, scales = "free")
 ```
 
-The _admixr_ package contains a simple function `qpAdm_filter()` which
-accepts the object produced by the `qpAdm_rotation()` function (either
-the `fulloutput` version or the simple) and removes models with any
-proportion outside of the [0, 1] range and also models with p-values
-lower than a specified cutoff (0.05 by default):
+To make it easier to narrow down the list of all models, _admixr_
+package contains a function `qpAdm_filter()`. This function accepts
+the result of the `qpAdm_rotation()` function (either the `fulloutput
+= TRUE` version or the simple data frame with admixture proportions,
+p-values etc. produced by using`fulloutput = FALSE`) and filters out
+models with any of the proportions outside of the [0, 1] range and
+with p-values lower than a specified cutoff (0.05 by default):
 
 ```{r}
+# filter out models which can clearly be rejected
 fits <- qpAdm_filter(models)
 ```
 
-As an aside, note that you can use the function `loginfo()` to examine
-the complete log output of any model by specifying the model number
-(this is why each row has the model identifier). Like this (output
-omitted for brevity):
+We can verify that the filtering worked by visualizing the filtered
+set of models again. Note that the p-values are distributed across the
+range of "insigificance" (i.e., "non-rejection") between [0.05,
+1.0]. Furthermore - remember that we originally set out to find
+combinations of sources-outgroups that model archaic ancestry in a
+French individual? We can clearly see two tidy clusters of estimated
+ancestry proportions. One is very small (this corresponds to the
+Neandertal component in modern humans - we would expect about 2-3%
+based on many previous analyses) and one large ("modern human"
+component, non-Neandertal ancestry):
 
-```{r, eval = FALSE}
-loginfo(fits, "m81")
-```
-
-We can verify the filtering worked by examining the filtered set of
-models. Again, note that the p-values are now nicely distributed
-across the range of "insigificance" (i.e., "non-rejection") range of
-[0.05, 1.0]. And, also (remember that we tried to find a set of
-sources-outgroups combinations that model archaic ancestry in a French
-individual?) we see two nice clusters of ancestry proportions - one
-very small (which what we will see is a Neandertal component) and one
-large ("modern human" component, non-Neandertal ancestry):
-
-```{r}
+```{r, fig.width = 6, fig.height = 4}
 select(fits$proportions, model, pvalue, prop1, prop2) %>%
     gather(parameter, value, -model) %>%
     ggplot(aes(parameter, value)) +
     geom_jitter() +
-    facet_wrap(~ parameter) +
+    facet_wrap(~ parameter, scales = "free") +
     coord_cartesian(y = c(0, 1))
 ```
 
-Let's now subset only to the proportions table which is most relevant
-at this stage anyway. We will also ignore a couple of columns for
-brevity (*note* that we are also ignoring p-values because we *cannot*
-used those for model selection, they are *not* meaningful at this
-stage) and order the models based on the size of the outgroup set.
+Let's now focus only on the proportions table. We will also ignore a
+couple of columns for brevity. Note that we are now also completely
+ignoring p-values because we *cannot* used those for model selection -
+they are *not* statistically meaningful at this stage! Higher p-value
+*never* implies higher likelihood of the model. Finally, we order the
+models based on the size of the outgroup set (smaller models first):
 
 ```{r}
 props <- fits$proportions %>%
@@ -270,28 +267,60 @@ props <- fits$proportions %>%
 print(props, n = Inf)
 ```
 
-Also, before you run away terrified by the huge number of "compatible"
-models, please note that we have _deliberately_ added too many
-candidate populations and so you might reasonably expect many of the
-evaluated models are not really optimal.
-
-Case in point: notice that there are many models in which the
-chimpanzee was fitted as a source of ancestry! Interestingly, qpAdm
-used it to "sucessfully" infer archaic human ancestry (where we define
-"successful model" by inferring ancestry proportions between 0 and 1,
-and a high p-value). This is because Neandertal ancestry could be
-considered an "ancestral component" of a modern human genome:
+Fun fact: notice in the table below that there are many models in
+which the chimpanzee was fitted as a source of ancestry!
+Interestingly, qpAdm used Chimp to infer archaic human ancestry. This
+is because you could think of Neandertal ancestry as an "ancestral
+component" of a modern human genome and the _qpAdm_ rotation procedure
+therefore concludes that Chimpanzee is not be an unreasonable
+surrogate for a source population. Of course, we know there are better
+sources in our candidates set - we have the archaic humans!
 
 ```{r}
 filter(props, source1 == "Chimp" | source2 == "Chimp")
 ```
 
+Another interesting fact: notice that the rotating population
+procedure selected another plausible model characterizing the ancestry
+of the French individual. However, this of course doesn't represent
+Neandertal introgression. What it might possibly represent is left as
+an exercise for the reader... :)
+
+```{r}
+filter(props, prop1 < 0.9, prop2 < 0.9)
+```
+
 ## Conclusions
 
-At this stage of analysis you would be on your own. You would have to
-decide which models are more reasonably and why, possibly based on
-prior knowledge or additional statistics (such as the details
-information reported in the full log output information). This is
-because qpAdm on some level is as much art as it is science and
-interpreting the results and finding the most appropriate models can
-be quite a challenge.
+At this stage of analysis, you would have to decide which of the
+models produced by `qpAdm_filter()` that cannot be immediately
+rejected are more reasonable than others and why. Possibly based on
+both some prior knowledge and additional statistics (such as the
+details information available in the full log output information shown
+by `loginfo()`). You could say that the _qpAdm_ methodology, while
+rooted in strong statistics, is from a certain point as much art as it
+is science. Interpreting the results and finding the most appropriate
+models can be quite a challenge.
+
+Happy modeling and please, do [let me
+know](https://github.com/bodkan/admixr/issues) if you discover bugs or
+missing features. My goal with this tool is to streamline _qpAdm_
+model fitting as much as possible and I can do it only with your
+input.
+
+## Final remarks
+
+1. As a reminder, keep in mind that _admixr_ gives you tools for
+filtering SNPs and also grouping samples into populations on the fly!
+You can easily process and group samples before plugging them into
+`qpAdm_rotation()`!
+
+2. Also note that you can use the function `loginfo()` to examine the
+complete log output of any model by specifying the model
+identifier. This is helpful not only for debugging purposes but also
+for cases when you need a particular statistic in the full qpAdm log
+report which is not currently parsed by _admixr_:
+
+```{r}
+loginfo(fits, "m40")
+```

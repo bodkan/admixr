@@ -1,10 +1,10 @@
 ---
-title: "admixr - Tutorial"
+title: "Tutorial and basic overview of the admixr R package"
 author: "Martin Petr"
 date: "`r Sys.Date()`"
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{admixr - Tutorial}
+  %\VignetteIndexEntry{Tutorial and basic overview of the admixr R package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -515,6 +515,14 @@ first introduced the theoretical background of what later became _qpWave_.
 overview of the _qpWave_ method than S6 of Reich et al. 2012, and also introduces the
 _qpAdm_ methodology for estimating admixture proportions.
 
+- A phenomenal description of _qpAdm_ methodology and best practices
+  by [Harney _et al._
+  2020](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1)
+  (see also PDF with [practical
+  guidelines](https://www.biorxiv.org/content/biorxiv/early/2020/04/10/2020.04.09.032664/DC1/embed/media-1.pdf?download=true). Both
+  documents should really be a mandatory reading before doing any
+  _qpAdm_ analysis.
+
 In the remainder of this section, I will assume that you are familiar with both
 methods, and will only explain how to use _admixr_ for running them from R.
 
@@ -666,10 +674,11 @@ however, all rank = 2 test $p$-values are not significant, and we can be
 reasonably sure that the _target_ samples can be fully modelled as a mixtures of
 all specified _references_.
 
-Having made sure that our model is reasonably correct, we can now take a look at
-`proportions`, which contains admixture proportion estimates from all specified
-sources, as well as standard errors for those proportions using a block
-jackknife:
+The most important element of a _qpAdm_ output is in the
+`$proportions` component. This contains admixture proportion estimates
+from all specified sources, the p-values of each model (remember, low
+p-values/significance means the model is rejected!) as well as
+standard errors for those proportions using a block jackknife:
 
 ```{r, eval = FALSE}
 result$proportions
@@ -696,6 +705,10 @@ result$subsets
 knitr::kable(result$subsets)
 ```
 
+*New feature*: There is a new function called `qpAdm_rotation()` which
+allows exhaustive exploration of many _qpAdm_ models in paralle. For
+more information please see the vignette _"Fitting qpAdm models with a
+'rotation' strategy_".
 
 
 ## Grouping samples
