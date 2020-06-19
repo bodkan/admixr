@@ -29,17 +29,6 @@ if (admixtools_present()) {
     )
 }
 
-# f3 ----------------------------------------------------------------------
-
-# qpAdm -------------------------------------------------------------------
-
-test_that("qpAdm_rotation() output object is of the right class", {
-    skip_on_cran()
-    skip_on_os("windows")
-    expect_true(inherits(models1, "admixr_result") & attr(models1, "command") == "qpAdm_rotation")
-})
-
-
 test_that("qpAdm_rotation() `fulloutput = TRUE` object is of the right format", {
     skip_on_cran()
     skip_on_os("windows")
@@ -50,7 +39,7 @@ test_that("qpAdm_rotation() `fulloutput = TRUE` object is of the right format", 
 test_that("qpAdm_rotation() `fulloutput = FALSE` object is of the right format", {
     skip_on_cran()
     skip_on_os("windows")
-    expect_true(is.data.frame(models2$proportions))
+    expect_true(is.data.frame(models2))
 })
 
 

@@ -143,7 +143,7 @@ test_that("Output object carries with it the whole log output", {
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
   pops <- read_pops(file.path(examples_dir, "list_qp3Pop"), c("A", "B", "C"))
-  outdir <- file.path(tempdir(), "log_test")
+  outdir <- file.path(tempdir(), paste0("log_test", runif(1, 0, 10000000)))
   dir.create(outdir)
   res <- f3(A = pops$A, B = pops$B, C = pops$C, data = data, outdir = outdir)
   expect_true(all(attr(res, "log_output") == readLines(list.files(outdir, pattern = "*.log$", full.names = TRUE))))

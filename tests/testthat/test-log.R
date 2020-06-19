@@ -44,7 +44,7 @@ test_that("Requesting log for a missing sample fails", {
   dir.create(outdir, showWarnings = FALSE)
   qpAdm_res <- qpAdm(target = left[1], sources = left[-1], outgroups = right, data = data, outdir = outdir)
   
-  expect_error(loginfo(qpAdm_res, target = "missing_sample"))
+  expect_error(suppressMessages(loginfo(qpAdm_res, target = "missing_sample")))
 })
 
 
@@ -62,7 +62,7 @@ test_that("Specifying target for a non-qpAdm log fails", {
   dir.create(outdir, showWarnings = FALSE)
   res <- d(left[1], left[2], left[3], left[4], data = data)
   
-  expect_error(loginfo(res, target = "missing_sample"))
+  expect_error(suppressMessages(loginfo(res, target = "missing_sample")))
 })
 
 
@@ -74,5 +74,5 @@ test_that("Detect broken log file and inform the user", {
   data <- eigenstrat(file.path(data_dir, "qpdata"))
   truncated_log <- tempfile()
   system(glue::glue('head -n10 {file.path(admixtools_path(), "examples", "qpDstat1.log")} > {truncated_log}'))
-  expect_error(read_output(truncated_log))
+  expect_error(capture.output(read_output(truncated_log)))
 })
