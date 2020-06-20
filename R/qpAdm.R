@@ -14,6 +14,7 @@
 #'     with a traditional qpAdm run) or just the proportions
 #'     (determined by the value of the 'fulloutput' argument)
 #'
+#' @importFrom utils combn
 #' @export
 qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources = 2, ncores = 1, fulloutput = FALSE) {
     check_type(data, "EIGENSTRAT")
@@ -83,13 +84,13 @@ qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources =
     ## add model identifier to each row in the proportions table, ...
     models <- paste0("m", seq_along(sources_outgroups))
     proportions$model <- models
-    proportions <- dplyr::as_tibble(proportions) %>% dplyr::select(model, everything())
+    proportions <- dplyr::as_tibble(proportions) %>% dplyr::select(model, dplyr::everything())
     ## ... ranks table, ...
     ranks$model <- sort(rep(models, 2))
-    ranks <- dplyr::as_tibble(ranks) %>% dplyr::select(model, everything())
+    ranks <- dplyr::as_tibble(ranks) %>% dplyr::select(model, dplyr::everything())
     ## and subsets table
     subsets$model <- sort(rep(models, 1 + 2^(nsources - 1)))
-    subsets <- dplyr::as_tibble(subsets) %>% dplyr::select(model, everything())
+    subsets <- dplyr::as_tibble(subsets) %>% dplyr::select(model, dplyr::everything())
 
     ## add metadata to the results object
     if (fulloutput)

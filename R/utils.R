@@ -104,7 +104,8 @@ download_data <- function(dirname = tempdir()) {
 utils::globalVariables(
   names = c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
             "FORMAT", "chrom", "pos", "snp_id", "ref", "alt", "gen_dist",
-            "sample_id", "name", "target", ".", "start", "end"),
+            "sample_id", "name", "target", ".", "start", "end",
+            "model", "noutgroups", "outgroups", "pattern", "pvalue"),
             package = "admixr")
 
 
