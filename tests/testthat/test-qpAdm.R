@@ -50,4 +50,28 @@ test_that("qpAdm_rotation() output object carries all required annotation", {
 })
 
 
+test_that("qpAdm_filter() filters p-value and proportions", {
+    skip_on_cran()
+    skip_on_os("windows")
+    filtered <- qpAdm_filter(models1, p = 0.01)
+    expect_true(all(c(filtered$proportions$pvalue > 0.01,
+                      filtered$proportions$prop1 < 1,
+                      filtered$proportions$prop1 > 0,
+                      filtered$proportions$prop2 < 1,
+                      filtered$proportions$prop2 > 0)))
+})
+
+
+test_that("It is possible to switch off outgroup number minimization", {
+    models <- qpAdm_rotation(
+        data = snps,
+        target = "French",
+        candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija", "Altai"),
+        minimize = FALSE,
+        nsources = 2,
+        ncores = 1,
+        fulloutput = TRUE
+    )
+    expect_true(unique(models$proportions$noutgroups) == 3)
+})
 
