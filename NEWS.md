@@ -6,7 +6,6 @@
 * Fixed broken regex parsing of qpWave log files in some cases.
 * Added type checking to a couple of functions (not all wrappers type
   checked yet).
-* 
 
 # admixr 0.8.7
 
