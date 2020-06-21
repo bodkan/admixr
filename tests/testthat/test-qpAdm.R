@@ -80,21 +80,6 @@ test_that("qpAdm_filter() filters p-value and proportions", {
                       filtered$proportions$prop2 > 0)))
 })
 
-
-test_that("It is possible to switch on outgroup number minimization", {
-    models <- qpAdm_rotation(
-        data = snps,
-        target = "French",
-        candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija", "Altai"),
-        minimize = TRUE,
-        nsources = 2,
-        ncores = 1,
-        fulloutput = TRUE
-    )
-    expect_true(sort(unique(models$proportions$noutgroups)) == c(2, 3))
-})
-
-
 test_that("qpAdm_fiter works only on objects of qpAdm_rotation type", {
     x <- data.frame()
     class(x) <- "random"
