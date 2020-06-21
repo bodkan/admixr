@@ -171,7 +171,7 @@ read_qpWave <- function(log_lines, details = FALSE) {
   a_end <- c(test_pos[-c(1, 2)], which(stringr::str_detect(log_lines, "## end of run")))
 
   test_df <- log_lines[test_pos + 1] %>%
-    stringr::str_replace_all(" *[a-z0-9]+: ", "") %>%
+    stringr::str_replace_all("[a-z0-9]+: ", "") %>%
     stringr::str_replace_all(" +", "\t") %>%
     paste0(collapse = "\n") %>%
     readr::read_tsv(col_names = c("rank", "df", "chisq", "tail", "dfdiff",

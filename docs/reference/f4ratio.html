@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -95,7 +95,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/tutorial.html">admixr - Tutorial</a>
+      <a href="../articles/qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial.html">Tutorial and basic overview of the admixr R package</a>
     </li>
   </ul>
 </li>
@@ -134,9 +137,19 @@
 
     <pre class="usage"><span class='fu'>f4ratio</span>(<span class='no'>data</span>, <span class='no'>X</span>, <span class='no'>A</span>, <span class='no'>B</span>, <span class='no'>C</span>, <span class='no'>O</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>d</span>(<span class='no'>data</span>, <span class='no'>W</span>, <span class='no'>X</span>, <span class='no'>Y</span>, <span class='no'>Z</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>f4mode</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>d</span>(
+  <span class='no'>data</span>,
+  <span class='no'>W</span>,
+  <span class='no'>X</span>,
+  <span class='no'>Y</span>,
+  <span class='no'>Z</span>,
+  <span class='kw'>quartets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>f4mode</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
-<span class='fu'>f4</span>(<span class='no'>data</span>, <span class='no'>W</span>, <span class='no'>X</span>, <span class='no'>Y</span>, <span class='no'>Z</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>f4</span>(<span class='no'>data</span>, <span class='no'>W</span>, <span class='no'>X</span>, <span class='no'>Y</span>, <span class='no'>Z</span>, <span class='kw'>quartets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>f3</span>(<span class='no'>data</span>, <span class='no'>A</span>, <span class='no'>B</span>, <span class='no'>C</span>, <span class='kw'>outdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>inbreed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
@@ -159,6 +172,10 @@
       <th>W, X, Y, Z, A, B, C, O</th>
       <td><p>Population names according to the nomenclature used in
 Patterson et al., 2012.</p></td>
+    </tr>
+    <tr>
+      <th>quartets</th>
+      <td><p>List of character vectors (quartets of population/sample labels)</p></td>
     </tr>
     <tr>
       <th>f4mode</th>

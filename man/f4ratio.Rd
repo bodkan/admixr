@@ -9,9 +9,19 @@
 \usage{
 f4ratio(data, X, A, B, C, O, outdir = NULL, params = NULL)
 
-d(data, W, X, Y, Z, outdir = NULL, f4mode = FALSE, params = NULL)
+d(
+  data,
+  W,
+  X,
+  Y,
+  Z,
+  quartets = NULL,
+  outdir = NULL,
+  f4mode = FALSE,
+  params = NULL
+)
 
-f4(data, W, X, Y, Z, outdir = NULL, params = NULL)
+f4(data, W, X, Y, Z, quartets = NULL, outdir = NULL, params = NULL)
 
 f3(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL)
 }
@@ -24,6 +34,8 @@ f3(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL)
 
 \item{W, X, Y, Z, A, B, C, O}{Population names according to the nomenclature used in
 Patterson et al., 2012.}
+
+\item{quartets}{List of character vectors (quartets of population/sample labels)}
 
 \item{f4mode}{Calculate the f4 statistic instead of the D statistic.}
 

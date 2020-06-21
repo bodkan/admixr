@@ -1,5 +1,18 @@
 context("Utility functions")
 
+## Checking for object types---------------------- ------------------------
+test_that("Type check reveals wrong admixr type", {
+    x <- data.frame()
+    class(x) <- "random"
+    expect_error(check_type(x, "admixr_result"))
+})
+
+test_that("Type check accepts the correct admixr type", {
+    x <- data.frame()
+    class(x) <- c(class(x), "admixr_result")
+    expect_silent(check_type(x, "admixr_result"))
+})
+
 # Checking for presence of a sample in an ind file ------------------------
 
 test_that("Fails to find a missing sample", {
@@ -126,4 +139,3 @@ test_that("Merging produces correct results", {
   merged_ind <- read_ind(merged)
   expect_true(all(c(geno == merged_geno, snp == merged_snp, ind == merged_ind)))
 })
-

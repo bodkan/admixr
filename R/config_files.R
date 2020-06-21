@@ -43,6 +43,17 @@ create_qpDstat_pop_file <- function(W = NULL, X = NULL, Y = NULL, Z = NULL, file
 }
 
 
+# Generate a file with populations for a qpDstat run based on given
+# list of quartets.
+create_qpDstat_pop_file_quartets <- function(quartets, file) {
+  lines <- c()
+  for (q in quartets) {
+    lines <- c(lines, sprintf("%s %s %s %s", q[1], q[2], q[3], q[4]))
+  }
+  writeLines(lines, file)
+}
+
+
 # Generate a file with populations for a qp3Pop run.
 create_qp3Pop_pop_file <- function(A, B, C, file) {
   lines <- c()

@@ -27,4 +27,4 @@ before_install:
     # return to the top directory
   - popd
 after_success:
-  - Rscript -e 'covr::codecov()'
+  - Rscript -e 'covr::codecov(exclusions = "R/log.R", function_exclusions = c("print\\."))'
