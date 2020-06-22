@@ -21,15 +21,15 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-qpAdm model fitting is a complex topic. Navigating it successfuly
+qpAdm model fitting is a complex topic. To navigate it successfuly
 requires solid knowledge of the $f$-statistics theory first introduced
 by Nick Patterson and colleagues [in
 2012](https://www.genetics.org/content/192/3/1065). As part of our
 [tutorial](tutorial.html#qpwave-and-qpadm-1), we have looked at a very
 basic overview of the qpAdm-related functionality implemented in
-_admixr_ and also talked about some important resources for learning
-more the method pioneered by Iosif Lazaridis in
-[2015](https://www.nature.com/articles/nature14317).
+_admixr_. We also talked about the most important resources for
+learning more about this powerful method pioneered by Iosif Lazaridis
+in [2015](https://www.nature.com/articles/nature14317).
 
 Recently, Harney _et al._ published an exciting new preprint called
 ["Assessing the Performance of qpAdm: A Statistical Tool for Studying
