@@ -142,10 +142,9 @@
 <li>It gives us a clear expectation of what models we should <em>definitely</em> reject.</li>
 </ol>
 <p>First, let’s download and install a development version of <em>admixr</em> to get access to the new features, and download a small example data set:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># install `devtools` if not on already your system by running:</span>
-<span class="co"># install.packages("devtools")</span>
-<span class="co"># this will allow installing 'admixr' from Github</span>
-<span class="co">#devtools::install_github("bodkan/admixr", ref = "qpadm-rotation", force = TRUE)</span>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># install the latest version of 'admixr' from Gihub:</span>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)
+
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">admixr</span>)
 
 <span class="no">snps</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eigenstrat.html">eigenstrat</a></span>(<span class="fu"><a href="../reference/download_data.html">download_data</a></span>())</pre></body></html></div>
@@ -372,19 +371,19 @@
 <span class="co">#&gt; Full output log of qpAdm rotation for model 'm40':</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpf6qd7v/qpAdm__1452457283.par</span>
+<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmp1mdvms/qpAdm__1720993032.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpf6qd7v/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpf6qd7v/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpf6qd7v/snps/snps.ind</span>
-<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpf6qd7v/qpAdm__1452457283.popleft</span>
-<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpf6qd7v/qpAdm__1452457283.popright</span>
+<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmp1mdvms/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmp1mdvms/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmp1mdvms/snps/snps.ind</span>
+<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmp1mdvms/qpAdm__1720993032.popleft</span>
+<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmp1mdvms/qpAdm__1720993032.popright</span>
 <span class="co">#&gt; allsnps: YES</span>
 <span class="co">#&gt; summary: YES</span>
 <span class="co">#&gt; details: YES</span>
 <span class="co">#&gt; ## qpAdm version: 1000</span>
-<span class="co">#&gt; seed: -1847170058</span>
+<span class="co">#&gt; seed: -1823513907</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; left pops:</span>
 <span class="co">#&gt; French</span>
@@ -475,7 +474,7 @@
 <span class="co">#&gt; gendstat:               Yoruba                Chimp    -0.121</span>
 <span class="co">#&gt; gendstat:                Altai                Chimp    -0.086</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ##end of qpAdm:        3.948 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
+<span class="co">#&gt; ##end of qpAdm:        4.270 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
 </div>
   </div>
 
