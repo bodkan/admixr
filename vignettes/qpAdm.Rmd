@@ -128,9 +128,6 @@ First, let's download and install a development version of _admixr_ to
 get access to the new features, and download a small example data set:
 
 ```{r, message = FALSE, warning = FALSE, results = "hide"}
-# install the latest version of 'admixr' from Gihub:
-devtools::install_github("bodkan/admixr")
-
 library(admixr)
 
 snps <- eigenstrat(download_data())
