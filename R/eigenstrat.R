@@ -125,7 +125,7 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = "
     return(data)
   }
 
-  if (system("bedtools", ignore.stdout = TRUE) != 0)
+  if (Sys.which("bedtools") == "")
     stop("bedtools is required for filtering, but is not in your $PATH")
 
   if (!file.exists(bed))
