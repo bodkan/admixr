@@ -1,5 +1,5 @@
 admixtools_present <- function() {
-  system("which qpDstat", ignore.stdout = TRUE) == 0
+  Sys.which("qpDstat") != ""
 }
 
 read_pops <- function(filename, columns) {
@@ -23,12 +23,11 @@ snp_to_bed <- function(snp, bed) {
 }
 
 admixtools_path <- function() {
-  # ugly hack to enable testing on my macOS where I have ADMIXTOOLS
-  # binaries symlinked to ~/local/bin
-  if (system("uname", intern = TRUE) == "Darwin") {
-    return("~/local/AdmixTools-6.0/")
-  }
+    ## ugly hack to enable testing on my macOS where I have ADMIXTOOLS
+    ## binaries symlinked to ~/local/bin
+    if (system("uname", intern = TRUE) == "Darwin") {
+        return("~/local/AdmixTools-6.0/")
+    }
 
-  system("which qpDstat", intern = TRUE) %>%
-    stringr::str_replace("/bin.*", "")
+    stringr::str_replace(Sys.which("qpDstat"), "/bin.*", "")
 }
