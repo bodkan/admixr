@@ -5,8 +5,8 @@
     path_check <- all(Sys.which(cmds) != "")
     if (!path_check) {
         packageStartupMessage(
-            "Not all ADMIXTOOLS binaries could be found in your $PATH variable.\n",
-            "At the very least, the following programs are recommended:\n    ",
+            "ADMIXTOOLS programs required by admixr are not in your $PATH variable.\n",
+            "At the very least, the following programs should be available:\n    ",
             paste(cmds, collapse = ", "),
             "\nMake sure to modify the $PATH variable in your .Renviron file so \n",
             "that it points to the directory containing the ADMIXTOOLS programs.\n")
