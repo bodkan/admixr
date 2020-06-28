@@ -133,6 +133,11 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
 #' @param outdir Where to put all generated files (temporary directory by default).
 #' @param params Named list of parameters and their values.
 #'
+#' @return List of three components:
+#'     1. estimated ancestry proportions
+#'     2. ranks statistics
+#'     3. analysis of patterns (all possible subsets of ancestry sources).
+#'
 #' @examples
 #' \dontrun{# download example data set and prepare it for analysis
 #' snps <- eigenstrat(download_data())
@@ -227,6 +232,8 @@ qpAdm <- function(data, target, sources, outgroups, outdir = NULL,
 #' @param maxrank Maximum rank to test for.
 #' @param details Return the A, B matrices used in rank calculations?
 #' @inheritParams qpAdm
+#'
+#' @return Table of rank test results.
 #'
 #' @examples
 #' \dontrun{# download example data set and prepare it for analysis

@@ -26,6 +26,12 @@ qpAdm(
 
 \item{params}{Named list of parameters and their values.}
 }
+\value{
+List of three components:
+    1. estimated ancestry proportions
+    2. ranks statistics
+    3. analysis of patterns (all possible subsets of ancestry sources).
+}
 \description{
 Calculate ancestry proportions in a set of target populations.
 }

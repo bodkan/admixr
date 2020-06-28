@@ -27,6 +27,9 @@ qpWave(
 
 \item{params}{Named list of parameters and their values.}
 }
+\value{
+Table of rank test results.
+}
 \description{
 Given a set of 'left' populations, estimate the lowest number of necessary
 admixture sources related to the set of 'right' populations.
