@@ -159,13 +159,12 @@ damage (C-&gt;T and G-&gt;A substitutions).</p>
     analysis.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='co'># download an example genomic data set and prepare it for analysis</span>
+    <pre class="examples"><div class='input'><span class='co'># download an example genomic data set and prepare it for analysis</span>
 <span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='fu'><a href='download_data.html'>download_data</a></span>())
 
 <span class='co'># perform the calculation only on transversions</span>
-<span class='no'>snps_tv</span> <span class='kw'>&lt;-</span> <span class='fu'>transversions_only</span>(<span class='no'>snps</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(exclude, data$exclude, data$snp): object 'snps' not found</span></div><div class='input'><span class='no'>results_d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='f4ratio.html'>d</a></span>(<span class='kw'>W</span> <span class='kw'>=</span> <span class='st'>"French"</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"Dinka"</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='st'>"Altai"</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='st'>"Chimp"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps_tv</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps_tv' not found</span></div><div class='input'>
-
-</div></pre>
+<span class='no'>snps_tv</span> <span class='kw'>&lt;-</span> <span class='fu'>transversions_only</span>(<span class='no'>snps</span>)
+<span class='no'>results_d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='f4ratio.html'>d</a></span>(<span class='kw'>W</span> <span class='kw'>=</span> <span class='st'>"French"</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"Dinka"</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='st'>"Altai"</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='st'>"Chimp"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps_tv</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

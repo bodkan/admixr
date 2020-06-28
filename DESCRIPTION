@@ -7,9 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "contact@bodkan.net",
            comment = c(ORCID = "0000-0003-4879-8421"))
-Description: A convenient interface for performing all stages of 'ADMIXTOOLS'
-    analyses (<https://reich.hms.harvard.edu/software>) entirely from R. Wrapper
-    functions (D, f4, f3, etc.) completely automate the generation of intermediate
+Description: An interface for performing all stages of 'ADMIXTOOLS' analyses
+    (<https://reich.hms.harvard.edu/software>) entirely from R. Wrapper functions
+    (D, f4, f3, etc.) completely automate the generation of intermediate
     configuration files, run 'ADMIXTOOLS' programs on the command-line, and
     parse output files to extract values of interest. This allows users to focus
     on the analysis itself instead of worrying about low-level technical details.

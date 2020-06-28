@@ -1,4 +1,4 @@
-#' Print the full log output associated with an admixr output object.
+#' Print the full log output of an admixr wrapper to the console.
 #'
 #' @param x Output from one of the admixr wrappers (d, f4, qpAdm, ...)
 #' @param target A specific log to examine (relevant for multiple target qpAdm runs)
@@ -69,7 +69,7 @@ loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix
       } else {
         title <- cmd
       }
-      
+
       if (i > 1 && is.na(target)) cat("\n\n")
       cat(paste0("Full output log of ", title, ":\n"))
       cat("===================================================\n\n")

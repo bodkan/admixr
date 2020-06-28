@@ -36,7 +36,7 @@ new_snps <- relabel(
 )
 
 # use the newly created EIGENSTRAT object to run a D statistic with
-# the groups
+# the new population groups
 result_d  <- d(W = "European", X = "African", Y = "Archaic", Z = "Chimp", data = new_snps)
 }
 

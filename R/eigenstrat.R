@@ -1,6 +1,5 @@
 #' EIGENSTRAT data constructor
 #'
-#'
 #' This function creates an instance of the EIGENSTRAT S3 class, which
 #' encapsulates all paths to data files required for an ADMIXTOOLS analysis.
 #'
@@ -104,7 +103,7 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
   ) %>% writeLines(text = ., con = parfile)
 
   return_value <- run_cmd("mergeit", parfile, "/dev/null")
-  if (return_value) cat("\nMerge command ended with an error -- see above.\n")
+  if (return_value) stop("\nMerge command ended with an error -- see above.\n")
 
   eigenstrat(merged)
 }
@@ -274,7 +273,7 @@ transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
 #' )
 #'
 #' # use the newly created EIGENSTRAT object to run a D statistic with
-#' # the groups
+#' # the new population groups
 #' result_d  <- d(W = "European", X = "African", Y = "Archaic", Z = "Chimp", data = new_snps)
 #' }
 #'
@@ -308,6 +307,25 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
 #'
 #' @param data EIGENSTRAT data object.
 #' @return EIGENSTRAT data S3 object.
+#'
+#'
+#' @examples
+#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # group individual samples into larger populations, creating a new
+#' # EIGENSTRAT R object
+#' new_snps <- relabel(
+#'     snps,
+#'     European = c("French", "Sardinian"),
+#'     African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
+#'     Archaic = c("Vindija", "Altai", "Denisova")
+#' )
+#'
+#' # remove the population grouping in the previous step - this
+#' # results in the same EIGENSTRAT object tht we started with
+#' original_snps <- reset(new_snps)
+#' }
 #'
 #' @export
 reset <- function(data) {

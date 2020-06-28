@@ -2,7 +2,7 @@
 % Please edit documentation in R/log.R
 \name{loginfo}
 \alias{loginfo}
-\title{Print the full log output associated with an admixr output object.}
+\title{Print the full log output of an admixr wrapper to the console.}
 \usage{
 loginfo(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt")
 }
@@ -20,7 +20,7 @@ loginfo(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt")
 \item{suffix}{Suffix of the output log file(s) (".txt" by default)}
 }
 \description{
-Print the full log output associated with an admixr output object.
+Print the full log output of an admixr wrapper to the console.
 }
 \examples{
 \dontrun{# download an example genomic data set and prepare it for analysis

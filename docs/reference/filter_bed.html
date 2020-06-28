@@ -171,16 +171,18 @@ sites that do not overlap BED regions are removed.</p></td>
 <p>- https://bedtools.readthedocs.io/</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='co'># download an example genomic data set</span>
+    <pre class="examples"><div class='input'><span class='co'># download an example genomic data set</span>
 <span class='no'>prefix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='download_data.html'>download_data</a></span>()
 <span class='co'># create an EIGENSTRAT R object from the downloaded data</span>
-<span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='no'>prefix</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eigenstrat(prefix): object 'prefix' not found</span></div><div class='input'>
+<span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='no'>prefix</span>)
+
 <span class='co'># get the path to an example BED file</span>
-<span class='no'>bed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/basename.html'>dirname</a></span>(<span class='no'>prefix</span>), <span class='st'>"regions.bed"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in dirname(prefix): object 'prefix' not found</span></div><div class='input'>
+<span class='no'>bed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/basename.html'>dirname</a></span>(<span class='no'>prefix</span>), <span class='st'>"regions.bed"</span>)
+
 <span class='co'># BED file contains regions to keep in an analysis</span>
-<span class='no'>snps_kept</span> <span class='kw'>&lt;-</span> <span class='fu'>filter_bed</span>(<span class='no'>snps</span>, <span class='no'>bed</span>)</div><div class='output co'>#&gt; <span class='error'>Error in file.exists(bed): object 'bed' not found</span></div><div class='input'><span class='co'># BED file contains regions to remove from an analysis</span>
-<span class='no'>snps_removed</span> <span class='kw'>&lt;-</span> <span class='fu'>filter_bed</span>(<span class='no'>snps</span>, <span class='no'>bed</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in file.exists(bed): object 'bed' not found</span></div><div class='input'>
-</div></pre>
+<span class='no'>snps_kept</span> <span class='kw'>&lt;-</span> <span class='fu'>filter_bed</span>(<span class='no'>snps</span>, <span class='no'>bed</span>)
+<span class='co'># BED file contains regions to remove from an analysis</span>
+<span class='no'>snps_removed</span> <span class='kw'>&lt;-</span> <span class='fu'>filter_bed</span>(<span class='no'>snps</span>, <span class='no'>bed</span>, <span class='kw'>remove</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
