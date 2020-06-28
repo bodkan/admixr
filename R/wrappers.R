@@ -4,6 +4,34 @@
 #'
 #' @inheritParams qpAdm
 #'
+#' @examples
+#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # define a set of populations to analyze
+#' pops <- c("French", "Sardinian", "Han", "Papuan", "Dinka")
+#'
+#' result_f4ratio <- f4ratio(
+#'     X = pops, A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp",
+#'     data = snps
+#' )
+#'
+#' result_d <- d(
+#'     W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp",
+#'     data = snps
+#' )
+#'
+#' result_f4 <- f4(
+#'     W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp",
+#'     data = snps
+#' )
+#'
+#' result_f3 <- f3(
+#'     A = pops, B = "Mbuti", C = "Khomani_San",
+#'     data = snps
+#' )
+#' }
+#'
 #' @export
 f4ratio <- function(data, X, A, B, C, O, outdir = NULL, params = NULL) {
   check_presence(c(X, A, B, C, O), data)
@@ -105,6 +133,21 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
 #' @param outdir Where to put all generated files (temporary directory by default).
 #' @param params Named list of parameters and their values.
 #'
+#' @examples
+#' \dontrun{# download example data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # estimate the proportion of Neandertal ancestry in a French
+#' # individual and other associated qpAdm statistics (see detailed
+#' # description in the tutorial vignette)
+#' result <- qpAdm(
+#'     target = "French",
+#'     sources = c("Vindija", "Yoruba"),
+#'     outgroups = c("Chimp", "Denisova", "Altai"),
+#'     data = snps
+#' )
+#' }
+#'
 #' @export
 qpAdm <- function(data, target, sources, outgroups, outdir = NULL,
                   params = list(allsnps = "YES", summary = "YES", details = "YES")) {
@@ -184,6 +227,18 @@ qpAdm <- function(data, target, sources, outgroups, outdir = NULL,
 #' @param maxrank Maximum rank to test for.
 #' @param details Return the A, B matrices used in rank calculations?
 #' @inheritParams qpAdm
+#'
+#' @examples
+#' \dontrun{# download example data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # run the qpWave wrapper (detailed description in the tutorial vignette)
+#' result <- qpWave(
+#'      left = c("French", "Sardinian", "Han"),
+#'      right = c("Altai", "Yoruba", "Mbuti"),
+#'      data = snps
+#' )
+#' }
 #'
 #' @export
 qpWave <- function(data, left, right, maxrank = NULL, details = FALSE, outdir = NULL, params = NULL) {

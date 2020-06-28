@@ -20,3 +20,13 @@ Updated S3 EIGENSTRAT data object with an additional 'exclude' slot
 Remove substitutions that are more likely to be a result of ancient DNA
 damage (C->T and G->A substitutions).
 }
+\examples{
+\dontrun{# download an example genomic data set and prepare it for analysis
+snps <- eigenstrat(download_data())
+
+# perform the calculation only on transversions
+snps_tv <- transversions_only(snps)
+results_d <- d(W = "French", X = "Dinka", Y = "Altai", Z = "Chimp", data = snps_tv)
+}
+
+}

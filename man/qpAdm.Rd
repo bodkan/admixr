@@ -29,3 +29,19 @@ qpAdm(
 \description{
 Calculate ancestry proportions in a set of target populations.
 }
+\examples{
+\dontrun{# download example data set and prepare it for analysis
+snps <- eigenstrat(download_data())
+
+# estimate the proportion of Neandertal ancestry in a French
+# individual and other associated qpAdm statistics (see detailed
+# description in the tutorial vignette)
+result <- qpAdm(
+    target = "French",
+    sources = c("Vindija", "Yoruba"),
+    outgroups = c("Chimp", "Denisova", "Altai"),
+    data = snps
+)
+}
+
+}

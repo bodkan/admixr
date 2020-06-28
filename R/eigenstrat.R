@@ -10,6 +10,17 @@
 #'
 #' @return S3 object of the EIGENSTRAT class.
 #'
+#' @examples
+#' \dontrun{# download an example genomic data and get the path prefix to the
+#' # trio of snp/geno/ind files in an EIGENSTRAT format
+#' prefix <- download_data()
+#'
+#' # wrap the trio of snp/geno/ind files in an object of the class
+#' # EIGENSTRAT
+#' snps <- eigenstrat(prefix)
+#' snps
+#' }
+#'
 #' @export
 eigenstrat <- function(prefix = NULL, ind = NULL, snp = NULL, geno = NULL, exclude = NULL) {
   if (is.null(prefix) & any(is.null(c(ind, snp, geno))))
@@ -106,8 +117,10 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #' BED file.
 #'
 #' This function requires a functioning bedtools installation! See:
-#'   - https://github.com/arq5x/bedtools2
-#'   - https://bedtools.readthedocs.io/en/latest/content/installation.html
+#'
+#' - https://github.com/arq5x/bedtools2
+#'
+#' - https://bedtools.readthedocs.io/
 #'
 #' @param data EIGENSTRAT data object.
 #' @param bed Path to a BED file.
@@ -117,6 +130,20 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #'
 #' @return Updated S3 EIGENSTRAT data object.
 #'
+#' @examples
+#' \dontrun{# download an example genomic data set
+#' prefix <- download_data()
+#' # create an EIGENSTRAT R object from the downloaded data
+#' snps <- eigenstrat(prefix)
+#'
+#' # get the path to an example BED file
+#' bed <- file.path(dirname(prefix), "regions.bed")
+#'
+#' # BED file contains regions to keep in an analysis
+#' snps_kept <- filter_bed(snps, bed)
+#' # BED file contains regions to remove from an analysis
+#' snps_removed <- filter_bed(snps, bed, remove = TRUE)
+#' }
 #' @export
 filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp")) {
   if (file.exists(outfile)) {
@@ -171,8 +198,7 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = "
 #' @param outfile Path to an output snp file with coordinates of excluded sites.
 #'
 #' @return Updated S3 EIGENSTRAT data object with an additional 'exclude' slot
-#'     specifying the path to the set of SNPs to be removed from a downstream
-#'     analysis.
+#'     specifying the path to the set of SNPs to be removed.
 #'
 #' @export
 keep_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
@@ -191,6 +217,15 @@ keep_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
 #' @return Updated S3 EIGENSTRAT data object with an additional 'exclude' slot
 #'     specifying the path to the set of SNPs to be removed from a downstream
 #'     analysis.
+#'
+#' @examples
+#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # perform the calculation only on transversions
+#' snps_tv <- transversions_only(snps)
+#' results_d <- d(W = "French", X = "Dinka", Y = "Altai", Z = "Chimp", data = snps_tv)
+#' }
 #'
 #' @export
 transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
@@ -223,8 +258,25 @@ transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
 #' @param outfile Path to an output snp file with coordinates of excluded sites.
 #'
 #' @return Updated S3 EIGENSTRAT data object with an additional 'group' slot
-#'     specifying the path to a new ind file that will be used in downstream
-#'     analysis.
+#'     specifying the path to a new ind file.
+#'#'
+#' @examples
+#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # group individual samples into larger populations, creating a new
+#' # EIGENSTRAT R object
+#' new_snps <- relabel(
+#'     snps,
+#'     European = c("French", "Sardinian"),
+#'     African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
+#'     Archaic = c("Vindija", "Altai", "Denisova")
+#' )
+#'
+#' # use the newly created EIGENSTRAT object to run a D statistic with
+#' # the groups
+#' result_d  <- d(W = "European", X = "African", Y = "Archaic", Z = "Chimp", data = new_snps)
+#' }
 #'
 #' @export
 relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {

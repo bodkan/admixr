@@ -13,8 +13,7 @@ keep_transitions(data, outfile = tempfile(fileext = ".snp"))
 }
 \value{
 Updated S3 EIGENSTRAT data object with an additional 'exclude' slot
-    specifying the path to the set of SNPs to be removed from a downstream
-    analysis.
+    specifying the path to the set of SNPs to be removed.
 }
 \description{
 Remove substitutions that are more likely to be a result of ancient DNA

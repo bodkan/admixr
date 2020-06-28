@@ -7,6 +7,21 @@
 #' @param dir In which directory to save the log file(s)?
 #' @param suffix Suffix of the output log file(s) (".txt" by default)
 #'
+#' @examples
+#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # define a set of populations to analyze and calculate a D statistic
+#' pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka")
+#' result_d <- d(
+#'     W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp",
+#'     data = snps
+#' )
+#'
+#' # examine the full log output associated with the returned object
+#' loginfo(result_d)
+#' }
+#'
 #' @export
 loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt") {
   if (!inherits(x, "admixr_result")) {

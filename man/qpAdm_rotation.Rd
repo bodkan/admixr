@@ -40,3 +40,23 @@ qpAdm list with proportions, ranks and subsets elements (as
 Fit qpAdm models based on the rotation strategy described in
 Harney et al. 2020 (bioRxiv)
 }
+\examples{
+\dontrun{# download an example genomic data set and prepare it for analysis
+snps <- eigenstrat(download_data())
+
+# find the set of most likely two-source qpAdm models of
+# a French individual - produce only the 'proportions'
+# qpAdm summary
+models <- qpAdm_rotation(
+    data = snps,
+    target = "French",
+    candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija",
+                   "Altai", "Denisova", "Chimp"),
+    minimize = TRUE,
+    nsources = 2,
+    ncores = 2,
+    fulloutput = FALSE
+)
+}
+
+}
