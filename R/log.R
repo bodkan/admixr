@@ -19,7 +19,8 @@
 #' )
 #'
 #' # examine the full log output associated with the returned object
-#' loginfo(result_d)
+#' # (this prints the output to the console)
+#' # loginfo(result_d)
 #' }
 #'
 #' @export
