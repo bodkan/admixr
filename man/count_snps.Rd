@@ -21,7 +21,12 @@ Count the number/proportion of present/missing sites in each sample
 }
 \examples{
 \dontrun{snps <- eigenstrat(download_data())
+
+present_count <- count_snps(snps)
 missing_count <- count_snps(snps, missing = TRUE)
+
+present_proportion <- count_snps(snps, prop = TRUE)
+missing_proportion <- count_snps(snps, missing = TRUE, prop = TRUE)
 }
 
 }

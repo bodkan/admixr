@@ -85,6 +85,14 @@ print.EIGENSTRAT <- function(x, ...) {
 #' @param a,b Two EIGENSTRAT datasets to merge.
 #' @param strandcheck Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.
 #'
+#' @examples
+#' \dontrun{# merged <- merge_eigenstrat(
+#' #    merged = <"path prefix of the merged snp/geno/ind data">
+#' #    a = first_EIGENSTRAT_object,
+#' #    b = second_EIGENSTRAT_object
+#' #)
+#' }
+#'
 #' @export
 merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
   parfile <- tempfile()
