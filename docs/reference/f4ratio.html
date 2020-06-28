@@ -189,40 +189,30 @@ Patterson et al., 2012.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
-<span class='co'># download an example genomic data set and prepare it for analysis</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='co'># download an example genomic data set and prepare it for analysis</span>
 <span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='fu'><a href='download_data.html'>download_data</a></span>())
 
 <span class='co'># define a set of populations to analyze</span>
-<span class='no'>pops</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Han"</span>, <span class='st'>"Papuan"</span>, <span class='st'>"Khomani_San"</span>, <span class='st'>"Mbuti"</span>, <span class='st'>"Dinka"</span>)
+<span class='no'>pops</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Han"</span>, <span class='st'>"Papuan"</span>, <span class='st'>"Dinka"</span>)
 
 <span class='no'>result_f4ratio</span> <span class='kw'>&lt;-</span> <span class='fu'>f4ratio</span>(
     <span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>pops</span>, <span class='kw'>A</span> <span class='kw'>=</span> <span class='st'>"Altai"</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='st'>"Vindija"</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='st'>"Yoruba"</span>, <span class='kw'>O</span> <span class='kw'>=</span> <span class='st'>"Chimp"</span>,
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
-)
-<span class='co'># }</span>
-
-<span class='co'># \dontrun{</span>
+)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps' not found</span></div><div class='input'>
 <span class='no'>result_d</span> <span class='kw'>&lt;-</span> <span class='fu'>d</span>(
     <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>pops</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"Yoruba"</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='st'>"Vindija"</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='st'>"Chimp"</span>,
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
-)
-<span class='co'># }</span>
-
-<span class='co'># \dontrun{</span>
+)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps' not found</span></div><div class='input'>
 <span class='no'>result_f4</span> <span class='kw'>&lt;-</span> <span class='fu'>f4</span>(
     <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>pops</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"Yoruba"</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='st'>"Vindija"</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='st'>"Chimp"</span>,
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
-)
-<span class='co'># }</span>
-
-<span class='co'># \dontrun{</span>
-<span class='co'># run the f3 wrapper (see detailed description in the tutorial vignette)</span>
+)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps' not found</span></div><div class='input'>
 <span class='no'>result_f3</span> <span class='kw'>&lt;-</span> <span class='fu'>f3</span>(
     <span class='kw'>A</span> <span class='kw'>=</span> <span class='no'>pops</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='st'>"Mbuti"</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='st'>"Khomani_San"</span>,
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
-)
-<span class='co'># }</span></div></pre>
+)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps' not found</span></div><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

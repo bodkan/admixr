@@ -176,6 +176,9 @@ admixture sources related to the set of 'right' populations.</p>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Table of rank test results.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>It has been shown (Reich, Nature 2012 - Reconstructing Native American
@@ -186,8 +189,7 @@ rank N - 1. This function uses the ADMIXTOOLS command qpWave to find the
 lowest possible rank of this matrix that is consistent with the data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
-<span class='co'># download example data set and prepare it for analysis</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='co'># download example data set and prepare it for analysis</span>
 <span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='fu'><a href='download_data.html'>download_data</a></span>())
 
 <span class='co'># run the qpWave wrapper (detailed description in the tutorial vignette)</span>
@@ -195,13 +197,7 @@ lowest possible rank of this matrix that is consistent with the data.</p>
      <span class='kw'>left</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Han"</span>),
      <span class='kw'>right</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Altai"</span>, <span class='st'>"Yoruba"</span>, <span class='st'>"Mbuti"</span>),
      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
-)
-<span class='no'>result</span></div><div class='output co'>#&gt; # A tibble: 3 x 7
-#&gt;    rank    df chisq  tail dfdiff chisqdiff taildiff
-#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-#&gt; 1     0     4 1.76  0.781      0     0        1    
-#&gt; 2     1     1 0.192 0.661      3     1.56     0.667
-#&gt; 3     2     0 0     1          1     0.192    0.661</div><div class='input'># }
+)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps' not found</span></div><div class='input'>
 
 </div></pre>
   </div>
