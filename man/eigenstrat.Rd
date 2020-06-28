@@ -28,7 +28,6 @@ prefix <- download_data()
 # wrap the trio of snp/geno/ind files in an object of the class
 # EIGENSTRAT
 snps <- eigenstrat(prefix)
-snps
 }
 
 }
