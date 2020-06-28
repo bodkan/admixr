@@ -4,6 +4,8 @@
 #'
 #' @inheritParams qpAdm
 #'
+#' @return Data frame object with calculated statistics
+#'
 #' @examples
 #' \dontrun{# download an example genomic data set and prepare it for analysis
 #' snps <- eigenstrat(download_data())

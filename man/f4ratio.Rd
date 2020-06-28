@@ -41,6 +41,9 @@ Patterson et al., 2012.}
 
 \item{inbreed}{See README.3PopTest in ADMIXTOOLS for an explanation.}
 }
+\value{
+Data frame object with calculated statistics
+}
 \description{
 Calculate the D, f4, f4-ratio, or f3 statistic.
 }
