@@ -27,6 +27,9 @@ qpWave(
 
 \item{params}{Named list of parameters and their values.}
 }
+\value{
+Table of rank test results.
+}
 \description{
 Given a set of 'left' populations, estimate the lowest number of necessary
 admixture sources related to the set of 'right' populations.
@@ -38,4 +41,17 @@ different sources related to the set of 'right' populations, the rank of the
 matrix of the form \eqn{f_4(left_i, left_j; right_k, right_l)} will have a
 rank N - 1. This function uses the ADMIXTOOLS command qpWave to find the
 lowest possible rank of this matrix that is consistent with the data.
+}
+\examples{
+\dontrun{# download example data set and prepare it for analysis
+snps <- eigenstrat(download_data())
+
+# run the qpWave wrapper (detailed description in the tutorial vignette)
+result <- qpWave(
+     left = c("French", "Sardinian", "Han"),
+     right = c("Altai", "Yoruba", "Mbuti"),
+     data = snps
+)
+}
+
 }

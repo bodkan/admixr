@@ -1,3 +1,7 @@
+# admixr 0.9.1
+
+* Added executable examples to each function.
+
 # admixr 0.9.0
 
 * New prototype implementation of exhaustive search of qpAdm models

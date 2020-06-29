@@ -41,6 +41,38 @@ Patterson et al., 2012.}
 
 \item{inbreed}{See README.3PopTest in ADMIXTOOLS for an explanation.}
 }
+\value{
+Data frame object with calculated statistics
+}
 \description{
 Calculate the D, f4, f4-ratio, or f3 statistic.
+}
+\examples{
+\dontrun{# download an example genomic data set and prepare it for analysis
+snps <- eigenstrat(download_data())
+
+# define a set of populations to analyze
+pops <- c("French", "Sardinian", "Han", "Papuan", "Dinka")
+
+result_f4ratio <- f4ratio(
+    X = pops, A = "Altai", B = "Vindija", C = "Yoruba", O = "Chimp",
+    data = snps
+)
+
+result_d <- d(
+    W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp",
+    data = snps
+)
+
+result_f4 <- f4(
+    W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp",
+    data = snps
+)
+
+result_f3 <- f3(
+    A = pops, B = "Mbuti", C = "Khomani_San",
+    data = snps
+)
+}
+
 }

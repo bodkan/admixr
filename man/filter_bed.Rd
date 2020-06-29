@@ -25,6 +25,23 @@ BED file.
 }
 \details{
 This function requires a functioning bedtools installation! See:
-  - https://github.com/arq5x/bedtools2
-  - https://bedtools.readthedocs.io/en/latest/content/installation.html
+
+- https://github.com/arq5x/bedtools2
+
+- https://bedtools.readthedocs.io/
+}
+\examples{
+\dontrun{# download an example genomic data set
+prefix <- download_data()
+# create an EIGENSTRAT R object from the downloaded data
+snps <- eigenstrat(prefix)
+
+# get the path to an example BED file
+bed <- file.path(dirname(prefix), "regions.bed")
+
+# BED file contains regions to keep in an analysis
+snps_kept <- filter_bed(snps, bed)
+# BED file contains regions to remove from an analysis
+snps_removed <- filter_bed(snps, bed, remove = TRUE)
+}
 }

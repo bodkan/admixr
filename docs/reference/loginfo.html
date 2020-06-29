@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Print the full log output associated with an admixr output object. — loginfo • admixr</title>
+<title>Print the full log output of an admixr wrapper to the console. — loginfo • admixr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Print the full log output associated with an admixr output object. — loginfo" />
-<meta property="og:description" content="Print the full log output associated with an admixr output object." />
+<meta property="og:title" content="Print the full log output of an admixr wrapper to the console. — loginfo" />
+<meta property="og:description" content="Print the full log output of an admixr wrapper to the console." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -126,13 +126,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Print the full log output associated with an admixr output object.</h1>
+    <h1>Print the full log output of an admixr wrapper to the console.</h1>
     <small class="dont-index">Source: <a href='https://github.com/bodkan/admixr/blob/master/R/log.R'><code>R/log.R</code></a></small>
     <div class="hidden name"><code>loginfo.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Print the full log output associated with an admixr output object.</p>
+    <p>Print the full log output of an admixr wrapper to the console.</p>
     </div>
 
     <pre class="usage"><span class='fu'>loginfo</span>(<span class='no'>x</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>".txt"</span>)</pre>
@@ -167,6 +167,20 @@
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># download an example genomic data set and prepare it for analysis</span>
+<span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='fu'><a href='download_data.html'>download_data</a></span>())
+
+<span class='co'># define a set of populations to analyze and calculate a D statistic</span>
+<span class='no'>pops</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Han"</span>, <span class='st'>"Papuan"</span>, <span class='st'>"Khomani_San"</span>, <span class='st'>"Mbuti"</span>, <span class='st'>"Dinka"</span>)
+<span class='no'>result_d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='f4ratio.html'>d</a></span>(
+    <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>pops</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"Yoruba"</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='st'>"Vindija"</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='st'>"Chimp"</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
+)
+
+<span class='co'># examine the full log output associated with the returned object</span>
+<span class='co'># (this prints the output to the console)</span>
+<span class='co'># loginfo(result_d)</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

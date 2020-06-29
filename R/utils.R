@@ -6,6 +6,16 @@
 #'
 #' @return A data.frame object with SNP counts/proportions.
 #'
+#' @examples
+#' \dontrun{snps <- eigenstrat(download_data())
+#' 
+#' present_count <- count_snps(snps)
+#' missing_count <- count_snps(snps, missing = TRUE)
+#'
+#' present_proportion <- count_snps(snps, prop = TRUE)
+#' missing_proportion <- count_snps(snps, missing = TRUE, prop = TRUE)
+#' }
+#'
 #' @export
 #' @import rlang
 count_snps <- function(data, missing = FALSE, prop = FALSE) {

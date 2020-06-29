@@ -14,11 +14,11 @@ read_output <- function(file, ...) {
   # which only confuse the user. Let's make sure that the log file is
   # complete, informing the user to inspect it in case we see a problem.
   if (!any(stringr::str_detect(log_lines, "end of"))) {
-    cat("BEGINNING OF OUTPUT FILE\n")
-    cat("==================================================\n\n")
-    cat(paste(log_lines, collapse = "\n"))
-    cat("\n\n==================================================\n")
-    cat("END OF OUTPUT FILE\n\n")
+    message("BEGINNING OF OUTPUT FILE\n",
+            "==================================================\n\n",
+            paste(log_lines, collapse = "\n"),
+            "\n\n==================================================\n",
+            "END OF OUTPUT FILE\n\n")
     stop("The output file we got from ADMIXTOOLS is truncated.
        Please examine the full output above and check for errors.",
          call. = FALSE)

@@ -16,3 +16,12 @@ merge_eigenstrat(merged, a, b, strandcheck = "NO")
 \description{
 This function utilizes the 'mergeit' command distributed in ADMIXTOOLS.
 }
+\examples{
+\dontrun{# merged <- merge_eigenstrat(
+#    merged = <"path prefix of the merged snp/geno/ind data">
+#    a = first_EIGENSTRAT_object,
+#    b = second_EIGENSTRAT_object
+#)
+}
+
+}

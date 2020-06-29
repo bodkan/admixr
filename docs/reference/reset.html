@@ -73,7 +73,7 @@ resetting the dataset into its original state." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -152,6 +152,22 @@ resetting the dataset into its original state.</p>
 
     <p>EIGENSTRAT data S3 object.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># download an example genomic data set and prepare it for analysis</span>
+<span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='fu'><a href='download_data.html'>download_data</a></span>())
+
+<span class='co'># group individual samples into larger populations, creating a new</span>
+<span class='co'># EIGENSTRAT R object</span>
+<span class='no'>new_snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='relabel.html'>relabel</a></span>(
+    <span class='no'>snps</span>,
+    <span class='kw'>European</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>),
+    <span class='kw'>African</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Dinka"</span>, <span class='st'>"Yoruba"</span>, <span class='st'>"Mbuti"</span>, <span class='st'>"Khomani_San"</span>),
+    <span class='kw'>Archaic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Vindija"</span>, <span class='st'>"Altai"</span>, <span class='st'>"Denisova"</span>)
+)
+
+<span class='co'># remove the population grouping in the previous step - this</span>
+<span class='co'># results in the same EIGENSTRAT object tht we started with</span>
+<span class='no'>original_snps</span> <span class='kw'>&lt;-</span> <span class='fu'>reset</span>(<span class='no'>new_snps</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

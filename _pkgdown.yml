@@ -14,6 +14,15 @@ reference:
     - qpWave
     - qpAdm
 
+  - title: qpAdm model exploration
+    contents:
+    - qpAdm_rotation
+    - qpAdm_filter
+
+  - title: Examining output log information
+    contents:
+    - loginfo
+
   - title: Data processing and filtering
     contents:
     - eigenstrat
@@ -29,7 +38,3 @@ reference:
     - starts_with("read_(geno|ind|snp)")
     - starts_with("write_(geno|ind|snp)")
     - read_output
-
-  - title: Examining output log information
-    contents:
-    - loginfo

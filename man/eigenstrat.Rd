@@ -20,3 +20,14 @@ S3 object of the EIGENSTRAT class.
 This function creates an instance of the EIGENSTRAT S3 class, which
 encapsulates all paths to data files required for an ADMIXTOOLS analysis.
 }
+\examples{
+\dontrun{# download an example genomic data and get the path prefix to the
+# trio of snp/geno/ind files in an EIGENSTRAT format
+prefix <- download_data()
+
+# wrap the trio of snp/geno/ind files in an object of the class
+# EIGENSTRAT
+snps <- eigenstrat(prefix)
+}
+
+}

@@ -26,6 +26,28 @@ qpAdm(
 
 \item{params}{Named list of parameters and their values.}
 }
+\value{
+List of three components:
+    1. estimated ancestry proportions
+    2. ranks statistics
+    3. analysis of patterns (all possible subsets of ancestry sources).
+}
 \description{
 Calculate ancestry proportions in a set of target populations.
+}
+\examples{
+\dontrun{# download example data set and prepare it for analysis
+snps <- eigenstrat(download_data())
+
+# estimate the proportion of Neandertal ancestry in a French
+# individual and other associated qpAdm statistics (see detailed
+# description in the tutorial vignette)
+result <- qpAdm(
+    target = "French",
+    sources = c("Vindija", "Yoruba"),
+    outgroups = c("Chimp", "Denisova", "Altai"),
+    data = snps
+)
+}
+
 }

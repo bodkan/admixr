@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -82,13 +82,13 @@
 
       
 
-      </header><script src="qpAdm_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="qpAdm_files/header-attrs-2.3/header-attrs.js"></script><script src="qpAdm_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Fitting qpAdm models with a ‘rotation’ strategy</h1>
                         <h4 class="author">Martin Petr</h4>
             
-            <h4 class="date">2020-06-22</h4>
+            <h4 class="date">2020-06-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/qpAdm.Rmd"><code>vignettes/qpAdm.Rmd</code></a></small>
       <div class="hidden name"><code>qpAdm.Rmd</code></div>
@@ -142,10 +142,7 @@
 <li>It gives us a clear expectation of what models we should <em>definitely</em> reject.</li>
 </ol>
 <p>First, let’s download and install a development version of <em>admixr</em> to get access to the new features, and download a small example data set:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># install the latest version of 'admixr' from Gihub:</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)
-
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">admixr</span>)
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">admixr</span>)
 
 <span class="no">snps</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eigenstrat.html">eigenstrat</a></span>(<span class="fu"><a href="../reference/download_data.html">download_data</a></span>())</pre></body></html></div>
 <p>These are the individuals for which we have genotype data:</p>
@@ -371,19 +368,19 @@
 <span class="co">#&gt; Full output log of qpAdm rotation for model 'm40':</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpMRMuhX/qpAdm__535930199.par</span>
+<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpJnYmw2/qpAdm__1559246697.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpMRMuhX/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpMRMuhX/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpMRMuhX/snps/snps.ind</span>
-<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpMRMuhX/qpAdm__535930199.popleft</span>
-<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpMRMuhX/qpAdm__535930199.popright</span>
+<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpJnYmw2/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpJnYmw2/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpJnYmw2/snps/snps.ind</span>
+<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpJnYmw2/qpAdm__1559246697.popleft</span>
+<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpJnYmw2/qpAdm__1559246697.popright</span>
 <span class="co">#&gt; allsnps: YES</span>
 <span class="co">#&gt; summary: YES</span>
 <span class="co">#&gt; details: YES</span>
 <span class="co">#&gt; ## qpAdm version: 1000</span>
-<span class="co">#&gt; seed: -2125211068</span>
+<span class="co">#&gt; seed: 468404858</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; left pops:</span>
 <span class="co">#&gt; French</span>
@@ -474,7 +471,7 @@
 <span class="co">#&gt; gendstat:               Yoruba                Chimp    -0.121</span>
 <span class="co">#&gt; gendstat:                Altai                Chimp    -0.086</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ##end of qpAdm:        4.415 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
+<span class="co">#&gt; ##end of qpAdm:        3.470 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
 </div>
   </div>
 

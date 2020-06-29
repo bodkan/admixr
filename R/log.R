@@ -1,4 +1,4 @@
-#' Print the full log output associated with an admixr output object.
+#' Print the full log output of an admixr wrapper to the console.
 #'
 #' @param x Output from one of the admixr wrappers (d, f4, qpAdm, ...)
 #' @param target A specific log to examine (relevant for multiple target qpAdm runs)
@@ -6,6 +6,22 @@
 #' @param prefix Prefix of the output log file(s) (name of the admixr command by default)
 #' @param dir In which directory to save the log file(s)?
 #' @param suffix Suffix of the output log file(s) (".txt" by default)
+#'
+#' @examples
+#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # define a set of populations to analyze and calculate a D statistic
+#' pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka")
+#' result_d <- d(
+#'     W = pops, X = "Yoruba", Y = "Vindija", Z = "Chimp",
+#'     data = snps
+#' )
+#'
+#' # examine the full log output associated with the returned object
+#' # (this prints the output to the console)
+#' # loginfo(result_d)
+#' }
 #'
 #' @export
 loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix = ".txt") {
@@ -54,7 +70,7 @@ loginfo <- function(x, target = NA, save = FALSE, prefix = NA, dir = ".", suffix
       } else {
         title <- cmd
       }
-      
+
       if (i > 1 && is.na(target)) cat("\n\n")
       cat(paste0("Full output log of ", title, ":\n"))
       cat("===================================================\n\n")

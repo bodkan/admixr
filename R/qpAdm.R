@@ -14,6 +14,25 @@
 #'     with a traditional qpAdm run) or just the proportions
 #'     (determined by the value of the 'fulloutput' argument)
 #'
+#' @examples
+#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # find the set of most likely two-source qpAdm models of
+#' # a French individual - produce only the 'proportions'
+#' # qpAdm summary
+#' models <- qpAdm_rotation(
+#'     data = snps,
+#'     target = "French",
+#'     candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija",
+#'                    "Altai", "Denisova", "Chimp"),
+#'     minimize = TRUE,
+#'     nsources = 2,
+#'     ncores = 2,
+#'     fulloutput = FALSE
+#' )
+#' }
+#'
 #' @importFrom utils combn
 #' @export
 qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources = 2, ncores = 1, fulloutput = FALSE) {
@@ -116,6 +135,30 @@ qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources =
 #'     admixture proportions)
 #'
 #' @return qpAdm_rotation object filtered down based on p-value
+#'
+#' 
+#'
+#' @examples
+#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' snps <- eigenstrat(download_data())
+#'
+#' # find the set of most likely two-source qpAdm models of
+#' # a French individual - produce only the 'proportions'
+#' # qpAdm summary
+#' models <- qpAdm_rotation(
+#'     data = snps,
+#'     target = "French",
+#'     candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija",
+#'                    "Altai", "Denisova", "Chimp"),
+#'     minimize = TRUE,
+#'     nsources = 2,
+#'     ncores = 2,
+#'     fulloutput = FALSE
+#' )
+#'
+#' # filter out models which can clearly be rejected
+#' fits <- qpAdm_filter(models, p = 0.05)
+#' }
 #'
 #' @export
 qpAdm_filter <- function(x, p = 0.05) {
