@@ -22,7 +22,7 @@ There were two new points raised in the last review:
    in this package are automatically tested with each new version
    against the latest compiled ADMIXTOOLS, including all examples and
    vignettes). But that's only because I can compile all dependencies
-   before the actual tests.
+   on the server before running the check.
 
 2. The reviewer reminded me that I should be using `tempdir()` for
    accessing the filesystem. However, in all examples/vignettes/tests
