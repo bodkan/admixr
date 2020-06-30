@@ -260,7 +260,7 @@ transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'     specifying the path to a new ind file.
 #'#'
 #' @examples
-#' # download an example genomic data set and prepare it for analysis
+#' \dontrun{# download an example genomic data set and prepare it for analysis
 #' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # group individual samples into larger populations, creating a new
@@ -271,6 +271,7 @@ transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'     African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
 #'     Archaic = c("Vindija", "Altai", "Denisova")
 #' )
+#' }
 #'
 #' @export
 relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
@@ -305,7 +306,7 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
 #'
 #'
 #' @examples
-#' # download an example genomic data set and prepare it for analysis
+#' \dontrun{# download an example genomic data set and prepare it for analysis
 #' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # group individual samples into larger populations, creating a new
@@ -320,6 +321,7 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
 #' # remove the population grouping in the previous step - this
 #' # results in the same EIGENSTRAT object tht we started with
 #' original_snps <- reset(new_snps)
+#' }
 #'
 #' @export
 reset <- function(data) {

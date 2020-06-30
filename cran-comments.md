@@ -8,8 +8,8 @@ There were two points raised in the last review:
    'do not run'"), I should clarify the following:
 
    The only purpose of this package is to wrap around command-line
-   utilities in the unix-based ADMIXTOOLS software distribution for
-   population genetics (a large C codebase with several other
+   utilities in the unix-based ADMIXTOOLS suite for population
+   genetics (a large C codebase with several other
    dependencies). Thanks to this package, the user can do all the work
    in R without ever touching bash/awk/sed/perl.
 
@@ -17,8 +17,9 @@ There were two points raised in the last review:
    installation - the documented functions are wrappers and pipelines
    for more complex command-line operations happening under the hood.
    
-   This is why they are all flagged with "do not run" - they simply
-   will not run unless ADMIXTOOLS is compiled on the system.
+   This is why all examples are flagged with "do not run" - they are
+   meaningless unless ADMIXTOOLS is compiled on the system and won't
+   even run without it.
 
 2. The reviewer reminded me that I should be using `tempdir()` for
    accessing the filesystem. However, in all examples/vignettes/tests
