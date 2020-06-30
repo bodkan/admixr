@@ -1,15 +1,25 @@
 ## Resubmission
 
-In this version I have addressed both points raised during the second
-round of reviews:
+1. After reading previous review comments, I'm afraid there is some
+   misunderstanding in what this R package does.
 
-* I have added examples to the documentation of each exported wrapper
-  function.
+   As written in the DESCRIPTION, it's only purpose is to wrap around
+   a set of command-line utilities distributed in the ADMIXTOOLS
+   software suite (ADMIXTOOLS is a large C codebase).
 
-* The only calls to `cat()` are now in `print.*` methods and in
-  interactive functions whose only purpose is to print output to the
-  console. All other communication with the user is now done via
-  `message()`, `warning()` or `stop()` functions.
+   Naturally, the examples in the documentation require working
+   ADMIXTOOLS installation - all documented functions are convenience
+   wrappers and automated pipelines for complex command-line
+   operations.
+
+   This is why they are flagged with "do not run" - without compiled
+   ADMIXTOOLS command-line programs, they will simply not run.
+
+2. The reviewer reminded me that it's not allowed to modify user home
+   filespace in examples/vignettes/tests and that I should be using
+   `tempdir()`. However, I did not find a case where this is not the
+   case. In all examples/vignettes/tests I'm using `tempdir()` unless
+   the user specifies otherwise.
 
 ## Test environments
 

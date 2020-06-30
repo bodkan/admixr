@@ -142,6 +142,7 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #' # BED file contains regions to remove from an analysis
 #' snps_removed <- filter_bed(snps, bed, remove = TRUE)
 #' }
+#'
 #' @export
 filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp")) {
   if (file.exists(outfile)) {
@@ -259,7 +260,7 @@ transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'     specifying the path to a new ind file.
 #'#'
 #' @examples
-#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' # download an example genomic data set and prepare it for analysis
 #' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # group individual samples into larger populations, creating a new
@@ -270,11 +271,6 @@ transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'     African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
 #'     Archaic = c("Vindija", "Altai", "Denisova")
 #' )
-#'
-#' # use the newly created EIGENSTRAT object to run a D statistic with
-#' # the new population groups
-#' result_d  <- d(W = "European", X = "African", Y = "Archaic", Z = "Chimp", data = new_snps)
-#' }
 #'
 #' @export
 relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
@@ -309,7 +305,7 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
 #'
 #'
 #' @examples
-#' \dontrun{# download an example genomic data set and prepare it for analysis
+#' # download an example genomic data set and prepare it for analysis
 #' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # group individual samples into larger populations, creating a new
