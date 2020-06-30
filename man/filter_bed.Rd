@@ -32,7 +32,7 @@ This function requires a functioning bedtools installation! See:
 }
 \examples{
 \dontrun{# download an example genomic data set
-prefix <- download_data()
+prefix <- download_data(dirname = tempdir())
 # create an EIGENSTRAT R object from the downloaded data
 snps <- eigenstrat(prefix)
 

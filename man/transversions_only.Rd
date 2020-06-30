@@ -22,7 +22,7 @@ damage (C->T and G->A substitutions).
 }
 \examples{
 \dontrun{# download an example genomic data set and prepare it for analysis
-snps <- eigenstrat(download_data())
+snps <- eigenstrat(download_data(dirname = tempdir()))
 
 # perform the calculation only on transversions
 snps_tv <- transversions_only(snps)

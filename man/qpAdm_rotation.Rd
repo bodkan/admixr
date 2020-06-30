@@ -42,7 +42,7 @@ Harney et al. 2020 (bioRxiv)
 }
 \examples{
 \dontrun{# download an example genomic data set and prepare it for analysis
-snps <- eigenstrat(download_data())
+snps <- eigenstrat(download_data(dirname = tempdir()))
 
 # find the set of most likely two-source qpAdm models of
 # a French individual - produce only the 'proportions'

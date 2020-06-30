@@ -7,7 +7,7 @@
 #' @return A data.frame object with SNP counts/proportions.
 #'
 #' @examples
-#' \dontrun{snps <- eigenstrat(download_data())
+#' \dontrun{snps <- eigenstrat(download_data(dirname = tempdir()))
 #' 
 #' present_count <- count_snps(snps)
 #' missing_count <- count_snps(snps, missing = TRUE)

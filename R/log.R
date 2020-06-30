@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' \dontrun{# download an example genomic data set and prepare it for analysis
-#' snps <- eigenstrat(download_data())
+#' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # define a set of populations to analyze and calculate a D statistic
 #' pops <- c("French", "Sardinian", "Han", "Papuan", "Khomani_San", "Mbuti", "Dinka")
@@ -19,8 +19,7 @@
 #' )
 #'
 #' # examine the full log output associated with the returned object
-#' # (this prints the output to the console)
-#' # loginfo(result_d)
+#' loginfo(result_d)
 #' }
 #'
 #' @export

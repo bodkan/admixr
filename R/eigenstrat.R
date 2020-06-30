@@ -12,7 +12,7 @@
 #' @examples
 #' \dontrun{# download an example genomic data and get the path prefix to the
 #' # trio of snp/geno/ind files in an EIGENSTRAT format
-#' prefix <- download_data()
+#' prefix <- download_data(dirname = tempdir())
 #'
 #' # wrap the trio of snp/geno/ind files in an object of the class
 #' # EIGENSTRAT
@@ -80,17 +80,9 @@ print.EIGENSTRAT <- function(x, ...) {
 #' 
 #' This function utilizes the 'mergeit' command distributed in ADMIXTOOLS.
 #'
-#' @param merged Prefix of the final merged EIGENSTRAT object.
-#' @param a,b Two EIGENSTRAT datasets to merge.
+#' @param merged Prefix of the path to the merged EIGENSTRAT snp/ind/geno trio.
+#' @param a,b Two EIGENSTRAT objects to merge.
 #' @param strandcheck Deal with potential strand issues? Mostly for historic reasons. For details see the README of ADMIXTOOLS convertf.
-#'
-#' @examples
-#' \dontrun{# merged <- merge_eigenstrat(
-#' #    merged = <"path prefix of the merged snp/geno/ind data">
-#' #    a = first_EIGENSTRAT_object,
-#' #    b = second_EIGENSTRAT_object
-#' #)
-#' }
 #'
 #' @export
 merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
@@ -138,7 +130,7 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #'
 #' @examples
 #' \dontrun{# download an example genomic data set
-#' prefix <- download_data()
+#' prefix <- download_data(dirname = tempdir())
 #' # create an EIGENSTRAT R object from the downloaded data
 #' snps <- eigenstrat(prefix)
 #'
@@ -226,7 +218,7 @@ keep_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'
 #' @examples
 #' \dontrun{# download an example genomic data set and prepare it for analysis
-#' snps <- eigenstrat(download_data())
+#' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # perform the calculation only on transversions
 #' snps_tv <- transversions_only(snps)
@@ -268,7 +260,7 @@ transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'#'
 #' @examples
 #' \dontrun{# download an example genomic data set and prepare it for analysis
-#' snps <- eigenstrat(download_data())
+#' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # group individual samples into larger populations, creating a new
 #' # EIGENSTRAT R object
@@ -318,7 +310,7 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
 #'
 #' @examples
 #' \dontrun{# download an example genomic data set and prepare it for analysis
-#' snps <- eigenstrat(download_data())
+#' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # group individual samples into larger populations, creating a new
 #' # EIGENSTRAT R object

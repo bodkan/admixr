@@ -24,7 +24,7 @@ Replace population/sample names with specified group labels.
 }
 \examples{
 \dontrun{# download an example genomic data set and prepare it for analysis
-snps <- eigenstrat(download_data())
+snps <- eigenstrat(download_data(dirname = tempdir()))
 
 # group individual samples into larger populations, creating a new
 # EIGENSTRAT R object
