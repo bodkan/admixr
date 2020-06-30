@@ -2,19 +2,20 @@
 
 This is a third (re-)submission of the package to CRAN.
 
-There were two points raised in the last review:
+There were two new points raised in the last review:
 
-1. After reading the first comment ("your examples are wrapped with
-   'do not run'"), I should clarify the following:
+1. After reading the first comment ("your examples in the
+   documentation are all wrapped in 'do not run'"), I should clarify
+   the following:
 
-   The only purpose of this package is to wrap around command-line
+   The purpose of this package is to wrap around command-line
    utilities in the unix-based ADMIXTOOLS suite for population
-   genetics (a large C codebase with several other
-   dependencies). Thanks to this package, the user can do all the work
-   in R without ever touching bash/awk/sed/perl.
+   genetics (a large C codebase). The submitted R package allows the
+   user to do all the work in R (data processing/statistics/plotting)
+   without ever touching bash/awk/sed/perl.
 
    All examples in the documentation require working ADMIXTOOLS
-   installation - the documented functions are wrappers and pipelines
+   installation - the exported functions are wrappers and pipelines
    for more complex command-line operations happening under the hood.
    
    This is why all examples are flagged with "do not run" - they are
@@ -24,7 +25,7 @@ There were two points raised in the last review:
 2. The reviewer reminded me that I should be using `tempdir()` for
    accessing the filesystem. However, in all examples/vignettes/tests
    I've been using `tempdir()` by default unless the user specified
-   otherwise. Nothing has changed in regard to this point.
+   otherwise. Perhaps this was just a misunderstanding.
 
 ## Test environments
 
