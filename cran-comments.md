@@ -2,32 +2,24 @@
 
 This is a third (re-)submission of the package to CRAN.
 
-There were two new points raised in the last review:
+There was one major point raised in the last review: "your examples in
+the documentation are all wrapped in 'do not run'".
 
-1. After reading the first comment ("your examples in the
-   documentation are all wrapped in 'do not run'"), I should clarify
-   the following:
+I should clarify the following:
 
-   The purpose of this package is to wrap around command-line programs
-   in the ADMIXTOOLS suite for population genetics (a large C
-   codebase, only available for unix/Linux). This package allows the
-   user to do all the work in R (data processing/statistics/plotting)
-   without ever touching bash/awk/sed/Perl.
+The purpose of this package is to wrap around command-line programs in
+the ADMIXTOOLS suite for population genetics (a large C codebase, only
+available for unix/Linux).
 
-   All examples require working ADMIXTOOLS installation. This is why
-   they are flagged with "do not run" - unless ADMIXTOOLS is compiled
-   on the system, they will not run.
+All examples require working ADMIXTOOLS installation. This is why they
+are flagged with "do not run" - unless ADMIXTOOLS is compiled on the
+system, they will not run.
    
-   This is easily solved on a service such as Travis CI (all functions
-   in this package are automatically tested with each new version
-   against the latest compiled ADMIXTOOLS, including all examples and
-   vignettes). But that's only because I can compile all dependencies
-   on the server before running the check.
-
-2. The reviewer reminded me that I should be using `tempdir()` for
-   accessing the filesystem. However, in all examples/vignettes/tests
-   I've been already using `tempdir()` by default unless the user
-   specified otherwise.
+This is easily solved on a service such as Travis CI (all functions in
+this package are automatically tested with each new version against
+the latest compiled ADMIXTOOLS, including all examples and
+vignettes). But that's only because I can compile all dependencies on
+the server before running the check.
 
 ## Test environments
 
