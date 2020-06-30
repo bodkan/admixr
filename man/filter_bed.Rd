@@ -32,7 +32,7 @@ This function requires a functioning bedtools installation! See:
 }
 \examples{
 \dontrun{# download an example genomic data set
-prefix <- download_data()
+prefix <- download_data(dirname = tempdir())
 # create an EIGENSTRAT R object from the downloaded data
 snps <- eigenstrat(prefix)
 
@@ -44,4 +44,5 @@ snps_kept <- filter_bed(snps, bed)
 # BED file contains regions to remove from an analysis
 snps_removed <- filter_bed(snps, bed, remove = TRUE)
 }
+
 }

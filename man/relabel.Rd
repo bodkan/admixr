@@ -24,7 +24,7 @@ Replace population/sample names with specified group labels.
 }
 \examples{
 \dontrun{# download an example genomic data set and prepare it for analysis
-snps <- eigenstrat(download_data())
+snps <- eigenstrat(download_data(dirname = tempdir()))
 
 # group individual samples into larger populations, creating a new
 # EIGENSTRAT R object
@@ -34,10 +34,6 @@ new_snps <- relabel(
     African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
     Archaic = c("Vindija", "Altai", "Denisova")
 )
-
-# use the newly created EIGENSTRAT object to run a D statistic with
-# the new population groups
-result_d  <- d(W = "European", X = "African", Y = "Archaic", Z = "Chimp", data = new_snps)
 }
 
 }

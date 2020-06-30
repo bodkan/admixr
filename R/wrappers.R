@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' \dontrun{# download an example genomic data set and prepare it for analysis
-#' snps <- eigenstrat(download_data())
+#' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # define a set of populations to analyze
 #' pops <- c("French", "Sardinian", "Han", "Papuan", "Dinka")
@@ -142,7 +142,7 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
 #'
 #' @examples
 #' \dontrun{# download example data set and prepare it for analysis
-#' snps <- eigenstrat(download_data())
+#' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # estimate the proportion of Neandertal ancestry in a French
 #' # individual and other associated qpAdm statistics (see detailed
@@ -239,7 +239,7 @@ qpAdm <- function(data, target, sources, outgroups, outdir = NULL,
 #'
 #' @examples
 #' \dontrun{# download example data set and prepare it for analysis
-#' snps <- eigenstrat(download_data())
+#' snps <- eigenstrat(download_data(dirname = tempdir()))
 #'
 #' # run the qpWave wrapper (detailed description in the tutorial vignette)
 #' result <- qpWave(
@@ -278,4 +278,3 @@ qpWave <- function(data, left, right, maxrank = NULL, details = FALSE, outdir = 
 
   read_output(files[["log_file"]], details)
 }
-

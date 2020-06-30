@@ -49,7 +49,7 @@ Calculate the D, f4, f4-ratio, or f3 statistic.
 }
 \examples{
 \dontrun{# download an example genomic data set and prepare it for analysis
-snps <- eigenstrat(download_data())
+snps <- eigenstrat(download_data(dirname = tempdir()))
 
 # define a set of populations to analyze
 pops <- c("French", "Sardinian", "Han", "Papuan", "Dinka")

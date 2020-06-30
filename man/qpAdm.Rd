@@ -37,7 +37,7 @@ Calculate ancestry proportions in a set of target populations.
 }
 \examples{
 \dontrun{# download example data set and prepare it for analysis
-snps <- eigenstrat(download_data())
+snps <- eigenstrat(download_data(dirname = tempdir()))
 
 # estimate the proportion of Neandertal ancestry in a French
 # individual and other associated qpAdm statistics (see detailed

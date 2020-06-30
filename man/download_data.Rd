@@ -7,8 +7,9 @@
 download_data(dirname = tempdir())
 }
 \arguments{
-\item{dirname}{Directory in which to put the data (EIGENSTRAT trio of snp/geno/ind files).}
+\item{dirname}{Directory in which to put the data (EIGENSTRAT trio
+of snp/geno/ind files).}
 }
 \description{
-Download example SNP data.
+The data is downloaded to a temporary directory by default.
 }

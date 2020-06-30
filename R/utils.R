@@ -7,7 +7,7 @@
 #' @return A data.frame object with SNP counts/proportions.
 #'
 #' @examples
-#' \dontrun{snps <- eigenstrat(download_data())
+#' \dontrun{snps <- eigenstrat(download_data(dirname = tempdir()))
 #' 
 #' present_count <- count_snps(snps)
 #' missing_count <- count_snps(snps, missing = TRUE)
@@ -91,7 +91,10 @@ check_presence <- function(labels, data) {
 
 #' Download example SNP data.
 #'
-#' @param dirname Directory in which to put the data (EIGENSTRAT trio of snp/geno/ind files).
+#' The data is downloaded to a temporary directory by default.
+#' 
+#' @param dirname Directory in which to put the data (EIGENSTRAT trio
+#'     of snp/geno/ind files).
 #'
 #' @export
 download_data <- function(dirname = tempdir()) {

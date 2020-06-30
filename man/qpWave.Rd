@@ -44,7 +44,7 @@ lowest possible rank of this matrix that is consistent with the data.
 }
 \examples{
 \dontrun{# download example data set and prepare it for analysis
-snps <- eigenstrat(download_data())
+snps <- eigenstrat(download_data(dirname = tempdir()))
 
 # run the qpWave wrapper (detailed description in the tutorial vignette)
 result <- qpWave(
