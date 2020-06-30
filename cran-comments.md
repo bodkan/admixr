@@ -12,16 +12,22 @@ There were two new points raised in the last review:
    in the ADMIXTOOLS suite for population genetics (a large C
    codebase, only available for unix/Linux). This package allows the
    user to do all the work in R (data processing/statistics/plotting)
-   without ever touching bash/awk/sed/perl.
+   without ever touching bash/awk/sed/Perl.
 
    All examples require working ADMIXTOOLS installation. This is why
    they are flagged with "do not run" - unless ADMIXTOOLS is compiled
    on the system, they will not run.
+   
+   This is easily solved on a service such as Travis CI (all functions
+   in this package are automatically tested with each new version
+   against the latest compiled ADMIXTOOLS, including all examples and
+   vignettes). But that's only because I can compile all dependencies
+   before the actual tests.
 
 2. The reviewer reminded me that I should be using `tempdir()` for
    accessing the filesystem. However, in all examples/vignettes/tests
-   I've been using `tempdir()` by default unless the user specified
-   otherwise.
+   I've been already using `tempdir()` by default unless the user
+   specified otherwise.
 
 ## Test environments
 
