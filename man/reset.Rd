@@ -17,7 +17,7 @@ Set 'exclude' and 'group' modifications of snp and ind files, effectively
 resetting the dataset into its original state.
 }
 \examples{
-\dontrun{# download an example genomic data set and prepare it for analysis
+# download an example genomic data set and prepare it for analysis
 snps <- eigenstrat(download_data(dirname = tempdir()))
 
 # group individual samples into larger populations, creating a new
@@ -32,6 +32,5 @@ new_snps <- relabel(
 # remove the population grouping in the previous step - this
 # results in the same EIGENSTRAT object tht we started with
 original_snps <- reset(new_snps)
-}
 
 }

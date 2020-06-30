@@ -129,7 +129,7 @@ case you want to place it elsewhere). In addition to this, the function returns
 a shared path/prefix of the whole dataset.
 
 ```{r eigenstrat_path}
-(prefix <- download_data())
+(prefix <- download_data(dirname = tempdir()))
 ```
 
 We can verify that there are indeed three files with this prefix:

@@ -44,4 +44,5 @@ snps_kept <- filter_bed(snps, bed)
 # BED file contains regions to remove from an analysis
 snps_removed <- filter_bed(snps, bed, remove = TRUE)
 }
+
 }

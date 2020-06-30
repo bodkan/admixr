@@ -320,7 +320,6 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
 #' # remove the population grouping in the previous step - this
 #' # results in the same EIGENSTRAT object tht we started with
 #' original_snps <- reset(new_snps)
-#' }
 #'
 #' @export
 reset <- function(data) {

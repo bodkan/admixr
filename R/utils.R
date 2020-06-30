@@ -91,7 +91,10 @@ check_presence <- function(labels, data) {
 
 #' Download example SNP data.
 #'
-#' @param dirname Directory in which to put the data (EIGENSTRAT trio of snp/geno/ind files).
+#' The data is downloaded to a temporary directory by default.
+#' 
+#' @param dirname Directory in which to put the data (EIGENSTRAT trio
+#'     of snp/geno/ind files).
 #'
 #' @export
 download_data <- function(dirname = tempdir()) {

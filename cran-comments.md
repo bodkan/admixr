@@ -1,25 +1,29 @@
 ## Resubmission
 
-1. After reading previous review comments, I'm afraid there is some
-   misunderstanding in what this R package does.
+This is a third (re-)submission of the package to CRAN.
 
-   As written in the DESCRIPTION, it's only purpose is to wrap around
-   a set of command-line utilities distributed in the ADMIXTOOLS
-   software suite (ADMIXTOOLS is a large C codebase).
+There were two points raised in the last review:
 
-   Naturally, the examples in the documentation require working
-   ADMIXTOOLS installation - all documented functions are convenience
-   wrappers and automated pipelines for complex command-line
-   operations.
+1. After reading the first comment ("your examples are wrapped with
+   'do not run'"), I should clarify the following:
 
-   This is why they are flagged with "do not run" - without compiled
-   ADMIXTOOLS command-line programs, they will simply not run.
+   The only purpose of this package is to wrap around command-line
+   utilities in the unix-based ADMIXTOOLS software distribution for
+   population genetics (a large C codebase with several other
+   dependencies). Thanks to this package, the user can do all the work
+   in R without ever touching bash/awk/sed/perl.
 
-2. The reviewer reminded me that it's not allowed to modify user home
-   filespace in examples/vignettes/tests and that I should be using
-   `tempdir()`. However, I did not find a case where this is not the
-   case. In all examples/vignettes/tests I'm using `tempdir()` unless
-   the user specifies otherwise.
+   All examples in the documentation require working ADMIXTOOLS
+   installation - the documented functions are wrappers and pipelines
+   for more complex command-line operations happening under the hood.
+   
+   This is why they are all flagged with "do not run" - they simply
+   will not run unless ADMIXTOOLS is compiled on the system.
+
+2. The reviewer reminded me that I should be using `tempdir()` for
+   accessing the filesystem. However, in all examples/vignettes/tests
+   I've been using `tempdir()` by default unless the user specified
+   otherwise. Nothing has changed in regard to this point.
 
 ## Test environments
 
