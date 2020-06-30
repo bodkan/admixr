@@ -143,12 +143,12 @@
 <p>Therefore, a VCF file is essentially a combination of all three files in a single package.</p>
 <p>Let’s first download a small testing SNP dataset using a built-in <em>admixr</em> function <code><a href="../reference/download_data.html">download_data()</a></code>. This function downloads the data into a temporary directory (you can specify the destination using its <code>dirname</code> argument, in case you want to place it elsewhere). In addition to this, the function returns a shared path/prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r">(prefix &lt;- download_data(dirname = tempdir()))
-[1] "/var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps"</pre></body></html></div>
+[1] "/var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps"</pre></body></html></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r">list.files(path = dirname(prefix), pattern = basename(prefix), full.names = TRUE)
-[1] "/var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.geno"
-[2] "/var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.ind" 
-[3] "/var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.snp" </pre></body></html></div>
+[1] "/var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.geno"
+[2] "/var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.ind" 
+[3] "/var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.snp" </pre></body></html></div>
 <p>Let’s look at their contents:</p>
 <div id="ind-file" class="section level4">
 <h4 class="hasAnchor">
@@ -217,9 +217,9 @@ Denisova     U  Denisova</code></pre>
 <span class="co">#&gt; EIGENSTRAT object</span>
 <span class="co">#&gt; =================</span>
 <span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.geno</span></pre></body></html></div>
+<span class="co">#&gt;   ind file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.ind</span>
+<span class="co">#&gt;   snp file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.snp</span>
+<span class="co">#&gt;   geno file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.geno</span></pre></body></html></div>
 <p>This object encapsulates the paths to all three EIGENSTRAT components and makes it easy to pass the data to different <em>admixr</em> functions.</p>
 <p>The following couple of sections describe how to use the <em>admixr</em> package using simple example analyses.</p>
 </div>
@@ -1054,12 +1054,12 @@ Denisova     U  Denisova</code></pre>
 <span class="co">#&gt; EIGENSTRAT object</span>
 <span class="co">#&gt; =================</span>
 <span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.geno</span>
+<span class="co">#&gt;   ind file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.ind</span>
+<span class="co">#&gt;   snp file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.snp</span>
+<span class="co">#&gt;   geno file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.geno</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; modifiers:</span>
-<span class="co">#&gt;   groups:  /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/file819865470f5d.ind</span></pre></body></html></div>
+<span class="co">#&gt;   groups:  /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/filebc6b12a38897.ind</span></pre></body></html></div>
 <p>We can see that the function <code>relabel</code> returned a modified <code>EIGENSTRAT</code> object, which contains a new item in the “modifiers” section - the path to a new ind file. Let’s look at its contents:</p>
 <pre><code>Chimp        U  Chimp
 Mbuti        U  African
@@ -1217,12 +1217,12 @@ Denisova     U  Archaic</code></pre>
 <span class="co">#&gt; EIGENSTRAT object</span>
 <span class="co">#&gt; =================</span>
 <span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.geno</span>
+<span class="co">#&gt;   ind file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.ind</span>
+<span class="co">#&gt;   snp file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.snp</span>
+<span class="co">#&gt;   geno file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.geno</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; modifiers:</span>
-<span class="co">#&gt;   excluded sites:  /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/file81984ce26de3.snp </span>
+<span class="co">#&gt;   excluded sites:  /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/filebc6b65614b35.snp </span>
 <span class="co">#&gt;       (SNPs excluded: 100000, SNPs remaining: 400000)</span></pre></body></html></div>
 <p>If we want to run the whole analysis in a single pipeline, we can use the <code><a href="../reference/pipe.html">%&gt;%</a></code> pipe operator and do the following:</p>
 <p>(The <code><a href="../reference/pipe.html">%&gt;%</a></code> operator takes what is on its left side and puts it as a first argument of a function on the right side. While it takes some time to get used to, it is very useful in longer multi-step “pipelines” because it makes more pipelines much more readable. In fact, the resulting code often reads <em>almost</em> like English! The <code><a href="../reference/pipe.html">%&gt;%</a></code> pipe is automatically imported when you load the <code>tidyverse</code> library, and you can read about it more <a href="https://magrittr.tidyverse.org">here</a>.)</p>
@@ -1278,13 +1278,13 @@ merged &lt;- merge_eigenstrat(
 <span class="co">#&gt; Full output log of qpDstat:</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpDstat: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/qpDstat__1877170126.par</span>
+<span class="co">#&gt; qpDstat: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/qpDstat__912766437.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.ind</span>
-<span class="co">#&gt; popfilename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/qpDstat__1877170126.pop</span>
+<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.ind</span>
+<span class="co">#&gt; popfilename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/qpDstat__912766437.pop</span>
 <span class="co">#&gt; printsd: YES</span>
 <span class="co">#&gt; ## qpDstat version: 900</span>
 <span class="co">#&gt; number of quadruples 3</span>
@@ -1301,7 +1301,7 @@ merged &lt;- merge_eigenstrat(
 <span class="co">#&gt; result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 </span>
 <span class="co">#&gt; result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 </span>
 <span class="co">#&gt; result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 </span>
-<span class="co">#&gt; ##end of qpDstat:        3.774 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
+<span class="co">#&gt; ##end of qpDstat:        3.682 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
 <p>The situation is a bit more complex for <em>qpAdm</em> which can be evaluated for multiple target populations/samples which are then analyzed separately, with each analysis having its own log file:</p>
 <div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="no">qpadm_res</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/qpAdm.html">qpAdm</a></span>(
   <span class="kw">target</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sardinian"</span>, <span class="st">"Han"</span>),
@@ -1343,19 +1343,19 @@ merged &lt;- merge_eigenstrat(
 <span class="co">#&gt; Full output log of qpAdm for target 'Han':</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/qpAdm__2048919898.par</span>
+<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/qpAdm__457662370.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/snps/snps.ind</span>
-<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/qpAdm__2048919898.popleft</span>
-<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpz0m37V/qpAdm__2048919898.popright</span>
+<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/snps/snps.ind</span>
+<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/qpAdm__457662370.popleft</span>
+<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpZtBuc9/qpAdm__457662370.popright</span>
 <span class="co">#&gt; allsnps: YES</span>
 <span class="co">#&gt; summary: YES</span>
 <span class="co">#&gt; details: YES</span>
 <span class="co">#&gt; ## qpAdm version: 1000</span>
-<span class="co">#&gt; seed: 1540201561</span>
+<span class="co">#&gt; seed: 1164234138</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; left pops:</span>
 <span class="co">#&gt; Han</span>
@@ -1446,7 +1446,7 @@ merged &lt;- merge_eigenstrat(
 <span class="co">#&gt; gendstat:                Chimp                Altai    -0.260</span>
 <span class="co">#&gt; gendstat:             Denisova                Altai     1.118</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ##end of qpAdm:        3.599 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
+<span class="co">#&gt; ##end of qpAdm:        3.920 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
 <p>Finally, we might want to keep some of the log files around for future reference, further debugging or sharing with others. For these purposes, we can run the <code>loginfo</code> function with the argument <code>save = TRUE</code>, potentially also specifying the output directory (<code>dir = "."</code> by default) or a prefix of the output file(s) (default prefix is simply the name of the admixr command which generated the log file).</p>
 <p>For example, the following will save the result of our qpAdm analysis of Neandertal ancestry to a file with a prefix “qpAdm_Neandertal_ancestry”, but just the one for the Sardinian individual:</p>
 <div class="sourceCode" id="cb49"><html><body><pre class="r"><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span>(<span class="no">qpadm_res</span>, <span class="kw">target</span> <span class="kw">=</span> <span class="st">"Sardinian"</span>, <span class="kw">save</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">prefix</span> <span class="kw">=</span> <span class="st">"qpAdm_Neandertal_ancestry"</span>)</pre></body></html></div>
