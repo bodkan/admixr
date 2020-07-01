@@ -1,25 +1,12 @@
 ## Resubmission
 
-This is a third (re-)submission of the package to CRAN.
+I have added a 'SystemRequirements' field which explicitly states that
+the R package requires ADMIXTOOLS command-line population genetic
+utilities compiled on the system. It also includes a link to where the
+user can find the most recent information on how to install the
+software.
 
-There was one major point raised in the last review: "your examples in
-the documentation are all wrapped in 'do not run'".
-
-I should clarify the following:
-
-The purpose of this package is to wrap around command-line programs in
-the ADMIXTOOLS suite for population genetics (a large C codebase, only
-available for unix/Linux).
-
-All examples require working ADMIXTOOLS installation. This is why they
-are flagged with "do not run" - unless ADMIXTOOLS is compiled on the
-system, they will not run.
-   
-This is easily solved on a service such as Travis CI (all functions in
-this package are automatically tested with each new version against
-the latest compiled ADMIXTOOLS, including all examples and
-vignettes). But that's only because I can compile all dependencies on
-the server before running the check.
+I apologize for not having done so at the very beginning!
 
 ## Test environments
 

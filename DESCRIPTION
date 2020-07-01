@@ -37,6 +37,7 @@ Suggests:
     knitr,
     rmarkdown,
     tidyverse
+SystemRequirements: ADMIXTOOLS suite of command-line utilities for population genetics. See <https://reich.hms.harvard.edu/software> for the most recent installation instructions and further information.
 Encoding: UTF-8
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr

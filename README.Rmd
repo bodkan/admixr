@@ -46,13 +46,6 @@ as an [_Application Note_](https://doi.org/10.1093/bioinformatics/btz030) in the
 
 ## Installation instructions
 
-**Note (2020/06/14):** This package is currently in the last phase of testing
-and polishing the API before I submit it to [CRAN](https://cran.r-project.org).
-You can definitely safely use it for your own work (many laboratories already do),
-but please make sure to check back here for instructions on how to install the
-officially released version. You can also follow me on
-[Twitter](https://www.twitter.com/fleventy5) if you want to stay updated.
-
 To install `admixr` from Github you need to install the package `devtools`
 first. You can simply run:
 
@@ -71,6 +64,10 @@ installation of ADMIXTOOLS!** You can find installation instructions
 **Furthermore, you need to make sure that R can find ADMIXTOOLS binaries on the
 `$PATH`.** If this is not the case, running `library(admixr)` will show a
 warning message with instructions on how to fix this.
+
+Follow me on [Twitter](https://www.twitter.com/fleventy5) if you want
+to stay updated on new _admixr_ developments.
+
 
 ## Example
 
