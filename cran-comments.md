@@ -1,14 +1,13 @@
 ## Resubmission
 
 I have added a 'SystemRequirements' field which explicitly states that
-the R package requires ADMIXTOOLS command-line population genetic
-utilities compiled on the system. It also includes a link to where the
-user can find the most recent information on how to install the
-software.
+the package requires ADMIXTOOLS command-line utilities compiled on the
+system. It also includes a link to where the user can find the most
+recent information on how to install the ADMIXTOOLS software.
 
 I apologize for not having done so at the very beginning!
 
-## Test environments
+## Checked environments
 
 * My local macOS install: R 4.0.1
 * Ubuntu 16.04 GNU/Linux (on Travis CI): R 4.0.0
