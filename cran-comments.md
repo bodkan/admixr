@@ -2,7 +2,7 @@
 
 This version is a fourth resubmission of the package to CRAN.
 
-As requested by the reviewer, I have added a 'SystemRequirements'
+As requested by the last reviewer, I have added a 'SystemRequirements'
 field which explicitly states that the package requires ADMIXTOOLS
 command-line utilities compiled on the system. It also includes a link
 to where the user can find the most recent information on how to
