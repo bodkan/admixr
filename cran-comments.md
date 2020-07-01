@@ -5,8 +5,6 @@ the package requires ADMIXTOOLS command-line utilities compiled on the
 system. It also includes a link to where the user can find the most
 recent information on how to install the ADMIXTOOLS software.
 
-I apologize for not having done so at the very beginning!
-
 ## Checked environments
 
 * My local macOS install: R 4.0.1
