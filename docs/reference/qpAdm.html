@@ -181,7 +181,7 @@
     3. analysis of patterns (all possible subsets of ancestry sources).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># download example data set and prepare it for analysis</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='co'># download example data set and prepare it for analysis</span>
 <span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='fu'><a href='download_data.html'>download_data</a></span>(<span class='kw'>dirname</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()))
 
 <span class='co'># estimate the proportion of Neandertal ancestry in a French</span>
@@ -192,7 +192,9 @@
     <span class='kw'>sources</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Vindija"</span>, <span class='st'>"Yoruba"</span>),
     <span class='kw'>outgroups</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Chimp"</span>, <span class='st'>"Denisova"</span>, <span class='st'>"Altai"</span>),
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
-)</div></pre>
+)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps' not found</span></div><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
