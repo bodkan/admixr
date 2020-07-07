@@ -1,6 +1,7 @@
 # admixr 0.9.1
 
 * Added executable examples to each function.
+* First official CRAN release! 🎉
 
 # admixr 0.9.0
 
