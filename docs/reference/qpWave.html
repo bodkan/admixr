@@ -189,7 +189,7 @@ rank N - 1. This function uses the ADMIXTOOLS command qpWave to find the
 lowest possible rank of this matrix that is consistent with the data.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='co'># download example data set and prepare it for analysis</span>
+    <pre class="examples"><div class='input'><span class='co'># download example data set and prepare it for analysis</span>
 <span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='fu'><a href='download_data.html'>download_data</a></span>(<span class='kw'>dirname</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()))
 
 <span class='co'># run the qpWave wrapper (detailed description in the tutorial vignette)</span>
@@ -197,9 +197,7 @@ lowest possible rank of this matrix that is consistent with the data.</p>
      <span class='kw'>left</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"French"</span>, <span class='st'>"Sardinian"</span>, <span class='st'>"Han"</span>),
      <span class='kw'>right</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Altai"</span>, <span class='st'>"Yoruba"</span>, <span class='st'>"Mbuti"</span>),
      <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps' not found</span></div><div class='input'>
-
-</div></pre>
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

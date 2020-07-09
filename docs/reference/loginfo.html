@@ -168,7 +168,7 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='co'># download an example genomic data set and prepare it for analysis</span>
+    <pre class="examples"><div class='input'><span class='co'># download an example genomic data set and prepare it for analysis</span>
 <span class='no'>snps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='eigenstrat.html'>eigenstrat</a></span>(<span class='fu'><a href='download_data.html'>download_data</a></span>(<span class='kw'>dirname</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()))
 
 <span class='co'># define a set of populations to analyze and calculate a D statistic</span>
@@ -176,9 +176,44 @@
 <span class='no'>result_d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='f4ratio.html'>d</a></span>(
     <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>pops</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='st'>"Yoruba"</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='st'>"Vindija"</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='st'>"Chimp"</span>,
     <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>snps</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in ifelse(is.null(data$group), data$ind, data$group): object 'snps' not found</span></div><div class='input'>
+)
+
 <span class='co'># examine the full log output associated with the returned object</span>
-<span class='fu'>loginfo</span>(<span class='no'>result_d</span>)</div><div class='output co'>#&gt; <span class='error'>Error in loginfo(result_d): object 'result_d' not found</span></div><div class='input'>
+<span class='fu'>loginfo</span>(<span class='no'>result_d</span>)</div><div class='output co'>#&gt; Full output log of qpDstat:
+#&gt; ===================================================
+#&gt; 
+#&gt; qpDstat: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpv2F4wc/qpDstat__15890178.par
+#&gt; ### THE INPUT PARAMETERS
+#&gt; ##PARAMETER NAME: VALUE
+#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpv2F4wc/snps/snps.geno
+#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpv2F4wc/snps/snps.snp
+#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpv2F4wc/snps/snps.ind
+#&gt; popfilename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//Rtmpv2F4wc/qpDstat__15890178.pop
+#&gt; printsd: YES
+#&gt; ## qpDstat version: 970
+#&gt; number of quadruples 7
+#&gt;   0               French    1
+#&gt;   1            Sardinian    1
+#&gt;   2                  Han    1
+#&gt;   3               Papuan    1
+#&gt;   4          Khomani_San    1
+#&gt;   5                Mbuti    1
+#&gt;   6                Dinka    1
+#&gt;   7               Yoruba    1
+#&gt;   8              Vindija    1
+#&gt;   9                Chimp    1
+#&gt; jackknife block size:     0.050
+#&gt; snps: 500000  indivs: 10
+#&gt; number of blocks for block jackknife: 547
+#&gt; nrows, ncols: 10 500000
+#&gt; result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 
+#&gt; result:  Sardinian     Yoruba    Vindija      Chimp      0.0287      0.006792     4.222   15729  14852 487646 
+#&gt; result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 
+#&gt; result:     Papuan     Yoruba    Vindija      Chimp      0.0457      0.006571     6.953   16131  14721 487694 
+#&gt; result: Khomani_San     Yoruba    Vindija      Chimp      0.0066      0.006292     1.051   16168  15955 487564 
+#&gt; result:      Mbuti     Yoruba    Vindija      Chimp     -0.0005      0.006345    -0.074   15751  15766 487642 
+#&gt; result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 
+#&gt; ##end of qpDstat:        4.449 seconds cpu        0.000 Mbytes in use</div><div class='input'>
 
 </div></pre>
   </div>
