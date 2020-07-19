@@ -19,6 +19,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+**Note:** The functionality described in this vignette is still quite
+experimental. Please keep this in mind when running qpAdm analyses and
+be extra careful when drawing conclusions. Feedback, criticisms and
+suggestions on this functionality are more then welcome!
+
 ## Introduction
 
 qpAdm model fitting is a complex topic. To navigate it successfuly

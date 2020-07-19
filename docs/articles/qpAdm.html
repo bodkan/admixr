@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1.9000</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Fitting qpAdm models with a ‘rotation’ strategy</h1>
                         <h4 class="author">Martin Petr</h4>
             
-            <h4 class="date">2020-07-09</h4>
+            <h4 class="date">2020-07-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/qpAdm.Rmd"><code>vignettes/qpAdm.Rmd</code></a></small>
       <div class="hidden name"><code>qpAdm.Rmd</code></div>
@@ -97,8 +97,9 @@
 
     
     
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
+    <div id="introduction" class="section level2">
+          <p><strong>Note:</strong> The functionality described in this vignette is still quite experimental. Please keep this in mind when running qpAdm analyses and be extra careful when drawing conclusions. Feedback, criticisms and suggestions on this functionality are more then welcome!</p>
+  <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>qpAdm model fitting is a complex topic. To navigate it successfuly requires solid knowledge of the <span class="math inline">\(f\)</span>-statistics theory first introduced by Nick Patterson and colleagues <a href="https://www.genetics.org/content/192/3/1065">in 2012</a>. As part of our <a href="tutorial.html#qpwave-and-qpadm-1">tutorial</a>, we have looked at a very basic overview of the qpAdm-related functionality implemented in <em>admixr</em>. We also talked about the most important resources for learning more about this powerful method pioneered by Iosif Lazaridis in <a href="https://www.nature.com/articles/nature14317">2015</a>.</p>
 <p>Recently, Harney <em>et al.</em> published an exciting new preprint called <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1">“Assessing the Performance of qpAdm: A Statistical Tool for Studying Population Admixture”</a>. Before we go any further, I encourage everyone to read it and the superb tutorial/guide available as its <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1.supplementary-material">supplementary pdf</a> on bioRxiv. There really isn’t a better source of information on how to run and interpret qpAdm analyses.</p>
@@ -368,19 +369,19 @@
 <span class="co">#&gt; Full output log of qpAdm rotation for model 'm40':</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpPexIV5/qpAdm__1561627157.par</span>
+<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/qpAdm__999364930.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpPexIV5/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpPexIV5/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpPexIV5/snps/snps.ind</span>
-<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpPexIV5/qpAdm__1561627157.popleft</span>
-<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpPexIV5/qpAdm__1561627157.popright</span>
+<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/snps/snps.ind</span>
+<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/qpAdm__999364930.popleft</span>
+<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/qpAdm__999364930.popright</span>
 <span class="co">#&gt; allsnps: YES</span>
 <span class="co">#&gt; summary: YES</span>
 <span class="co">#&gt; details: YES</span>
 <span class="co">#&gt; ## qpAdm version: 1201</span>
-<span class="co">#&gt; seed: -1361589133</span>
+<span class="co">#&gt; seed: 414097275</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; left pops:</span>
 <span class="co">#&gt; French</span>
@@ -471,7 +472,7 @@
 <span class="co">#&gt; gendstat:               Yoruba                Chimp    -0.121</span>
 <span class="co">#&gt; gendstat:                Altai                Chimp    -0.086</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ##end of qpAdm:        4.331 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
+<span class="co">#&gt; ##end of qpAdm:        3.549 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
 </div>
   </div>
 
