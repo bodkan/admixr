@@ -100,10 +100,11 @@ check_presence <- function(labels, data) {
 download_data <- function(dirname = tempdir()) {
   dest <- file.path(dirname, "snps.tgz")
   utils::download.file(
-    "https://bioinf.eva.mpg.de/admixr/snps.tar.gz",
+    "http://bioinf.eva.mpg.de/admixr/snps.tar.gz",
     destfile = dest,
     method = "wget",
-    quiet = TRUE
+    quiet = TRUE,
+    extra = "--no-check-certificate"
   )
   system(paste0("cd ", dirname, "; tar xf ", dest, "; rm snps.tgz"))
   file.path(dirname, "snps", "snps")
