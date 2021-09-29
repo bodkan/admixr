@@ -70,7 +70,8 @@ read_qpF4ratio <- function(log_lines) {
 
   res_df <- res_lines %>%
     paste0("\n", collapse = "\n") %>%
-    readr::read_delim(delim = " ", col_names = FALSE) %>%
+    readr::read_delim(delim = " ", col_names = FALSE, show_col_types = FALSE,
+                      progress = FALSE) %>%
     stats::setNames(c("A", "O", "X", "C", "A", "O", "B", "C", "alpha", "stderr", "Zscore")) %>%
     .[c("A", "B", "X", "C", "O", "alpha", "stderr", "Zscore")]
 
@@ -107,7 +108,8 @@ read_qpDstat <- function(log_lines) {
 
   raw_cols <- res_lines %>%
     paste0("\n", collapse = "\n") %>%
-    readr::read_delim(delim = " ", col_names = FALSE)
+    readr::read_delim(delim = " ", col_names = FALSE, show_col_types = FALSE,
+                      progress = FALSE)
 
   # remove the weird "best" column first, then add an optional stderr column
   # (if it's present)
@@ -136,7 +138,8 @@ read_qp3Pop <- function(log_lines) {
 
   res_df <- res_lines %>%
     paste0("\n", collapse = "\n") %>%
-    readr::read_delim(delim = " ", col_names = FALSE) %>%
+    readr::read_delim(delim = " ", col_names = FALSE, show_col_types = FALSE,
+                      progress = FALSE) %>%
     stats::setNames(c("A", "B", "C", "f3", "stderr", "Zscore", "nsnps"))
 
   res_df
@@ -252,7 +255,8 @@ read_qpAdm <- function(log_lines) {
     }
     pat_df <- patterns[-1] %>%
       paste0(collapse = "\n") %>%
-      readr::read_delim(delim = " ", col_names = FALSE) %>%
+      readr::read_delim(delim = " ", col_names = FALSE, show_col_types = FALSE,
+                      progress = FALSE) %>%
       stats::setNames(pat_header)
   }
 
