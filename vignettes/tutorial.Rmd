@@ -90,17 +90,10 @@ giving it a shot.
 When everything is ready, you can run the following code to load both
 packages:
 
-```{r libraries, eval = FALSE, message = FALSE, warning = FALSE}
+```{r libraries, message = FALSE, warning = FALSE}
 library(admixr)
 library(tidyverse)
 ```
-
-```{r, include = FALSE}
-devtools::load_all(".")
-library(tidyverse)
-```
-
-
 
 ## A note about EIGENSTRAT format
 
