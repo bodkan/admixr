@@ -1,5 +1,5 @@
-#' Fit qpAdm models based on the rotation strategy described in
-#' Harney et al. 2020 (bioRxiv)
+#' Fit qpAdm models based on the rotation strategy described in Harney et al.
+#' 2020 (bioRxiv)
 #'
 #' @param data EIGENSTRAT dataset
 #' @param target Target population that is modeled as admixed
@@ -7,12 +7,14 @@
 #' @param minimize Test also all possible subsets of outgroups? (default TRUE)
 #' @param nsources Number of sources to pull from the candidates
 #' @param ncores Number of CPU cores to utilize for model fitting
-#' @param fulloutput Report also 'ranks' and 'subsets' analysis from
-#'     qpAdm in addition to the admixture proportions results? (default FALSE)
+#' @param fulloutput Report also 'ranks' and 'subsets' analysis from qpAdm in
+#'   addition to the admixture proportions results? (default FALSE)
+#' @param params Named list of parameters and their values to be passed to
+#'   \code{qpAdm()}.
 #'
-#' @return qpAdm list with proportions, ranks and subsets elements (as
-#'     with a traditional qpAdm run) or just the proportions
-#'     (determined by the value of the 'fulloutput' argument)
+#' @return qpAdm list with proportions, ranks and subsets elements (as with a
+#'   traditional qpAdm run) or just the proportions (determined by the value of
+#'   the 'fulloutput' argument)
 #'
 #' @examples
 #' \dontrun{# download an example genomic data set and prepare it for analysis
@@ -35,7 +37,7 @@
 #'
 #' @importFrom utils combn
 #' @export
-qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources = 2, ncores = 1, fulloutput = FALSE) {
+qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources = 2, ncores = 1, fulloutput = FALSE, params = NULL) {
     check_type(data, "EIGENSTRAT")
 
     ## generate combinations of possible sources and outgroups
@@ -58,7 +60,8 @@ qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources =
     results_list <- parallel::mclapply(sources_outgroups, function(x) {
         result <- qpAdm(
             data,
-            target = target, sources = x$sources, outgroups = x$outgroups
+            target = target, sources = x$sources, outgroups = x$outgroups,
+            params = params
         )
 
         names(x$sources) <- paste0("source", 1:nsources)
