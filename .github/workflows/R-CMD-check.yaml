@@ -87,7 +87,7 @@ jobs:
       - name: Populate PATH with compiled binaries
         if: runner.os != 'Windows'
         run: |
-          export PATH="~/deps/AdmixTools-7.0.2/bin:$PATH"
+          export PATH="$HOME/deps/AdmixTools-7.0.2/bin:$PATH"
           echo "PATH=$PATH" > ~/.Renviron
 
       - uses: r-lib/actions/setup-pandoc@v1
