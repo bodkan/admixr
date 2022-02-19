@@ -1,7 +1,7 @@
 .onAttach <- function(libname, pkgname) {
   ## check for presence of an ADMIXTOOLS command on user's PATH and display
   ## a warning if it's not present
-  cmds  <- c("qp3Pop", "qpDstat", "qpF4ratio", "qpAdm", "qpWave", "qpfstats")
+  cmds  <- c("qp3Pop", "qpDstat", "qpF4ratio", "qpAdm", "qpWave", "qpfstats", "mergeit")
   path_check <- all(Sys.which(cmds) != "")
   if (!path_check) {
     packageStartupMessage(
