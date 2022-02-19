@@ -1,0 +1,84 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+name: test-coverage
+
+jobs:
+  test-coverage:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install ADMIXTOOLS dependencies
+        run: sudo apt-get install perl libopenblas-dev libgsl-dev liblapack-dev
+
+      - name: Compile and install ADMIXTOOLS
+        run: |
+          # create a single directory for all external software
+          mkdir -p ~/deps
+          cd ~/deps
+
+          # download and unpack the ADMIXTOOLS source code
+          curl -LO https://github.com/DReichLab/AdmixTools/archive/v7.0.2.tar.gz
+          tar xf v7.0.2.tar.gz
+          cd AdmixTools-7.0.2
+
+          # set compiler flags (compilation on macOS was failing unable to find
+          # openblas library files)
+          export LDFLAGS="-L/usr/local/opt/openblas/lib"
+          export CPPFLAGS="-I/usr/local/opt/openblas/include"
+
+          # compile ADMIXTOOLS and move binaries under bin/
+          cd src
+          make clobber
+          make LDLIBS="-llapack" all
+          make install
+
+          # download testing data for unit tests
+          cd ../
+          curl -LO https://reich.hms.harvard.edu/sites/reich.hms.harvard.edu/files/inline-files/AdmixTools_Example_Data.tar_.gz
+          tar xf AdmixTools_Example_Data.tar_.gz
+
+          # run the Perl script with tests for the compiled binaries
+          cd examples
+          # fix unportable Perl shebang
+          sed -i "1s/.*/\#\!\/usr\/bin\/env perl/" mklog
+          ./mklog
+          cd ../
+
+          # we need to do this in bash because of $OSTYPE above
+        shell: bash
+
+      - name: Compile and install bedtools
+        run: |
+          mkdir -p ~/deps
+          cd ~/deps
+          curl -LO https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtools-2.30.0.tar.gz
+          tar xf bedtools-2.30.0.tar.gz
+          cd bedtools2
+          make
+
+      - name: Populate PATH with compiled binaries
+        run: |
+          export PATH="~/deps/AdmixTools-7.0.2/bin:~/deps/bedtools2/bin:$PATH"
+          echo "PATH=$PATH" > ~/.Renviron
+
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v1
+        with:
+          extra-packages: covr
+
+      - name: Test coverage
+        run: covr::codecov()
+        shell: Rscript {0}
