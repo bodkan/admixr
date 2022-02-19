@@ -34,13 +34,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install ADMIXTOOLS dependencies (Linux)
+      - name: Install ADMIXTOOLS/admixr dependencies (Linux)
         if: runner.os == 'Linux'
-        run: sudo apt-get install perl libopenblas-dev libgsl-dev liblapack-dev
+        run: sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev bedtools
 
-      - name: Install ADMIXTOOLS dependencies (macOS)
+      - name: Install ADMIXTOOLS/admixr dependencies (macOS)
         if: runner.os == 'macOS'
-        run: brew install openblas gsl lapack
+        run: brew install openblas gsl lapack bedtools
 
       - name: Compile and install ADMIXTOOLS (Linux + macOS)
         if: runner.os != 'Windows'
@@ -84,20 +84,10 @@ jobs:
           # we need to do this in bash because of $OSTYPE above
         shell: bash
 
-      - name: Compile and install bedtools
-        if: runner.os != 'Windows'
-        run: |
-          mkdir -p ~/deps
-          cd ~/deps
-          curl -LO https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtools-2.30.0.tar.gz
-          tar xf bedtools-2.30.0.tar.gz
-          cd bedtools2
-          make
-
       - name: Populate PATH with compiled binaries
         if: runner.os != 'Windows'
         run: |
-          export PATH="~/deps/AdmixTools-7.0.2/bin:~/deps/bedtools2/bin:$PATH"
+          export PATH="~/deps/AdmixTools-7.0.2/bin:$PATH"
           echo "PATH=$PATH" > ~/.Renviron
 
       - uses: r-lib/actions/setup-pandoc@v1
