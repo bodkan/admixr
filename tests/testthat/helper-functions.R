@@ -22,12 +22,10 @@ snp_to_bed <- function(snp, bed) {
         readr::write_tsv(bed, col_names = FALSE)
 }
 
+# Find the path to the root of the ADMIXTOOLS directory
 admixtools_path <- function() {
-    ## ugly hack to enable testing on my macOS where I have ADMIXTOOLS
-    ## binaries symlinked to ~/local/bin
-    if (system("uname", intern = TRUE) == "Darwin") {
-        return("~/.my_local/AdmixTools-7.0.2/")
-    }
-
-    stringr::str_replace(Sys.which("qpDstat"), "/bin.*", "")
+  path <- Sys.which("qpDstat")
+  is_symlink <- base::isTRUE(base::nzchar(base::Sys.readlink(path), keepNA = TRUE))
+  if (is_symlink) path <- Sys.readlink(path)
+  stringr::str_replace(path, "/bin.*", "")
 }
