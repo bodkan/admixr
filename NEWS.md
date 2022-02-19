@@ -1,5 +1,14 @@
 # admixr (development version)
 
+# admixr 0.9.1.9000
+
+* Implemented R CMD checks with Github Actions
+* Made necessary changes to upgrade to the latest ADMIXTOOLS 7.0.2
+  throughout the unit tests (users are encouraged to upgrade their
+  ADMIXTOOLS installation).
+* The presence of `mergeit` and `qpfstats` in the `$PATH` is now checked
+  when `library(admixr)` is called.
+
 # admixr 0.9.1
 
 * Added executable examples to each function.
