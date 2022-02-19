@@ -16,9 +16,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Install ADMIXTOOLS dependencies
-        run: sudo apt-get install perl libopenblas-dev libgsl-dev liblapack-dev
+ 
+      - name: Install ADMIXTOOLS/admixr dependencies
+        run: sudo apt-get install libopenblas-dev libgsl-dev liblapack-dev bedtools
 
       - name: Compile and install ADMIXTOOLS
         run: |
@@ -50,25 +50,20 @@ jobs:
           # run the Perl script with tests for the compiled binaries
           cd examples
           # fix unportable Perl shebang
-          sed -i "1s/.*/\#\!\/usr\/bin\/env perl/" mklog
+          if [[ "$OSTYPE" == "darwin"* ]]; then
+            sed -i '' "1s/.*/\#\!\/usr\/bin\/env perl -w/" mklog
+          else
+            sed -i "1s/.*/\#\!\/usr\/bin\/env perl/" mklog
+          fi
           ./mklog
           cd ../
 
           # we need to do this in bash because of $OSTYPE above
         shell: bash
 
-      - name: Compile and install bedtools
-        run: |
-          mkdir -p ~/deps
-          cd ~/deps
-          curl -LO https://github.com/arq5x/bedtools2/releases/download/v2.30.0/bedtools-2.30.0.tar.gz
-          tar xf bedtools-2.30.0.tar.gz
-          cd bedtools2
-          make
-
       - name: Populate PATH with compiled binaries
         run: |
-          export PATH="~/deps/AdmixTools-7.0.2/bin:~/deps/bedtools2/bin:$PATH"
+          export PATH="$HOME/deps/AdmixTools-7.0.2/bin:$PATH"
           echo "PATH=$PATH" > ~/.Renviron
 
       - uses: r-lib/actions/setup-r@v1
