@@ -2,8 +2,8 @@
 % Please edit documentation in R/qpAdm.R
 \name{qpAdm_rotation}
 \alias{qpAdm_rotation}
-\title{Fit qpAdm models based on the rotation strategy described in
-Harney et al. 2020 (bioRxiv)}
+\title{Fit qpAdm models based on the rotation strategy described in Harney et al.
+2020 (bioRxiv)}
 \usage{
 qpAdm_rotation(
   data,
@@ -12,7 +12,8 @@ qpAdm_rotation(
   minimize = TRUE,
   nsources = 2,
   ncores = 1,
-  fulloutput = FALSE
+  fulloutput = FALSE,
+  params = NULL
 )
 }
 \arguments{
@@ -28,17 +29,20 @@ qpAdm_rotation(
 
 \item{ncores}{Number of CPU cores to utilize for model fitting}
 
-\item{fulloutput}{Report also 'ranks' and 'subsets' analysis from
-qpAdm in addition to the admixture proportions results? (default FALSE)}
+\item{fulloutput}{Report also 'ranks' and 'subsets' analysis from qpAdm in
+addition to the admixture proportions results? (default FALSE)}
+
+\item{params}{Named list of parameters and their values to be passed to
+\code{qpAdm()}.}
 }
 \value{
-qpAdm list with proportions, ranks and subsets elements (as
-    with a traditional qpAdm run) or just the proportions
-    (determined by the value of the 'fulloutput' argument)
+qpAdm list with proportions, ranks and subsets elements (as with a
+  traditional qpAdm run) or just the proportions (determined by the value of
+  the 'fulloutput' argument)
 }
 \description{
-Fit qpAdm models based on the rotation strategy described in
-Harney et al. 2020 (bioRxiv)
+Fit qpAdm models based on the rotation strategy described in Harney et al.
+2020 (bioRxiv)
 }
 \examples{
 \dontrun{# download an example genomic data set and prepare it for analysis

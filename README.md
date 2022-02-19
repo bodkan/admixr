@@ -1,3 +1,5 @@
+
+
 [![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions)
 [![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](https://codecov.io/github/bodkan/admixr?branch=master)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
@@ -93,7 +95,7 @@ result <- d(
 )
 
 result
-#> # A tibble: 2 x 10
+#> # A tibble: 2 × 10
 #>   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps
 #>   <chr>     <chr>  <chr>   <chr>  <dbl>   <dbl>  <dbl> <dbl> <dbl>  <dbl>
 #> 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753

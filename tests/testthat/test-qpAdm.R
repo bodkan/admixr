@@ -20,8 +20,7 @@ test_that("qpAdm_rotation() `fulloutput = TRUE` object is of the right format", 
         minimize = FALSE,
         nsources = 2,
         ncores = 1,
-        fulloutput = TRUE,
-        params = list(inbreed = "NO")
+        fulloutput = TRUE
     )
     expect_equal(sort(names(models1)), sort(c("proportions", "ranks", "subsets")))
 })

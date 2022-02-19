@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -67,8 +63,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/bodkan/admixr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/bodkan/admixr/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -82,39 +78,39 @@
 
       
 
-      </header><script src="qpAdm_files/header-attrs-2.3/header-attrs.js"></script><script src="qpAdm_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Fitting qpAdm models with a ‘rotation’ strategy</h1>
-                        <h4 class="author">Martin Petr</h4>
+                        <h4 data-toc-skip class="author">Martin Petr</h4>
             
-            <h4 class="date">2020-07-19</h4>
+            <h4 data-toc-skip class="date">2022-02-19</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/master/vignettes/qpAdm.Rmd"><code>vignettes/qpAdm.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/qpAdm.Rmd" class="external-link"><code>vignettes/qpAdm.Rmd</code></a></small>
       <div class="hidden name"><code>qpAdm.Rmd</code></div>
 
     </div>
 
     
     
-    <div id="introduction" class="section level2">
-          <p><strong>Note:</strong> The functionality described in this vignette is still quite experimental. Please keep this in mind when running qpAdm analyses and be extra careful when drawing conclusions. Feedback, criticisms and suggestions on this functionality are more then welcome!</p>
-  <h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>qpAdm model fitting is a complex topic. To navigate it successfuly requires solid knowledge of the <span class="math inline">\(f\)</span>-statistics theory first introduced by Nick Patterson and colleagues <a href="https://www.genetics.org/content/192/3/1065">in 2012</a>. As part of our <a href="tutorial.html#qpwave-and-qpadm-1">tutorial</a>, we have looked at a very basic overview of the qpAdm-related functionality implemented in <em>admixr</em>. We also talked about the most important resources for learning more about this powerful method pioneered by Iosif Lazaridis in <a href="https://www.nature.com/articles/nature14317">2015</a>.</p>
-<p>Recently, Harney <em>et al.</em> published an exciting new preprint called <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1">“Assessing the Performance of qpAdm: A Statistical Tool for Studying Population Admixture”</a>. Before we go any further, I encourage everyone to read it and the superb tutorial/guide available as its <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1.supplementary-material">supplementary pdf</a> on bioRxiv. There really isn’t a better source of information on how to run and interpret qpAdm analyses.</p>
+<p><strong>Note:</strong> The functionality described in this vignette is still quite experimental. Please keep this in mind when running qpAdm analyses and be extra careful when drawing conclusions. Feedback, criticisms and suggestions on this functionality are more then welcome!</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>qpAdm model fitting is a complex topic. To navigate it successfuly requires solid knowledge of the <span class="math inline">\(f\)</span>-statistics theory first introduced by Nick Patterson and colleagues <a href="https://www.genetics.org/content/192/3/1065" class="external-link">in 2012</a>. As part of our <a href="tutorial.html#qpwave-and-qpadm-1">tutorial</a>, we have looked at a very basic overview of the qpAdm-related functionality implemented in <em>admixr</em>. We also talked about the most important resources for learning more about this powerful method pioneered by Iosif Lazaridis in <a href="https://www.nature.com/articles/nature14317" class="external-link">2015</a>.</p>
+<p>Recently, Harney <em>et al.</em> published an exciting new preprint called <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1" class="external-link">“Assessing the Performance of qpAdm: A Statistical Tool for Studying Population Admixture”</a>. Before we go any further, I encourage everyone to read it and the superb tutorial/guide available as its <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1.supplementary-material" class="external-link">supplementary pdf</a> on bioRxiv. There really isn’t a better source of information on how to run and interpret qpAdm analyses.</p>
 <p>Please, only attempt to run qpAdm if you have familiarized yoursef with all of the above-mentioned resources. I have had many people ask questions via email (not only about qpAdm but also other topics) to which the only sensible answer was - “you have to read the papers and understand the statistics first.” I know it’s frustrating but there really are no shortcuts here.</p>
 </div>
-<div id="qpadm-rotation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#qpadm-rotation" class="anchor"></a><em>qpAdm</em> “rotation”</h2>
+<div class="section level2">
+<h2 id="qpadm-rotation">
+<em>qpAdm</em> “rotation”<a class="anchor" aria-label="anchor" href="#qpadm-rotation"></a>
+</h2>
 <p>If you have ever worked with <em>qpAdm</em>, you are well aware of the intricacies of finding the most suitable set of models that can explain the data. Among other things, we have to make a decision about the number of admixture sources and which populations are the most appropriate surrogates for those source populations (because only rarely we have sampled them directly). Furthermore, we need to carefully choose a number of so called ‘outgroup’ populations (also called ‘references’ or ‘right’ populations, depending on whom you talk to).</p>
-<p>The preprint by <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1">Harney <em>et al.</em></a> described an interesting idea to find a set of the most appropriate models (i.e. combinations of source and outgroup populations) which has been sucessfully used in the past. They call the method a “rotating population” strategy.</p>
+<p>The preprint by <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1" class="external-link">Harney <em>et al.</em></a> described an interesting idea to find a set of the most appropriate models (i.e. combinations of source and outgroup populations) which has been sucessfully used in the past. They call the method a “rotating population” strategy.</p>
 <p>This approach starts by defining a set of “candidate” populations from which we iteratively sample a defined number of “sources” of ancestry for our “target” population of interest (most commonly two or three sources). After removing the sources from the candidate list, we then define all the remaining populations as “outgroups”. Finally, we iteratively fit qpAdm models for each combination of target, sources and outgroups, extracting <span class="math inline">\(p\)</span>-values and other statistics of interest. After finishing the exhaustive fitting of source-outgroup combinations, we examine all explored models, selecting those that seem most appropriate.</p>
 </div>
-<div id="implementation-in-admixr" class="section level2">
-<h2 class="hasAnchor">
-<a href="#implementation-in-admixr" class="anchor"></a>Implementation in <em>admixr</em>
+<div class="section level2">
+<h2 id="implementation-in-admixr">Implementation in <em>admixr</em><a class="anchor" aria-label="anchor" href="#implementation-in-admixr"></a>
 </h2>
 <p>In <em>admixr</em>, I have implemented a function <code><a href="../reference/qpAdm_rotation.html">qpAdm_rotation()</a></code> which does exactly what is described paragraph with one additional feature. Given the sensitivity of <em>qpAdm</em> to large numbers of potential outgroups (references), for each combination of sources and outgroups we also explore models for all possible <em>subsets</em> of outgroups. This is to find models which are as small as possible, possibly determining which outgroups are potentially redundant and not actually needed.</p>
 <p>Let’s say that we have a target population <em>T</em> and a set of candidates for potential sources and outgroups <em>C</em> = {a, b, c, d, e, f}. Then, if we imagine an iteration of the rotation scheme in which we fixed sources <em>S</em> = {a, b}, we have remaining candidates for outgroups <em>C - S</em> = {c, d, e, f}. The basic implementation of the rotation procedure would simply take <em>C - S</em> as the full set of outgroups and fitted the following model:</p>
@@ -130,12 +126,12 @@
 </ul>
 <p>Therefore, our implementation in <code><a href="../reference/qpAdm_rotation.html">qpAdm_rotation()</a></code> explores all posible outgroup combinations, allowing us to look for the <em>smallest</em> model (in terms of outgroup size) that can explain our data.</p>
 </div>
-<div id="concrete-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#concrete-example" class="anchor"></a>Concrete example</h2>
-<div id="performing-exhaustive-search-by-rotating-sourcesoutgroups" class="section level3">
-<h3 class="hasAnchor">
-<a href="#performing-exhaustive-search-by-rotating-sourcesoutgroups" class="anchor"></a>Performing exhaustive search by rotating sources/outgroups</h3>
+<div class="section level2">
+<h2 id="concrete-example">Concrete example<a class="anchor" aria-label="anchor" href="#concrete-example"></a>
+</h2>
+<div class="section level3">
+<h3 id="performing-exhaustive-search-by-rotating-sourcesoutgroups">Performing exhaustive search by rotating sources/outgroups<a class="anchor" aria-label="anchor" href="#performing-exhaustive-search-by-rotating-sourcesoutgroups"></a>
+</h3>
 <p>As an example, let’s revisit the problem of estimating the level of Neandertal ancestry in a French person from the main tutorial. We use this as an illustration because:</p>
 <ol style="list-style-type: decimal">
 <li>It’s the simplest possible analysis one could do with <em>qpAdm</em>.</li>
@@ -143,26 +139,28 @@
 <li>It gives us a clear expectation of what models we should <em>definitely</em> reject.</li>
 </ol>
 <p>First, let’s download and install a development version of <em>admixr</em> to get access to the new features, and download a small example data set:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">admixr</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bodkan/admixr" class="external-link">admixr</a></span><span class="op">)</span>
 
-<span class="no">snps</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eigenstrat.html">eigenstrat</a></span>(<span class="fu"><a href="../reference/download_data.html">download_data</a></span>(<span class="kw">dirname</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>()))</pre></body></html></div>
+<span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="../reference/download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>These are the individuals for which we have genotype data:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/read_ind.html">read_ind</a></span>(<span class="no">snps</span>)
-<span class="co">#&gt; # A tibble: 12 x 3</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/read_ind.html">read_ind</a></span><span class="op">(</span><span class="va">snps</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 3</span></span>
 <span class="co">#&gt;    id          sex   label      </span>
-<span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;      </span>
-<span class="co">#&gt;  1 Chimp       U     Chimp      </span>
-<span class="co">#&gt;  2 Mbuti       U     Mbuti      </span>
-<span class="co">#&gt;  3 Yoruba      U     Yoruba     </span>
-<span class="co">#&gt;  4 Khomani_San U     Khomani_San</span>
-<span class="co">#&gt;  5 Han         U     Han        </span>
-<span class="co">#&gt;  6 Dinka       U     Dinka      </span>
-<span class="co">#&gt;  7 Sardinian   U     Sardinian  </span>
-<span class="co">#&gt;  8 Papuan      U     Papuan     </span>
-<span class="co">#&gt;  9 French      U     French     </span>
-<span class="co">#&gt; 10 Vindija     U     Vindija    </span>
-<span class="co">#&gt; 11 Altai       U     Altai      </span>
-<span class="co">#&gt; 12 Denisova    U     Denisova</span></pre></body></html></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Chimp       U     Chimp      </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Mbuti       U     Mbuti      </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Yoruba      U     Yoruba     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Khomani_San U     Khomani_San</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Han         U     Han        </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Dinka       U     Dinka      </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Sardinian   U     Sardinian  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Papuan      U     Papuan     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> French      U     French     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Vindija     U     Vindija    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Altai       U     Altai      </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Denisova    U     Denisova</span></code></pre></div>
 <p>The <code><a href="../reference/qpAdm_rotation.html">qpAdm_rotation()</a></code> function is very simple. It accepts:</p>
 <ul>
 <li>a name of the target population,</li>
@@ -173,215 +171,215 @@
 <li>parameter <code>fulloutput</code> specifying whether we want to have all the “ranks” and “subsets/patterns” statistics (see the main tutorial for more information) or if we just want the proportions of ancestry and significance values for individual models (this is the default, i.e. <code>fulloutput = FALSE</code>).</li>
 </ul>
 <p>So, let’s say we are interested in finding the proportions of archaic human ancestry in a French individual, and we also want to see what sorts of possible models we could find that match archaic introgression. We would run the following:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">models</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/qpAdm_rotation.html">qpAdm_rotation</a></span>(
-    <span class="kw">data</span> <span class="kw">=</span> <span class="no">snps</span>,
-    <span class="kw">target</span> <span class="kw">=</span> <span class="st">"French"</span>,
-    <span class="kw">candidates</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Dinka"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>, <span class="st">"Chimp"</span>),
-    <span class="kw">minimize</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-    <span class="kw">nsources</span> <span class="kw">=</span> <span class="fl">2</span>,
-    <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">2</span>,
-    <span class="kw">fulloutput</span> <span class="kw">=</span> <span class="fl">TRUE</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpAdm_rotation.html">qpAdm_rotation</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">snps</span>,
+    target <span class="op">=</span> <span class="st">"French"</span>,
+    candidates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dinka"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>, <span class="st">"Chimp"</span><span class="op">)</span>,
+    minimize <span class="op">=</span> <span class="cn">TRUE</span>,
+    nsources <span class="op">=</span> <span class="fl">2</span>,
+    ncores <span class="op">=</span> <span class="fl">2</span>,
+    fulloutput <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span></code></pre></div>
 <p>Here is what the full output looks like:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">models</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">models</span>
 <span class="co">#&gt; $proportions</span>
-<span class="co">#&gt; # A tibble: 336 x 13</span>
-<span class="co">#&gt;    model target source1 source2 outgroups noutgroups  pvalue    prop1   prop2</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 m1    French Dinka   Mbuti   Yoruba &amp;…          3 3.37e-2    0.757   0.243</span>
-<span class="co">#&gt;  2 m2    French Dinka   Mbuti   Yoruba &amp;…          3 1.38e-2    0.774   0.226</span>
-<span class="co">#&gt;  3 m3    French Dinka   Mbuti   Yoruba &amp;…          3 1.14e-6    0.89    0.11 </span>
-<span class="co">#&gt;  4 m4    French Dinka   Mbuti   Yoruba &amp;…          3 6.85e-2    0.781   0.219</span>
-<span class="co">#&gt;  5 m5    French Dinka   Mbuti   Yoruba &amp;…          3 1.49e-5    0.885   0.115</span>
-<span class="co">#&gt;  6 m6    French Dinka   Mbuti   Yoruba &amp;…          3 9.32e-3    0.887   0.113</span>
-<span class="co">#&gt;  7 m7    French Dinka   Mbuti   Vindija …          3 6.70e-2   -8.51    9.51 </span>
-<span class="co">#&gt;  8 m8    French Dinka   Mbuti   Vindija …          3 2.71e-1   25.3   -24.3  </span>
-<span class="co">#&gt;  9 m9    French Dinka   Mbuti   Vindija …          3 1.61e-1 -187.    188.   </span>
-<span class="co">#&gt; 10 m10   French Dinka   Mbuti   Altai &amp; …          3 8.10e-2  -30.7    31.7  </span>
-<span class="co">#&gt; # … with 326 more rows, and 4 more variables: stderr1 &lt;dbl&gt;, stderr2 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   nsnps_used &lt;dbl&gt;, nsnps_target &lt;dbl&gt;</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 336 × 13</span></span>
+<span class="co">#&gt;    model target source1 source2 outgroups    noutgroups  pvalue    prop1   prop2</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> m1    French Dinka   Mbuti   Yoruba &amp; Vi…          3 4.06<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>    0.757   0.243</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> m2    French Dinka   Mbuti   Yoruba &amp; Vi…          3 1.56<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>    0.774   0.226</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> m3    French Dinka   Mbuti   Yoruba &amp; Vi…          3 3.58<span style="color: #949494;">e</span><span style="color: #BB0000;">-7</span>    0.895   0.105</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> m4    French Dinka   Mbuti   Yoruba &amp; Al…          3 6.86<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>    0.781   0.219</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> m5    French Dinka   Mbuti   Yoruba &amp; Al…          3 6.73<span style="color: #949494;">e</span><span style="color: #BB0000;">-6</span>    0.892   0.108</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> m6    French Dinka   Mbuti   Yoruba &amp; De…          3 4.03<span style="color: #949494;">e</span><span style="color: #BB0000;">-3</span>    0.89    0.11 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> m7    French Dinka   Mbuti   Vindija &amp; A…          3 6.73<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>   -<span style="color: #BB0000;">7.98</span>    8.98 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> m8    French Dinka   Mbuti   Vindija &amp; A…          3 4.65<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>   46.2   -<span style="color: #BB0000;">45.2</span>  </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> m9    French Dinka   Mbuti   Vindija &amp; D…          3 1.88<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span> -<span style="color: #BB0000;">177.</span>    178.   </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> m10   French Dinka   Mbuti   Altai &amp; Den…          3 1.33<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>  -<span style="color: #BB0000;">37.5</span>    38.5  </span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 326 more rows, and 4 more variables: stderr1 &lt;dbl&gt;, stderr2 &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   nsnps_used &lt;dbl&gt;, nsnps_target &lt;dbl&gt;</span></span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $ranks</span>
-<span class="co">#&gt; # A tibble: 672 x 9</span>
-<span class="co">#&gt;    model target  rank    df chisq       tail dfdiff chisqdiff   taildiff</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 m1    French     1     1  4.51 0.0337          3     -4.51 1         </span>
-<span class="co">#&gt;  2 m1    French     2     0  0    1               1      4.51 0.0337    </span>
-<span class="co">#&gt;  3 m10   French     1     1  6.06 0.0138          3     -6.06 1         </span>
-<span class="co">#&gt;  4 m10   French     2     0  0    1               1      6.06 0.0138    </span>
-<span class="co">#&gt;  5 m100  French     1     1 23.7  0.00000114      3    -23.7  1         </span>
-<span class="co">#&gt;  6 m100  French     2     0  0    1               1     23.7  0.00000114</span>
-<span class="co">#&gt;  7 m101  French     1     1  3.32 0.0685          3     -3.32 1         </span>
-<span class="co">#&gt;  8 m101  French     2     0  0    1               1      3.32 0.0685    </span>
-<span class="co">#&gt;  9 m102  French     1     1 18.8  0.0000149       3    -18.8  1         </span>
-<span class="co">#&gt; 10 m102  French     2     0  0    1               1     18.8  0.0000149 </span>
-<span class="co">#&gt; # … with 662 more rows</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 672 × 9</span></span>
+<span class="co">#&gt;    model target  rank    df chisq        tail dfdiff chisqdiff    taildiff</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> m1    French     1     1  4.19 0.040<span style="text-decoration: underline;">6</span>           3     -<span style="color: #BB0000;">4.19</span> 1          </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> m1    French     2     0  0    1                1      4.19 0.040<span style="text-decoration: underline;">6</span>     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> m10   French     1     1  5.85 0.015<span style="text-decoration: underline;">6</span>           3     -<span style="color: #BB0000;">5.85</span> 1          </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> m10   French     2     0  0    1                1      5.85 0.015<span style="text-decoration: underline;">6</span>     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> m100  French     1     1 25.9  0.000<span style="text-decoration: underline;">000</span>358      3    -<span style="color: #BB0000;">25.9</span>  1          </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> m100  French     2     0  0    1                1     25.9  0.000<span style="text-decoration: underline;">000</span>358</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> m101  French     1     1  3.32 0.068<span style="text-decoration: underline;">6</span>           3     -<span style="color: #BB0000;">3.32</span> 1          </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> m101  French     2     0  0    1                1      3.32 0.068<span style="text-decoration: underline;">6</span>     </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> m102  French     1     1 20.3  0.000<span style="text-decoration: underline;">006</span>73       3    -<span style="color: #BB0000;">20.3</span>  1          </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> m102  French     2     0  0    1                1     20.3  0.000<span style="text-decoration: underline;">006</span>73 </span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 662 more rows</span></span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $subsets</span>
-<span class="co">#&gt; # A tibble: 1,008 x 12</span>
-<span class="co">#&gt;    model target source1 source2 pattern    wt   dof  chisq    tail prop1 prop2</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 m1    French Dinka   Mbuti   00          0     1   4.51 3.37e-2 0.757 0.243</span>
-<span class="co">#&gt;  2 m1    French Dinka   Mbuti   01          1     2  23.6  7.35e-6 1     0    </span>
-<span class="co">#&gt;  3 m1    French Dinka   Mbuti   10          1     2 160.   0.      0     1    </span>
-<span class="co">#&gt;  4 m10   French Dinka   Mbuti   00          0     1   6.06 1.38e-2 0.774 0.226</span>
-<span class="co">#&gt;  5 m10   French Dinka   Mbuti   01          1     2  23.3  8.91e-6 1     0    </span>
-<span class="co">#&gt;  6 m10   French Dinka   Mbuti   10          1     2 162.   0.      0     1    </span>
-<span class="co">#&gt;  7 m100  French Dinka   Mbuti   00          0     1  23.7  1.14e-6 0.89  0.11 </span>
-<span class="co">#&gt;  8 m100  French Dinka   Mbuti   01          1     2  28.8  5.66e-7 1     0    </span>
-<span class="co">#&gt;  9 m100  French Dinka   Mbuti   10          1     2 285.   0.      0     1    </span>
-<span class="co">#&gt; 10 m101  French Dinka   Mbuti   00          0     1   3.32 6.85e-2 0.781 0.219</span>
-<span class="co">#&gt; # … with 998 more rows, and 1 more variable: comment &lt;chr&gt;</span></pre></body></html></div>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,008 × 12</span></span>
+<span class="co">#&gt;    model target source1 source2 pattern    wt   dof  chisq      tail prop1 prop2</span>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> m1    French Dinka   Mbuti   00          0     1   4.19   4.06<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span> 0.757 0.243</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> m1    French Dinka   Mbuti   01          1     2  23.4    8.44<span style="color: #949494;">e</span><span style="color: #BB0000;">-6</span> 1     0    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> m1    French Dinka   Mbuti   10          1     2 159.     0   <span style="color: #949494;"> </span>   0     1    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> m10   French Dinka   Mbuti   00          0     1   5.85   1.56<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span> 0.774 0.226</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> m10   French Dinka   Mbuti   01          1     2  23.1    9.68<span style="color: #949494;">e</span><span style="color: #BB0000;">-6</span> 1     0    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> m10   French Dinka   Mbuti   10          1     2 162.     0   <span style="color: #949494;"> </span>   0     1    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> m100  French Dinka   Mbuti   00          0     1  25.9    3.58<span style="color: #949494;">e</span><span style="color: #BB0000;">-7</span> 0.895 0.105</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> m100  French Dinka   Mbuti   01          1     2  30.6    2.31<span style="color: #949494;">e</span><span style="color: #BB0000;">-7</span> 1     0    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> m100  French Dinka   Mbuti   10          1     2 287.     0   <span style="color: #949494;"> </span>   0     1    </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> m101  French Dinka   Mbuti   00          0     1   3.32   6.86<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span> 0.781 0.219</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 998 more rows, and 1 more variable: comment &lt;chr&gt;</span></span></code></pre></div>
 <p>We can see a list with three components, as we would expect from any other <code><a href="../reference/qpAdm.html">qpAdm()</a></code> run (again, see the manual page and the tutorial for description of all three elements and their meaning). The first column of each component is always named <code>model</code> - this contains a short identifier of each individual “rotation” run (i.e., a combination target &amp; sources &amp; outgroups). It’s values don’t have any particular meaning - the order is completely arbitrary!, This variable is useful for later filtering and examination of individual models in detail.</p>
 <p>Let’s ignore the <code>$ranks</code> and <code>$subsets</code> elements for now. We will focus only on the first element, <code>$proportions</code> which contains the main <em>qpAdm</em> summary.</p>
 </div>
-<div id="examining-and-filtering-fitted-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#examining-and-filtering-fitted-models" class="anchor"></a>Examining and filtering fitted models</h3>
+<div class="section level3">
+<h3 id="examining-and-filtering-fitted-models">Examining and filtering fitted models<a class="anchor" aria-label="anchor" href="#examining-and-filtering-fitted-models"></a>
+</h3>
 <p>The <code>$proportions</code> table shown above contains information about <em>all</em> models, regardless of their plausibility. We can see that by examining the distributions of p-values (column <code>pvalue</code>) and admixture proportions (columns <code>prop1</code> and <code>prop2</code>) of each evaluated model in the figure below.</p>
 <p>Notice two things (each dot represents one examined <em>qpAdm</em> model):</p>
 <ul>
 <li>Many models have inferred admixture proportions <em>way</em> outside the [0, 1] interval - those are clearly nonsensical.</li>
 <li>Many models have very low p-values - this means these are incompatible with the data and can be rejected.</li>
 </ul>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 
-<span class="fu">select</span>(<span class="no">models</span>$<span class="no">proportions</span>, <span class="no">model</span>, <span class="no">pvalue</span>, <span class="no">prop1</span>, <span class="no">prop2</span>) <span class="kw">%&gt;%</span>
-    <span class="fu">gather</span>(<span class="no">parameter</span>, <span class="no">value</span>, -<span class="no">model</span>) <span class="kw">%&gt;%</span>
-    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="no">parameter</span>, <span class="no">value</span>)) +
-    <span class="fu">geom_jitter</span>() +
-    <span class="fu">facet_wrap</span>(~ <span class="no">parameter</span>, <span class="kw">scales</span> <span class="kw">=</span> <span class="st">"free"</span>)</pre></body></html></div>
-<p><img src="qpAdm_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">models</span><span class="op">$</span><span class="va">proportions</span>, <span class="va">model</span>, <span class="va">pvalue</span>, <span class="va">prop1</span>, <span class="va">prop2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span><span class="va">parameter</span>, <span class="va">value</span>, <span class="op">-</span><span class="va">model</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">parameter</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">parameter</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></code></pre></div>
+<p><img src="qpAdm_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 <p>To make it easier to narrow down the list of all models, <em>admixr</em> package contains a function <code><a href="../reference/qpAdm_filter.html">qpAdm_filter()</a></code>. This function accepts the result of the <code><a href="../reference/qpAdm_rotation.html">qpAdm_rotation()</a></code> function (either the <code>fulloutput = TRUE</code> version or the simple data frame with admixture proportions, p-values etc. produced by using<code>fulloutput = FALSE</code>) and filters out models with any of the proportions outside of the [0, 1] range and with p-values lower than a specified cutoff (0.05 by default):</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># filter out models which can clearly be rejected</span>
-<span class="no">fits</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/qpAdm_filter.html">qpAdm_filter</a></span>(<span class="no">models</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># filter out models which can clearly be rejected</span>
+<span class="va">fits</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpAdm_filter.html">qpAdm_filter</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
 <p>We can verify that the filtering worked by visualizing the filtered set of models again. Note that the p-values are distributed across the range of “insigificance” (i.e., “non-rejection”) between [0.05, 1.0]. Furthermore - remember that we originally set out to find combinations of sources-outgroups that model archaic ancestry in a French individual? We can clearly see two tidy clusters of estimated ancestry proportions. One is very small (this corresponds to the Neandertal component in modern humans - we would expect about 2-3% based on many previous analyses) and one large (“modern human” component, non-Neandertal ancestry):</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu">select</span>(<span class="no">fits</span>$<span class="no">proportions</span>, <span class="no">model</span>, <span class="no">pvalue</span>, <span class="no">prop1</span>, <span class="no">prop2</span>) <span class="kw">%&gt;%</span>
-    <span class="fu">gather</span>(<span class="no">parameter</span>, <span class="no">value</span>, -<span class="no">model</span>) <span class="kw">%&gt;%</span>
-    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="no">parameter</span>, <span class="no">value</span>)) +
-    <span class="fu">geom_jitter</span>() +
-    <span class="fu">facet_wrap</span>(~ <span class="no">parameter</span>, <span class="kw">scales</span> <span class="kw">=</span> <span class="st">"free"</span>) +
-    <span class="fu">coord_cartesian</span>(<span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1</span>))</pre></body></html></div>
-<p><img src="qpAdm_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">fits</span><span class="op">$</span><span class="va">proportions</span>, <span class="va">model</span>, <span class="va">pvalue</span>, <span class="va">prop1</span>, <span class="va">prop2</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span><span class="va">parameter</span>, <span class="va">value</span>, <span class="op">-</span><span class="va">model</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">parameter</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">parameter</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="qpAdm_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 <p>Let’s now focus only on the proportions table. We will also ignore a couple of columns for brevity. Note that we are now also completely ignoring p-values because we <em>cannot</em> used those for model selection - they are <em>not</em> statistically meaningful at this stage! Higher p-value <em>never</em> implies higher likelihood of the model. Finally, we order the models based on the size of the outgroup set (smaller models first):</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">props</span> <span class="kw">&lt;-</span> <span class="no">fits</span>$<span class="no">proportions</span> <span class="kw">%&gt;%</span>
-    <span class="fu">arrange</span>(<span class="no">noutgroups</span>) <span class="kw">%&gt;%</span>
-    <span class="fu">select</span>(-<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">target</span>, <span class="no">noutgroups</span>, <span class="no">stderr1</span>, <span class="no">stderr2</span>, <span class="no">nsnps_used</span>, <span class="no">nsnps_target</span>))
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">props</span> <span class="op">&lt;-</span> <span class="va">fits</span><span class="op">$</span><span class="va">proportions</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">noutgroups</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">target</span>, <span class="va">noutgroups</span>, <span class="va">stderr1</span>, <span class="va">stderr2</span>, <span class="va">nsnps_used</span>, <span class="va">nsnps_target</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">props</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">Inf</span>)
-<span class="co">#&gt; # A tibble: 56 x 7</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">props</span>, n <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 51 × 7</span></span>
 <span class="co">#&gt;    model source1 source2  outgroups                           pvalue prop1 prop2</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;                                &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 m81   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Vindija            0.963  0.937 0.063</span>
-<span class="co">#&gt;  2 m82   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Altai              0.959  0.942 0.058</span>
-<span class="co">#&gt;  3 m56   Dinka   Altai    Yoruba &amp; Vindija &amp; Chimp            0.898  0.973 0.027</span>
-<span class="co">#&gt;  4 m40   Dinka   Vindija  Yoruba &amp; Altai &amp; Chimp              0.875  0.975 0.025</span>
-<span class="co">#&gt;  5 m52   Dinka   Altai    Mbuti &amp; Vindija &amp; Denisova          0.829  0.977 0.023</span>
-<span class="co">#&gt;  6 m183  Yoruba  Vindija  Mbuti &amp; Altai &amp; Denisova            0.826  0.993 0.007</span>
-<span class="co">#&gt;  7 m83   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Denisova           0.712  0.96  0.04 </span>
-<span class="co">#&gt;  8 m65   Dinka   Denisova Mbuti &amp; Yoruba &amp; Vindija            0.712  0.96  0.04 </span>
-<span class="co">#&gt;  9 m66   Dinka   Denisova Mbuti &amp; Yoruba &amp; Altai              0.672  0.963 0.037</span>
-<span class="co">#&gt; 10 m41   Dinka   Vindija  Yoruba &amp; Denisova &amp; Chimp           0.603  0.97  0.03 </span>
-<span class="co">#&gt; 11 m57   Dinka   Altai    Yoruba &amp; Denisova &amp; Chimp           0.603  0.97  0.03 </span>
-<span class="co">#&gt; 12 m55   Dinka   Altai    Yoruba &amp; Vindija &amp; Denisova         0.599  0.974 0.026</span>
-<span class="co">#&gt; 13 m199  Yoruba  Altai    Mbuti &amp; Vindija &amp; Denisova          0.562  0.991 0.009</span>
-<span class="co">#&gt; 14 m36   Dinka   Vindija  Mbuti &amp; Altai &amp; Denisova            0.561  0.979 0.021</span>
-<span class="co">#&gt; 15 m50   Dinka   Altai    Mbuti &amp; Yoruba &amp; Denisova           0.550  0.973 0.027</span>
-<span class="co">#&gt; 16 m34   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Denisova           0.548  0.973 0.027</span>
-<span class="co">#&gt; 17 m49   Dinka   Altai    Mbuti &amp; Yoruba &amp; Vindija            0.527  0.975 0.025</span>
-<span class="co">#&gt; 18 m33   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Altai              0.504  0.977 0.023</span>
-<span class="co">#&gt; 19 m51   Dinka   Altai    Mbuti &amp; Yoruba &amp; Chimp              0.460  0.981 0.019</span>
-<span class="co">#&gt; 20 m35   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Chimp              0.459  0.981 0.019</span>
-<span class="co">#&gt; 21 m67   Dinka   Denisova Mbuti &amp; Yoruba &amp; Chimp              0.448  0.982 0.018</span>
-<span class="co">#&gt; 22 m37   Dinka   Vindija  Mbuti &amp; Altai &amp; Chimp               0.400  0.977 0.023</span>
-<span class="co">#&gt; 23 m58   Dinka   Altai    Vindija &amp; Denisova &amp; Chimp          0.367  0.972 0.028</span>
-<span class="co">#&gt; 24 m39   Dinka   Vindija  Yoruba &amp; Altai &amp; Denisova           0.360  0.977 0.023</span>
-<span class="co">#&gt; 25 m233  Yoruba  Chimp    Mbuti &amp; Altai &amp; Denisova            0.343  0.988 0.012</span>
-<span class="co">#&gt; 26 m42   Dinka   Vindija  Altai &amp; Denisova &amp; Chimp            0.291  0.976 0.024</span>
-<span class="co">#&gt; 27 m53   Dinka   Altai    Mbuti &amp; Vindija &amp; Chimp             0.290  0.974 0.026</span>
-<span class="co">#&gt; 28 m38   Dinka   Vindija  Mbuti &amp; Denisova &amp; Chimp            0.198  0.975 0.025</span>
-<span class="co">#&gt; 29 m54   Dinka   Altai    Mbuti &amp; Denisova &amp; Chimp            0.197  0.975 0.025</span>
-<span class="co">#&gt; 30 m232  Yoruba  Chimp    Mbuti &amp; Vindija &amp; Denisova          0.123  0.986 0.014</span>
-<span class="co">#&gt; 31 m202  Yoruba  Altai    Vindija &amp; Denisova &amp; Chimp          0.0983 0.974 0.026</span>
-<span class="co">#&gt; 32 m68   Dinka   Denisova Mbuti &amp; Vindija &amp; Altai             0.0809 0.964 0.036</span>
-<span class="co">#&gt; 33 m215  Yoruba  Denisova Mbuti &amp; Vindija &amp; Altai             0.0788 0.988 0.012</span>
-<span class="co">#&gt; 34 m231  Yoruba  Chimp    Mbuti &amp; Vindija &amp; Altai             0.0751 0.98  0.02 </span>
-<span class="co">#&gt; 35 m186  Yoruba  Vindija  Altai &amp; Denisova &amp; Chimp            0.0699 0.978 0.022</span>
-<span class="co">#&gt; 36 m84   Dinka   Chimp    Mbuti &amp; Vindija &amp; Altai             0.0698 0.942 0.058</span>
-<span class="co">#&gt; 37 m71   Dinka   Denisova Yoruba &amp; Vindija &amp; Altai            0.0687 0.96  0.04 </span>
-<span class="co">#&gt; 38 m4    Dinka   Mbuti    Yoruba &amp; Altai &amp; Denisova           0.0685 0.781 0.219</span>
-<span class="co">#&gt; 39 m87   Dinka   Chimp    Yoruba &amp; Vindija &amp; Altai            0.0608 0.941 0.059</span>
-<span class="co">#&gt; 40 m74   Dinka   Denisova Vindija &amp; Altai &amp; Chimp             0.0507 0.922 0.078</span>
-<span class="co">#&gt; 41 m63   Dinka   Altai    Yoruba &amp; Vindija &amp; Denisova &amp; Chimp 0.788  0.973 0.027</span>
-<span class="co">#&gt; 42 m59   Dinka   Altai    Mbuti &amp; Yoruba &amp; Vindija &amp; Denisova 0.770  0.976 0.024</span>
-<span class="co">#&gt; 43 m44   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Altai &amp; Chimp      0.660  0.976 0.024</span>
-<span class="co">#&gt; 44 m47   Dinka   Vindija  Yoruba &amp; Altai &amp; Denisova &amp; Chimp   0.612  0.976 0.024</span>
-<span class="co">#&gt; 45 m43   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Altai &amp; Denisova   0.607  0.978 0.022</span>
-<span class="co">#&gt; 46 m60   Dinka   Altai    Mbuti &amp; Yoruba &amp; Vindija &amp; Chimp    0.559  0.974 0.026</span>
-<span class="co">#&gt; 47 m62   Dinka   Altai    Mbuti &amp; Vindija &amp; Denisova &amp; Chimp  0.433  0.975 0.025</span>
-<span class="co">#&gt; 48 m45   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Denisova &amp; Chimp   0.426  0.974 0.026</span>
-<span class="co">#&gt; 49 m61   Dinka   Altai    Mbuti &amp; Yoruba &amp; Denisova &amp; Chimp   0.425  0.974 0.026</span>
-<span class="co">#&gt; 50 m46   Dinka   Vindija  Mbuti &amp; Altai &amp; Denisova &amp; Chimp    0.406  0.977 0.023</span>
-<span class="co">#&gt; 51 m75   Dinka   Denisova Mbuti &amp; Yoruba &amp; Vindija &amp; Altai    0.196  0.962 0.038</span>
-<span class="co">#&gt; 52 m91   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Vindija &amp; Altai    0.194  0.941 0.059</span>
-<span class="co">#&gt; 53 m239  Yoruba  Chimp    Mbuti &amp; Vindija &amp; Altai &amp; Denisova  0.101  0.988 0.012</span>
-<span class="co">#&gt; 54 m93   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Altai &amp; Denisova   0.0786 0.954 0.046</span>
-<span class="co">#&gt; 55 m64   Dinka   Altai    Mbuti &amp; Yoruba &amp; Vindija &amp; Denisov… 0.629  0.974 0.026</span>
-<span class="co">#&gt; 56 m48   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Altai &amp; Denisova … 0.580  0.976 0.024</span></pre></body></html></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> m40   Dinka   Vindija  Yoruba &amp; Altai &amp; Chimp              0.943  0.975 0.025</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> m81   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Vindija            0.871  0.938 0.062</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> m183  Yoruba  Vindija  Mbuti &amp; Altai &amp; Denisova            0.838  0.993 0.007</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> m52   Dinka   Altai    Mbuti &amp; Vindija &amp; Denisova          0.831  0.977 0.023</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> m82   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Altai              0.788  0.943 0.057</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> m56   Dinka   Altai    Yoruba &amp; Vindija &amp; Chimp            0.785  0.972 0.028</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> m65   Dinka   Denisova Mbuti &amp; Yoruba &amp; Vindija            0.742  0.96  0.04 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> m66   Dinka   Denisova Mbuti &amp; Yoruba &amp; Altai              0.701  0.963 0.037</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> m55   Dinka   Altai    Yoruba &amp; Vindija &amp; Denisova         0.587  0.974 0.026</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> m83   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Denisova           0.576  0.96  0.04 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">11</span> m50   Dinka   Altai    Mbuti &amp; Yoruba &amp; Denisova           0.574  0.973 0.027</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">12</span> m34   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Denisova           0.573  0.973 0.027</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">13</span> m199  Yoruba  Altai    Mbuti &amp; Vindija &amp; Denisova          0.572  0.99  0.01 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">14</span> m36   Dinka   Vindija  Mbuti &amp; Altai &amp; Denisova            0.564  0.979 0.021</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">15</span> m49   Dinka   Altai    Mbuti &amp; Yoruba &amp; Vindija            0.536  0.975 0.025</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">16</span> m33   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Altai              0.513  0.977 0.023</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">17</span> m41   Dinka   Vindija  Yoruba &amp; Denisova &amp; Chimp           0.443  0.969 0.031</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">18</span> m37   Dinka   Vindija  Mbuti &amp; Altai &amp; Chimp               0.437  0.978 0.022</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">19</span> m57   Dinka   Altai    Yoruba &amp; Denisova &amp; Chimp           0.435  0.969 0.031</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">20</span> m233  Yoruba  Chimp    Mbuti &amp; Altai &amp; Denisova            0.389  0.987 0.013</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">21</span> m58   Dinka   Altai    Vindija &amp; Denisova &amp; Chimp          0.361  0.972 0.028</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">22</span> m39   Dinka   Vindija  Yoruba &amp; Altai &amp; Denisova           0.359  0.977 0.023</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">23</span> m35   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Chimp              0.351  0.98  0.02 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">24</span> m67   Dinka   Denisova Mbuti &amp; Yoruba &amp; Chimp              0.350  0.981 0.019</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">25</span> m51   Dinka   Altai    Mbuti &amp; Yoruba &amp; Chimp              0.348  0.98  0.02 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">26</span> m53   Dinka   Altai    Mbuti &amp; Vindija &amp; Chimp             0.300  0.975 0.025</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">27</span> m42   Dinka   Vindija  Altai &amp; Denisova &amp; Chimp            0.233  0.976 0.024</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">28</span> m38   Dinka   Vindija  Mbuti &amp; Denisova &amp; Chimp            0.227  0.975 0.025</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">29</span> m54   Dinka   Altai    Mbuti &amp; Denisova &amp; Chimp            0.221  0.975 0.025</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">30</span> m232  Yoruba  Chimp    Mbuti &amp; Vindija &amp; Denisova          0.122  0.984 0.016</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">31</span> m202  Yoruba  Altai    Vindija &amp; Denisova &amp; Chimp          0.099<span style="text-decoration: underline;">0</span> 0.974 0.026</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">32</span> m68   Dinka   Denisova Mbuti &amp; Vindija &amp; Altai             0.082<span style="text-decoration: underline;">4</span> 0.963 0.037</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">33</span> m71   Dinka   Denisova Yoruba &amp; Vindija &amp; Altai            0.081<span style="text-decoration: underline;">2</span> 0.96  0.04 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">34</span> m215  Yoruba  Denisova Mbuti &amp; Vindija &amp; Altai             0.077<span style="text-decoration: underline;">0</span> 0.987 0.013</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">35</span> m4    Dinka   Mbuti    Yoruba &amp; Altai &amp; Denisova           0.068<span style="text-decoration: underline;">6</span> 0.781 0.219</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">36</span> m186  Yoruba  Vindija  Altai &amp; Denisova &amp; Chimp            0.050<span style="text-decoration: underline;">9</span> 0.978 0.022</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">37</span> m59   Dinka   Altai    Mbuti &amp; Yoruba &amp; Vindija &amp; Denisova 0.792  0.975 0.025</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">38</span> m63   Dinka   Altai    Yoruba &amp; Vindija &amp; Denisova &amp; Chimp 0.650  0.973 0.027</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">39</span> m43   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Altai &amp; Denisova   0.629  0.977 0.023</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">40</span> m44   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Altai &amp; Chimp      0.611  0.977 0.023</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">41</span> m60   Dinka   Altai    Mbuti &amp; Yoruba &amp; Vindija &amp; Chimp    0.524  0.974 0.026</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">42</span> m62   Dinka   Altai    Mbuti &amp; Vindija &amp; Denisova &amp; Chimp  0.480  0.975 0.025</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">43</span> m47   Dinka   Vindija  Yoruba &amp; Altai &amp; Denisova &amp; Chimp   0.469  0.976 0.024</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">44</span> m46   Dinka   Vindija  Mbuti &amp; Altai &amp; Denisova &amp; Chimp    0.442  0.978 0.022</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">45</span> m45   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Denisova &amp; Chimp   0.433  0.974 0.026</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">46</span> m61   Dinka   Altai    Mbuti &amp; Yoruba &amp; Denisova &amp; Chimp   0.425  0.974 0.026</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">47</span> m75   Dinka   Denisova Mbuti &amp; Yoruba &amp; Vindija &amp; Altai    0.197  0.962 0.038</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">48</span> m93   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Altai &amp; Denisova   0.095<span style="text-decoration: underline;">4</span> 0.955 0.045</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">49</span> m91   Dinka   Chimp    Mbuti &amp; Yoruba &amp; Vindija &amp; Altai    0.093<span style="text-decoration: underline;">0</span> 0.942 0.058</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">50</span> m64   Dinka   Altai    Mbuti &amp; Yoruba &amp; Vindija &amp; Denisov… 0.635  0.974 0.026</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">51</span> m48   Dinka   Vindija  Mbuti &amp; Yoruba &amp; Altai &amp; Denisova … 0.560  0.977 0.023</span></code></pre></div>
 <p>Fun fact: notice in the table below that there are many models in which the chimpanzee was fitted as a source of ancestry! Interestingly, qpAdm used Chimp to infer archaic human ancestry. This is because you could think of Neandertal ancestry as an “ancestral component” of a modern human genome and the <em>qpAdm</em> rotation procedure therefore concludes that Chimpanzee is not be an unreasonable surrogate for a source population. Of course, we know there are better sources in our candidates set - we have the archaic humans!</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">props</span>, <span class="no">source1</span> <span class="kw">==</span> <span class="st">"Chimp"</span> <span class="kw">|</span> <span class="no">source2</span> <span class="kw">==</span> <span class="st">"Chimp"</span>)
-<span class="co">#&gt; # A tibble: 11 x 7</span>
-<span class="co">#&gt;    model source1 source2 outgroups                          pvalue prop1 prop2</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;                               &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 m81   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Vindija           0.963  0.937 0.063</span>
-<span class="co">#&gt;  2 m82   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Altai             0.959  0.942 0.058</span>
-<span class="co">#&gt;  3 m83   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Denisova          0.712  0.96  0.04 </span>
-<span class="co">#&gt;  4 m233  Yoruba  Chimp   Mbuti &amp; Altai &amp; Denisova           0.343  0.988 0.012</span>
-<span class="co">#&gt;  5 m232  Yoruba  Chimp   Mbuti &amp; Vindija &amp; Denisova         0.123  0.986 0.014</span>
-<span class="co">#&gt;  6 m231  Yoruba  Chimp   Mbuti &amp; Vindija &amp; Altai            0.0751 0.98  0.02 </span>
-<span class="co">#&gt;  7 m84   Dinka   Chimp   Mbuti &amp; Vindija &amp; Altai            0.0698 0.942 0.058</span>
-<span class="co">#&gt;  8 m87   Dinka   Chimp   Yoruba &amp; Vindija &amp; Altai           0.0608 0.941 0.059</span>
-<span class="co">#&gt;  9 m91   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Vindija &amp; Altai   0.194  0.941 0.059</span>
-<span class="co">#&gt; 10 m239  Yoruba  Chimp   Mbuti &amp; Vindija &amp; Altai &amp; Denisova 0.101  0.988 0.012</span>
-<span class="co">#&gt; 11 m93   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Altai &amp; Denisova  0.0786 0.954 0.046</span></pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">props</span>, <span class="va">source1</span> <span class="op">==</span> <span class="st">"Chimp"</span> <span class="op">|</span> <span class="va">source2</span> <span class="op">==</span> <span class="st">"Chimp"</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 7 × 7</span></span>
+<span class="co">#&gt;   model source1 source2 outgroups                         pvalue prop1 prop2</span>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> m81   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Vindija          0.871  0.938 0.062</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> m82   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Altai            0.788  0.943 0.057</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> m83   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Denisova         0.576  0.96  0.04 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> m233  Yoruba  Chimp   Mbuti &amp; Altai &amp; Denisova          0.389  0.987 0.013</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> m232  Yoruba  Chimp   Mbuti &amp; Vindija &amp; Denisova        0.122  0.984 0.016</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> m93   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Altai &amp; Denisova 0.095<span style="text-decoration: underline;">4</span> 0.955 0.045</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">7</span> m91   Dinka   Chimp   Mbuti &amp; Yoruba &amp; Vindija &amp; Altai  0.093<span style="text-decoration: underline;">0</span> 0.942 0.058</span></code></pre></div>
 <p>Another interesting fact: notice that the rotating population procedure selected another plausible model characterizing the ancestry of the French individual. However, this of course doesn’t represent Neandertal introgression. What it might possibly represent is left as an exercise for the reader… :)</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">props</span>, <span class="no">prop1</span> <span class="kw">&lt;</span> <span class="fl">0.9</span>, <span class="no">prop2</span> <span class="kw">&lt;</span> <span class="fl">0.9</span>)
-<span class="co">#&gt; # A tibble: 1 x 7</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">props</span>, <span class="va">prop1</span> <span class="op">&lt;</span> <span class="fl">0.9</span>, <span class="va">prop2</span> <span class="op">&lt;</span> <span class="fl">0.9</span><span class="op">)</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 7</span></span>
 <span class="co">#&gt;   model source1 source2 outgroups                 pvalue prop1 prop2</span>
-<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;                      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 m4    Dinka   Mbuti   Yoruba &amp; Altai &amp; Denisova 0.0685 0.781 0.219</span></pre></body></html></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> m4    Dinka   Mbuti   Yoruba &amp; Altai &amp; Denisova 0.068<span style="text-decoration: underline;">6</span> 0.781 0.219</span></code></pre></div>
 </div>
 </div>
-<div id="conclusions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#conclusions" class="anchor"></a>Conclusions</h2>
+<div class="section level2">
+<h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
+</h2>
 <p>At this stage of analysis, you would have to decide which of the models produced by <code><a href="../reference/qpAdm_filter.html">qpAdm_filter()</a></code> that cannot be immediately rejected are more reasonable than others and why. Possibly based on both some prior knowledge and additional statistics (such as the details information available in the full log output information shown by <code><a href="../reference/loginfo.html">loginfo()</a></code>). You could say that the <em>qpAdm</em> methodology, while rooted in strong statistics, is from a certain point as much art as it is science. Interpreting the results and finding the most appropriate models can be quite a challenge.</p>
-<p>Happy modeling and please, do <a href="https://github.com/bodkan/admixr/issues">let me know</a> if you discover bugs or missing features. My goal with this tool is to streamline <em>qpAdm</em> model fitting as much as possible and I can do it only with your input.</p>
+<p>Happy modeling and please, do <a href="https://github.com/bodkan/admixr/issues" class="external-link">let me know</a> if you discover bugs or missing features. My goal with this tool is to streamline <em>qpAdm</em> model fitting as much as possible and I can do it only with your input.</p>
 </div>
-<div id="final-remarks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#final-remarks" class="anchor"></a>Final remarks</h2>
+<div class="section level2">
+<h2 id="final-remarks">Final remarks<a class="anchor" aria-label="anchor" href="#final-remarks"></a>
+</h2>
 <ol style="list-style-type: decimal">
 <li><p>As a reminder, keep in mind that <em>admixr</em> gives you tools for filtering SNPs and also grouping samples into populations on the fly! You can easily process and group samples before plugging them into <code><a href="../reference/qpAdm_rotation.html">qpAdm_rotation()</a></code>!</p></li>
 <li><p>Also note that you can use the function <code><a href="../reference/loginfo.html">loginfo()</a></code> to examine the complete log output of any model by specifying the model identifier. This is helpful not only for debugging purposes but also for cases when you need a particular statistic in the full qpAdm log report which is not currently parsed by <em>admixr</em>:</p></li>
 </ol>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span>(<span class="no">fits</span>, <span class="st">"m40"</span>)
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span><span class="op">(</span><span class="va">fits</span>, <span class="st">"m40"</span><span class="op">)</span>
 <span class="co">#&gt; Full output log of qpAdm rotation for model 'm40':</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpAdm: parameter file: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/qpAdm__999364930.par</span>
+<span class="co">#&gt; qpAdm: parameter file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpt9eg0m/qpAdm__1675323396.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/snps/snps.ind</span>
-<span class="co">#&gt; popleft: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/qpAdm__999364930.popleft</span>
-<span class="co">#&gt; popright: /var/folders/t7/9gjtb6m92flbnp930618vt3r0000gn/T//RtmpsoJhIf/qpAdm__999364930.popright</span>
-<span class="co">#&gt; allsnps: YES</span>
-<span class="co">#&gt; summary: YES</span>
-<span class="co">#&gt; details: YES</span>
-<span class="co">#&gt; ## qpAdm version: 1201</span>
-<span class="co">#&gt; seed: 414097275</span>
+<span class="co">#&gt; genotypename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpt9eg0m/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpt9eg0m/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpt9eg0m/snps/snps.ind</span>
+<span class="co">#&gt; popleft: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpt9eg0m/qpAdm__1675323396.popleft</span>
+<span class="co">#&gt; popright: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpt9eg0m/qpAdm__1675323396.popright</span>
+<span class="co">#&gt; ## qpAdm version: 1520</span>
+<span class="co">#&gt; seed: -479117025</span>
+<span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span>
+<span class="co">#&gt;  *** recommended that inbreed be explicitly set ***</span>
+<span class="co">#&gt; inbreed set NO</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; left pops:</span>
 <span class="co">#&gt; French</span>
@@ -409,28 +407,28 @@
 <span class="co">#&gt; coverage:               Yoruba 499246</span>
 <span class="co">#&gt; coverage:                Altai 497729</span>
 <span class="co">#&gt; coverage:                Chimp 491273</span>
-<span class="co">#&gt; Effective number of blocks:   490.290</span>
-<span class="co">#&gt; numsnps used: 500000</span>
+<span class="co">#&gt; Effective number of blocks:   489.461</span>
+<span class="co">#&gt; numsnps used: 492145</span>
 <span class="co">#&gt; codimension 1</span>
 <span class="co">#&gt; f4info: </span>
-<span class="co">#&gt; f4rank: 1 dof:      1 chisq:     0.025 tail:          0.875038438 dofdiff:      3 chisqdiff:    -0.025 taildiff:                    1</span>
+<span class="co">#&gt; f4rank: 1 dof:      1 chisq:     0.005 tail:          0.943090515 dofdiff:      3 chisqdiff:    -0.005 taildiff:                    1</span>
 <span class="co">#&gt; B:</span>
 <span class="co">#&gt;           scale     1.000 </span>
-<span class="co">#&gt;           Altai     1.301 </span>
-<span class="co">#&gt;           Chimp     0.554 </span>
+<span class="co">#&gt;           Altai     1.299 </span>
+<span class="co">#&gt;           Chimp     0.560 </span>
 <span class="co">#&gt; A:</span>
-<span class="co">#&gt;           scale    15.252 </span>
-<span class="co">#&gt;           Dinka    -0.036 </span>
+<span class="co">#&gt;           scale    15.336 </span>
+<span class="co">#&gt;           Dinka    -0.037 </span>
 <span class="co">#&gt;         Vindija     1.414 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; full rank</span>
 <span class="co">#&gt; f4info: </span>
-<span class="co">#&gt; f4rank: 2 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      1 chisqdiff:     0.025 taildiff:          0.875038438</span>
+<span class="co">#&gt; f4rank: 2 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      1 chisqdiff:     0.005 taildiff:          0.943090515</span>
 <span class="co">#&gt; B:</span>
-<span class="co">#&gt;           scale   421.013    10.787 </span>
-<span class="co">#&gt;           Altai    -1.293     1.301 </span>
-<span class="co">#&gt;           Chimp    -0.574     0.554 </span>
+<span class="co">#&gt;           scale   418.012    10.844 </span>
+<span class="co">#&gt;           Altai    -1.297     1.299 </span>
+<span class="co">#&gt;           Chimp    -0.564     0.560 </span>
 <span class="co">#&gt; A:</span>
 <span class="co">#&gt;           scale     1.414     1.414 </span>
 <span class="co">#&gt;           Dinka     1.414     0.000 </span>
@@ -438,41 +436,41 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; best coefficients:     0.975     0.025 </span>
-<span class="co">#&gt; Jackknife mean:      0.975467965     0.024532035 </span>
+<span class="co">#&gt; Jackknife mean:      0.974725785     0.025274215 </span>
 <span class="co">#&gt;       std. errors:     0.005     0.005 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; error covariance (* 1,000,000)</span>
-<span class="co">#&gt;         24        -24 </span>
-<span class="co">#&gt;        -24         24 </span>
+<span class="co">#&gt;         25        -25 </span>
+<span class="co">#&gt;        -25         25 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; summ: French    2      0.875038     0.975     0.025         24        -24         24 </span>
+<span class="co">#&gt; summ: French    2      0.943091     0.975     0.025         25        -25         25 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     fixed pat  wt  dof     chisq       tail prob</span>
-<span class="co">#&gt;            00  0     1     0.025        0.875038     0.975     0.025 </span>
-<span class="co">#&gt;            01  1     2    24.294     5.30367e-06     1.000     0.000 </span>
-<span class="co">#&gt;            10  1     2 23181.059               0     0.000     1.000 </span>
-<span class="co">#&gt; best pat:           00         0.875038              -  -</span>
-<span class="co">#&gt; best pat:           01      5.30367e-06  chi(nested):    24.269 p-value for nested model:     8.37552e-07</span>
+<span class="co">#&gt;            00  0     1     0.005        0.943091     0.975     0.025 </span>
+<span class="co">#&gt;            01  1     2    25.148     3.46134e-06     1.000     0.000 </span>
+<span class="co">#&gt;            10  1     2 23565.754               0     0.000     1.000 </span>
+<span class="co">#&gt; best pat:           00         0.943091              -  -</span>
+<span class="co">#&gt; best pat:           01      3.46134e-06  chi(nested):    25.143 p-value for nested model:     5.32432e-07</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; coeffs:     0.975     0.025 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ## dscore:: f_4(Base, Fit, Rbase, right2)</span>
 <span class="co">#&gt; ## genstat:: f_4(Base, Fit, right1, right2)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; details:                Dinka                Altai    -0.003070   -4.407893</span>
-<span class="co">#&gt; details:              Vindija                Altai     0.120642  146.515551</span>
-<span class="co">#&gt; dscore:                Altai f4:    -0.000037 Z:    -0.053286</span>
+<span class="co">#&gt; details:                Dinka                Altai    -0.003103   -4.438742</span>
+<span class="co">#&gt; details:              Vindija                Altai     0.119761  147.102911</span>
+<span class="co">#&gt; dscore:                Altai f4:     0.000001 Z:     0.001526</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; details:                Dinka                Chimp    -0.001363   -2.294880</span>
-<span class="co">#&gt; details:              Vindija                Chimp     0.051327   77.922651</span>
-<span class="co">#&gt; dscore:                Chimp f4:    -0.000071 Z:    -0.121462</span>
+<span class="co">#&gt; details:                Dinka                Chimp    -0.001349   -2.260476</span>
+<span class="co">#&gt; details:              Vindija                Chimp     0.051628   77.995602</span>
+<span class="co">#&gt; dscore:                Chimp f4:    -0.000010 Z:    -0.017643</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; gendstat:               Yoruba                Altai    -0.053</span>
-<span class="co">#&gt; gendstat:               Yoruba                Chimp    -0.121</span>
-<span class="co">#&gt; gendstat:                Altai                Chimp    -0.086</span>
+<span class="co">#&gt; gendstat:               Yoruba                Altai     0.002</span>
+<span class="co">#&gt; gendstat:               Yoruba                Chimp    -0.018</span>
+<span class="co">#&gt; gendstat:                Altai                Chimp    -0.029</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ##end of qpAdm:        3.549 seconds cpu        0.000 Mbytes in use</span></pre></body></html></div>
+<span class="co">#&gt; ##end of qpAdm:        5.087 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
 </div>
   </div>
 
@@ -487,11 +485,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Martin Petr.</p>
+  <p></p>
+<p>Developed by Martin Petr.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -499,6 +499,8 @@
 
   
 
+
+  
 
   </body>
 </html>

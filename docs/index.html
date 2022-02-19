@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,18 +40,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -74,8 +70,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/bodkan/admixr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/bodkan/admixr/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -93,73 +89,76 @@
   <div class="contents col-md-9">
 
 
-<div id="admixr" class="section level1">
+<div class="section level1">
 
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><a href="https://github.com/DReichLab/AdmixTools/">ADMIXTOOLS</a> is a widely used software package for calculating admixture statistics and testing population admixture hypotheses.</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p><a href="https://github.com/DReichLab/AdmixTools/" class="external-link">ADMIXTOOLS</a> is a widely used software package for calculating admixture statistics and testing population admixture hypotheses.</p>
 <p>A typical ADMIXTOOLS workflow often involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS commands, and control how to run a particular analysis. The results are then redirected to another file, which has to be parsed by the user to extract values of interest, often using command-line utilities again or (worse) by manual copy-pasting. Finally, the processed results are analysed in R, Excel or another program.</p>
 <p>This workflow can be a little cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations. Most importantly, however, it makes it difficult to follow the rules of best practice for reproducible science, as it is nearly impossible to construct reproducible automated “pipelines”.</p>
 <p>This R package makes it possible to perform all stages of an ADMIXTOOLS analysis entirely from R. It provides a set of convenient functions that completely remove the need for “low level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
 </div>
-<div id="how-to-cite" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-to-cite" class="anchor"></a>How to cite</h2>
-<p><em>admixr</em> is now published as an <a href="https://doi.org/10.1093/bioinformatics/btz030"><em>Application Note</em></a> in the journal Bioinformatics. If you use it in your work, please cite the paper!</p>
+<div class="section level2">
+<h2 id="how-to-cite">How to cite<a class="anchor" aria-label="anchor" href="#how-to-cite"></a>
+</h2>
+<p><em>admixr</em> is now published as an <a href="https://doi.org/10.1093/bioinformatics/btz030" class="external-link"><em>Application Note</em></a> in the journal Bioinformatics. If you use it in your work, please cite the paper!</p>
 </div>
-<div id="installation-instructions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation-instructions" class="anchor"></a>Installation instructions</h2>
-<div id="latest-stable-version" class="section level5">
-<h5 class="hasAnchor">
-<a href="#latest-stable-version" class="anchor"></a>Latest stable version</h5>
-<p>The package is available <a href="https://cran.r-project.org/package=admixr">on CRAN</a>. You can install it simply by running</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"admixr"</span>)</pre></div>
+<div class="section level2">
+<h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
+</h2>
+<div class="section level5">
+<h5 id="latest-stable-version">Latest stable version<a class="anchor" aria-label="anchor" href="#latest-stable-version"></a>
+</h5>
+<p>The package is available <a href="https://cran.r-project.org/package=admixr" class="external-link">on CRAN</a>. You can install it simply by running</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"admixr"</span><span class="op">)</span></code></pre></div>
 <p>from your R session. This the recommended procedure for most users.</p>
 </div>
-<div id="development-version" class="section level5">
-<h5 class="hasAnchor">
-<a href="#development-version" class="anchor"></a>Development version</h5>
+<div class="section level5">
+<h5 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
+</h5>
 <p>To install the development version from Github (which might be slightly ahead in terms of new features and bugfixes compared to the stable release on CRAN), you need the package <code>devtools</code>. You can run:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"bodkan/admixr"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bodkan/admixr"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="installing-admixtools" class="section level5">
-<h5 class="hasAnchor">
-<a href="#installing-admixtools" class="anchor"></a>Installing ADMIXTOOLS</h5>
-<p>In order to use the <code>admixr</code> package, you need a working installation of ADMIXTOOLS. You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL">here</a>.</p>
+<div class="section level5">
+<h5 id="installing-admixtools">Installing ADMIXTOOLS<a class="anchor" aria-label="anchor" href="#installing-admixtools"></a>
+</h5>
+<p>In order to use the <code>admixr</code> package, you need a working installation of ADMIXTOOLS. You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL" class="external-link">here</a>.</p>
 <p>Furthermore, you also need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>. You can achieve this by specifying <code>PATH=&lt;path to the location of ADMIXTOOLS programs&gt;</code> in the <code>.Renviron</code> file.</p>
 </div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <p>This is all the code that you need to perform ADMIXTOOLS analyses using this package! No shell scripting, no copy-pasting and manual editing of text files. The only thing you need is a working ADMIXTOOLS installation and a path to EIGENSTRAT data (a trio of ind/snp/geno files), which we call <code>prefix</code> here.</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">admixr</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bodkan/admixr" class="external-link">admixr</a></span><span class="op">)</span>
 
 <span class="co"># download a small testing dataset to a temporary directory and</span>
 <span class="co"># process it for use in R</span>
-<span class="no">snp_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/eigenstrat.html">eigenstrat</a></span>(<span class="fu"><a href="reference/download_data.html">download_data</a></span>())
+<span class="va">snp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
-<span class="no">result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/f4ratio.html">d</a></span>(
-  <span class="kw">W</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"French"</span>, <span class="st">"Sardinian"</span>), <span class="kw">X</span> <span class="kw">=</span> <span class="st">"Yoruba"</span>, <span class="kw">Y</span> <span class="kw">=</span> <span class="st">"Vindija"</span>, <span class="kw">Z</span> <span class="kw">=</span> <span class="st">"Chimp"</span>,
-  <span class="kw">data</span> <span class="kw">=</span> <span class="no">snp_data</span>
-)
+<span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/f4ratio.html">d</a></span><span class="op">(</span>
+  W <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span><span class="op">)</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>,
+  data <span class="op">=</span> <span class="va">snp_data</span>
+<span class="op">)</span>
 
-<span class="no">result</span>
-<span class="co">#&gt; # A tibble: 2 x 10</span>
+<span class="va">result</span>
+<span class="co">#&gt; # A tibble: 2 × 10</span>
 <span class="co">#&gt;   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps</span>
 <span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753</span>
-<span class="co">#&gt; 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646</span></pre></div>
+<span class="co">#&gt; 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646</span></code></pre></div>
 <p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns the result as a <code>data.frame</code> object. It does all of this behind the scenes, without the user having to deal with low-level technical details.</p>
 </div>
-<div id="more-information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#more-information" class="anchor"></a>More information</h2>
-<p>To see many more examples of admixr in action, please check out the <a href="https://bodkan.net/admixr/articles/tutorial.html">tutorial vignette</a>.</p>
-<p>If you want to stay updated on new <em>admixr</em> development, follow me on <a href="https://www.twitter.com/fleventy5">Twitter</a>.</p>
+<div class="section level2">
+<h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
+</h2>
+<p>To see many more examples of admixr in action, please check out the <a href="https://bodkan.net/admixr/articles/tutorial.html" class="external-link">tutorial vignette</a>.</p>
+<p>If you want to stay updated on new <em>admixr</em> development, follow me on <a href="https://www.twitter.com/fleventy5" class="external-link">Twitter</a>.</p>
 </div>
 </div>
 
@@ -167,50 +166,59 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=admixr">https://​cloud.r-project.org/​package=admixr</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/bodkan/admixr/">https://​github.com/​bodkan/​admixr/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/bodkan/admixr/issues">https://​github.com/​bodkan/​admixr/​issues</a>
-</li>
-<li>Learn more at <br><a href="http://bodkan.net/admixr/articles/tutorial.html">http://​bodkan.net/​admixr/​articles/​tutorial.html</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Martin Petr <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-4879-8421" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="https://cloud.r-project.org/package=admixr" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/bodkan/admixr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/bodkan/admixr/issues" class="external-link">Report a bug</a></li>
+<li><a href="http://bodkan.net/admixr/articles/tutorial.html" class="external-link">Learn more</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/bodkan/admixr"><img src="https://travis-ci.org/bodkan/admixr.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://codecov.io/github/bodkan/admixr?branch=master"><img src="https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing admixr</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Martin Petr <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-4879-8421" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/bodkan/admixr/actions" class="external-link"><img src="https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/github/bodkan/admixr?branch=master" class="external-link"><img src="https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Martin Petr.</p>
+  <p></p>
+<p>Developed by Martin Petr.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -218,6 +226,8 @@
 
   
 
+
+  
 
   </body>
 </html>
