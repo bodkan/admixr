@@ -90,12 +90,15 @@ giving it a shot.
 When everything is ready, you can run the following code to load both
 packages:
 
-```{r libraries, message = FALSE, warning = FALSE}
+```{r libraries, eval = FALSE, message = FALSE, warning = FALSE}
 library(admixr)
 library(tidyverse)
 ```
 
-
+```{r, include = FALSE}
+devtools::load_all(".")
+library(tidyverse)
+```
 
 
 
@@ -627,7 +630,8 @@ result <- qpAdm(
   target = c("Sardinian", "Han", "French"),
   sources = c("Vindija", "Yoruba"),
   outgroups = c("Chimp", "Denisova", "Altai"),
-  data = snps
+  data = snps,
+  params = list(inbreed = "YES") # forced by new ADMIXTOOLS qpfstats
 )
 ```
 
@@ -649,6 +653,7 @@ Let's start with the `ranks` element:
 ```{r, eval = FALSE}
 result$ranks
 ```
+
 ```{r, echo = FALSE}
 knitr::kable(result$ranks)
 ```
@@ -991,7 +996,8 @@ qpadm_res <- qpAdm(
   target = c("Sardinian", "Han"),
   sources = c("Vindija", "Yoruba"),
   outgroups = c("Chimp", "Denisova", "Altai"),
-  data = snps
+  data = snps,
+  params = list(inbreed = "YES") # forced by new ADMIXTOOLS qpfstats
 )
 
 qpadm_res
