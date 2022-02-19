@@ -9,7 +9,8 @@
       "At the very least, the following programs should be available:\n    ",
       paste(cmds, collapse = ", "),
       "\nOne way to solve this is to modify the $PATH variable in your ~/.Renviron\n",
-      "file so that it points to the directory containing the ADMIXTOOLS programs."
+      "file so that it points to the directory containing the ADMIXTOOLS programs.\n\n",
+      "Current contents of the $PATH:\n", Sys.getenv("PATH", "\n")
     )
   }
 }

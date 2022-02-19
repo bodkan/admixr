@@ -1,5 +1,5 @@
 admixtools_present <- function() {
-  Sys.which("qpDstat") != ""
+  as.vector(Sys.which("qpDstat") != "")
 }
 
 read_pops <- function(filename, columns) {
