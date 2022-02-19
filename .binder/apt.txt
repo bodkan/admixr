@@ -1,0 +1,4 @@
+libopenblas-dev
+libgsl-dev
+liblapack-dev
+bedtools
