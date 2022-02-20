@@ -252,7 +252,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">parameter</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">parameter</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></code></pre></div>
-<p><img src="qpAdm_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
+<p><img src="qpAdm_files/figure-html/qpAdm_fig1-1.png" width="576"></p>
 <p>To make it easier to narrow down the list of all models, <em>admixr</em> package contains a function <code><a href="../reference/qpAdm_filter.html">qpAdm_filter()</a></code>. This function accepts the result of the <code><a href="../reference/qpAdm_rotation.html">qpAdm_rotation()</a></code> function (either the <code>fulloutput = TRUE</code> version or the simple data frame with admixture proportions, p-values etc. produced by using<code>fulloutput = FALSE</code>) and filters out models with any of the proportions outside of the [0, 1] range and with p-values lower than a specified cutoff (0.05 by default):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># filter out models which can clearly be rejected</span>
@@ -265,7 +265,7 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">parameter</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="qpAdm_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
+<p><img src="qpAdm_files/figure-html/qpAdm_fig2-1.png" width="576"></p>
 <p>Let’s now focus only on the proportions table. We will also ignore a couple of columns for brevity. Note that we are now also completely ignoring p-values because we <em>cannot</em> used those for model selection - they are <em>not</em> statistically meaningful at this stage! Higher p-value <em>never</em> implies higher likelihood of the model. Finally, we order the models based on the size of the outgroup set (smaller models first):</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">props</span> <span class="op">&lt;-</span> <span class="va">fits</span><span class="op">$</span><span class="va">proportions</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -367,16 +367,16 @@
 <span class="co">#&gt; Full output log of qpAdm rotation for model 'm40':</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpAdm: parameter file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpX36Gvo/qpAdm__156951530.par</span>
+<span class="co">#&gt; qpAdm: parameter file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpHJqO9t/qpAdm__1434849848.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpX36Gvo/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpX36Gvo/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpX36Gvo/snps/snps.ind</span>
-<span class="co">#&gt; popleft: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpX36Gvo/qpAdm__156951530.popleft</span>
-<span class="co">#&gt; popright: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpX36Gvo/qpAdm__156951530.popright</span>
+<span class="co">#&gt; genotypename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpHJqO9t/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpHJqO9t/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpHJqO9t/snps/snps.ind</span>
+<span class="co">#&gt; popleft: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpHJqO9t/qpAdm__1434849848.popleft</span>
+<span class="co">#&gt; popright: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//RtmpHJqO9t/qpAdm__1434849848.popright</span>
 <span class="co">#&gt; ## qpAdm version: 1520</span>
-<span class="co">#&gt; seed: 1150058188</span>
+<span class="co">#&gt; seed: 1530667706</span>
 <span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span>
 <span class="co">#&gt;  *** recommended that inbreed be explicitly set ***</span>
 <span class="co">#&gt; inbreed set NO</span>
@@ -470,7 +470,7 @@
 <span class="co">#&gt; gendstat:               Yoruba                Chimp    -0.018</span>
 <span class="co">#&gt; gendstat:                Altai                Chimp    -0.029</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ##end of qpAdm:        3.493 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
+<span class="co">#&gt; ##end of qpAdm:        5.697 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
 </div>
   </div>
 

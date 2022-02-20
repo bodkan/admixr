@@ -1,11 +1,12 @@
 
 
-[![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions)
-[![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/master/graph/badge.svg)](https://codecov.io/github/bodkan/admixr?branch=master)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
-
-
 # admixr
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions)
+[![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/main/graph/badge.svg)](https://codecov.io/github/bodkan/admixr?branch=main)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing) [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
+<!-- badges: end -->
 
 ## Introduction
 

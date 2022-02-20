@@ -213,7 +213,7 @@ Notice two things (each dot represents one examined _qpAdm_ model):
 - Many models have very low p-values - this means these are
   incompatible with the data and can be rejected.
 
-```{r, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4}
+```{r, qpAdm_fig1, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4}
 library(tidyverse)
 
 select(models$proportions, model, pvalue, prop1, prop2) %>%
@@ -247,7 +247,7 @@ Neandertal component in modern humans - we would expect about 2-3%
 based on many previous analyses) and one large ("modern human"
 component, non-Neandertal ancestry):
 
-```{r, fig.width = 6, fig.height = 4}
+```{r, qpAdm_fig2, fig.width = 6, fig.height = 4}
 select(fits$proportions, model, pvalue, prop1, prop2) %>%
     gather(parameter, value, -model) %>%
     ggplot(aes(parameter, value)) +
