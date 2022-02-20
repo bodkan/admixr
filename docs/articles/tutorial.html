@@ -141,12 +141,12 @@
 <p>Therefore, a VCF file is essentially a combination of all three files in a single package.</p>
 <p>Let’s first download a small testing SNP dataset using a built-in <em>admixr</em> function <code><a href="../reference/download_data.html">download_data()</a></code>. This function downloads the data into a temporary directory (you can specify the destination using its <code>dirname</code> argument, in case you want to place it elsewhere). In addition to this, the function returns a shared path/prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(prefix <span class="ot">&lt;-</span> <span class="fu">download_data</span>(<span class="at">dirname =</span> <span class="fu">tempdir</span>()))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps"</span></span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps"</span></span></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="fu">dirname</span>(prefix), <span class="at">pattern =</span> <span class="fu">basename</span>(prefix), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.geno"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.ind"</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.snp"</span> </span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.geno"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.ind"</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.snp"</span> </span></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div class="section level4">
 <h4 id="ind-file">
@@ -219,9 +219,9 @@ Denisova     U  Denisova</code></pre>
 <span class="co">#&gt; EIGENSTRAT object</span>
 <span class="co">#&gt; =================</span>
 <span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.geno</span></code></pre></div>
+<span class="co">#&gt;   ind file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.ind</span>
+<span class="co">#&gt;   snp file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.snp</span>
+<span class="co">#&gt;   geno file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.geno</span></code></pre></div>
 <p>This object encapsulates the paths to all three EIGENSTRAT components and makes it easy to pass the data to different <em>admixr</em> functions.</p>
 <p>The following couple of sections describe how to use the <em>admixr</em> package using simple example analyses.</p>
 </div>
@@ -1079,12 +1079,12 @@ Denisova     U  Denisova</code></pre>
 <span class="co">#&gt; EIGENSTRAT object</span>
 <span class="co">#&gt; =================</span>
 <span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.geno</span>
+<span class="co">#&gt;   ind file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.ind</span>
+<span class="co">#&gt;   snp file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.snp</span>
+<span class="co">#&gt;   geno file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.geno</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; modifiers:</span>
-<span class="co">#&gt;   groups:  /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/file98aa4151dfad.ind</span></code></pre></div>
+<span class="co">#&gt;   groups:  /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/filea5746e76ab8b.ind</span></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified <code>EIGENSTRAT</code> object, which contains a new item in the “modifiers” section - the path to a new ind file. Let’s look at its contents:</p>
 <pre><code>Chimp        U  Chimp
 Mbuti        U  African
@@ -1248,12 +1248,12 @@ Denisova     U  Archaic</code></pre>
 <span class="co">#&gt; EIGENSTRAT object</span>
 <span class="co">#&gt; =================</span>
 <span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.geno</span>
+<span class="co">#&gt;   ind file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.ind</span>
+<span class="co">#&gt;   snp file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.snp</span>
+<span class="co">#&gt;   geno file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.geno</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; modifiers:</span>
-<span class="co">#&gt;   excluded sites:  /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/file98aa47de9201.snp </span>
+<span class="co">#&gt;   excluded sites:  /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/filea57417f900f5.snp </span>
 <span class="co">#&gt;       (SNPs excluded: 100000, SNPs remaining: 400000)</span></code></pre></div>
 <p>If we want to run the whole analysis in a single pipeline, we can use the <code>%&gt;%</code> pipe operator and do the following:</p>
 <p>(The <code>%&gt;%</code> operator takes what is on its left side and puts it as a first argument of a function on the right side. While it takes some time to get used to, it is very useful in longer multi-step “pipelines” because it makes more pipelines much more readable. In fact, the resulting code often reads <em>almost</em> like English! The <code>%&gt;%</code> pipe is automatically imported when you load the <code>tidyverse</code> library, and you can read about it more <a href="https://magrittr.tidyverse.org" class="external-link">here</a>.)</p>
@@ -1314,13 +1314,13 @@ Denisova     U  Archaic</code></pre>
 <span class="co">#&gt; Full output log of qpDstat:</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpDstat: parameter file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/qpDstat__1488067303.par</span>
+<span class="co">#&gt; qpDstat: parameter file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/qpDstat__1708746110.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.ind</span>
-<span class="co">#&gt; popfilename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/qpDstat__1488067303.pop</span>
+<span class="co">#&gt; genotypename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.ind</span>
+<span class="co">#&gt; popfilename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/qpDstat__1708746110.pop</span>
 <span class="co">#&gt; printsd: YES</span>
 <span class="co">#&gt; ## qpDstat version: 980</span>
 <span class="co">#&gt; inbreed set NO</span>
@@ -1338,7 +1338,7 @@ Denisova     U  Archaic</code></pre>
 <span class="co">#&gt; result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 </span>
 <span class="co">#&gt; result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 </span>
 <span class="co">#&gt; result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 </span>
-<span class="co">#&gt; ##end of qpDstat:        6.264 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
+<span class="co">#&gt; ##end of qpDstat:        6.231 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
 <p>The situation is a bit more complex for <em>qpAdm</em> which can be evaluated for multiple target populations/samples which are then analyzed separately, with each analysis having its own log file:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">qpadm_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpAdm.html">qpAdm</a></span><span class="op">(</span>
@@ -1383,17 +1383,17 @@ Denisova     U  Archaic</code></pre>
 <span class="co">#&gt; Full output log of qpAdm for target 'Han':</span>
 <span class="co">#&gt; ===================================================</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; qpAdm: parameter file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/qpAdm__1384739247.par</span>
+<span class="co">#&gt; qpAdm: parameter file: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/qpAdm__1394753718.par</span>
 <span class="co">#&gt; ### THE INPUT PARAMETERS</span>
 <span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/snps/snps.ind</span>
-<span class="co">#&gt; popleft: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/qpAdm__1384739247.popleft</span>
-<span class="co">#&gt; popright: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmpm6L1GX/qpAdm__1384739247.popright</span>
+<span class="co">#&gt; genotypename: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.geno</span>
+<span class="co">#&gt; snpname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.snp</span>
+<span class="co">#&gt; indivname: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/snps/snps.ind</span>
+<span class="co">#&gt; popleft: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/qpAdm__1394753718.popleft</span>
+<span class="co">#&gt; popright: /var/folders/hr/_t1b0f5n7c76yrfsg8yk9l100000gn/T//Rtmp62wIm8/qpAdm__1394753718.popright</span>
 <span class="co">#&gt; inbreed: YES</span>
 <span class="co">#&gt; ## qpAdm version: 1520</span>
-<span class="co">#&gt; seed: 45745483</span>
+<span class="co">#&gt; seed: 481411358</span>
 <span class="co">#&gt; inbreed set YES</span>
 <span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span>
 <span class="co">#&gt; inbreed set YES</span>
@@ -1487,7 +1487,7 @@ Denisova     U  Archaic</code></pre>
 <span class="co">#&gt; gendstat:                Chimp                Altai    -0.264</span>
 <span class="co">#&gt; gendstat:             Denisova                Altai     1.131</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; ##end of qpAdm:        5.892 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
+<span class="co">#&gt; ##end of qpAdm:        5.864 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
 <p>Finally, we might want to keep some of the log files around for future reference, further debugging or sharing with others. For these purposes, we can run the <code>loginfo</code> function with the argument <code>save = TRUE</code>, potentially also specifying the output directory (<code>dir = "."</code> by default) or a prefix of the output file(s) (default prefix is simply the name of the admixr command which generated the log file).</p>
 <p>For example, the following will save the result of our qpAdm analysis of Neandertal ancestry to a file with a prefix “qpAdm_Neandertal_ancestry”, but just the one for the Sardinian individual:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
