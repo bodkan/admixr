@@ -1,3 +1,5 @@
+# 2022-02-20 1:03am
+
 # create a single directory for all external software
 mkdir -p ~/deps
 cd ~/deps
