@@ -72,7 +72,7 @@ qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources =
         ## don't want that here because we want to merge all the individual
         ## proportion tables, columns have to have the same name)
         names(result$proportions)[2:(1 + nsources)] <- paste0("prop", 1:nsources)
-        names(result$proportions)[4:(3 + nsources)] <- paste0("stderr", 1:nsources)
+        names(result$proportions)[(2 + nsources):(1 + 2 * nsources)] <- paste0("stderr", 1:nsources)
         ## add source names as two new columns
         result$proportions <- cbind(result$proportions, sources_df) %>%
             dplyr::mutate(outgroups = paste0(x$outgroups, collapse = " & "),
@@ -94,7 +94,7 @@ qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources =
 
         result
     }, mc.cores = ncores)
-    
+
     ## extract log information before further processing of the results
     log_lines <- sapply(results_list, function(i) attr(i, "log_output"))
     names(log_lines) <- paste0("m", seq_along(sources_outgroups))
@@ -111,7 +111,7 @@ qpAdm_rotation <- function(data, target, candidates, minimize = TRUE, nsources =
     ranks$model <- sort(rep(models, 2))
     ranks <- dplyr::as_tibble(ranks) %>% dplyr::select(model, dplyr::everything())
     ## and subsets table
-    subsets$model <- sort(rep(models, 1 + 2^(nsources - 1)))
+    subsets$model <- sort(rep(models, 2 ^ nsources - 1))
     subsets <- dplyr::as_tibble(subsets) %>% dplyr::select(model, dplyr::everything())
 
     ## add metadata to the results object
