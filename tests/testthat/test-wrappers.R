@@ -99,6 +99,8 @@ test_that("qpAdm gives the correct number of source/stderr columns (n = 2)", {
   skip_on_cran()
   skip_on_os("windows")
 
+  snps <- eigenstrat(file.path(data_dir, "allmap"))
+
   # two sources
   nsources <- 2
   sources2 <- qpAdm_rotation(
