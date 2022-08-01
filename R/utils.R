@@ -28,6 +28,17 @@ count_snps <- function(data, missing = FALSE, prop = FALSE) {
     col <- "present"
   }
   geno <- read_geno(data)
+  if (!is.null(data$exclude)) {
+    snps <- read_snp(data)
+    excluded_snps <- read_snp(data, exclude = TRUE)
+    chroms <- unique(snps$chrom)
+    sites_to_remove <- lapply(chroms, function(chrom) {
+      chrom_snps <- snps[snps$chrom == chrom, ]
+      chrom_excluded_snps <- excluded_snps[excluded_snps$chrom == chrom, ]
+      chrom_snps$pos %in% chrom_excluded_snps$pos
+    }) %>% Reduce(c, .)
+    geno <- geno[!sites_to_remove, ]
+  }
   result <- read_ind(data)
   result[[col]] <- as.vector(t(dplyr::summarise_all(geno, list(~ summary_fun(fun(.))))))
   result
