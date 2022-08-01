@@ -69,6 +69,8 @@ jobs:
           make clobber
           make LDLIBS="-llapack" all
           make install
+          # mergeit isn't copied by make install in 6.x and 5.x
+          cp mergeit ../bin
 
           # download testing data for unit tests
           cd ../
