@@ -155,7 +155,7 @@ test_that("Input data is enforced to be of the EIGENSTRAT class", {
   x <- data.frame()
   class(x) <- "random"
 
-  error_msg <- "not of the type EIGENSTRAT"
+  error_msg <- "Input variable 'data' is not of the type EIGENSTRAT"
   expect_error(f3(x, "a", "b", "c"), error_msg)
   expect_error(f4(x, "a", "b", "c", "d"), error_msg)
   expect_error(d(x, "a", "b", "c", "d"), error_msg)
@@ -170,6 +170,8 @@ test_that("Input data is enforced to be of the EIGENSTRAT class", {
   expect_error(reset(x), error_msg)
 
   data <- eigenstrat(file.path(data_dir, "allmap"))
+  error_msg <- "Input variable 'a' is not of the type EIGENSTRAT"
   expect_error(merge_eigenstrat("prefix", a = x, b = data), error_msg)
+  error_msg <- "Input variable 'b' is not of the type EIGENSTRAT"
   expect_error(merge_eigenstrat("prefix", a = data, b = x), error_msg)
 })
