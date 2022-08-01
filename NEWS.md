@@ -1,7 +1,7 @@
 # admixr (development version)
 
-# admixr 0.9.1.9000
-
+* Input data type `EIGENSTRAT` is checked in all user-facing functions that
+  operate on this data.
 * Implemented R CMD checks with Github Actions
 * Made necessary changes to upgrade to the latest ADMIXTOOLS 7.0.2
   throughout the unit tests (users are encouraged to upgrade their
