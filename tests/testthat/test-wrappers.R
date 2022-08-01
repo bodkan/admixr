@@ -95,55 +95,6 @@ test_that("qpAdm with a single source produces NULL subsets dataframe", {
   expect_true(is.null(result$subsets))
 })
 
-test_that("qpAdm gives the correct number of source/stderr columns (n = 2)", {
-  skip_on_cran()
-  skip_on_os("windows")
-
-  snps <- eigenstrat(file.path(data_dir, "allmap"))
-
-  # two sources
-  nsources <- 2
-  sources2 <- qpAdm_rotation(
-    data = snps,
-    target = "French",
-    candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija", "Altai"),
-    minimize = FALSE,
-    nsources = nsources,
-    ncores = 1,
-    fulloutput = TRUE
-  )
-  expect_true(all(unique(sources2$ranks$rank) == (nsources - 1) : nsources))
-  expect_true(all(grep("source", colnames(sources2$proportions), value = TRUE) == paste0("source", 1:nsources)))
-
-  # three sources
-  nsources <- 3
-  sources3 <- qpAdm_rotation(
-    data = snps,
-    target = "French",
-    candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija", "Altai", "Denisova", "Sardinian"),
-    minimize = FALSE,
-    nsources = nsources,
-    ncores = 1,
-    fulloutput = TRUE
-  )
-  expect_true(all(unique(sources3$ranks$rank) == (nsources - 1) : nsources))
-  expect_true(all(grep("source", colnames(sources3$proportions), value = TRUE) == paste0("source", 1:nsources)))
-
-  # four sources
-  nsources <- 4
-  sources4 <- qpAdm_rotation(
-    data = snps,
-    target = "French",
-    candidates = c("Dinka", "Mbuti", "Yoruba", "Vindija", "Altai", "Sardinian", "Khomani_San", "Chimp", "Han"),
-    minimize = FALSE,
-    nsources = nsources,
-    ncores = 1,
-    fulloutput = TRUE
-  )
-  expect_true(all(unique(sources4$ranks$rank) == (nsources - 1) : nsources))
-  expect_true(all(grep("source", colnames(sources4$proportions), value = TRUE) == paste0("source", 1:nsources)))
-})
-
 # qpWave ------------------------------------------------------------------
 
 test_that("qpWave wrapper produces correct results", {
