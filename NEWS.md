@@ -1,8 +1,9 @@
 # admixr (development version)
 
+* Fixed problem with `qpAdm_rotation` when `nsources >= 3`. ([issue](https://github.com/bodkan/admixr/issues/77))
 * Input data type `EIGENSTRAT` is checked in all user-facing functions that
-  operate on this data.
-* Implemented R CMD checks with Github Actions
+  operate on this data. ([issue](https://github.com/bodkan/admixr/issues/61))
+* Implemented R CMD checks with Github Actions.
 * Made necessary changes to upgrade to the latest ADMIXTOOLS 7.0.2
   throughout the unit tests (users are encouraged to upgrade their
   ADMIXTOOLS installation).

@@ -62,9 +62,11 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="development version" id="admixr-development-version">admixr (development version)<a class="anchor" aria-label="anchor" href="#admixr-development-version"></a></h2>
-<ul><li>Input data type <code>EIGENSTRAT</code> is checked in all
-user-facing functions that operate on this data.</li>
-<li>Implemented R CMD checks with Github Actions</li>
+<ul><li>Fixed problem with <code>qpAdm_rotation</code> when
+<code>nsources &gt;= 3</code>. (<a href="https://github.com/bodkan/admixr/issues/77" class="external-link">issue</a>)</li>
+<li>Input data type <code>EIGENSTRAT</code> is checked in all
+user-facing functions that operate on this data. (<a href="https://github.com/bodkan/admixr/issues/61" class="external-link">issue</a>)</li>
+<li>Implemented R CMD checks with Github Actions.</li>
 <li>Made necessary changes to upgrade to the latest ADMIXTOOLS 7.0.2
 throughout the unit tests (users are encouraged to upgrade their
 ADMIXTOOLS installation).</li>
