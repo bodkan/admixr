@@ -36,6 +36,8 @@
 #'
 #' @export
 f4ratio <- function(data, X, A, B, C, O, outdir = NULL, params = NULL) {
+  check_type(data, "EIGENSTRAT")
+
   check_presence(c(X, A, B, C, O), data)
 
   # get the path to the population, parameter and log files
@@ -59,6 +61,8 @@ f4ratio <- function(data, X, A, B, C, O, outdir = NULL, params = NULL) {
 #'
 #' @export
 d <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, f4mode = FALSE, params = NULL) {
+  check_type(data, "EIGENSTRAT")
+
   if (is.null(quartets)) {
     check_presence(c(W, X, Y, Z), data)
   } else {
@@ -94,6 +98,7 @@ d <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, f4mode = FALSE, 
 #'
 #' @export
 f4 <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, params = NULL) {
+  check_type(data, "EIGENSTRAT")
   d(data, W, X, Y, Z, quartets, outdir, f4mode = TRUE)
 }
 
@@ -105,6 +110,7 @@ f4 <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, params = NULL) 
 #'
 #' @export
 f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
+  check_type(data, "EIGENSTRAT")
   check_presence(c(A, B, C), data)
 
   # get the path to the population, parameter and log files
@@ -158,6 +164,10 @@ f3 <- function(data, A, B, C, outdir = NULL, inbreed = FALSE, params = NULL) {
 #' @export
 qpAdm <- function(data, target, sources, outgroups, outdir = NULL,
                   params = list(allsnps = "YES", summary = "YES", details = "YES")) {
+  check_type(data, "EIGENSTRAT")
+
+  check_type(data, "EIGENSTRAT")
+
     if (length(outgroups) < length(sources) + 1) {
         stop("The number of outgroup samples has to be larger or equal than the number of sources + 1",
              call. = FALSE)
@@ -251,7 +261,9 @@ qpAdm <- function(data, target, sources, outgroups, outdir = NULL,
 #'
 #' @export
 qpWave <- function(data, left, right, maxrank = NULL, details = FALSE, outdir = NULL, params = NULL) {
+  check_type(data, "EIGENSTRAT")
   check_presence(c(left, right), data)
+
   if (length(intersect(left, right))) {
     stop("Duplicated populations in both left and right population sets not allowed: ",
          paste(intersect(left, right), collapse = " "),

@@ -71,7 +71,7 @@ get_files <- function(dir_name, prefix) {
 # Check that the provided object is of the required type
 check_type <- function(x, type) {
     if (!inherits(x, type)) {
-        stop(glue::glue("Object is not of the type {type}"), call. = FALSE)
+        stop(glue::glue("Input object is not of the type {type}"), call. = FALSE)
     }
 }
 

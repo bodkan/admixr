@@ -149,3 +149,27 @@ test_that("Output object carries with it the whole log output", {
   expect_true(all(attr(res, "log_output") == readLines(list.files(outdir, pattern = "*.log$", full.names = TRUE))))
 })
 
+# 'data' is enforced to be of the EIGENSTRAT class ------------------------
+
+test_that("Input data is enforced to be of the EIGENSTRAT class", {
+  x <- data.frame()
+  class(x) <- "random"
+
+  error_msg <- "not of the type EIGENSTRAT"
+  expect_error(f3(x, "a", "b", "c"), error_msg)
+  expect_error(f4(x, "a", "b", "c", "d"), error_msg)
+  expect_error(d(x, "a", "b", "c", "d"), error_msg)
+  expect_error(f4ratio(x, "x", "a", "b", "c", "d"), error_msg)
+  expect_error(qpAdm(x, "a", "b", "c" ), error_msg)
+  expect_error(qpAdm_rotation(x, "a", "b"), error_msg)
+  expect_error(qpWave(x, "a", "b"), error_msg)
+
+  expect_error(filter_bed(x, "a"), error_msg)
+  expect_error(transversions_only(x), error_msg)
+  expect_error(relabel(x), error_msg)
+  expect_error(reset(x), error_msg)
+
+  data <- eigenstrat(file.path(data_dir, "allmap"))
+  expect_error(merge_eigenstrat("prefix", a = x, b = data), error_msg)
+  expect_error(merge_eigenstrat("prefix", a = data, b = x), error_msg)
+})

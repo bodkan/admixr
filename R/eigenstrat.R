@@ -86,6 +86,9 @@ print.EIGENSTRAT <- function(x, ...) {
 #'
 #' @export
 merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
+  check_type(a, "EIGENSTRAT")
+  check_type(b, "EIGENSTRAT")
+
   parfile <- tempfile()
   paste0(
     "outputformat: EIGENSTRAT\n",
@@ -145,6 +148,8 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #'
 #' @export
 filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp")) {
+  check_type(data, "EIGENSTRAT")
+
   if (file.exists(outfile)) {
     warning(paste("snp file", outfile, "already exists - adding it to the EIGENSTRAT object directly."), call. = FALSE)
     data <- add_excluded_snps(data, outfile)
@@ -228,6 +233,8 @@ keep_transitions <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'
 #' @export
 transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
+  check_type(data, "EIGENSTRAT")
+
   if (file.exists(outfile)) {
     warning(paste0("snp file '", outfile, "' already exists - adding it to the EIGENSTRAT object directly..."), call. = FALSE)
     data <- add_excluded_snps(data, outfile)
@@ -275,6 +282,8 @@ transversions_only <- function(data, outfile = tempfile(fileext = ".snp")) {
 #'
 #' @export
 relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
+  check_type(data, "EIGENSTRAT")
+
   labels <- list(...)
 
   # iterate over the lines in the "ind" file, replacing population
@@ -325,6 +334,8 @@ relabel <- function(data, ..., outfile = tempfile(fileext = ".ind")) {
 #'
 #' @export
 reset <- function(data) {
+  check_type(data, "EIGENSTRAT")
+
   data$group <- NULL
   data$exclude <- NULL
   data$excluded_n <- NULL
