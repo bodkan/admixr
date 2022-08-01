@@ -25,7 +25,10 @@ qpWave(
 
 \item{outdir}{Where to put all generated files (temporary directory by default).}
 
-\item{params}{Named list of parameters and their values.}
+\item{params}{Named list of parameters and their values. For instance,
+\code{params = list(allsnps = "YES")} or \code{params = list(blgsize = 0.01)}
+(or an arbitrary combination of parameters using a list with multiple named
+elements).}
 }
 \value{
 Table of rank test results.
