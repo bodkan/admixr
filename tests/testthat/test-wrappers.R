@@ -152,6 +152,9 @@ test_that("Output object carries with it the whole log output", {
 # 'data' is enforced to be of the EIGENSTRAT class ------------------------
 
 test_that("Input data is enforced to be of the EIGENSTRAT class", {
+  skip_on_cran()
+  skip_on_os("windows")
+
   x <- data.frame()
   class(x) <- "random"
 
