@@ -16,3 +16,4 @@ check_servers.R
 ^CRAN-RELEASE$
 ^\.github$
 ^Makefile$
+^.binder
