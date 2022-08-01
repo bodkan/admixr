@@ -26,6 +26,7 @@ jobs:
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
+        admixtools: [ 7.0.2, 6.0, 5.1 ]
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -50,9 +51,9 @@ jobs:
           cd ~/deps
 
           # download and unpack the ADMIXTOOLS source code
-          curl -LO https://github.com/DReichLab/AdmixTools/archive/v7.0.2.tar.gz
-          tar xf v7.0.2.tar.gz
-          cd AdmixTools-7.0.2
+          curl -LO https://github.com/DReichLab/AdmixTools/archive/v${{ matrix.admixtools }}.tar.gz
+          tar xf v${{ matrix.admixtools }}.tar.gz
+          cd AdmixTools-${{ matrix.admixtools }}
 
           # set compiler flags (compilation on macOS was failing unable to find
           # openblas library files)
@@ -87,7 +88,7 @@ jobs:
       - name: Populate PATH with compiled binaries
         if: runner.os != 'Windows'
         run: |
-          export PATH="$HOME/deps/AdmixTools-7.0.2/bin:$PATH"
+          export PATH="$HOME/deps/AdmixTools-${{ matrix.admixtools }}/bin:$PATH"
           echo "PATH=$PATH" > ~/.Renviron
 
       - uses: r-lib/actions/setup-pandoc@v1
