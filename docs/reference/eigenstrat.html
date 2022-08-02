@@ -18,7 +18,7 @@ encapsulates all paths to data files required for an ADMIXTOOLS analysis."><!-- 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -87,15 +87,16 @@ encapsulates all paths to data files required for an ADMIXTOOLS analysis.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download an example genomic data and get the path prefix to the</span>
-<span class="co"># trio of snp/geno/ind files in an EIGENSTRAT format</span>
-<span class="va">prefix</span> <span class="op">&lt;-</span> <span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># wrap the trio of snp/geno/ind files in an object of the class</span>
-<span class="co"># EIGENSTRAT</span>
-<span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu">eigenstrat</span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span>
-
-
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download an example genomic data and get the path prefix to the</span></span>
+<span class="r-in"><span class="co"># trio of snp/geno/ind files in an EIGENSTRAT format</span></span>
+<span class="r-in"><span class="va">prefix</span> <span class="op">&lt;-</span> <span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># wrap the trio of snp/geno/ind files in an object of the class</span></span>
+<span class="r-in"><span class="co"># EIGENSTRAT</span></span>
+<span class="r-in"><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu">eigenstrat</span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eigenstrat(prefix):</span> object 'prefix' not found</span>
+<span class="r-in"></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>

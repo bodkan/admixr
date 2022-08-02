@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -85,15 +85,19 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">present_count</span> <span class="op">&lt;-</span> <span class="fu">count_snps</span><span class="op">(</span><span class="va">snps</span><span class="op">)</span>
-<span class="va">missing_count</span> <span class="op">&lt;-</span> <span class="fu">count_snps</span><span class="op">(</span><span class="va">snps</span>, missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="va">present_proportion</span> <span class="op">&lt;-</span> <span class="fu">count_snps</span><span class="op">(</span><span class="va">snps</span>, prop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">missing_proportion</span> <span class="op">&lt;-</span> <span class="fu">count_snps</span><span class="op">(</span><span class="va">snps</span>, missing <span class="op">=</span> <span class="cn">TRUE</span>, prop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">present_count</span> <span class="op">&lt;-</span> <span class="fu">count_snps</span><span class="op">(</span><span class="va">snps</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ifelse(is.null(data$group), data$ind, data$group):</span> object 'snps' not found</span>
+<span class="r-in"><span class="va">missing_count</span> <span class="op">&lt;-</span> <span class="fu">count_snps</span><span class="op">(</span><span class="va">snps</span>, missing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ifelse(is.null(data$group), data$ind, data$group):</span> object 'snps' not found</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">present_proportion</span> <span class="op">&lt;-</span> <span class="fu">count_snps</span><span class="op">(</span><span class="va">snps</span>, prop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ifelse(is.null(data$group), data$ind, data$group):</span> object 'snps' not found</span>
+<span class="r-in"><span class="va">missing_proportion</span> <span class="op">&lt;-</span> <span class="fu">count_snps</span><span class="op">(</span><span class="va">snps</span>, missing <span class="op">=</span> <span class="cn">TRUE</span>, prop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ifelse(is.null(data$group), data$ind, data$group):</span> object 'snps' not found</span>
+<span class="r-in"></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>

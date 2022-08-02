@@ -137,8 +137,8 @@ continues to be developed and maintained, _admixr_ remains relevant and useful a
 will continue to be supported. ADMIXTOOLS might have a smaller set of features than
 ADMIXTOOLS 2, but the features it provides are extremely stable. ADMIXTOOLS is one of
 the most battle-tested pieces of software in population genetics&mdash;if you're happy with
-the set of features it provides, there is no real reason to move away from it (and
-from _admixr_).
+the set of features it provides and if you're happy with _admixr_ itself, there is no
+dramatic reason to move away from either of them.
 
 ## More information
 

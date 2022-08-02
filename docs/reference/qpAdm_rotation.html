@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -113,24 +113,25 @@ addition to the admixture proportions results? (default FALSE)</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download an example genomic data set and prepare it for analysis</span>
-<span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># find the set of most likely two-source qpAdm models of</span>
-<span class="co"># a French individual - produce only the 'proportions'</span>
-<span class="co"># qpAdm summary</span>
-<span class="va">models</span> <span class="op">&lt;-</span> <span class="fu">qpAdm_rotation</span><span class="op">(</span>
-    data <span class="op">=</span> <span class="va">snps</span>,
-    target <span class="op">=</span> <span class="st">"French"</span>,
-    candidates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dinka"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Vindija"</span>,
-                   <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>, <span class="st">"Chimp"</span><span class="op">)</span>,
-    minimize <span class="op">=</span> <span class="cn">TRUE</span>,
-    nsources <span class="op">=</span> <span class="fl">2</span>,
-    ncores <span class="op">=</span> <span class="fl">2</span>,
-    fulloutput <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download an example genomic data set and prepare it for analysis</span></span>
+<span class="r-in"><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># find the set of most likely two-source qpAdm models of</span></span>
+<span class="r-in"><span class="co"># a French individual - produce only the 'proportions'</span></span>
+<span class="r-in"><span class="co"># qpAdm summary</span></span>
+<span class="r-in"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu">qpAdm_rotation</span><span class="op">(</span></span>
+<span class="r-in">    data <span class="op">=</span> <span class="va">snps</span>,</span>
+<span class="r-in">    target <span class="op">=</span> <span class="st">"French"</span>,</span>
+<span class="r-in">    candidates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dinka"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Vindija"</span>,</span>
+<span class="r-in">                   <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>, <span class="st">"Chimp"</span><span class="op">)</span>,</span>
+<span class="r-in">    minimize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span class="r-in">    nsources <span class="op">=</span> <span class="fl">2</span>,</span>
+<span class="r-in">    ncores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span class="r-in">    fulloutput <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_type(data, "EIGENSTRAT"):</span> object 'snps' not found</span>
+<span class="r-in"></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>
