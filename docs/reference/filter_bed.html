@@ -68,7 +68,13 @@ BED file.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filter_bed</span><span class="op">(</span><span class="va">data</span>, <span class="va">bed</span>, remove <span class="op">=</span> <span class="cn">FALSE</span>, outfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".snp"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filter_bed</span><span class="op">(</span>
+  <span class="va">data</span>,
+  <span class="va">bed</span>,
+  remove <span class="op">=</span> <span class="cn">FALSE</span>,
+  outfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".snp"</span><span class="op">)</span>,
+  bedtools_args <span class="op">=</span> <span class="st">""</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -82,6 +88,9 @@ BED file.</p>
 sites that do not overlap BED regions are removed.</p></dd>
 <dt>outfile</dt>
 <dd><p>Path to an output snp file with coordinates of excluded sites.</p></dd>
+<dt>bedtools_args</dt>
+<dd><p>Optional arguments to `bedtools intersect` such as <code>"-sorted"</code>
+or <code>"-sorted -nonamecheck"</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

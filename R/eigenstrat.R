@@ -128,6 +128,8 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #' @param remove Remove sites falling inside the BED file regions? By default,
 #'     sites that do not overlap BED regions are removed.
 #' @param outfile Path to an output snp file with coordinates of excluded sites.
+#' @param bedtools_args Optional arguments to `bedtools intersect` such as \code{"-sorted"}
+#'   or \code{"-sorted -nonamecheck"}.
 #'
 #' @return Updated S3 EIGENSTRAT data object.
 #'
@@ -147,7 +149,7 @@ merge_eigenstrat <- function(merged, a, b, strandcheck = "NO") {
 #' }
 #'
 #' @export
-filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp")) {
+filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp"), bedtools_args = "") {
   check_type(data, "EIGENSTRAT")
 
   if (file.exists(outfile)) {
@@ -175,8 +177,8 @@ filter_bed <- function(data, bed, remove = FALSE, outfile = tempfile(fileext = "
   # for our purposes, this means either 0 (no overlap) or 1 (overlap)
   output <- tempfile()
   # run bedtools
-  sprintf("bedtools intersect %s -c -a %s -b %s > %s",
-          ifelse(remove, "-v", ""), tmpbed, bed, output) %>% system()
+  sprintf("bedtools intersect %s -c -a %s -b %s %s > %s",
+          ifelse(remove, "-v", ""), tmpbed, bed, bedtools_args, output) %>% system()
   # collect the results
   snp_hits <- readr::read_tsv(output,
                               col_names = c("chrom", "start", "end", "hit"),

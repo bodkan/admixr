@@ -22,7 +22,7 @@ if (admixtools_present()) {
       prefix = file.path(admixtools_path(), "convertf", "example"),
       geno = file.path(admixtools_path(), "convertf", "example.eigenstratgeno")
   )
-  
+
   # ADMIXTOOLS example data is broken and it's first SNP has a position 0,
   # although snp files have to be 0-based - let's remove the first SNP entirely
   data <- orig_data
@@ -118,4 +118,57 @@ test_that("Filtering works when data is piped into a calculation", {
       transversions_only %>%
       d(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z)
   )
+})
+
+test_that("filter_bed correctly handles strange contig names", {
+  skip_on_cran()
+  skip_on_os("windows")
+
+  data <- eigenstrat(file.path(admixtools_path(), "data/allmap"))
+
+  set.seed(123)
+
+  # these are the chromosomes observed in the snp file
+  # unique(read_snp(data)$chrom)
+
+  # create a BED file that has a mixture of positions in the original snp file,
+  # but also has positions with weird contigs
+  # originally pointed out here as an issue which doesn't seem to be happening:
+  # https://github.com/bodkan/admixr/issues/72
+  bed_file <- tempfile()
+  modified_snp <- tempfile()
+  read_snp(data) %>%
+    dplyr::sample_n(10) %>%
+    dplyr::arrange(chrom, pos) %>%
+    dplyr::mutate(chrom = c(chrom[1:5], paste0("asdfchr", chrom[6:10]))) %>%
+    write_snp(modified_snp)
+  snp_to_bed(modified_snp, bed_file)
+
+  # check the generated BED file
+  # readr::read_tsv(bed_file, col_names = c("chrom", "start", "end"), show_col_types = FALSE)
+
+  filtered_data1 <- filter_bed(data, bed_file, remove = TRUE)
+  expect_true(nrow(read_snp_file(filtered_data1$exclude)) == 5)
+
+  # an optional argument for bedtools has been implemented, allowing `-nonamecheck` to
+  # silence warnings about inconsistent naming conventions -- again, motivated by the
+  # issue linked above but it seems this has no practical benefit (I will keep the
+  # `bedtools_args = ""` option to allow `-sorted` to be used with large BED files)
+  bed_file <- tempfile()
+  modified_snp <- tempfile()
+  read_snp(data) %>%
+    dplyr::sample_n(10) %>%
+    dplyr::mutate(chrom = c(chrom[1:5], paste0("chr", chrom[6:10]))) %>%
+    dplyr::arrange(chrom, pos) %>%
+    write_snp(modified_snp)
+  snp_to_bed(modified_snp, bed_file)
+
+  # again, check the produced BED file
+  # readr::read_tsv(bed_file, col_names = c("chrom", "start", "end"), show_col_types = FALSE)
+
+  # filtered_data2 <- filter_bed(data, bed_file, remove = TRUE)
+  filtered_data3 <- filter_bed(data, bed_file, remove = TRUE, bedtools_args = "-nonamecheck")
+
+  # expect_true(nrow(read_snp_file(filtered_data2$exclude)) == 5)
+  expect_true(nrow(read_snp_file(filtered_data3$exclude)) == 5)
 })

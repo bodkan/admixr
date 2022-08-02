@@ -4,7 +4,13 @@
 \alias{filter_bed}
 \title{Filter EIGENSTRAT data based on a given BED file}
 \usage{
-filter_bed(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp"))
+filter_bed(
+  data,
+  bed,
+  remove = FALSE,
+  outfile = tempfile(fileext = ".snp"),
+  bedtools_args = ""
+)
 }
 \arguments{
 \item{data}{EIGENSTRAT data object.}
@@ -15,6 +21,9 @@ filter_bed(data, bed, remove = FALSE, outfile = tempfile(fileext = ".snp"))
 sites that do not overlap BED regions are removed.}
 
 \item{outfile}{Path to an output snp file with coordinates of excluded sites.}
+
+\item{bedtools_args}{Optional arguments to `bedtools intersect` such as \code{"-sorted"}
+or \code{"-sorted -nonamecheck"}.}
 }
 \value{
 Updated S3 EIGENSTRAT data object.
