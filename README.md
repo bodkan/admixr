@@ -132,7 +132,7 @@ myself, but from the looks of it it seems to offer some very interesting feature
 for fitting complex admixture graphs (something I'm not personally interested in, which
 is why early efforts to implement this in _admixr_ have been eventually given up on).
 
-**The bottom-line is this:** as long as the [original ADMIXTOOLS](https://uqrmaie1.github.io/admixtools/)
+**The bottom-line is this:** as long as the [original ADMIXTOOLS](https://github.com/DReichLab/AdmixTools)
 continues to be developed and maintained, _admixr_ remains relevant and useful and
 will continue to be supported. ADMIXTOOLS might have a smaller set of features than
 ADMIXTOOLS 2, but the features it provides are extremely stable. ADMIXTOOLS is one of
