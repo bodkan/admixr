@@ -1,46 +1,61 @@
 
 
-# admixr
+# _admixr_&mdash;interactive R interface for ADMIXTOOLS
 
 <!-- badges: start -->
+[![](https://cranlogs.r-pkg.org/badges/admixr)](https://cran.r-project.org/package=admixr)
 [![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions)
 [![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/main/graph/badge.svg)](https://codecov.io/github/bodkan/admixr?branch=main)
 [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
 <!-- badges: end -->
 
-## Introduction
+## What is _admixr_?
 
-[ADMIXTOOLS](https://github.com/DReichLab/AdmixTools/) is a widely used
+The _admixr_ package provides a convenient R interface to
+[ADMIXTOOLS](https://github.com/DReichLab/AdmixTools/), a widely used
 software package for calculating admixture statistics and testing population
 admixture hypotheses.
 
 A typical ADMIXTOOLS workflow often involves a combination of `sed`/`awk`/shell
 scripting and manual editing to create different configuration files. These are
 then passed as command-line arguments to one of ADMIXTOOLS commands, and
-control how to run a particular analysis. The results are then redirected to
-another file, which has to be parsed by the user to extract values of interest,
-often using command-line utilities again or (worse) by manual copy-pasting.
-Finally, the processed results are analysed in R, Excel or another program.
+control how to run a particular analysis. The results of such computation are
+then usually redirected to another file, which needs to be parsed by the user
+to extract values of interest, often using command-line utilities again or by
+manual copy-pasting, and finally analysed in R, Excel or another program.
 
 This workflow can be a little cumbersome, especially if one wants to explore many
-hypotheses involving different combinations of populations. Most importantly,
-however, it makes it difficult to follow the rules of best practice for
-reproducible science, as it is nearly impossible to construct reproducible
-automated "pipelines".
+hypotheses involving different combinations of populations or data filtering
+strategies. Most importantly, it makes it difficult to follow the rules of best
+practice for reproducible science, especially given the need for manual
+intervention on the command-line or custom shell scripting to orchestrate more
+complex pipelines.
 
-This R package makes it possible to perform all stages of an ADMIXTOOLS
-analysis entirely from R. It provides a set of convenient functions that
-completely remove the need for "low level" configuration of individual
-ADMIXTOOLS programs, allowing users to focus on the analysis itself.
+_admixr_ makes it possible to perform all stages of an ADMIXTOOLS analysis entirely
+from R. It provides a [set of convenient functions](http://bodkan.github.io/admixr/reference/index.html)
+that completely remove the need for "low-level" configuration of individual ADMIXTOOLS
+programs, allowing users to focus on the analysis itself.
 
 ## How to cite
 
 _admixr_ is now published
-as an [_Application Note_](https://doi.org/10.1093/bioinformatics/btz030) in the journal Bioinformatics. If you use it in your work, please cite the paper!
+as an [_Application Note_](https://doi.org/10.1093/bioinformatics/btz030) in the
+journal Bioinformatics. If you use it in your work, please cite the paper! You
+will join an [excellent company](https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13286994334855947290)
+of papers who have used it to do amazing research. 🙂
 
 ## Installation instructions
 
-##### Latest stable version
+#### Browser-based RStudio session
+
+You can try out _admixr_ without installation directly in your browser! Simply
+click on [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
+and after a short moment you will get a Binder RStudio could session running
+in your web browser. However, please note that Binder's computational resources
+are extremely limited so you might run into issues if you try to run extremely
+resource-intensive computations.
+
+#### Latest stable version
 
 The package is available [on
 CRAN](https://cran.r-project.org/package=admixr). You can install it
@@ -53,11 +68,11 @@ install.packages("admixr")
 
 from your R session. This the recommended procedure for most users.
 
-##### Development version
+#### Development version
 
 To install the development version from Github (which might be
 slightly ahead in terms of new features and bugfixes compared to the
-stable release on CRAN), you need the package `devtools`. You can run:
+stable release on CRAN), you need the R package _devtools_. You can run:
 
 
 ```r
@@ -65,18 +80,19 @@ install.packages("devtools")
 devtools::install_github("bodkan/admixr")
 ```
 
-##### Installing ADMIXTOOLS
+#### Installing ADMIXTOOLS
 
-In order to use the `admixr` package, you need a working installation
+In order to use the _admixr_ package, you need a working installation
 of ADMIXTOOLS. You can find installation instructions
 [here](https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL).
 
 Furthermore, you also need to make sure that R can find ADMIXTOOLS
 binaries on the `$PATH`. You can achieve this by specifying
 `PATH=<path to the location of ADMIXTOOLS programs>` in the
-`.Renviron` file.
+`.Renviron` file in your home directory. If R cannot find ADMIXTOOLS utilities,
+you will get a warning upon loading `library(admixr)` in your R session.
 
-## Example
+## Example analysis
 
 This is all the code that you need to perform ADMIXTOOLS analyses using this
 package! No shell scripting, no copy-pasting and manual editing of text files.
@@ -87,8 +103,7 @@ EIGENSTRAT data (a trio of ind/snp/geno files), which we call `prefix` here.
 ```r
 library(admixr)
 
-# download a small testing dataset to a temporary directory and
-# process it for use in R
+# download a small testing dataset to a temporary directory and process it for use in R
 snp_data <- eigenstrat(download_data())
 
 result <- d(
@@ -97,17 +112,33 @@ result <- d(
 )
 
 result
-#> # A tibble: 2 × 10
-#>   W         X      Y       Z          D  stderr Zscore  BABA  ABBA  nsnps
-#>   <chr>     <chr>  <chr>   <chr>  <dbl>   <dbl>  <dbl> <dbl> <dbl>  <dbl>
-#> 1 French    Yoruba Vindija Chimp 0.0313 0.00693   4.51 15802 14844 487753
-#> 2 Sardinian Yoruba Vindija Chimp 0.0287 0.00679   4.22 15729 14852 487646
 ```
 
 Note that a single call to the `d` function generates all required intermediate
 config and population files, runs ADMIXTOOLS, parses its log output and returns
-the result as a `data.frame` object. It does all of this behind the scenes,
-without the user having to deal with low-level technical details.
+the result as a `data.frame` object with the D statistics results. It does all of
+this behind the scenes, without the user having to deal with low-level technical
+details.
+
+## Is _admixr_ related to ADMIXTOOLS 2?
+
+Recently, a new R package called [ADMIXTOOLS 2](https://uqrmaie1.github.io/admixtools/)
+appeared on the horizon, offering a re-implementation of several features of the
+original ADMIXTOOLS suite of command-line programs.
+
+The _admixr_ project is not related to that initiative at all. It is not a pre-cursor to it, nor
+it is&mdash;the way I see it&mdash;superseeded by it. I have never used ADMIXTOOLS 2
+myself, but from the looks of it it seems to offer some very interesting features
+for fitting complex admixture graphs (something I'm not personally interested in, which
+is why early efforts to implement this in _admixr_ have been eventually given up on).
+
+**The bottom-line is this:** as long as the [original ADMIXTOOLS](https://uqrmaie1.github.io/admixtools/)
+continues to be developed and maintained, _admixr_ remains relevant and useful and
+will continue to be supported. ADMIXTOOLS might have a smaller set of features than
+ADMIXTOOLS 2, but the features it provides are extremely stable. ADMIXTOOLS is one of
+the most battle-tested pieces of software in population genetics&mdash;if you're happy with
+the set of features it provides, there is no real reason to move away from it (and
+from _admixr_).
 
 ## More information
 
@@ -115,4 +146,4 @@ To see many more examples of admixr in action, please check out the
 [tutorial vignette](https://bodkan.net/admixr/articles/tutorial.html).
 
 If you want to stay updated on new _admixr_ development, follow me on
-[Twitter](https://www.twitter.com/fleventy5).
+[Twitter](https://www.twitter.com/dr_bodkan).
