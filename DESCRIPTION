@@ -1,6 +1,6 @@
 Package: admixr
 Title: An Interface for Running 'ADMIXTOOLS' Analyses
-Version: 0.9.1.9000
+Version: 1.0.0
 Authors@R: 
     person(given = "Martin",
            family = "Petr",
