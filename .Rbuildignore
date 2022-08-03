@@ -17,3 +17,4 @@ check_servers.R
 ^\.github$
 ^Makefile$
 ^.binder
+^build

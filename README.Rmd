@@ -35,7 +35,7 @@ intervention on the command-line or custom shell scripting to orchestrate more
 complex pipelines.
 
 _admixr_ makes it possible to perform all stages of an ADMIXTOOLS analysis entirely
-from R. It provides a [set of convenient functions](http://bodkan.github.io/admixr/reference/index.html)
+from R. It provides a [set of convenient functions](https://bodkan.net/admixr/reference/index.html)
 that completely remove the need for "low-level" configuration of individual ADMIXTOOLS
 programs, allowing users to focus on the analysis itself.
 
@@ -143,7 +143,7 @@ dramatic reason to move away from either of them.
 ## More information
 
 To see many more examples of admixr in action, please check out the
-[tutorial vignette](https://bodkan.net/admixr/articles/tutorial.html).
+[tutorial vignette](https://bodkan.net/admixr/reference/index.html).
 
 If you want to stay updated on new _admixr_ development, follow me on
-[Twitter](https://www.twitter.com/dr_bodkan).
+[Twitter](https://twitter.com/dr_bodkan).

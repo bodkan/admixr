@@ -36,7 +36,7 @@ rhub: README.md
 
 $(pkg): README.md
 	R -e 'devtools::document()'
-	mkdir -p build; cd build; R CMD build --log ../../slendr
+	mkdir -p build; cd build; R CMD build --log ../../admixr
 
 README.md: README.Rmd $(logo)
 	R -e 'devtools::install(upgrade = "never")'

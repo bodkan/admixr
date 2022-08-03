@@ -316,7 +316,7 @@ ggplot(result, aes(fct_reorder(W, D), D, color = abs(Zscore) > 2)) +
 ```
 
 (If you want to more know about data analysis using R, including plotting with
-ggplot2, I highly recommend [this](http://r4ds.had.co.nz) free book.)
+ggplot2, I highly recommend [this](https://r4ds.had.co.nz/) free book.)
 
 We can see that the $D$ values for Africans are not significantly different from
 0, meaning that the data is consistent with the null hypothesis of no
@@ -1031,6 +1031,6 @@ rm qpAdm_Neandertal_ancestry_Sardinian.txt
 
 ---
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+<a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
 
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
