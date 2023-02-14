@@ -146,4 +146,4 @@ To see many more examples of admixr in action, please check out the
 [tutorial vignette](https://bodkan.net/admixr/reference/index.html).
 
 If you want to stay updated on new _admixr_ development, follow me on
-[Twitter](https://twitter.com/dr_bodkan).
+[Twitter](https://twitter.com/fleventy5).
