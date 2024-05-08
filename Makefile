@@ -31,9 +31,6 @@ windev: README.md
 winold: README.md
 	R -e 'devtools::check_win_oldrelease()'
 
-rhub: README.md
-	R -e 'rhub::check_for_cran(platforms = c("macos-highsierra-release", "macos-highsierra-release-cran", "macos-m1-bigsur-release"))'
-
 $(pkg): README.md
 	R -e 'devtools::document()'
 	mkdir -p build; cd build; R CMD build --log ../../admixr
@@ -41,9 +38,6 @@ $(pkg): README.md
 README.md: README.Rmd $(logo)
 	R -e 'devtools::install(upgrade = "never")'
 	R -e 'knitr::knit("README.Rmd", output = "README.md")'
-
-example_data:
-	Rscript generate_examples.R
 
 clean:
 	rm -rf build
