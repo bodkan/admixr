@@ -18,7 +18,7 @@ BED file."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
       </span>
     </div>
 
@@ -68,33 +68,44 @@ BED file.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filter_bed</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">bed</span>,
-  remove <span class="op">=</span> <span class="cn">FALSE</span>,
-  outfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".snp"</span><span class="op">)</span>,
-  bedtools_args <span class="op">=</span> <span class="st">""</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filter_bed</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">bed</span>,</span>
+<span>  remove <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  outfile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".snp"</span><span class="op">)</span>,</span>
+<span>  bedtools_args <span class="op">=</span> <span class="st">""</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>EIGENSTRAT data object.</p></dd>
+
+
 <dt>bed</dt>
 <dd><p>Path to a BED file.</p></dd>
+
+
 <dt>remove</dt>
 <dd><p>Remove sites falling inside the BED file regions? By default,
 sites that do not overlap BED regions are removed.</p></dd>
+
+
 <dt>outfile</dt>
 <dd><p>Path to an output snp file with coordinates of excluded sites.</p></dd>
+
+
 <dt>bedtools_args</dt>
 <dd><p>Optional arguments to `bedtools intersect` such as <code>"-sorted"</code>
 or <code>"-sorted -nonamecheck"</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Updated S3 EIGENSTRAT data object.</p>
+    
+
+<p>Updated S3 EIGENSTRAT data object.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -105,24 +116,24 @@ or <code>"-sorted -nonamecheck"</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download an example genomic data set</span></span>
-<span class="r-in"><span class="va">prefix</span> <span class="op">&lt;-</span> <span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># create an EIGENSTRAT R object from the downloaded data</span></span>
-<span class="r-in"><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eigenstrat(prefix):</span> object 'prefix' not found</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># get the path to an example BED file</span></span>
-<span class="r-in"><span class="va">bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span>, <span class="st">"regions.bed"</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dirname(prefix):</span> object 'prefix' not found</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># BED file contains regions to keep in an analysis</span></span>
-<span class="r-in"><span class="va">snps_kept</span> <span class="op">&lt;-</span> <span class="fu">filter_bed</span><span class="op">(</span><span class="va">snps</span>, <span class="va">bed</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_type(data, "EIGENSTRAT"):</span> object 'snps' not found</span>
-<span class="r-in"><span class="co"># BED file contains regions to remove from an analysis</span></span>
-<span class="r-in"><span class="va">snps_removed</span> <span class="op">&lt;-</span> <span class="fu">filter_bed</span><span class="op">(</span><span class="va">snps</span>, <span class="va">bed</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_type(data, "EIGENSTRAT"):</span> object 'snps' not found</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download an example genomic data set</span></span></span>
+<span class="r-in"><span><span class="va">prefix</span> <span class="op">&lt;-</span> <span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># create an EIGENSTRAT R object from the downloaded data</span></span></span>
+<span class="r-in"><span><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'prefix' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get the path to an example BED file</span></span></span>
+<span class="r-in"><span><span class="va">bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span>, <span class="st">"regions.bed"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'prefix' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># BED file contains regions to keep in an analysis</span></span></span>
+<span class="r-in"><span><span class="va">snps_kept</span> <span class="op">&lt;-</span> <span class="fu">filter_bed</span><span class="op">(</span><span class="va">snps</span>, <span class="va">bed</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'snps' not found</span>
+<span class="r-in"><span><span class="co"># BED file contains regions to remove from an analysis</span></span></span>
+<span class="r-in"><span><span class="va">snps_removed</span> <span class="op">&lt;-</span> <span class="fu">filter_bed</span><span class="op">(</span><span class="va">snps</span>, <span class="va">bed</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'snps' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -137,8 +148,7 @@ or <code>"-sorted -nonamecheck"</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

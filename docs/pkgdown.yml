@@ -1,8 +1,8 @@
-pandoc: '2.18'
-pkgdown: 2.0.2
+pandoc: 3.1.12.1
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   qpAdm: qpAdm.html
   tutorial: tutorial.html
-last_built: 2022-08-03T18:09Z
+last_built: 2024-05-08T17:27Z
 

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
       </span>
     </div>
 
@@ -66,37 +66,50 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">qpAdm</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">target</span>,
-  <span class="va">sources</span>,
-  <span class="va">outgroups</span>,
-  outdir <span class="op">=</span> <span class="cn">NULL</span>,
-  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>allsnps <span class="op">=</span> <span class="st">"YES"</span>, summary <span class="op">=</span> <span class="st">"YES"</span>, details <span class="op">=</span> <span class="st">"YES"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qpAdm</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">target</span>,</span>
+<span>  <span class="va">sources</span>,</span>
+<span>  <span class="va">outgroups</span>,</span>
+<span>  outdir <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>allsnps <span class="op">=</span> <span class="st">"YES"</span>, summary <span class="op">=</span> <span class="st">"YES"</span>, details <span class="op">=</span> <span class="st">"YES"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>EIGENSTRAT data object.</p></dd>
+
+
 <dt>target</dt>
 <dd><p>Vector of target populations (evaluated one at a time).</p></dd>
+
+
 <dt>sources</dt>
 <dd><p>Source populations related to true ancestors.</p></dd>
+
+
 <dt>outgroups</dt>
 <dd><p>Outgroup populations.</p></dd>
+
+
 <dt>outdir</dt>
 <dd><p>Where to put all generated files (temporary directory by default).</p></dd>
+
+
 <dt>params</dt>
 <dd><p>Named list of parameters and their values. For instance,
 <code>params = list(allsnps = "YES")</code> or <code>params = list(blgsize = 0.01)</code>
 (or an arbitrary combination of parameters using a list with multiple named
 elements).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>List of three components:
+    
+
+<p>List of three components:
     1. estimated ancestry proportions
     2. ranks statistics
     3. analysis of patterns (all possible subsets of ancestry sources).</p>
@@ -104,21 +117,21 @@ elements).</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download example data set and prepare it for analysis</span></span>
-<span class="r-in"><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># estimate the proportion of Neandertal ancestry in a French</span></span>
-<span class="r-in"><span class="co"># individual and other associated qpAdm statistics (see detailed</span></span>
-<span class="r-in"><span class="co"># description in the tutorial vignette)</span></span>
-<span class="r-in"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">qpAdm</span><span class="op">(</span></span>
-<span class="r-in">    target <span class="op">=</span> <span class="st">"French"</span>,</span>
-<span class="r-in">    sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vindija"</span>, <span class="st">"Yoruba"</span><span class="op">)</span>,</span>
-<span class="r-in">    outgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chimp"</span>, <span class="st">"Denisova"</span>, <span class="st">"Altai"</span><span class="op">)</span>,</span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">snps</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_type(data, "EIGENSTRAT"):</span> object 'snps' not found</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download example data set and prepare it for analysis</span></span></span>
+<span class="r-in"><span><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># estimate the proportion of Neandertal ancestry in a French</span></span></span>
+<span class="r-in"><span><span class="co"># individual and other associated qpAdm statistics (see detailed</span></span></span>
+<span class="r-in"><span><span class="co"># description in the tutorial vignette)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">qpAdm</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    target <span class="op">=</span> <span class="st">"French"</span>,</span></span>
+<span class="r-in"><span>    sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vindija"</span>, <span class="st">"Yoruba"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    outgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chimp"</span>, <span class="st">"Denisova"</span>, <span class="st">"Altai"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">snps</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'snps' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -133,8 +146,7 @@ elements).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

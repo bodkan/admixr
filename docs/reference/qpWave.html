@@ -18,7 +18,7 @@ admixture sources related to the set of 'right' populations."><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
       </span>
     </div>
 
@@ -68,38 +68,51 @@ admixture sources related to the set of 'right' populations.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">qpWave</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">left</span>,
-  <span class="va">right</span>,
-  maxrank <span class="op">=</span> <span class="cn">NULL</span>,
-  details <span class="op">=</span> <span class="cn">FALSE</span>,
-  outdir <span class="op">=</span> <span class="cn">NULL</span>,
-  params <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qpWave</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">left</span>,</span>
+<span>  <span class="va">right</span>,</span>
+<span>  maxrank <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  details <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  outdir <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  params <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>EIGENSTRAT data object.</p></dd>
+
+
 <dt>left, right</dt>
 <dd><p>Character vectors of populations labels.</p></dd>
+
+
 <dt>maxrank</dt>
 <dd><p>Maximum rank to test for.</p></dd>
+
+
 <dt>details</dt>
 <dd><p>Return the A, B matrices used in rank calculations?</p></dd>
+
+
 <dt>outdir</dt>
 <dd><p>Where to put all generated files (temporary directory by default).</p></dd>
+
+
 <dt>params</dt>
 <dd><p>Named list of parameters and their values. For instance,
 <code>params = list(allsnps = "YES")</code> or <code>params = list(blgsize = 0.01)</code>
 (or an arbitrary combination of parameters using a list with multiple named
 elements).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Table of rank test results.</p>
+    
+
+<p>Table of rank test results.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -113,18 +126,18 @@ lowest possible rank of this matrix that is consistent with the data.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download example data set and prepare it for analysis</span></span>
-<span class="r-in"><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># run the qpWave wrapper (detailed description in the tutorial vignette)</span></span>
-<span class="r-in"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">qpWave</span><span class="op">(</span></span>
-<span class="r-in">     left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span><span class="op">)</span>,</span>
-<span class="r-in">     right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altai"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span><span class="op">)</span>,</span>
-<span class="r-in">     data <span class="op">=</span> <span class="va">snps</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_type(data, "EIGENSTRAT"):</span> object 'snps' not found</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download example data set and prepare it for analysis</span></span></span>
+<span class="r-in"><span><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># run the qpWave wrapper (detailed description in the tutorial vignette)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">qpWave</span><span class="op">(</span></span></span>
+<span class="r-in"><span>     left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>     right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altai"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>     data <span class="op">=</span> <span class="va">snps</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'snps' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -139,8 +152,7 @@ lowest possible rank of this matrix that is consistent with the data.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

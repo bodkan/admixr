@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
       </span>
     </div>
 
@@ -71,67 +71,84 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">qpAdm_rotation</span><span class="op">(</span>
-  <span class="va">data</span>,
-  <span class="va">target</span>,
-  <span class="va">candidates</span>,
-  minimize <span class="op">=</span> <span class="cn">TRUE</span>,
-  nsources <span class="op">=</span> <span class="fl">2</span>,
-  ncores <span class="op">=</span> <span class="fl">1</span>,
-  fulloutput <span class="op">=</span> <span class="cn">FALSE</span>,
-  params <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qpAdm_rotation</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">target</span>,</span>
+<span>  <span class="va">candidates</span>,</span>
+<span>  minimize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  nsources <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  ncores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  fulloutput <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  params <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>EIGENSTRAT dataset</p></dd>
+
+
 <dt>target</dt>
 <dd><p>Target population that is modeled as admixed</p></dd>
+
+
 <dt>candidates</dt>
 <dd><p>Potential candidates for sources and outgroups</p></dd>
+
+
 <dt>minimize</dt>
 <dd><p>Test also all possible subsets of outgroups? (default TRUE)</p></dd>
+
+
 <dt>nsources</dt>
 <dd><p>Number of sources to pull from the candidates</p></dd>
+
+
 <dt>ncores</dt>
 <dd><p>Number of CPU cores to utilize for model fitting</p></dd>
+
+
 <dt>fulloutput</dt>
 <dd><p>Report also 'ranks' and 'subsets' analysis from qpAdm in
 addition to the admixture proportions results? (default FALSE)</p></dd>
+
+
 <dt>params</dt>
 <dd><p>Named list of parameters and their values to be passed to
 <code><a href="qpAdm.html">qpAdm()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>qpAdm list with proportions, ranks and subsets elements (as with a
+    
+
+<p>qpAdm list with proportions, ranks and subsets elements (as with a
   traditional qpAdm run) or just the proportions (determined by the value of
   the 'fulloutput' argument)</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download an example genomic data set and prepare it for analysis</span></span>
-<span class="r-in"><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># find the set of most likely two-source qpAdm models of</span></span>
-<span class="r-in"><span class="co"># a French individual - produce only the 'proportions'</span></span>
-<span class="r-in"><span class="co"># qpAdm summary</span></span>
-<span class="r-in"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu">qpAdm_rotation</span><span class="op">(</span></span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">snps</span>,</span>
-<span class="r-in">    target <span class="op">=</span> <span class="st">"French"</span>,</span>
-<span class="r-in">    candidates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dinka"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Vindija"</span>,</span>
-<span class="r-in">                   <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>, <span class="st">"Chimp"</span><span class="op">)</span>,</span>
-<span class="r-in">    minimize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">    nsources <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">    ncores <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">    fulloutput <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_type(data, "EIGENSTRAT"):</span> object 'snps' not found</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="co"># download an example genomic data set and prepare it for analysis</span></span></span>
+<span class="r-in"><span><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="download_data.html">download_data</a></span><span class="op">(</span>dirname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># find the set of most likely two-source qpAdm models of</span></span></span>
+<span class="r-in"><span><span class="co"># a French individual - produce only the 'proportions'</span></span></span>
+<span class="r-in"><span><span class="co"># qpAdm summary</span></span></span>
+<span class="r-in"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu">qpAdm_rotation</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">snps</span>,</span></span>
+<span class="r-in"><span>    target <span class="op">=</span> <span class="st">"French"</span>,</span></span>
+<span class="r-in"><span>    candidates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dinka"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Vindija"</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"Altai"</span>, <span class="st">"Denisova"</span>, <span class="st">"Chimp"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    minimize <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    nsources <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    ncores <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    fulloutput <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'snps' not found</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -146,8 +163,7 @@ addition to the admixture proportions results? (default FALSE)</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

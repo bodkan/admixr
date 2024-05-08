@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
       </span>
     </div>
 
@@ -94,37 +94,15 @@
 <div class="section level2">
 <h2 id="what-is-admixr">What is <em>admixr</em>?<a class="anchor" aria-label="anchor" href="#what-is-admixr"></a>
 </h2>
-<p>The <em>admixr</em> package provides a convenient R interface to <a href="https://github.com/DReichLab/AdmixTools/" class="external-link">ADMIXTOOLS</a>, a widely
-used software package for calculating admixture statistics and testing
-population admixture hypotheses.</p>
-<p>A typical ADMIXTOOLS workflow often involves a combination of
-<code>sed</code>/<code>awk</code>/shell scripting and manual editing to
-create different configuration files. These are then passed as
-command-line arguments to one of ADMIXTOOLS commands, and control how to
-run a particular analysis. The results of such computation are then
-usually redirected to another file, which needs to be parsed by the user
-to extract values of interest, often using command-line utilities again
-or by manual copy-pasting, and finally analysed in R, Excel or another
-program.</p>
-<p>This workflow can be a little cumbersome, especially if one wants to
-explore many hypotheses involving different combinations of populations
-or data filtering strategies. Most importantly, it makes it difficult to
-follow the rules of best practice for reproducible science, especially
-given the need for manual intervention on the command-line or custom
-shell scripting to orchestrate more complex pipelines.</p>
-<p><em>admixr</em> makes it possible to perform all stages of an
-ADMIXTOOLS analysis entirely from R. It provides a <a href="https://bodkan.net/admixr/reference/index.html" class="external-link">set of convenient
-functions</a> that completely remove the need for “low-level”
-configuration of individual ADMIXTOOLS programs, allowing users to focus
-on the analysis itself.</p>
+<p>The <em>admixr</em> package provides a convenient R interface to <a href="https://github.com/DReichLab/AdmixTools/" class="external-link">ADMIXTOOLS</a>, a widely used software package for calculating admixture statistics and testing population admixture hypotheses.</p>
+<p>A typical ADMIXTOOLS workflow often involves a combination of <code>sed</code>/<code>awk</code>/shell scripting and manual editing to create different configuration files. These are then passed as command-line arguments to one of ADMIXTOOLS commands, and control how to run a particular analysis. The results of such computation are then usually redirected to another file, which needs to be parsed by the user to extract values of interest, often using command-line utilities again or by manual copy-pasting, and finally analysed in R, Excel or another program.</p>
+<p>This workflow can be a little cumbersome, especially if one wants to explore many hypotheses involving different combinations of populations or data filtering strategies. Most importantly, it makes it difficult to follow the rules of best practice for reproducible science, especially given the need for manual intervention on the command-line or custom shell scripting to orchestrate more complex pipelines.</p>
+<p><em>admixr</em> makes it possible to perform all stages of an ADMIXTOOLS analysis entirely from R. It provides a <a href="https://bodkan.net/admixr/reference/index.html" class="external-link">set of convenient functions</a> that completely remove the need for “low-level” configuration of individual ADMIXTOOLS programs, allowing users to focus on the analysis itself.</p>
 </div>
 <div class="section level2">
 <h2 id="how-to-cite">How to cite<a class="anchor" aria-label="anchor" href="#how-to-cite"></a>
 </h2>
-<p><em>admixr</em> is now published as an <a href="https://doi.org/10.1093/bioinformatics/btz030" class="external-link"><em>Application
-Note</em></a> in the journal Bioinformatics. If you use it in your work,
-please cite the paper! You will join an <a href="https://scholar.google.com/scholar?oi=bibs&amp;hl=en&amp;cites=13286994334855947290" class="external-link">excellent
-company</a> of papers who have used it to do amazing research. 🙂</p>
+<p><em>admixr</em> is now published as an <a href="https://doi.org/10.1093/bioinformatics/btz030" class="external-link"><em>Application Note</em></a> in the journal Bioinformatics. If you use it in your work, please cite the paper! You will join an <a href="https://scholar.google.com/scholar?oi=bibs&amp;hl=en&amp;cites=13286994334855947290" class="external-link">excellent company</a> of papers who have used it to do amazing research. 🙂</p>
 </div>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
@@ -132,105 +110,61 @@ company</a> of papers who have used it to do amazing research. 🙂</p>
 <div class="section level4">
 <h4 id="browser-based-rstudio-session">Browser-based RStudio session<a class="anchor" aria-label="anchor" href="#browser-based-rstudio-session"></a>
 </h4>
-<p>You can try out <em>admixr</em> without installation directly in your
-browser! Simply click on <a href="http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio" class="external-link"><img src="http://mybinder.org/badge.svg" alt="Binder"></a> and after a
-short moment you will get a Binder RStudio could session running in your
-web browser. However, please note that Binder’s computational resources
-are extremely limited so you might run into issues if you try to run
-extremely resource-intensive computations.</p>
+<p>You can try out <em>admixr</em> without installation directly in your browser! Simply click on <a href="http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio" class="external-link"><img src="http://mybinder.org/badge.svg" alt="Binder"></a> and after a short moment you will get a Binder RStudio could session running in your web browser. However, please note that Binder’s computational resources are extremely limited so you might run into issues if you try to run extremely resource-intensive computations.</p>
 </div>
 <div class="section level4">
 <h4 id="latest-stable-version">Latest stable version<a class="anchor" aria-label="anchor" href="#latest-stable-version"></a>
 </h4>
-<p>The package is available <a href="https://cran.r-project.org/package=admixr" class="external-link">on CRAN</a>. You can
-install it simply by running</p>
+<p>The package is available <a href="https://cran.r-project.org/package=admixr" class="external-link">on CRAN</a>. You can install it simply by running</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"admixr"</span><span class="op">)</span></code></pre></div>
-<p>from your R session. This the recommended procedure for most
-users.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"admixr"</span><span class="op">)</span></span></code></pre></div>
+<p>from your R session. This the recommended procedure for most users.</p>
 </div>
 <div class="section level4">
 <h4 id="development-version">Development version<a class="anchor" aria-label="anchor" href="#development-version"></a>
 </h4>
-<p>To install the development version from Github (which might be
-slightly ahead in terms of new features and bugfixes compared to the
-stable release on CRAN), you need the R package <em>devtools</em>. You
-can run:</p>
+<p>To install the development version from Github (which might be slightly ahead in terms of new features and bugfixes compared to the stable release on CRAN), you need the R package <em>devtools</em>. You can run:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bodkan/admixr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"bodkan/admixr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="installing-admixtools">Installing ADMIXTOOLS<a class="anchor" aria-label="anchor" href="#installing-admixtools"></a>
 </h4>
-<p>In order to use the <em>admixr</em> package, you need a working
-installation of ADMIXTOOLS. You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL" class="external-link">here</a>.</p>
-<p>Furthermore, you also need to make sure that R can find ADMIXTOOLS
-binaries on the <code>$PATH</code>. You can achieve this by specifying
-<code>PATH=&lt;path to the location of ADMIXTOOLS programs&gt;</code> in
-the <code>.Renviron</code> file in your home directory. If R cannot find
-ADMIXTOOLS utilities, you will get a warning upon loading
-<code><a href="https://github.com/bodkan/admixr" class="external-link">library(admixr)</a></code> in your R session.</p>
+<p>In order to use the <em>admixr</em> package, you need a working installation of ADMIXTOOLS. You can find installation instructions <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL" class="external-link">here</a>.</p>
+<p>Furthermore, you also need to make sure that R can find ADMIXTOOLS binaries on the <code>$PATH</code>. You can achieve this by specifying <code>PATH=&lt;path to the location of ADMIXTOOLS programs&gt;</code> in the <code>.Renviron</code> file in your home directory. If R cannot find ADMIXTOOLS utilities, you will get a warning upon loading <code><a href="https://github.com/bodkan/admixr" class="external-link">library(admixr)</a></code> in your R session.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="example-analysis">Example analysis<a class="anchor" aria-label="anchor" href="#example-analysis"></a>
 </h2>
-<p>This is all the code that you need to perform ADMIXTOOLS analyses
-using this package! No shell scripting, no copy-pasting and manual
-editing of text files. The only thing you need is a working ADMIXTOOLS
-installation and a path to EIGENSTRAT data (a trio of ind/snp/geno
-files), which we call <code>prefix</code> here.</p>
+<p>This is all the code that you need to perform ADMIXTOOLS analyses using this package! No shell scripting, no copy-pasting and manual editing of text files. The only thing you need is a working ADMIXTOOLS installation and a path to EIGENSTRAT data (a trio of ind/snp/geno files), which we call <code>prefix</code> here.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bodkan/admixr" class="external-link">admixr</a></span><span class="op">)</span>
-
-<span class="co"># download a small testing dataset to a temporary directory and process it for use in R</span>
-<span class="va">snp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/f4ratio.html">d</a></span><span class="op">(</span>
-  W <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span><span class="op">)</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>,
-  data <span class="op">=</span> <span class="va">snp_data</span>
-<span class="op">)</span>
-
-<span class="va">result</span></code></pre></div>
-<p>Note that a single call to the <code>d</code> function generates all
-required intermediate config and population files, runs ADMIXTOOLS,
-parses its log output and returns the result as a
-<code>data.frame</code> object with the D statistics results. It does
-all of this behind the scenes, without the user having to deal with
-low-level technical details.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bodkan/admixr" class="external-link">admixr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># download a small testing dataset to a temporary directory and process it for use in R</span></span>
+<span><span class="va">snp_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="fu"><a href="reference/download_data.html">download_data</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/f4ratio.html">d</a></span><span class="op">(</span></span>
+<span>  W <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span><span class="op">)</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">snp_data</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span></span></code></pre></div>
+<p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns the result as a <code>data.frame</code> object with the D statistics results. It does all of this behind the scenes, without the user having to deal with low-level technical details.</p>
 </div>
 <div class="section level2">
 <h2 id="is-admixr-related-to-admixtools-2">Is <em>admixr</em> related to ADMIXTOOLS 2?<a class="anchor" aria-label="anchor" href="#is-admixr-related-to-admixtools-2"></a>
 </h2>
-<p>Recently, a new R package called <a href="https://uqrmaie1.github.io/admixtools/" class="external-link">ADMIXTOOLS 2</a> appeared
-on the horizon, offering a re-implementation of several features of the
-original ADMIXTOOLS suite of command-line programs.</p>
-<p>The <em>admixr</em> project is not related to that initiative at all.
-It is not a pre-cursor to it, nor it is—the way I see it—superseeded by
-it. I have never used ADMIXTOOLS 2 myself, but from the looks of it it
-seems to offer some very interesting features for fitting complex
-admixture graphs (something I’m not personally interested in, which is
-why early efforts to implement this in <em>admixr</em> have been
-eventually given up on).</p>
-<p><strong>The bottom-line is this:</strong> as long as the <a href="https://github.com/DReichLab/AdmixTools" class="external-link">original ADMIXTOOLS</a>
-continues to be developed and maintained, <em>admixr</em> remains
-relevant and useful and will continue to be supported. ADMIXTOOLS might
-have a smaller set of features than ADMIXTOOLS 2, but the features it
-provides are extremely stable. ADMIXTOOLS is one of the most
-battle-tested pieces of software in population genetics—if you’re happy
-with the set of features it provides and if you’re happy with
-<em>admixr</em> itself, there is no dramatic reason to move away from
-either of them.</p>
+<p>Recently, a new R package called <a href="https://uqrmaie1.github.io/admixtools/" class="external-link">ADMIXTOOLS 2</a> appeared on the horizon, offering a re-implementation of several features of the original ADMIXTOOLS suite of command-line programs.</p>
+<p>The <em>admixr</em> project is not related to that initiative at all. It is not a pre-cursor to it, nor it is—the way I see it—superseeded by it. I have never used ADMIXTOOLS 2 myself, but from the looks of it it seems to offer some very interesting features for fitting complex admixture graphs (something I’m not personally interested in, which is why early efforts to implement this in <em>admixr</em> have been eventually given up on).</p>
+<p><strong>The bottom-line is this:</strong> as long as the <a href="https://github.com/DReichLab/AdmixTools" class="external-link">original ADMIXTOOLS</a> continues to be developed and maintained, <em>admixr</em> remains relevant and useful and will continue to be supported. ADMIXTOOLS might have a smaller set of features than ADMIXTOOLS 2, but the features it provides are extremely stable. ADMIXTOOLS is one of the most battle-tested pieces of software in population genetics—if you’re happy with the set of features it provides and if you’re happy with <em>admixr</em> itself, there is no dramatic reason to move away from either of them.</p>
 </div>
 <div class="section level2">
 <h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
 </h2>
-<p>To see many more examples of admixr in action, please check out the
-<a href="https://bodkan.net/admixr/reference/index.html" class="external-link">tutorial
-vignette</a>.</p>
-<p>If you want to stay updated on new <em>admixr</em> development,
-follow me on <a href="https://twitter.com/fleventy5" class="external-link">Twitter</a>.</p>
+<p>To see many more examples of admixr in action, please check out the <a href="https://bodkan.net/admixr/reference/index.html" class="external-link">tutorial vignette</a>.</p>
+<p>If you want to stay updated on new <em>admixr</em> development, follow me on <a href="https://twitter.com/fleventy5" class="external-link">Twitter</a>.</p>
 </div>
 </div>
   </div>
@@ -290,8 +224,7 @@ follow me on <a href="https://twitter.com/fleventy5" class="external-link">Twitt
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ package</h1>
                         <h4 data-toc-skip class="author">Martin
 Petr</h4>
             
-            <h4 data-toc-skip class="date">2022-08-03</h4>
+            <h4 data-toc-skip class="date">2024-05-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/tutorial.Rmd" class="external-link"><code>vignettes/tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>tutorial.Rmd</code></div>
@@ -135,21 +135,21 @@ the <code>.Renviron</code> file.</p>
 <p>To install <em>admixr</em> you can simply run the following command
 in your R session:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"admixr"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"admixr"</span><span class="op">)</span></span></code></pre></div>
 <p>Furthermore, if you want to follow the examples in this vignette, you
 will need the <a href="https://www.tidyverse.org" class="external-link">tidyverse</a>
 collection of packages for data manipulation manipulation and plotting,
 which you can install with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code></pre></div>
 <p>You definitely don’t need tidyverse for working with <em>admixr</em>
 but it really makes data manipulation and plotting things much easier. I
 recommend at least giving it a shot.</p>
 <p>When everything is ready, you can run the following code to load both
 packages:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bodkan/admixr" class="external-link">admixr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bodkan/admixr" class="external-link">admixr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="a-note-about-eigenstrat-format">A note about EIGENSTRAT format<a class="anchor" aria-label="anchor" href="#a-note-about-eigenstrat-format"></a>
@@ -187,13 +187,13 @@ downloads the data into a temporary directory (you can specify the
 destination using its <code>dirname</code> argument, in case you want to
 place it elsewhere). In addition to this, the function returns a shared
 path/prefix of the whole dataset.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(prefix <span class="ot">&lt;-</span> <span class="fu">download_data</span>(<span class="at">dirname =</span> <span class="fu">tempdir</span>()))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps"</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>(prefix <span class="ot">&lt;-</span> <span class="fu">download_data</span>(<span class="at">dirname =</span> <span class="fu">tempdir</span>()))</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps"</span></span></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="fu">dirname</span>(prefix), <span class="at">pattern =</span> <span class="fu">basename</span>(prefix), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.geno"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.ind"</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.snp"</span> </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="fu">dirname</span>(prefix), <span class="at">pattern =</span> <span class="fu">basename</span>(prefix), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno"</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind"</span> </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp"</span> </span></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div class="section level4">
 <h4 id="ind-file">
@@ -244,9 +244,9 @@ individual separately.</p>
 <h4 id="geno-file-first-3-lines">
 <code>geno</code> file (first 3 lines)<a class="anchor" aria-label="anchor" href="#geno-file-first-3-lines"></a>
 </h4>
-<pre><code><span class="fl">902021012000</span>
-<span class="fl">922221211222</span>
-<span class="fl">922222122222</span></code></pre>
+<pre><code><span><span class="fl">902021012000</span></span>
+<span><span class="fl">922221211222</span></span>
+<span><span class="fl">922222122222</span></span></code></pre>
 <p>Each row is one genomic site, each column is a genotype in one
 individual.</p>
 </div>
@@ -282,15 +282,15 @@ function. This function accepts the path and prefix of a trio of
 EIGENSTRAT snp/ind/geno files and returns an R object of the class
 <code>EIGENSTRAT</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eigenstrat.html">eigenstrat</a></span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">snps</span>
-<span class="co">#&gt; EIGENSTRAT object</span>
-<span class="co">#&gt; =================</span>
-<span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.geno</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">snps</span></span>
+<span><span class="co">#&gt; EIGENSTRAT object</span></span>
+<span><span class="co">#&gt; =================</span></span>
+<span><span class="co">#&gt; components:</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span></code></pre></div>
 <p>This object encapsulates the paths to all three EIGENSTRAT components
 and makes it easy to pass the data to different <em>admixr</em>
 functions.</p>
@@ -325,13 +325,13 @@ Africans (whose ancestors never met Neanderthals).</p>
 <p>Let’s save some population names first to make our code more
 concise:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span><span class="op">)</span></span></code></pre></div>
 <p>Using the <em>admixr</em> package we can then calculate our <span class="math inline">\(D\)</span> statistic simply by running:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="va">pops</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="va">pops</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></span></code></pre></div>
 <p>The result is a following data frame:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="15%">
@@ -457,10 +457,10 @@ best representation of this kind of data, especially as the number of
 samples increases. Instead, we can use the <a href="https://ggplot2.tidyverse.org" class="external-link"><code>ggplot2</code></a> package to
 plot the results:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">result</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html" class="external-link">fct_reorder</a></span><span class="op">(</span><span class="va">W</span>, <span class="va">D</span><span class="op">)</span>, <span class="va">D</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Zscore</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">D</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span>, ymax <span class="op">=</span> <span class="va">D</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">result</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html" class="external-link">fct_reorder</a></span><span class="op">(</span><span class="va">W</span>, <span class="va">D</span><span class="op">)</span>, <span class="va">D</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Zscore</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">D</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span>, ymax <span class="op">=</span> <span class="va">D</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="tutorial_files/figure-html/d_plot-1.png" width="672"></p>
 <p>(If you want to more know about data analysis using R, including
 plotting with ggplot2, I highly recommend <a href="https://r4ds.had.co.nz/" class="external-link">this</a> free book.)</p>
@@ -485,9 +485,9 @@ of gene flow.</p>
 <p>To repeat the previous analysis using <span class="math inline">\(f_4\)</span> statistic, we can run the function
 <code><a href="../reference/f4ratio.html">f4()</a></code>:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">f4</a></span><span class="op">(</span>W <span class="op">=</span> <span class="va">pops</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">f4</a></span><span class="op">(</span>W <span class="op">=</span> <span class="va">pops</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="15%">
@@ -613,11 +613,11 @@ C)}{f_4(A, O; B, C)}.\]</span></p>
 (<code>X</code> being a vector of samples which we want to estimate the
 Neanderthal ancestry in):</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">f4ratio</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">pops</span>, A <span class="op">=</span> <span class="st">"Altai"</span>, B <span class="op">=</span> <span class="st">"Vindija"</span>, C <span class="op">=</span> <span class="st">"Yoruba"</span>, O <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">f4ratio</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">pops</span>, A <span class="op">=</span> <span class="st">"Altai"</span>, B <span class="op">=</span> <span class="st">"Vindija"</span>, C <span class="op">=</span> <span class="st">"Yoruba"</span>, O <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></span></code></pre></div>
 <p>The ancestry proportion (a number between 0 and 1) is given in the
 <code>alpha</code> column:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="9%">
@@ -703,11 +703,11 @@ Neanderthal ancestry in):</p>
 </tbody>
 </table>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">result</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html" class="external-link">fct_reorder</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">alpha</span><span class="op">)</span>, <span class="va">alpha</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Zscore</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">alpha</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span>, ymax <span class="op">=</span> <span class="va">alpha</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Neandertal ancestry proportion"</span>, x <span class="op">=</span> <span class="st">"present-day individual"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">result</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html" class="external-link">fct_reorder</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">alpha</span><span class="op">)</span>, <span class="va">alpha</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Zscore</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">alpha</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span>, ymax <span class="op">=</span> <span class="va">alpha</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Neandertal ancestry proportion"</span>, x <span class="op">=</span> <span class="st">"present-day individual"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="tutorial_files/figure-html/f4ratio_plot-1.png" width="672"></p>
 <p>We can make several observations:</p>
 <ul>
@@ -746,11 +746,11 @@ by fixing the <span class="math inline">\(C\)</span> outgroup as San,
 and calculating pairwise <span class="math inline">\(f_3\)</span>
 statistics between all present-day modern humans.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span><span class="op">)</span>
-
-<span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">f3</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">pops</span>, B <span class="op">=</span> <span class="va">pops</span>, C <span class="op">=</span> <span class="st">"Khomani_San"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">f3</a></span><span class="op">(</span>A <span class="op">=</span> <span class="va">pops</span>, B <span class="op">=</span> <span class="va">pops</span>, C <span class="op">=</span> <span class="st">"Khomani_San"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">A</th>
@@ -819,15 +819,15 @@ statistics between all present-day modern humans.</p>
 </tbody>
 </table>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># sort the population labels according to an increasing f3 value relative to French</span>
-<span class="va">ordered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">result</span>, <span class="va">A</span> <span class="op">==</span> <span class="st">"Mbuti"</span>, <span class="va">B</span> <span class="op">!=</span> <span class="st">"Mbuti"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">f3</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">[[</span><span class="st">"B"</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mbuti"</span><span class="op">)</span>
-
-<span class="co"># plot heatmap of pairwise f3 values</span>
-<span class="va">result</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">A</span> <span class="op">!=</span> <span class="va">B</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">A</span>, levels <span class="op">=</span> <span class="va">ordered</span><span class="op">)</span>,
-         B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">B</span>, levels <span class="op">=</span> <span class="va">ordered</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">f3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># sort the population labels according to an increasing f3 value relative to French</span></span>
+<span><span class="va">ordered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">result</span>, <span class="va">A</span> <span class="op">==</span> <span class="st">"Mbuti"</span>, <span class="va">B</span> <span class="op">!=</span> <span class="st">"Mbuti"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">f3</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">[[</span><span class="st">"B"</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mbuti"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plot heatmap of pairwise f3 values</span></span>
+<span><span class="va">result</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">A</span> <span class="op">!=</span> <span class="va">B</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">A</span>, levels <span class="op">=</span> <span class="va">ordered</span><span class="op">)</span>,</span>
+<span>         B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">B</span>, levels <span class="op">=</span> <span class="va">ordered</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">f3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="tutorial_files/figure-html/f3_plot-1.png" width="768"></p>
 <p>We can see that when we order the heatmap labels based on values of
 pairwise <span class="math inline">\(f_3\)</span> statistics, the
@@ -893,11 +893,11 @@ choices of populations.</p>
 Sardinian, Han} populations. We can do this using the function
 <code><a href="../reference/qpWave.html">qpWave()</a></code>, setting its arguments appropriately:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpWave.html">qpWave</a></span><span class="op">(</span>
- left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span><span class="op">)</span>,
- right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altai"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span><span class="op">)</span>,
- data <span class="op">=</span> <span class="va">snps</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpWave.html">qpWave</a></span><span class="op">(</span></span>
+<span> left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span><span class="op">)</span>,</span>
+<span> right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altai"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span><span class="op">)</span>,</span>
+<span> data <span class="op">=</span> <span class="va">snps</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/qpWave.html">qpWave()</a></code> function returns a data frame which shows
 the results of a series of matrix rank tests. The <code>rank</code>
 column is the matrix rank tested, <code>df</code>, <code>chisq</code>
@@ -908,7 +908,7 @@ below), and <code>dfdiff</code>, <code>chisqdiff</code> and
 <code>taildiff</code> give the same, but always comparing a model to the
 model with one rank less.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">rank</th>
@@ -959,13 +959,13 @@ from the set of <em>right</em> populations. In this case, the most
 likely explanation is Neandertal admixture into non-Africans today.</p>
 <p>Now, what happens if we add Papuans to the <em>left</em> group?</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpWave.html">qpWave</a></span><span class="op">(</span>
- left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Papuan"</span>, <span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span><span class="op">)</span>,
- right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altai"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span><span class="op">)</span>,
- data <span class="op">=</span> <span class="va">snps</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpWave.html">qpWave</a></span><span class="op">(</span></span>
+<span> left <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Papuan"</span>, <span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span><span class="op">)</span>,</span>
+<span> right <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Altai"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span><span class="op">)</span>,</span>
+<span> data <span class="op">=</span> <span class="va">snps</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">rank</th>
@@ -1039,13 +1039,13 @@ than the specified <em>sources</em>).</li>
 </ul>
 <p>Having defined all three population sets, we can run qpAdm with:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpAdm.html">qpAdm</a></span><span class="op">(</span>
-  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"French"</span><span class="op">)</span>,
-  sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vindija"</span>, <span class="st">"Yoruba"</span><span class="op">)</span>,
-  outgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chimp"</span>, <span class="st">"Denisova"</span>, <span class="st">"Altai"</span><span class="op">)</span>,
-  data <span class="op">=</span> <span class="va">snps</span>,
-  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inbreed <span class="op">=</span> <span class="st">"YES"</span><span class="op">)</span> <span class="co"># forced by new ADMIXTOOLS qpfstats</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpAdm.html">qpAdm</a></span><span class="op">(</span></span>
+<span>  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"French"</span><span class="op">)</span>,</span>
+<span>  sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vindija"</span>, <span class="st">"Yoruba"</span><span class="op">)</span>,</span>
+<span>  outgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chimp"</span>, <span class="st">"Denisova"</span>, <span class="st">"Altai"</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">snps</span>,</span>
+<span>  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inbreed <span class="op">=</span> <span class="st">"YES"</span><span class="op">)</span> <span class="co"># forced by new ADMIXTOOLS qpfstats</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/qpAdm.html">qpAdm()</a></code> function has an argument
 <code>details</code> (default TRUE) which makes the function return a
 list of three elements:</p>
@@ -1067,7 +1067,7 @@ for more details.</li>
 <code><a href="../reference/qpAdm.html">qpAdm()</a></code> function.</p>
 <p>Let’s start with the <code>ranks</code> element:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span><span class="op">$</span><span class="va">ranks</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">ranks</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">target</th>
@@ -1172,7 +1172,7 @@ estimates from all specified sources, the p-values of each model
 well as standard errors for those proportions using a block
 jackknife:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span><span class="op">$</span><span class="va">proportions</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">proportions</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="11%">
@@ -1236,7 +1236,7 @@ source populations. Each 1 in the “pattern” column means that the
 proportion of ancestry from that particular source population (in the
 order as specified by the user) was forced to 0.0.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span><span class="op">$</span><span class="va">subsets</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span><span class="op">$</span><span class="va">subsets</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">target</th>
@@ -1375,25 +1375,25 @@ Denisova     U  Denisova</code></pre>
 <p>To merge several individual samples under a combined label we can
 call <code><a href="../reference/relabel.html">relabel()</a></code> like this:</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># paths to the original ind file and a new modified ind file, which will</span>
-<span class="co"># contain merged population labels</span>
-<span class="va">modif_snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/relabel.html">relabel</a></span><span class="op">(</span>
-  <span class="va">snps</span>,
-  European <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span><span class="op">)</span>,
-  African <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Khomani_San"</span><span class="op">)</span>,
-  Archaic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># paths to the original ind file and a new modified ind file, which will</span></span>
+<span><span class="co"># contain merged population labels</span></span>
+<span><span class="va">modif_snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/relabel.html">relabel</a></span><span class="op">(</span></span>
+<span>  <span class="va">snps</span>,</span>
+<span>  European <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span><span class="op">)</span>,</span>
+<span>  African <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Khomani_San"</span><span class="op">)</span>,</span>
+<span>  Archaic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vindija"</span>, <span class="st">"Altai"</span>, <span class="st">"Denisova"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">modif_snps</span>
-<span class="co">#&gt; EIGENSTRAT object</span>
-<span class="co">#&gt; =================</span>
-<span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.geno</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; modifiers:</span>
-<span class="co">#&gt;   groups:  /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/filef8fe2de1b89d.ind</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">modif_snps</span></span>
+<span><span class="co">#&gt; EIGENSTRAT object</span></span>
+<span><span class="co">#&gt; =================</span></span>
+<span><span class="co">#&gt; components:</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; modifiers:</span></span>
+<span><span class="co">#&gt;   groups:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/file52495c64ec04.ind</span></span></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified
 <code>EIGENSTRAT</code> object, which contains a new item in the
 “modifiers” section - the path to a new ind file. Let’s look at its
@@ -1414,11 +1414,11 @@ Denisova     U  Archaic</code></pre>
 use “European”, “African” and “Archaic” names in any of the
 <em>admixr</em> wrapper functions described above. For example:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="st">"European"</span>, X <span class="op">=</span> <span class="st">"African"</span>, Y <span class="op">=</span> <span class="st">"Archaic"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">modif_snps</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="st">"European"</span>, X <span class="op">=</span> <span class="st">"African"</span>, Y <span class="op">=</span> <span class="st">"Archaic"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">modif_snps</span><span class="op">)</span></span></code></pre></div>
 <p>Here is the result, showing again Europeans show genetic affinity to
 archaic humans compared to Africans today:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="12%">
@@ -1478,7 +1478,7 @@ instead of present SNPs (set to <code>FALSE</code> by default).</li>
 </ul>
 <p>For each sample, count the SNPs present in that sample:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/count_snps.html">count_snps</a></span><span class="op">(</span><span class="va">snps</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/count_snps.html">count_snps</a></span><span class="op">(</span><span class="va">snps</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">id</th>
@@ -1578,25 +1578,25 @@ modifier called “excluded”, linking to a snp file with coordinates of
 sites that did not pass the filtering and will be excluded from later
 analyses.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span>, <span class="st">"regions.bed"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">prefix</span><span class="op">)</span>, <span class="st">"regions.bed"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># BED file contains regions to keep in an analysis</span>
-<span class="va">new_snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_bed.html">filter_bed</a></span><span class="op">(</span><span class="va">snps</span>, <span class="va">bed</span><span class="op">)</span>
-
-<span class="co"># BED file contains regions to remove from an analysis</span>
-<span class="va">new_snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_bed.html">filter_bed</a></span><span class="op">(</span><span class="va">snps</span>, <span class="va">bed</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># BED file contains regions to keep in an analysis</span></span>
+<span><span class="va">new_snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_bed.html">filter_bed</a></span><span class="op">(</span><span class="va">snps</span>, <span class="va">bed</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># BED file contains regions to remove from an analysis</span></span>
+<span><span class="va">new_snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_bed.html">filter_bed</a></span><span class="op">(</span><span class="va">snps</span>, <span class="va">bed</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_snps</span>
-<span class="co">#&gt; EIGENSTRAT object</span>
-<span class="co">#&gt; =================</span>
-<span class="co">#&gt; components:</span>
-<span class="co">#&gt;   ind file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.ind</span>
-<span class="co">#&gt;   snp file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.snp</span>
-<span class="co">#&gt;   geno file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.geno</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; modifiers:</span>
-<span class="co">#&gt;   excluded sites:  /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/filef8fe72055ca3.snp </span>
-<span class="co">#&gt;       (SNPs excluded: 100000, SNPs remaining: 400000)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">new_snps</span></span>
+<span><span class="co">#&gt; EIGENSTRAT object</span></span>
+<span><span class="co">#&gt; =================</span></span>
+<span><span class="co">#&gt; components:</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; modifiers:</span></span>
+<span><span class="co">#&gt;   excluded sites:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/file5249be182c7.snp </span></span>
+<span><span class="co">#&gt;       (SNPs excluded: 100000, SNPs remaining: 400000)</span></span></code></pre></div>
 <p>If we want to run the whole analysis in a single pipeline, we can use
 the <code>%&gt;%</code> pipe operator and do the following:</p>
 <p>(The <code>%&gt;%</code> operator takes what is on its left side and
@@ -1607,9 +1607,9 @@ the resulting code often reads <em>almost</em> like English! The
 <code>%&gt;%</code> pipe is automatically imported when you load the
 <code>tidyverse</code> library, and you can read about it more <a href="https://magrittr.tidyverse.org" class="external-link">here</a>.)</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">snps</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/filter_bed.html">filter_bed</a></span><span class="op">(</span><span class="st">"regions.bed"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="st">"French"</span>, X <span class="op">=</span> <span class="st">"Mbuti"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">snps</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/filter_bed.html">filter_bed</a></span><span class="op">(</span><span class="st">"regions.bed"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="st">"French"</span>, X <span class="op">=</span> <span class="st">"Mbuti"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span><span class="op">)</span></span></code></pre></div>
 <p>This is because in the formal definitions of <em>admixr</em>
 function, <code>data =</code> is always the argument, so we don’t have
 to specify it manually.</p>
@@ -1635,17 +1635,17 @@ similar method described in the BED filtering section above, we can use
 the <code><a href="../reference/transversions_only.html">transversions_only()</a></code> function to generate a snp file
 with positions that carry transitions (C→T and G→A sites):</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transversions_only.html">transversions_only</a></span><span class="op">(</span><span class="va">snps</span><span class="op">)</span>
-
-<span class="co"># perform the calculation only on transversions</span>
-<span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="st">"French"</span>, X <span class="op">=</span> <span class="st">"Dinka"</span>, Y <span class="op">=</span> <span class="st">"Altai"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">new_snps</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">new_snps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transversions_only.html">transversions_only</a></span><span class="op">(</span><span class="va">snps</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># perform the calculation only on transversions</span></span>
+<span><span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="st">"French"</span>, X <span class="op">=</span> <span class="st">"Dinka"</span>, Y <span class="op">=</span> <span class="st">"Altai"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">new_snps</span><span class="op">)</span></span></code></pre></div>
 <p>Again, we could combine several filtering steps into one
 pipeline:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">snps</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>                                    <span class="co"># take the original data</span>
-  <span class="fu"><a href="../reference/filter_bed.html">filter_bed</a></span><span class="op">(</span><span class="st">"regions.bed"</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  <span class="co"># remove sites not in specified regions</span>
-  <span class="fu"><a href="../reference/transversions_only.html">transversions_only</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>                      <span class="co"># remove potential false SNPs due to aDNA damage</span>
-  <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="st">"French"</span>, X <span class="op">=</span> <span class="st">"Dinka"</span>, Y <span class="op">=</span> <span class="st">"Altai"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span><span class="op">)</span> <span class="co"># calculate D on the filtered dataset</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">snps</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>                                    <span class="co"># take the original data</span></span>
+<span>  <span class="fu"><a href="../reference/filter_bed.html">filter_bed</a></span><span class="op">(</span><span class="st">"regions.bed"</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>  <span class="co"># remove sites not in specified regions</span></span>
+<span>  <span class="fu"><a href="../reference/transversions_only.html">transversions_only</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>                      <span class="co"># remove potential false SNPs due to aDNA damage</span></span>
+<span>  <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="st">"French"</span>, X <span class="op">=</span> <span class="st">"Dinka"</span>, Y <span class="op">=</span> <span class="st">"Altai"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span><span class="op">)</span> <span class="co"># calculate D on the filtered dataset</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -1656,12 +1656,12 @@ pipeline:</p>
 datasets and merges them, producing a union of samples and intersection
 of SNPs from both of them and returning a new <code>EIGENSTRAT</code>
 object.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is just an example code - it will not run unless you specify the paths</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">merge_eigenstrat</span>(</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">merged =</span> <span class="sc">&lt;</span><span class="st">"prefix of the merged dataset"</span><span class="sc">&gt;</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">a =</span> first_EIGENSTRAT_object,</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">b =</span> second_EIGENSTRAT_object</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="co"># this is just an example code - it will not run unless you specify the paths</span></span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">merge_eigenstrat</span>(</span>
+<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>    <span class="at">merged =</span> <span class="sc">&lt;</span><span class="st">"prefix of the merged dataset"</span><span class="sc">&gt;</span></span>
+<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a>    <span class="at">a =</span> first_EIGENSTRAT_object,</span>
+<span id="cb44-5"><a href="#cb44-5" tabindex="-1"></a>    <span class="at">b =</span> second_EIGENSTRAT_object</span>
+<span id="cb44-6"><a href="#cb44-6" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examining-log-information">Examining log information<a class="anchor" aria-label="anchor" href="#examining-log-information"></a>
@@ -1683,15 +1683,15 @@ useful (and important!) to examine the log outputs.</p>
 (hidden!) attribute which carries the complete log file associate with
 that particular analysis:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Han"</span>, <span class="st">"Dinka"</span><span class="op">)</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span>
-
-<span class="va">dres</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 10</span></span>
-<span class="co">#&gt;   W      X      Y       Z           D  stderr Zscore  BABA  ABBA  nsnps</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> French Yoruba Vindija Chimp  0.031<span style="text-decoration: underline;">3</span> 0.006<span style="text-decoration: underline;">93</span>  4.51  <span style="text-decoration: underline;">15</span>802 <span style="text-decoration: underline;">14</span>844 <span style="text-decoration: underline;">487</span>753</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Han    Yoruba Vindija Chimp  0.027<span style="text-decoration: underline;">8</span> 0.006<span style="text-decoration: underline;">61</span>  4.20  <span style="text-decoration: underline;">15</span>780 <span style="text-decoration: underline;">14</span>928 <span style="text-decoration: underline;">487</span>925</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Dinka  Yoruba Vindija Chimp -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">9</span> 0.006<span style="text-decoration: underline;">12</span> -<span style="color: #BB0000;">0.151</span> <span style="text-decoration: underline;">15</span>131 <span style="text-decoration: underline;">15</span>159 <span style="text-decoration: underline;">487</span>667</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Han"</span>, <span class="st">"Dinka"</span><span class="op">)</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dres</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 10</span></span></span>
+<span><span class="co">#&gt;   W      X      Y       Z           D  stderr Zscore  BABA  ABBA  nsnps</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> French Yoruba Vindija Chimp  0.031<span style="text-decoration: underline;">3</span> 0.006<span style="text-decoration: underline;">93</span>  4.51  <span style="text-decoration: underline;">15</span>802 <span style="text-decoration: underline;">14</span>844 <span style="text-decoration: underline;">487</span>753</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Han    Yoruba Vindija Chimp  0.027<span style="text-decoration: underline;">8</span> 0.006<span style="text-decoration: underline;">61</span>  4.20  <span style="text-decoration: underline;">15</span>780 <span style="text-decoration: underline;">14</span>928 <span style="text-decoration: underline;">487</span>925</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Dinka  Yoruba Vindija Chimp -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">9</span> 0.006<span style="text-decoration: underline;">12</span> -<span style="color: #BB0000;">0.151</span> <span style="text-decoration: underline;">15</span>131 <span style="text-decoration: underline;">15</span>159 <span style="text-decoration: underline;">487</span>667</span></span></code></pre></div>
 <p>We can examine the full log of this D statistic run with the
 <code>loginfo</code> function. Without any further arguments, this
 function writes the complete log on the screen. Note that we run this
@@ -1699,189 +1699,189 @@ function <em>on the data frame object</em> although it might appear that
 it does not contain any other information (it does but it’s normally
 hidden as most of the time it’s not useful):</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span><span class="op">(</span><span class="va">dres</span><span class="op">)</span>
-<span class="co">#&gt; Full output log of qpDstat:</span>
-<span class="co">#&gt; ===================================================</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; qpDstat: parameter file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/qpDstat__49733780.par</span>
-<span class="co">#&gt; ### THE INPUT PARAMETERS</span>
-<span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.ind</span>
-<span class="co">#&gt; popfilename: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/qpDstat__49733780.pop</span>
-<span class="co">#&gt; printsd: YES</span>
-<span class="co">#&gt; ## qpDstat version: 980</span>
-<span class="co">#&gt; inbreed set NO</span>
-<span class="co">#&gt; number of quadruples 3</span>
-<span class="co">#&gt;   0               French    1</span>
-<span class="co">#&gt;   1                  Han    1</span>
-<span class="co">#&gt;   2                Dinka    1</span>
-<span class="co">#&gt;   3               Yoruba    1</span>
-<span class="co">#&gt;   4              Vindija    1</span>
-<span class="co">#&gt;   5                Chimp    1</span>
-<span class="co">#&gt; jackknife block size:     0.050</span>
-<span class="co">#&gt; snps: 500000  indivs: 6</span>
-<span class="co">#&gt; number of blocks for block jackknife: 547</span>
-<span class="co">#&gt; nrows, ncols: 6 500000</span>
-<span class="co">#&gt; result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 </span>
-<span class="co">#&gt; result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 </span>
-<span class="co">#&gt; result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 </span>
-<span class="co">#&gt; ##end of qpDstat:        1.766 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span><span class="op">(</span><span class="va">dres</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Full output log of qpDstat:</span></span>
+<span><span class="co">#&gt; ===================================================</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; qpDstat: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpDstat__892851074.par</span></span>
+<span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
+<span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popfilename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpDstat__892851074.pop</span></span>
+<span><span class="co">#&gt; printsd: YES</span></span>
+<span><span class="co">#&gt; ## qpDstat version: 980</span></span>
+<span><span class="co">#&gt; inbreed set NO</span></span>
+<span><span class="co">#&gt; number of quadruples 3</span></span>
+<span><span class="co">#&gt;   0               French    1</span></span>
+<span><span class="co">#&gt;   1                  Han    1</span></span>
+<span><span class="co">#&gt;   2                Dinka    1</span></span>
+<span><span class="co">#&gt;   3               Yoruba    1</span></span>
+<span><span class="co">#&gt;   4              Vindija    1</span></span>
+<span><span class="co">#&gt;   5                Chimp    1</span></span>
+<span><span class="co">#&gt; jackknife block size:     0.050</span></span>
+<span><span class="co">#&gt; snps: 500000  indivs: 6</span></span>
+<span><span class="co">#&gt; number of blocks for block jackknife: 547</span></span>
+<span><span class="co">#&gt; nrows, ncols: 6 500000</span></span>
+<span><span class="co">#&gt; result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 </span></span>
+<span><span class="co">#&gt; result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 </span></span>
+<span><span class="co">#&gt; result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 </span></span>
+<span><span class="co">#&gt; ##end of qpDstat:        1.691 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 <p>The situation is a bit more complex for <em>qpAdm</em> which can be
 evaluated for multiple target populations/samples which are then
 analyzed separately, with each analysis having its own log file:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">qpadm_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpAdm.html">qpAdm</a></span><span class="op">(</span>
-  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sardinian"</span>, <span class="st">"Han"</span><span class="op">)</span>,
-  sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vindija"</span>, <span class="st">"Yoruba"</span><span class="op">)</span>,
-  outgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chimp"</span>, <span class="st">"Denisova"</span>, <span class="st">"Altai"</span><span class="op">)</span>,
-  data <span class="op">=</span> <span class="va">snps</span>,
-  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inbreed <span class="op">=</span> <span class="st">"YES"</span><span class="op">)</span> <span class="co"># forced by new ADMIXTOOLS qpfstats</span>
-<span class="op">)</span>
-
-<span class="va">qpadm_res</span>
-<span class="co">#&gt; $proportions</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 8</span></span>
-<span class="co">#&gt;   target    Vindija Yoruba stderr_Vindija stderr_Yoruba nsnps_u…¹ nsnps…² pvalue</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sardinian   0.025  0.975          0.006         0.006    <span style="text-decoration: underline;">492</span>420  <span style="text-decoration: underline;">499</span>314  0.936</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Han         0.021  0.979          0.006         0.006    <span style="text-decoration: underline;">492</span>531  <span style="text-decoration: underline;">499</span>654  0.143</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​nsnps_used, ²​nsnps_target</span></span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ranks</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 8</span></span>
-<span class="co">#&gt;   target     rank    df chisq  tail dfdiff chisqdiff taildiff</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sardinian     1     1 0.006 0.936      3    -<span style="color: #BB0000;">0.006</span>    1    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sardinian     2     0 0     1          1     0.006    0.936</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Han           1     1 2.14  0.143      3    -<span style="color: #BB0000;">2.14</span>     1    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Han           2     0 0     1          1     2.14     0.143</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $subsets</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span>
-<span class="co">#&gt;   target    pattern    wt   dof     chisq     tail Vindija Yoruba</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sardinian 00          0     1     0.006 0.936      0.025  0.975</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sardinian 01          1     2 <span style="text-decoration: underline;">15</span>953.    0          1      0    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Sardinian 10          1     2    16.6   0.000<span style="text-decoration: underline;">253</span>   0      1    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Han       00          0     1     2.14  0.143      0.021  0.979</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Han       01          1     2 <span style="text-decoration: underline;">14</span>966.    0          1      0    </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Han       10          1     2    14.5   0.000<span style="text-decoration: underline;">727</span>   0      1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">qpadm_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpAdm.html">qpAdm</a></span><span class="op">(</span></span>
+<span>  target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sardinian"</span>, <span class="st">"Han"</span><span class="op">)</span>,</span>
+<span>  sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vindija"</span>, <span class="st">"Yoruba"</span><span class="op">)</span>,</span>
+<span>  outgroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Chimp"</span>, <span class="st">"Denisova"</span>, <span class="st">"Altai"</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">snps</span>,</span>
+<span>  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inbreed <span class="op">=</span> <span class="st">"YES"</span><span class="op">)</span> <span class="co"># forced by new ADMIXTOOLS qpfstats</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">qpadm_res</span></span>
+<span><span class="co">#&gt; $proportions</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 8</span></span></span>
+<span><span class="co">#&gt;   target    Vindija Yoruba stderr_Vindija stderr_Yoruba nsnps_used nsnps_target</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sardinian   0.025  0.975          0.006         0.006     <span style="text-decoration: underline;">492</span>420       <span style="text-decoration: underline;">499</span>314</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Han         0.021  0.979          0.006         0.006     <span style="text-decoration: underline;">492</span>531       <span style="text-decoration: underline;">499</span>654</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: pvalue &lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ranks</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 8</span></span></span>
+<span><span class="co">#&gt;   target     rank    df chisq  tail dfdiff chisqdiff taildiff</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sardinian     1     1 0.006 0.936      3    -<span style="color: #BB0000;">0.006</span>    1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sardinian     2     0 0     1          1     0.006    0.936</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Han           1     1 2.14  0.143      3    -<span style="color: #BB0000;">2.14</span>     1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Han           2     0 0     1          1     2.14     0.143</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $subsets</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span></span>
+<span><span class="co">#&gt;   target    pattern    wt   dof     chisq     tail Vindija Yoruba</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Sardinian 00          0     1     0.006 0.936      0.025  0.975</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Sardinian 01          1     2 <span style="text-decoration: underline;">15</span>953.    0          1      0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Sardinian 10          1     2    16.6   0.000<span style="text-decoration: underline;">253</span>   0      1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Han       00          0     1     2.14  0.143      0.021  0.979</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Han       01          1     2 <span style="text-decoration: underline;">14</span>966.    0          1      0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Han       10          1     2    14.5   0.000<span style="text-decoration: underline;">727</span>   0      1</span></span></code></pre></div>
 <p>In this case, we could either print all log information (one log
 output for each target we specified in the <em>qpAdm</em> call) by
 running<code>loginfo(qpadm_res)</code> or, perhaps more useful, specify
 which target’s log file we want to examine:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span><span class="op">(</span><span class="va">qpadm_res</span>, target <span class="op">=</span> <span class="st">"Han"</span><span class="op">)</span>
-<span class="co">#&gt; Full output log of qpAdm for target 'Han':</span>
-<span class="co">#&gt; ===================================================</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; qpAdm: parameter file: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/qpAdm__228956184.par</span>
-<span class="co">#&gt; ### THE INPUT PARAMETERS</span>
-<span class="co">#&gt; ##PARAMETER NAME: VALUE</span>
-<span class="co">#&gt; genotypename: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.geno</span>
-<span class="co">#&gt; snpname: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.snp</span>
-<span class="co">#&gt; indivname: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/snps/snps.ind</span>
-<span class="co">#&gt; popleft: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/qpAdm__228956184.popleft</span>
-<span class="co">#&gt; popright: /var/folders/d_/hblb15pd3b94rg0v35920wd80000gn/T//RtmpByuk1e/qpAdm__228956184.popright</span>
-<span class="co">#&gt; inbreed: YES</span>
-<span class="co">#&gt; ## qpAdm version: 1520</span>
-<span class="co">#&gt; seed: -562745164</span>
-<span class="co">#&gt; inbreed set YES</span>
-<span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span>
-<span class="co">#&gt; inbreed set YES</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; left pops:</span>
-<span class="co">#&gt; Han</span>
-<span class="co">#&gt; Vindija</span>
-<span class="co">#&gt; Yoruba</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; right pops:</span>
-<span class="co">#&gt; Chimp</span>
-<span class="co">#&gt; Denisova</span>
-<span class="co">#&gt; Altai</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   0                  Han    1</span>
-<span class="co">#&gt;   1              Vindija    1</span>
-<span class="co">#&gt;   2               Yoruba    1</span>
-<span class="co">#&gt;   3                Chimp    1</span>
-<span class="co">#&gt;   4             Denisova    1</span>
-<span class="co">#&gt;   5                Altai    1</span>
-<span class="co">#&gt; jackknife block size:     0.050</span>
-<span class="co">#&gt; snps: 500000  indivs: 6</span>
-<span class="co">#&gt; number of blocks for block jackknife: 547</span>
-<span class="co">#&gt; ## ncols: 500000</span>
-<span class="co">#&gt; coverage:                  Han 499654</span>
-<span class="co">#&gt; coverage:              Vindija 497544</span>
-<span class="co">#&gt; coverage:               Yoruba 499246</span>
-<span class="co">#&gt; coverage:                Chimp 491273</span>
-<span class="co">#&gt; coverage:             Denisova 497398</span>
-<span class="co">#&gt; coverage:                Altai 497729</span>
-<span class="co">#&gt; Effective number of blocks:   489.431</span>
-<span class="co">#&gt; numsnps used: 492531</span>
-<span class="co">#&gt; codimension 1</span>
-<span class="co">#&gt; f4info: </span>
-<span class="co">#&gt; f4rank: 1 dof:      1 chisq:     2.144 tail:          0.143115702 dofdiff:      3 chisqdiff:    -2.144 taildiff:                    1</span>
-<span class="co">#&gt; B:</span>
-<span class="co">#&gt;           scale     1.000 </span>
-<span class="co">#&gt;        Denisova     0.475 </span>
-<span class="co">#&gt;           Altai     1.332 </span>
-<span class="co">#&gt; A:</span>
-<span class="co">#&gt;           scale    27.595 </span>
-<span class="co">#&gt;         Vindija     1.414 </span>
-<span class="co">#&gt;          Yoruba    -0.030 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; full rank</span>
-<span class="co">#&gt; f4info: </span>
-<span class="co">#&gt; f4rank: 2 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      1 chisqdiff:     2.144 taildiff:          0.143115702</span>
-<span class="co">#&gt; B:</span>
-<span class="co">#&gt;           scale    19.566   749.540 </span>
-<span class="co">#&gt;        Denisova     0.470    -0.811 </span>
-<span class="co">#&gt;           Altai     1.334    -1.158 </span>
-<span class="co">#&gt; A:</span>
-<span class="co">#&gt;           scale     1.414     1.414 </span>
-<span class="co">#&gt;         Vindija     1.414     0.000 </span>
-<span class="co">#&gt;          Yoruba     0.000     1.414 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; best coefficients:     0.021     0.979 </span>
-<span class="co">#&gt; Jackknife mean:      0.020626834     0.979373166 </span>
-<span class="co">#&gt;       std. errors:     0.006     0.006 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; error covariance (* 1,000,000)</span>
-<span class="co">#&gt;         34        -34 </span>
-<span class="co">#&gt;        -34         34 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; summ: Han    2      0.143116     0.021     0.979         34        -34         34 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     fixed pat  wt  dof     chisq       tail prob</span>
-<span class="co">#&gt;            00  0     1     2.144        0.143116     0.021     0.979 </span>
-<span class="co">#&gt;            01  1     2 14965.791               0     1.000     0.000 </span>
-<span class="co">#&gt;            10  1     2    14.454     0.000726865     0.000     1.000 </span>
-<span class="co">#&gt; best pat:           00         0.143116              -  -</span>
-<span class="co">#&gt; best pat:           10      0.000726865  chi(nested):    12.309 p-value for nested model:     0.000450682</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; coeffs:     0.021     0.979 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ## dscore:: f_4(Base, Fit, Rbase, right2)</span>
-<span class="co">#&gt; ## genstat:: f_4(Base, Fit, right1, right2)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; details:              Vindija             Denisova     0.024008   40.874863</span>
-<span class="co">#&gt; details:               Yoruba             Denisova    -0.001082   -2.595761</span>
-<span class="co">#&gt; dscore:             Denisova f4:    -0.000565 Z:    -1.366415</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; details:              Vindija                Altai     0.068176  121.272343</span>
-<span class="co">#&gt; details:               Yoruba                Altai    -0.001546   -3.724300</span>
-<span class="co">#&gt; dscore:                Altai f4:    -0.000109 Z:    -0.264364</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; gendstat:                Chimp             Denisova    -1.366</span>
-<span class="co">#&gt; gendstat:                Chimp                Altai    -0.264</span>
-<span class="co">#&gt; gendstat:             Denisova                Altai     1.131</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ##end of qpAdm:        1.713 seconds cpu        0.000 Mbytes in use</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span><span class="op">(</span><span class="va">qpadm_res</span>, target <span class="op">=</span> <span class="st">"Han"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Full output log of qpAdm for target 'Han':</span></span>
+<span><span class="co">#&gt; ===================================================</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpAdm__814846088.par</span></span>
+<span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
+<span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popleft: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpAdm__814846088.popleft</span></span>
+<span><span class="co">#&gt; popright: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpAdm__814846088.popright</span></span>
+<span><span class="co">#&gt; inbreed: YES</span></span>
+<span><span class="co">#&gt; ## qpAdm version: 1520</span></span>
+<span><span class="co">#&gt; seed: -988274848</span></span>
+<span><span class="co">#&gt; inbreed set YES</span></span>
+<span><span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span></span>
+<span><span class="co">#&gt; inbreed set YES</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; left pops:</span></span>
+<span><span class="co">#&gt; Han</span></span>
+<span><span class="co">#&gt; Vindija</span></span>
+<span><span class="co">#&gt; Yoruba</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; right pops:</span></span>
+<span><span class="co">#&gt; Chimp</span></span>
+<span><span class="co">#&gt; Denisova</span></span>
+<span><span class="co">#&gt; Altai</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   0                  Han    1</span></span>
+<span><span class="co">#&gt;   1              Vindija    1</span></span>
+<span><span class="co">#&gt;   2               Yoruba    1</span></span>
+<span><span class="co">#&gt;   3                Chimp    1</span></span>
+<span><span class="co">#&gt;   4             Denisova    1</span></span>
+<span><span class="co">#&gt;   5                Altai    1</span></span>
+<span><span class="co">#&gt; jackknife block size:     0.050</span></span>
+<span><span class="co">#&gt; snps: 500000  indivs: 6</span></span>
+<span><span class="co">#&gt; number of blocks for block jackknife: 547</span></span>
+<span><span class="co">#&gt; ## ncols: 500000</span></span>
+<span><span class="co">#&gt; coverage:                  Han 499654</span></span>
+<span><span class="co">#&gt; coverage:              Vindija 497544</span></span>
+<span><span class="co">#&gt; coverage:               Yoruba 499246</span></span>
+<span><span class="co">#&gt; coverage:                Chimp 491273</span></span>
+<span><span class="co">#&gt; coverage:             Denisova 497398</span></span>
+<span><span class="co">#&gt; coverage:                Altai 497729</span></span>
+<span><span class="co">#&gt; Effective number of blocks:   489.431</span></span>
+<span><span class="co">#&gt; numsnps used: 492531</span></span>
+<span><span class="co">#&gt; codimension 1</span></span>
+<span><span class="co">#&gt; f4info: </span></span>
+<span><span class="co">#&gt; f4rank: 1 dof:      1 chisq:     2.144 tail:          0.143115702 dofdiff:      3 chisqdiff:    -2.144 taildiff:                    1</span></span>
+<span><span class="co">#&gt; B:</span></span>
+<span><span class="co">#&gt;           scale     1.000 </span></span>
+<span><span class="co">#&gt;        Denisova     0.475 </span></span>
+<span><span class="co">#&gt;           Altai     1.332 </span></span>
+<span><span class="co">#&gt; A:</span></span>
+<span><span class="co">#&gt;           scale    27.595 </span></span>
+<span><span class="co">#&gt;         Vindija     1.414 </span></span>
+<span><span class="co">#&gt;          Yoruba    -0.030 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; full rank</span></span>
+<span><span class="co">#&gt; f4info: </span></span>
+<span><span class="co">#&gt; f4rank: 2 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      1 chisqdiff:     2.144 taildiff:          0.143115702</span></span>
+<span><span class="co">#&gt; B:</span></span>
+<span><span class="co">#&gt;           scale    19.566   749.540 </span></span>
+<span><span class="co">#&gt;        Denisova     0.470    -0.811 </span></span>
+<span><span class="co">#&gt;           Altai     1.334    -1.158 </span></span>
+<span><span class="co">#&gt; A:</span></span>
+<span><span class="co">#&gt;           scale     1.414     1.414 </span></span>
+<span><span class="co">#&gt;         Vindija     1.414     0.000 </span></span>
+<span><span class="co">#&gt;          Yoruba     0.000     1.414 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; best coefficients:     0.021     0.979 </span></span>
+<span><span class="co">#&gt; Jackknife mean:      0.020626834     0.979373166 </span></span>
+<span><span class="co">#&gt;       std. errors:     0.006     0.006 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; error covariance (* 1,000,000)</span></span>
+<span><span class="co">#&gt;         34        -34 </span></span>
+<span><span class="co">#&gt;        -34         34 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; summ: Han    2      0.143116     0.021     0.979         34        -34         34 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     fixed pat  wt  dof     chisq       tail prob</span></span>
+<span><span class="co">#&gt;            00  0     1     2.144        0.143116     0.021     0.979 </span></span>
+<span><span class="co">#&gt;            01  1     2 14965.791               0     1.000     0.000 </span></span>
+<span><span class="co">#&gt;            10  1     2    14.454     0.000726865     0.000     1.000 </span></span>
+<span><span class="co">#&gt; best pat:           00         0.143116              -  -</span></span>
+<span><span class="co">#&gt; best pat:           10      0.000726865  chi(nested):    12.309 p-value for nested model:     0.000450682</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; coeffs:     0.021     0.979 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ## dscore:: f_4(Base, Fit, Rbase, right2)</span></span>
+<span><span class="co">#&gt; ## genstat:: f_4(Base, Fit, right1, right2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; details:              Vindija             Denisova     0.024008   40.874863</span></span>
+<span><span class="co">#&gt; details:               Yoruba             Denisova    -0.001082   -2.595761</span></span>
+<span><span class="co">#&gt; dscore:             Denisova f4:    -0.000565 Z:    -1.366415</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; details:              Vindija                Altai     0.068176  121.272343</span></span>
+<span><span class="co">#&gt; details:               Yoruba                Altai    -0.001546   -3.724300</span></span>
+<span><span class="co">#&gt; dscore:                Altai f4:    -0.000109 Z:    -0.264364</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; gendstat:                Chimp             Denisova    -1.366</span></span>
+<span><span class="co">#&gt; gendstat:                Chimp                Altai    -0.264</span></span>
+<span><span class="co">#&gt; gendstat:             Denisova                Altai     1.131</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ##end of qpAdm:        1.622 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 <p>Finally, we might want to keep some of the log files around for
 future reference, further debugging or sharing with others. For these
 purposes, we can run the <code>loginfo</code> function with the argument
@@ -1894,7 +1894,7 @@ of Neandertal ancestry to a file with a prefix
 “qpAdm_Neandertal_ancestry”, but just the one for the Sardinian
 individual:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span><span class="op">(</span><span class="va">qpadm_res</span>, target <span class="op">=</span> <span class="st">"Sardinian"</span>, save <span class="op">=</span> <span class="cn">TRUE</span>, prefix <span class="op">=</span> <span class="st">"qpAdm_Neandertal_ancestry"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/loginfo.html">loginfo</a></span><span class="op">(</span><span class="va">qpadm_res</span>, target <span class="op">=</span> <span class="st">"Sardinian"</span>, save <span class="op">=</span> <span class="cn">TRUE</span>, prefix <span class="op">=</span> <span class="st">"qpAdm_Neandertal_ancestry"</span><span class="op">)</span></span></code></pre></div>
 <p>This will create a file in the current directory named
 <code>qpAdm_Neandertal_ancestry_Sardinian.txt</code>. Note that when you
 call <code><a href="../reference/loginfo.html">loginfo()</a></code> on a qpAdm run, the name of the target is
@@ -1924,8 +1924,7 @@ Commons Attribution 4.0 International License</a>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
