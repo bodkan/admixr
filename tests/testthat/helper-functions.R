@@ -8,7 +8,7 @@ read_pops <- function(filename, columns) {
 }
 
 read_snp_file <- function(path) {
-  readr::read_table2(
+  readr::read_table(
     path,
     col_types = "ccdicc",
     col_names = c("id", "chrom", "gen", "pos", "ref", "alt")

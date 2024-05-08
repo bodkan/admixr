@@ -46,7 +46,7 @@ test_that("read_snp and write_snp are inverse functions", {
   new_file <- tempfile()
   write_snp(true, new_file)
   
-  new <- readr::read_table2(
+  new <- readr::read_table(
     new_file,
     col_types = "ccdicc",
     col_names = c("id", "chrom", "gen", "pos", "ref", "alt")

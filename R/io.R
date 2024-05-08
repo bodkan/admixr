@@ -21,7 +21,7 @@ read_ind <- function(data) {
 #'
 #' @export
 read_snp <- function(data, exclude = FALSE) {
-  readr::read_table2(
+  readr::read_table(
     ifelse(exclude, data$exclude, data$snp),
     col_names = c("id", "chrom", "gen", "pos", "ref", "alt"),
     col_types = "ccdicc",
