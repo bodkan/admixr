@@ -30,9 +30,9 @@ Imports:
     rlang,
     utils
 Suggests:
-    covr,
     glue,
     testthat,
+    forcats,
     tidyr,
     knitr,
     rmarkdown
