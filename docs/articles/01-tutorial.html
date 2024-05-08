@@ -50,10 +50,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
+      <a href="../articles/01-tutorial.html">Tutorial and basic overview of the admixr R package</a>
     </li>
     <li>
-      <a href="../articles/tutorial.html">Tutorial and basic overview of the admixr R package</a>
+      <a href="../articles/02-qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
     </li>
   </ul>
 </li>
@@ -88,8 +88,8 @@ Petr</h4>
             
             <h4 data-toc-skip class="date">2024-05-08</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/tutorial.Rmd" class="external-link"><code>vignettes/tutorial.Rmd</code></a></small>
-      <div class="hidden name"><code>tutorial.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/01-tutorial.Rmd" class="external-link"><code>vignettes/01-tutorial.Rmd</code></a></small>
+      <div class="hidden name"><code>01-tutorial.Rmd</code></div>
 
     </div>
 
@@ -188,12 +188,12 @@ destination using its <code>dirname</code> argument, in case you want to
 place it elsewhere). In addition to this, the function returns a shared
 path/prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>(prefix <span class="ot">&lt;-</span> <span class="fu">download_data</span>(<span class="at">dirname =</span> <span class="fu">tempdir</span>()))</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps"</span></span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps"</span></span></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="fu">dirname</span>(prefix), <span class="at">pattern =</span> <span class="fu">basename</span>(prefix), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno"</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind"</span> </span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp"</span> </span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno"</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind"</span> </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp"</span> </span></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div class="section level4">
 <h4 id="ind-file">
@@ -288,9 +288,9 @@ EIGENSTRAT snp/ind/geno files and returns an R object of the class
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span></code></pre></div>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span></code></pre></div>
 <p>This object encapsulates the paths to all three EIGENSTRAT components
 and makes it easy to pass the data to different <em>admixr</em>
 functions.</p>
@@ -461,7 +461,7 @@ plot the results:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">D</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span>, ymax <span class="op">=</span> <span class="va">D</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tutorial_files/figure-html/d_plot-1.png" width="672"></p>
+<p><img src="01-tutorial_files/figure-html/d_plot-1.png" width="672"></p>
 <p>(If you want to more know about data analysis using R, including
 plotting with ggplot2, I highly recommend <a href="https://r4ds.had.co.nz/" class="external-link">this</a> free book.)</p>
 <p>We can see that the <span class="math inline">\(D\)</span> values for
@@ -708,7 +708,7 @@ Neanderthal ancestry in):</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">alpha</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span>, ymax <span class="op">=</span> <span class="va">alpha</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Neandertal ancestry proportion"</span>, x <span class="op">=</span> <span class="st">"present-day individual"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tutorial_files/figure-html/f4ratio_plot-1.png" width="672"></p>
+<p><img src="01-tutorial_files/figure-html/f4ratio_plot-1.png" width="672"></p>
 <p>We can make several observations:</p>
 <ul>
 <li>Again, we don’t see any significant Neanderthal ancestry in
@@ -828,7 +828,7 @@ statistics between all present-day modern humans.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">A</span>, levels <span class="op">=</span> <span class="va">ordered</span><span class="op">)</span>,</span>
 <span>         B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">B</span>, levels <span class="op">=</span> <span class="va">ordered</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">f3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tutorial_files/figure-html/f3_plot-1.png" width="768"></p>
+<p><img src="01-tutorial_files/figure-html/f3_plot-1.png" width="768"></p>
 <p>We can see that when we order the heatmap labels based on values of
 pairwise <span class="math inline">\(f_3\)</span> statistics, the
 (already known) order of population splits pops up nicely (i.e. San
@@ -1388,12 +1388,12 @@ call <code><a href="../reference/relabel.html">relabel()</a></code> like this:</
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; modifiers:</span></span>
-<span><span class="co">#&gt;   groups:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/file52495c64ec04.ind</span></span></code></pre></div>
+<span><span class="co">#&gt;   groups:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/file5cb6473bb754.ind</span></span></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified
 <code>EIGENSTRAT</code> object, which contains a new item in the
 “modifiers” section - the path to a new ind file. Let’s look at its
@@ -1590,12 +1590,12 @@ analyses.</p>
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; modifiers:</span></span>
-<span><span class="co">#&gt;   excluded sites:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/file5249be182c7.snp </span></span>
+<span><span class="co">#&gt;   excluded sites:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/file5cb6227326a3.snp </span></span>
 <span><span class="co">#&gt;       (SNPs excluded: 100000, SNPs remaining: 400000)</span></span></code></pre></div>
 <p>If we want to run the whole analysis in a single pipeline, we can use
 the <code>%&gt;%</code> pipe operator and do the following:</p>
@@ -1703,13 +1703,13 @@ hidden as most of the time it’s not useful):</p>
 <span><span class="co">#&gt; Full output log of qpDstat:</span></span>
 <span><span class="co">#&gt; ===================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; qpDstat: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpDstat__892851074.par</span></span>
+<span><span class="co">#&gt; qpDstat: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpDstat__335645284.par</span></span>
 <span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
 <span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
-<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span>
-<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
-<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
-<span><span class="co">#&gt; popfilename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpDstat__892851074.pop</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popfilename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpDstat__335645284.pop</span></span>
 <span><span class="co">#&gt; printsd: YES</span></span>
 <span><span class="co">#&gt; ## qpDstat version: 980</span></span>
 <span><span class="co">#&gt; inbreed set NO</span></span>
@@ -1727,7 +1727,7 @@ hidden as most of the time it’s not useful):</p>
 <span><span class="co">#&gt; result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 </span></span>
 <span><span class="co">#&gt; result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 </span></span>
 <span><span class="co">#&gt; result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 </span></span>
-<span><span class="co">#&gt; ##end of qpDstat:        1.691 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
+<span><span class="co">#&gt; ##end of qpDstat:        1.685 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 <p>The situation is a bit more complex for <em>qpAdm</em> which can be
 evaluated for multiple target populations/samples which are then
 analyzed separately, with each analysis having its own log file:</p>
@@ -1777,17 +1777,17 @@ which target’s log file we want to examine:</p>
 <span><span class="co">#&gt; Full output log of qpAdm for target 'Han':</span></span>
 <span><span class="co">#&gt; ===================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpAdm__814846088.par</span></span>
+<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpAdm__1789631171.par</span></span>
 <span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
 <span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
-<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.geno</span></span>
-<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.snp</span></span>
-<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/snps/snps.ind</span></span>
-<span><span class="co">#&gt; popleft: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpAdm__814846088.popleft</span></span>
-<span><span class="co">#&gt; popright: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpNja4nr/qpAdm__814846088.popright</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popleft: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpAdm__1789631171.popleft</span></span>
+<span><span class="co">#&gt; popright: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpAdm__1789631171.popright</span></span>
 <span><span class="co">#&gt; inbreed: YES</span></span>
 <span><span class="co">#&gt; ## qpAdm version: 1520</span></span>
-<span><span class="co">#&gt; seed: -988274848</span></span>
+<span><span class="co">#&gt; seed: -1064939153</span></span>
 <span><span class="co">#&gt; inbreed set YES</span></span>
 <span><span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span></span>
 <span><span class="co">#&gt; inbreed set YES</span></span>
@@ -1881,7 +1881,7 @@ which target’s log file we want to examine:</p>
 <span><span class="co">#&gt; gendstat:                Chimp                Altai    -0.264</span></span>
 <span><span class="co">#&gt; gendstat:             Denisova                Altai     1.131</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ##end of qpAdm:        1.622 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
+<span><span class="co">#&gt; ##end of qpAdm:        1.674 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 <p>Finally, we might want to keep some of the log files around for
 future reference, further debugging or sharing with others. For these
 purposes, we can run the <code>loginfo</code> function with the argument

@@ -50,10 +50,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
+      <a href="../articles/01-tutorial.html">Tutorial and basic overview of the admixr R package</a>
     </li>
     <li>
-      <a href="../articles/tutorial.html">Tutorial and basic overview of the admixr R package</a>
+      <a href="../articles/02-qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
     </li>
   </ul>
 </li>
@@ -88,8 +88,8 @@ Petr</h4>
             
             <h4 data-toc-skip class="date">2024-05-08</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/qpAdm.Rmd" class="external-link"><code>vignettes/qpAdm.Rmd</code></a></small>
-      <div class="hidden name"><code>qpAdm.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/02-qpAdm.Rmd" class="external-link"><code>vignettes/02-qpAdm.Rmd</code></a></small>
+      <div class="hidden name"><code>02-qpAdm.Rmd</code></div>
 
     </div>
 
@@ -357,7 +357,7 @@ incompatible with the data and can be rejected.</li>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">parameter</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">parameter</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qpAdm_files/figure-html/qpAdm_fig1-1.png" width="576"></p>
+<p><img src="02-qpAdm_files/figure-html/qpAdm_fig1-1.png" width="576"></p>
 <p>To make it easier to narrow down the list of all models,
 <em>admixr</em> package contains a function <code><a href="../reference/qpAdm_filter.html">qpAdm_filter()</a></code>.
 This function accepts the result of the <code><a href="../reference/qpAdm_rotation.html">qpAdm_rotation()</a></code>
@@ -386,7 +386,7 @@ ancestry):</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">parameter</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="qpAdm_files/figure-html/qpAdm_fig2-1.png" width="576"></p>
+<p><img src="02-qpAdm_files/figure-html/qpAdm_fig2-1.png" width="576"></p>
 <p>Let’s now focus only on the proportions table. We will also ignore a
 couple of columns for brevity. Note that we are now also completely
 ignoring p-values because we <em>cannot</em> used those for model
@@ -523,16 +523,16 @@ which is not currently parsed by <em>admixr</em>:</p></li>
 <span><span class="co">#&gt; Full output log of qpAdm rotation for model 'm40':</span></span>
 <span><span class="co">#&gt; ===================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpH9FBkQ/qpAdm__1861051580.par</span></span>
+<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpuNZmtb/qpAdm__1894579801.par</span></span>
 <span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
 <span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
-<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpH9FBkQ/snps/snps.geno</span></span>
-<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpH9FBkQ/snps/snps.snp</span></span>
-<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpH9FBkQ/snps/snps.ind</span></span>
-<span><span class="co">#&gt; popleft: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpH9FBkQ/qpAdm__1861051580.popleft</span></span>
-<span><span class="co">#&gt; popright: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpH9FBkQ/qpAdm__1861051580.popright</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpuNZmtb/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpuNZmtb/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpuNZmtb/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popleft: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpuNZmtb/qpAdm__1894579801.popleft</span></span>
+<span><span class="co">#&gt; popright: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpuNZmtb/qpAdm__1894579801.popright</span></span>
 <span><span class="co">#&gt; ## qpAdm version: 1520</span></span>
-<span><span class="co">#&gt; seed: -947149738</span></span>
+<span><span class="co">#&gt; seed: -550278229</span></span>
 <span><span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span></span>
 <span><span class="co">#&gt;  *** recommended that inbreed be explicitly set ***</span></span>
 <span><span class="co">#&gt; inbreed set NO</span></span>
@@ -626,7 +626,7 @@ which is not currently parsed by <em>admixr</em>:</p></li>
 <span><span class="co">#&gt; gendstat:               Yoruba                Chimp    -0.018</span></span>
 <span><span class="co">#&gt; gendstat:                Altai                Chimp    -0.029</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ##end of qpAdm:        1.648 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
+<span><span class="co">#&gt; ##end of qpAdm:        1.683 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 </div>
   </div>
 

@@ -2,7 +2,7 @@ pandoc: 3.1.12.1
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  qpAdm: qpAdm.html
-  tutorial: tutorial.html
-last_built: 2024-05-08T17:27Z
+  01-tutorial: 01-tutorial.html
+  02-qpAdm: 02-qpAdm.html
+last_built: 2024-05-08T17:50Z
 

@@ -57,10 +57,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
+      <a href="articles/01-tutorial.html">Tutorial and basic overview of the admixr R package</a>
     </li>
     <li>
-      <a href="articles/tutorial.html">Tutorial and basic overview of the admixr R package</a>
+      <a href="articles/02-qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
     </li>
   </ul>
 </li>
@@ -154,17 +154,16 @@
 <p>Note that a single call to the <code>d</code> function generates all required intermediate config and population files, runs ADMIXTOOLS, parses its log output and returns the result as a <code>data.frame</code> object with the D statistics results. It does all of this behind the scenes, without the user having to deal with low-level technical details.</p>
 </div>
 <div class="section level2">
-<h2 id="is-admixr-related-to-admixtools-2">Is <em>admixr</em> related to ADMIXTOOLS 2?<a class="anchor" aria-label="anchor" href="#is-admixr-related-to-admixtools-2"></a>
-</h2>
-<p>Recently, a new R package called <a href="https://uqrmaie1.github.io/admixtools/" class="external-link">ADMIXTOOLS 2</a> appeared on the horizon, offering a re-implementation of several features of the original ADMIXTOOLS suite of command-line programs.</p>
-<p>The <em>admixr</em> project is not related to that initiative at all. It is not a pre-cursor to it, nor it is—the way I see it—superseeded by it. I have never used ADMIXTOOLS 2 myself, but from the looks of it it seems to offer some very interesting features for fitting complex admixture graphs (something I’m not personally interested in, which is why early efforts to implement this in <em>admixr</em> have been eventually given up on).</p>
-<p><strong>The bottom-line is this:</strong> as long as the <a href="https://github.com/DReichLab/AdmixTools" class="external-link">original ADMIXTOOLS</a> continues to be developed and maintained, <em>admixr</em> remains relevant and useful and will continue to be supported. ADMIXTOOLS might have a smaller set of features than ADMIXTOOLS 2, but the features it provides are extremely stable. ADMIXTOOLS is one of the most battle-tested pieces of software in population genetics—if you’re happy with the set of features it provides and if you’re happy with <em>admixr</em> itself, there is no dramatic reason to move away from either of them.</p>
-</div>
-<div class="section level2">
 <h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
 </h2>
 <p>To see many more examples of admixr in action, please check out the <a href="https://bodkan.net/admixr/reference/index.html" class="external-link">tutorial vignette</a>.</p>
-<p>If you want to stay updated on new <em>admixr</em> development, follow me on <a href="https://twitter.com/fleventy5" class="external-link">Twitter</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="is-admixr-related-to-admixtools-2">Is <em>admixr</em> related to ADMIXTOOLS 2?<a class="anchor" aria-label="anchor" href="#is-admixr-related-to-admixtools-2"></a>
+</h2>
+<p>Recently, a new R package called <a href="https://uqrmaie1.github.io/admixtools/" class="external-link">ADMIXTOOLS 2</a> appeared on the horizon, offering a re-implementation of several features of the original ADMIXTOOLS suite of command-line programs.</p>
+<p>The <em>admixr</em> project is not related to that initiative. It is not a pre-cursor to it, nor it is superseeded by it. I have never used ADMIXTOOLS 2 myself, but from the looks of it it seems to offer some very interesting features for fitting complex admixture graphs, which is certainly something which <em>admixr</em> does not do.</p>
+<p><strong>The bottom-line is this:</strong> as long as the <a href="https://github.com/DReichLab/AdmixTools" class="external-link">original ADMIXTOOLS</a> continues to be developed and maintained, <em>admixr</em> remains relevant and useful and will continue to be supported. ADMIXTOOLS is one of the most battle-tested pieces of software in population genetics—if you’re happy with the set of features it provides and if you’re happy with <em>admixr</em> itself, there is no real reason to move away from either of them.</p>
 </div>
 </div>
   </div>
