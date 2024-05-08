@@ -76,11 +76,11 @@ install.packages("admixr")
 ```
 
 Furthermore, if you want to follow the examples in this vignette, you will need
-the [tidyverse](https://www.tidyverse.org) collection of packages for
-data manipulation manipulation and plotting, which you can install with:
+the a few [tidyverse](https://www.tidyverse.org) packages for
+data manipulation and plotting, which you can install with:
 
 ```{r, eval = FALSE}
-install.packages("tidyverse")
+install.packages(c("dplyr", "ggplot2", "forcats"))
 ```
 
 You definitely don't need tidyverse for working with _admixr_ but it really
