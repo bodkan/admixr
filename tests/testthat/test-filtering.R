@@ -1,5 +1,3 @@
-context("Filtering of sites")
-
 test_that("Potential aDNA SNPs are correctly removed", {
   skip_on_cran()
   skip_on_os("windows")

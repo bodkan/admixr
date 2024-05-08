@@ -1,8 +1,6 @@
 # This script simply runs the test suite that is part of the ADMIXTOOLS
 # package. It is normally executed via Perl script in examples/mklog.
 
-context("Built-in ADMIXTOOLS test suite")
-
 if (admixtools_present()) {
   path <- admixtools_path()
   data_dir <- file.path(path, "data")

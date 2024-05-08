@@ -1,5 +1,3 @@
-context("Utility functions")
-
 ## Checking for object types---------------------- ------------------------
 test_that("Type check reveals wrong admixr type", {
     x <- data.frame()

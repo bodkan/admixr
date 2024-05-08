@@ -1,5 +1,3 @@
-context("Examining log outputs")
-
 if (admixtools_present()) {
   path <- admixtools_path()
   data_dir <- file.path(path, "data")

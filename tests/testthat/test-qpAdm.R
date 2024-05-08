@@ -3,8 +3,6 @@
 # admixr's wrapper functions. The results of both tests (i.e. contents of
 # output log files) are then compared to each other.
 
-context("qpAdm rotation functionality")
-
 if (admixtools_present()) {
     snps <- eigenstrat(download_data())
 }
