@@ -92,7 +92,10 @@ packages:
 
 ```{r libraries, message = FALSE, warning = FALSE}
 library(admixr)
-library(tidyverse)
+
+library(dplyr)
+library(ggplot2)
+library(forcats)
 ```
 
 ## A note about EIGENSTRAT format
