@@ -120,30 +120,25 @@ the result as a `data.frame` object with the D statistics results. It does all o
 this behind the scenes, without the user having to deal with low-level technical
 details.
 
+## More information
+
+To see many more examples of admixr in action, please check out the
+[tutorial vignette](https://bodkan.net/admixr/reference/index.html).
+
 ## Is _admixr_ related to ADMIXTOOLS 2?
 
 Recently, a new R package called [ADMIXTOOLS 2](https://uqrmaie1.github.io/admixtools/)
 appeared on the horizon, offering a re-implementation of several features of the
 original ADMIXTOOLS suite of command-line programs.
 
-The _admixr_ project is not related to that initiative at all. It is not a pre-cursor to it, nor
-it is&mdash;the way I see it&mdash;superseeded by it. I have never used ADMIXTOOLS 2
-myself, but from the looks of it it seems to offer some very interesting features
-for fitting complex admixture graphs (something I'm not personally interested in, which
-is why early efforts to implement this in _admixr_ have been eventually given up on).
+The _admixr_ project is not related to that initiative. It is not a pre-cursor to it, nor
+it is superseeded by it. I have never used ADMIXTOOLS 2 myself, but from the looks of it
+it seems to offer some very interesting features for fitting complex admixture graphs,
+which is certainly something which _admixr_ does not do.
 
 **The bottom-line is this:** as long as the [original ADMIXTOOLS](https://github.com/DReichLab/AdmixTools)
 continues to be developed and maintained, _admixr_ remains relevant and useful and
-will continue to be supported. ADMIXTOOLS might have a smaller set of features than
-ADMIXTOOLS 2, but the features it provides are extremely stable. ADMIXTOOLS is one of
-the most battle-tested pieces of software in population genetics&mdash;if you're happy with
-the set of features it provides and if you're happy with _admixr_ itself, there is no
-dramatic reason to move away from either of them.
-
-## More information
-
-To see many more examples of admixr in action, please check out the
-[tutorial vignette](https://bodkan.net/admixr/reference/index.html).
-
-If you want to stay updated on new _admixr_ development, follow me on
-[Twitter](https://twitter.com/fleventy5).
+will continue to be supported. ADMIXTOOLS is one of the most battle-tested pieces
+of software in population genetics&mdash;if you're happy with the set of features
+it provides and if you're happy with _admixr_ itself, there is no real reason
+to move away from either of them.
