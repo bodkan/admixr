@@ -67,7 +67,7 @@ jobs:
           # compile ADMIXTOOLS and move binaries under bin/
           cd src
           make clobber
-          make LDLIBS="-llapack" all
+          make LDLIBS="-llapack" CFLAGS="-c -g -p -pg -Wimplicit -I./ -I./nicksrc -Wno-implicit-function-declaration" all
           make install
 
           # download testing data for unit tests
