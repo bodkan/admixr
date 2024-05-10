@@ -217,6 +217,7 @@ Notice two things (each dot represents one examined _qpAdm_ model):
 
 ```{r, qpAdm_fig1, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4}
 library(dplyr)
+library(tidyr)
 library(ggplot2)
 
 select(models$proportions, model, pvalue, prop1, prop2) %>%
