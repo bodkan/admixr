@@ -48,8 +48,7 @@ jobs:
         run: brew install openblas gsl lapack bedtools
 
       - name: Compile and install ADMIXTOOLS (Linux + macOS)
-        # if: runner.os != 'Windows'
-        if: runner.os == 'Linux'
+        if: runner.os != 'Windows'
         run: |
           # create a single directory for all external software
           mkdir -p ~/deps
