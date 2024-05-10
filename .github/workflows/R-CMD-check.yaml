@@ -63,13 +63,11 @@ jobs:
           # openblas library files)
           export LDFLAGS="-L/usr/local/opt/openblas/lib"
           export CPPFLAGS="-I/usr/local/opt/openblas/include"
-          export LDLIBS="-llapack -lgsl -lopenblas -lm -lnick" 
-          export CFLAGS="-c -g -p -pg -Wimplicit -I./ -I./nicksrc -Wno-implicit-function-declaration" 
 
           # compile ADMIXTOOLS and move binaries under bin/
           cd src
           make clobber
-          make all
+          make LDLIBS="-llapack -lgsl -lopenblas -lm -lnick" CFLAGS="-c -g -p -pg -Wimplicit -I./ -I./nicksrc -Wno-implicit-function-declaration" all
           make install
 
           # download testing data for unit tests
