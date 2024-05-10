@@ -30,7 +30,7 @@ jobs:
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
-        admixtools: ["7.0.2", "6.0", "5.1"]
+        admixtools: ["7.0.2"] #, "6.0", "5.1"]
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -69,10 +69,6 @@ jobs:
           make clobber
           make LDLIBS="-llapack" all
           make install
-          # for some reason, mergeit isn't built in 6.x and 5.x?
-          # compile it and copy it
-          make mergeit
-          cp mergeit ../bin
 
           # download testing data for unit tests
           cd ../
