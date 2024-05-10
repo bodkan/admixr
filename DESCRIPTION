@@ -31,6 +31,7 @@ Imports:
     utils
 Suggests:
     glue,
+    ggplot2,
     testthat,
     forcats,
     tidyr,
