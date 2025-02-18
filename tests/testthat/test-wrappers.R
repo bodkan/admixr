@@ -39,6 +39,24 @@ test_that("qpDstat wrapper produces correct results (4 population input version)
   )
 })
 
+# f4 ----------------------------------------------------------------------
+
+test_that("f4 wrapper prevents f4mode = TRUE being set explicitly", {
+  skip_on_cran()
+  skip_on_os("windows")
+
+  data <- eigenstrat(file.path(data_dir, "allmap"))
+  pops <- read_pops(file.path(examples_dir, "list_qpDstat1"), c("W", "X", "Y", "Z"))
+  expect_error(
+    f4(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, data = data, params = list(f4mode = TRUE)),
+    "admixr sets f4mode = TRUE for the qpDstat program automatically"
+  )
+  expect_s3_class(
+    f4(W = pops$W, X = pops$X, Y = pops$Y, Z = pops$Z, data = data),
+    "data.frame"
+  )
+})
+
 # f4-ratio ----------------------------------------------------------------
 
 test_that("qpF4ratio wrapper produces correct results", {

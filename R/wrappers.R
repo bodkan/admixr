@@ -99,6 +99,10 @@ d <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, f4mode = FALSE, 
 #' @export
 f4 <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, params = NULL) {
   check_type(data, "EIGENSTRAT")
+
+  if ("f4mode" %in% names(params))
+    stop("admixr sets f4mode = TRUE for the qpDstat program automatically", call. = FALSE)
+
   d(data, W, X, Y, Z, quartets, outdir, f4mode = TRUE, params = params)
 }
 
