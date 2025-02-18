@@ -1,25 +1,19 @@
-## Resubmission
+# R CMD check results
 
-This version is a fourth resubmission of the package to CRAN.
+There were no ERRORs, no WARNINGs, no NOTEs.
 
-As requested by the last reviewer, I have added a 'SystemRequirements'
-field which explicitly states that the package requires ADMIXTOOLS
-command-line utilities compiled on the system. It also includes a link
-to where the user can find the most recent information on how to
-install the ADMIXTOOLS software.
+# Checked environments
 
-## Checked environments
+* Local macOS install: R 4.3.2
 
-* My local macOS install: R 4.0.1
-* Ubuntu 16.04 GNU/Linux (on Travis CI): R 4.0.0
-* Windows (on https://win-builder.r-project.org/): R-devel, R 4.0.2
+* Win-Builder: R-devel, R-release, R-oldrelease
 
-## R CMD check results
+* GitHub Actions:
+  * macOS: R-release
+  * Ubuntu 20.04: R-devel, R-release, R-oldrelease
+  * Ubuntu 18.04: R-oldrelease
+  * Windows: R-release
 
-There were no ERRORs and no WARNINGs.
-
-There was only one NOTE ("New submission").
-
-## Downstream dependencies
+# Downstream dependencies
 
 None.
