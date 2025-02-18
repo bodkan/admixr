@@ -99,7 +99,7 @@ d <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, f4mode = FALSE, 
 #' @export
 f4 <- function(data, W, X, Y, Z, quartets = NULL, outdir = NULL, params = NULL) {
   check_type(data, "EIGENSTRAT")
-  d(data, W, X, Y, Z, quartets, outdir, f4mode = TRUE)
+  d(data, W, X, Y, Z, quartets, outdir, f4mode = TRUE, params = params)
 }
 
 
