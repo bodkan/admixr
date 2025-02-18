@@ -6,20 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutorial and basic overview of the admixr R package • admixr</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial and basic overview of the admixr R package">
-<meta property="og:description" content="admixr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -33,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">admixr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.10.0</span>
       </span>
     </div>
 
@@ -45,15 +44,15 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/01-tutorial.html">Tutorial and basic overview of the admixr R package</a>
+      <a href="../articles/vignette-01-tutorial.html">Tutorial and basic overview of the admixr R package</a>
     </li>
     <li>
-      <a href="../articles/02-qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
+      <a href="../articles/vignette-02-qpAdm.html">Fitting qpAdm models with a 'rotation' strategy</a>
     </li>
   </ul>
 </li>
@@ -65,7 +64,7 @@
 <li>
   <a href="https://github.com/bodkan/admixr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -76,7 +75,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -86,10 +85,10 @@ package</h1>
                         <h4 data-toc-skip class="author">Martin
 Petr</h4>
             
-            <h4 data-toc-skip class="date">2024-05-08</h4>
+            <h4 data-toc-skip class="date">2025-02-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/01-tutorial.Rmd" class="external-link"><code>vignettes/01-tutorial.Rmd</code></a></small>
-      <div class="hidden name"><code>01-tutorial.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/vignette-01-tutorial.Rmd" class="external-link"><code>vignettes/vignette-01-tutorial.Rmd</code></a></small>
+      <div class="hidden name"><code>vignette-01-tutorial.Rmd</code></div>
 
     </div>
 
@@ -137,11 +136,11 @@ in your R session:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"admixr"</span><span class="op">)</span></span></code></pre></div>
 <p>Furthermore, if you want to follow the examples in this vignette, you
-will need the <a href="https://www.tidyverse.org" class="external-link">tidyverse</a>
-collection of packages for data manipulation manipulation and plotting,
-which you can install with:</p>
+will need the a few <a href="https://www.tidyverse.org" class="external-link">tidyverse</a>
+packages for data manipulation and plotting, which you can install
+with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dplyr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"forcats"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>You definitely don’t need tidyverse for working with <em>admixr</em>
 but it really makes data manipulation and plotting things much easier. I
 recommend at least giving it a shot.</p>
@@ -149,7 +148,10 @@ recommend at least giving it a shot.</p>
 packages:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bodkan/admixr" class="external-link">admixr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="a-note-about-eigenstrat-format">A note about EIGENSTRAT format<a class="anchor" aria-label="anchor" href="#a-note-about-eigenstrat-format"></a>
@@ -188,12 +190,12 @@ destination using its <code>dirname</code> argument, in case you want to
 place it elsewhere). In addition to this, the function returns a shared
 path/prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>(prefix <span class="ot">&lt;-</span> <span class="fu">download_data</span>(<span class="at">dirname =</span> <span class="fu">tempdir</span>()))</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps"</span></span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps"</span></span></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="fu">dirname</span>(prefix), <span class="at">pattern =</span> <span class="fu">basename</span>(prefix), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno"</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind"</span> </span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp"</span> </span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.geno"</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.ind"</span> </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.snp"</span> </span></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div class="section level4">
 <h4 id="ind-file">
@@ -288,9 +290,9 @@ EIGENSTRAT snp/ind/geno files and returns an R object of the class
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span></code></pre></div>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.geno</span></span></code></pre></div>
 <p>This object encapsulates the paths to all three EIGENSTRAT components
 and makes it easy to pass the data to different <em>admixr</em>
 functions.</p>
@@ -302,31 +304,39 @@ functions.</p>
 </h2>
 <p>Let’s say we are interested in the following question: <em>“Which
 populations today show evidence of Neanderthal admixture?</em></p>
-<p>One way of looking at this is using the following D statistic: <span class="math display">\[D(\textrm{present-day human W}, \textrm{African},
-\textrm{Neanderthal}, \textrm{Chimp}).\]</span></p>
-<p><span class="math inline">\(D\)</span> statistics are based on
-comparing the proportions of BABA and ABBA sites patterns observed in
-the data:</p>
-<p><span class="math display">\[D = \frac{\textrm{# BABA sites - # ABBA
-sites}}{\textrm{# BABA sites + # ABBA sites}}.\]</span></p>
-<p>Significant departure of <span class="math inline">\(D\)</span> from
-zero indicates an excess of allele sharing between the first and the
-third population (positive <span class="math inline">\(D\)</span>), or
-an excess of allele sharing between the second and the third population
-(negative <span class="math inline">\(D\)</span>). If we get <span class="math inline">\(D\)</span> that is not significantly different
-from 0, this suggests that the first and second populations form a
-clade, and don’t differ in the rate of allele sharing with the third
-population (this is the null hypothesis that the data is compared
-against).</p>
-<p>Therefore, our <span class="math inline">\(D\)</span> statistic above
-tests whether some modern humans today admixed with Neanderthals, which
-would increase their genetic affinity to this archaic group compared to
-Africans (whose ancestors never met Neanderthals).</p>
+<p>One way of looking at this is using the following D statistic:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mrow><mo stretchy="true" form="prefix">(</mo><mtext mathvariant="normal">present-day human W</mtext><mo>,</mo><mtext mathvariant="normal">African</mtext><mo>,</mo><mtext mathvariant="normal">Neanderthal</mtext><mo>,</mo><mtext mathvariant="normal">Chimp</mtext><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">D(\textrm{present-day human W}, \textrm{African}, \textrm{Neanderthal}, \textrm{Chimp}).</annotation></semantics></math></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+statistics are based on comparing the proportions of BABA and ABBA sites
+patterns observed in the data:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo>=</mo><mfrac><mtext mathvariant="normal"># BABA sites - # ABBA sites</mtext><mtext mathvariant="normal"># BABA sites + # ABBA sites</mtext></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">D = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# BABA sites + # ABBA sites}}.</annotation></semantics></math></p>
+<p>Significant departure of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+from zero indicates an excess of allele sharing between the first and
+the third population (positive
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>),
+or an excess of allele sharing between the second and the third
+population (negative
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>).
+If we get
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+that is not significantly different from 0, this suggests that the first
+and second populations form a clade, and don’t differ in the rate of
+allele sharing with the third population (this is the null hypothesis
+that the data is compared against).</p>
+<p>Therefore, our
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+statistic above tests whether some modern humans today admixed with
+Neanderthals, which would increase their genetic affinity to this
+archaic group compared to Africans (whose ancestors never met
+Neanderthals).</p>
 <p>Let’s save some population names first to make our code more
 concise:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Khomani_San"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span><span class="op">)</span></span></code></pre></div>
-<p>Using the <em>admixr</em> package we can then calculate our <span class="math inline">\(D\)</span> statistic simply by running:</p>
+<p>Using the <em>admixr</em> package we can then calculate our
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+statistic simply by running:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">d</a></span><span class="op">(</span>W <span class="op">=</span> <span class="va">pops</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></span></code></pre></div>
 <p>The result is a following data frame:</p>
@@ -436,15 +446,20 @@ concise:</p>
 output table contains additional columns:</p>
 <ul>
 <li>
-<code>D</code> - <span class="math inline">\(D\)</span> statistic
-value</li>
+<code>D</code> -
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+statistic value</li>
 <li>
-<code>stderr</code> - standard error of the <span class="math inline">\(D\)</span> statistic calculated using the block
-jackknife</li>
+<code>stderr</code> - standard error of the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+statistic calculated using the block jackknife</li>
 <li>
-<code>Zscore</code> - <span class="math inline">\(Z\)</span>-zscore
-value (number of standard errors the <span class="math inline">\(D\)</span> is from 0, i.e. how strongly do we
-reject the null hypothesis of no admixture)</li>
+<code>Zscore</code> -
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>-zscore
+value (number of standard errors the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+is from 0, i.e. how strongly do we reject the null hypothesis of no
+admixture)</li>
 <li>
 <code>BABA</code>, <code>ABBA</code> - counts of observed site
 patterns</li>
@@ -452,38 +467,43 @@ patterns</li>
 <code>nsnps</code> - number of SNPs used for a given
 calculation</li>
 </ul>
-<p>While we could certainly make inferences by looking at the <span class="math inline">\(Z\)</span>-scores, tables in general are not the
-best representation of this kind of data, especially as the number of
-samples increases. Instead, we can use the <a href="https://ggplot2.tidyverse.org" class="external-link"><code>ggplot2</code></a> package to
-plot the results:</p>
+<p>While we could certainly make inferences by looking at the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>-scores,
+tables in general are not the best representation of this kind of data,
+especially as the number of samples increases. Instead, we can use the
+<a href="https://ggplot2.tidyverse.org" class="external-link"><code>ggplot2</code></a> package
+to plot the results:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">result</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html" class="external-link">fct_reorder</a></span><span class="op">(</span><span class="va">W</span>, <span class="va">D</span><span class="op">)</span>, <span class="va">D</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">Zscore</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">D</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span>, ymax <span class="op">=</span> <span class="va">D</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="01-tutorial_files/figure-html/d_plot-1.png" width="672"></p>
+<p><img src="vignette-01-tutorial_files/figure-html/d_plot-1.png" width="672"></p>
 <p>(If you want to more know about data analysis using R, including
 plotting with ggplot2, I highly recommend <a href="https://r4ds.had.co.nz/" class="external-link">this</a> free book.)</p>
-<p>We can see that the <span class="math inline">\(D\)</span> values for
-Africans are not significantly different from 0, meaning that the data
-is consistent with the null hypothesis of no Neanderthal ancestry in
-Africans. On the other hand, the test rejects the null hypothesis for
-all non-Africans today, suggesting that Neanderthals admixed with the
-ancestors of present-day non-Africans.</p>
+<p>We can see that the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+values for Africans are not significantly different from 0, meaning that
+the data is consistent with the null hypothesis of no Neanderthal
+ancestry in Africans. On the other hand, the test rejects the null
+hypothesis for all non-Africans today, suggesting that Neanderthals
+admixed with the ancestors of present-day non-Africans.</p>
 </div>
 <div class="section level2">
 <h2 id="f4-statistic">f4 statistic<a class="anchor" aria-label="anchor" href="#f4-statistic"></a>
 </h2>
 <p>An alternative way of addressing the previous question is to use the
-<span class="math inline">\(f_4\)</span> statistic, which is very
-similar to <span class="math inline">\(D\)</span> statistic and can be
-calculated as:</p>
-<p><span class="math display">\[ f_4 = \frac{\textrm{# BABA sites - #
-ABBA sites}}{\textrm{# sites}}\]</span></p>
-<p>Again, significant departure of <span class="math inline">\(f_4\)</span> from 0 can be interpreted as evidence
-of gene flow.</p>
-<p>To repeat the previous analysis using <span class="math inline">\(f_4\)</span> statistic, we can run the function
-<code><a href="../reference/f4ratio.html">f4()</a></code>:</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+statistic, which is very similar to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+statistic and can be calculated as:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>4</mn></msub><mo>=</mo><mfrac><mtext mathvariant="normal"># BABA sites - # ABBA sites</mtext><mtext mathvariant="normal"># sites</mtext></mfrac></mrow><annotation encoding="application/x-tex"> f_4 = \frac{\textrm{# BABA sites - # ABBA sites}}{\textrm{# sites}}</annotation></semantics></math></p>
+<p>Again, significant departure of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+from 0 can be interpreted as evidence of gene flow.</p>
+<p>To repeat the previous analysis using
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+statistic, we can run the function <code><a href="../reference/f4ratio.html">f4()</a></code>:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">f4</a></span><span class="op">(</span>W <span class="op">=</span> <span class="va">pops</span>, X <span class="op">=</span> <span class="st">"Yoruba"</span>, Y <span class="op">=</span> <span class="st">"Vindija"</span>, Z <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -588,15 +608,20 @@ of gene flow.</p>
 </tr>
 </tbody>
 </table>
-<p>By comparing this result to the <span class="math inline">\(D\)</span> statistic analysis above, we can make
-the same conclusions.</p>
-<p>You might be wondering why we have both <span class="math inline">\(f_4\)</span> and <span class="math inline">\(D\)</span> if they are so similar. The truth is
-that <span class="math inline">\(f_4\)</span> is, among other things,
-directly informative about the amount of shared genetic drift (“branch
-length”) between pairs of populations, which is a very useful
-theoretical property. Other than that, it’s often a matter of personal
-preference and so <em>admixr</em> provides functions for calculating
-both.</p>
+<p>By comparing this result to the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+statistic analysis above, we can make the same conclusions.</p>
+<p>You might be wondering why we have both
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+if they are so similar. The truth is that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+is, among other things, directly informative about the amount of shared
+genetic drift (“branch length”) between pairs of populations, which is a
+very useful theoretical property. Other than that, it’s often a matter
+of personal preference and so <em>admixr</em> provides functions for
+calculating both.</p>
 </div>
 <div class="section level2">
 <h2 id="f4-ratio-statistic">f4-ratio statistic<a class="anchor" aria-label="anchor" href="#f4-ratio-statistic"></a>
@@ -604,14 +629,16 @@ both.</p>
 <p>Now we know that non-Africans today carry <em>some</em> Neanderthal
 ancestry. But what if we want to know <em>how much</em> Neanderthal
 ancestry they have? What proportion of their genomes is of Neanderthal
-origin? To answer questions like this, we can use the <span class="math inline">\(f_4\)</span>-ratio statistic, which can be
-formulated in the following way (using a notation of <a href="http://www.genetics.org/content/192/3/1065" class="external-link">Patterson et al.,
+origin? To answer questions like this, we can use the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>-ratio
+statistic, which can be formulated in the following way (using a
+notation of <a href="http://www.genetics.org/content/192/3/1065" class="external-link">Patterson et al.,
 2012</a>, who formally described its properties).</p>
-<p><span class="math display">\[f_4\textrm{-ratio} = \frac{f_4(A, O; X,
-C)}{f_4(A, O; B, C)}.\]</span></p>
-<p>Using <code>amidxr</code>, we can calculate <span class="math inline">\(f_4\)</span>-ratios using the following code
-(<code>X</code> being a vector of samples which we want to estimate the
-Neanderthal ancestry in):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>4</mn></msub><mtext mathvariant="normal">-ratio</mtext><mo>=</mo><mfrac><mrow><msub><mi>f</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>O</mi><mo>;</mo><mi>X</mi><mo>,</mo><mi>C</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><msub><mi>f</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mo>,</mo><mi>O</mi><mo>;</mo><mi>B</mi><mo>,</mo><mi>C</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">f_4\textrm{-ratio} = \frac{f_4(A, O; X, C)}{f_4(A, O; B, C)}.</annotation></semantics></math></p>
+<p>Using <code>amidxr</code>, we can calculate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>-ratios
+using the following code (<code>X</code> being a vector of samples which
+we want to estimate the Neanderthal ancestry in):</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/f4ratio.html">f4ratio</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">pops</span>, A <span class="op">=</span> <span class="st">"Altai"</span>, B <span class="op">=</span> <span class="st">"Vindija"</span>, C <span class="op">=</span> <span class="st">"Yoruba"</span>, O <span class="op">=</span> <span class="st">"Chimp"</span>, data <span class="op">=</span> <span class="va">snps</span><span class="op">)</span></span></code></pre></div>
 <p>The ancestry proportion (a number between 0 and 1) is given in the
@@ -708,12 +735,16 @@ Neanderthal ancestry in):</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">alpha</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span>, ymax <span class="op">=</span> <span class="va">alpha</span> <span class="op">+</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">stderr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Neandertal ancestry proportion"</span>, x <span class="op">=</span> <span class="st">"present-day individual"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="01-tutorial_files/figure-html/f4ratio_plot-1.png" width="672"></p>
+<p><img src="vignette-01-tutorial_files/figure-html/f4ratio_plot-1.png" width="672"></p>
 <p>We can make several observations:</p>
 <ul>
 <li>Again, we don’t see any significant Neanderthal ancestry in
 present-day Africans (proportion is consistent with 0%), which is what
-we confirmed using <span class="math inline">\(D\)</span> and <span class="math inline">\(f_4\)</span> above.</li>
+we confirmed using
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+above.</li>
 <li>Present-day non-Africans carry between 2-3% of Neanderthal
 ancestry.</li>
 <li>We see a much higher proportion of Neanderthal ancestry in people
@@ -725,25 +756,43 @@ ancestors of present-day Papuans.</li>
 <div class="section level2">
 <h2 id="f3-statistic">f3 statistic<a class="anchor" aria-label="anchor" href="#f3-statistic"></a>
 </h2>
-<p>The <span class="math inline">\(f_3\)</span> statistic, also known as
-the 3-population statistic, is useful whenever we want to:</p>
+<p>The
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>3</mn></msub><annotation encoding="application/x-tex">f_3</annotation></semantics></math>
+statistic, also known as the 3-population statistic, is useful whenever
+we want to:</p>
 <ol style="list-style-type: decimal">
 <li>Estimate the branch length (shared genetic drift) between a pair of
-populations <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> with respect to a common outgroup <span class="math inline">\(C\)</span>. In this case, the higher the <span class="math inline">\(f_3\)</span> value, the longer the shared
-evolutionary time between <span class="math inline">\(A\)</span> and
-<span class="math inline">\(B\)</span>.</li>
-<li>Test whether population <span class="math inline">\(C\)</span> is a
-mixture of two populations <span class="math inline">\(A\)</span> and
-<span class="math inline">\(B\)</span>. Significantly negative values of
-the <span class="math inline">\(f_3\)</span> statistic are then a
-statistical evidence of this admixture.</li>
+populations
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
+with respect to a common outgroup
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>.
+In this case, the higher the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>3</mn></msub><annotation encoding="application/x-tex">f_3</annotation></semantics></math>
+value, the longer the shared evolutionary time between
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>.</li>
+<li>Test whether population
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+is a mixture of two populations
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>.
+Significantly negative values of the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>3</mn></msub><annotation encoding="application/x-tex">f_3</annotation></semantics></math>
+statistic are then a statistical evidence of this admixture.</li>
 </ol>
 <p>As an example, imagine we are interested in relative divergence times
 between pairs of present-day human populations, and want to know in
 which approximate order they split of from each other. To address this
-problem, we could use <span class="math inline">\(f_3\)</span> statistic
-by fixing the <span class="math inline">\(C\)</span> outgroup as San,
-and calculating pairwise <span class="math inline">\(f_3\)</span>
+problem, we could use
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>3</mn></msub><annotation encoding="application/x-tex">f_3</annotation></semantics></math>
+statistic by fixing the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
+outgroup as San, and calculating pairwise
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>3</mn></msub><annotation encoding="application/x-tex">f_3</annotation></semantics></math>
 statistics between all present-day modern humans.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pops</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"French"</span>, <span class="st">"Sardinian"</span>, <span class="st">"Han"</span>, <span class="st">"Papuan"</span>, <span class="st">"Mbuti"</span>, <span class="st">"Dinka"</span>, <span class="st">"Yoruba"</span><span class="op">)</span></span>
@@ -828,23 +877,28 @@ statistics between all present-day modern humans.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">A</span>, levels <span class="op">=</span> <span class="va">ordered</span><span class="op">)</span>,</span>
 <span>         B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">B</span>, levels <span class="op">=</span> <span class="va">ordered</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">A</span>, <span class="va">B</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">f3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="01-tutorial_files/figure-html/f3_plot-1.png" width="768"></p>
+<p><img src="vignette-01-tutorial_files/figure-html/f3_plot-1.png" width="768"></p>
 <p>We can see that when we order the heatmap labels based on values of
-pairwise <span class="math inline">\(f_3\)</span> statistics, the
-(already known) order of population splits pops up nicely (i.e. San
-separated first, followed by Mbuti, etc.).</p>
+pairwise
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>3</mn></msub><annotation encoding="application/x-tex">f_3</annotation></semantics></math>
+statistics, the (already known) order of population splits pops up
+nicely (i.e. San separated first, followed by Mbuti, etc.).</p>
 </div>
 <div class="section level2">
 <h2 id="qpwave-and-qpadm">qpWave and qpAdm<a class="anchor" aria-label="anchor" href="#qpwave-and-qpadm"></a>
 </h2>
 <p>Both <em>qpWave</em> and <em>qpAdm</em> can be though of as more
-complex and powerful extensions of the basic ideas behind a simple <span class="math inline">\(f_4\)</span> statistic. Building upon the <span class="math inline">\(f_4\)</span> theory and generalizing it,
-<em>qpWave</em> makes it possible to find the lowest number of “streams
-of ancestry” between two groups of populations that is consistent with
-the data. Extending the concept of <span class="math inline">\(f_4\)</span> statistics even further,
-<em>qpAdm</em> allows to find the proportions of ancestry from a set of
-ancestral populations that contributed ancestry to our population of
-interest.</p>
+complex and powerful extensions of the basic ideas behind a simple
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+statistic. Building upon the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+theory and generalizing it, <em>qpWave</em> makes it possible to find
+the lowest number of “streams of ancestry” between two groups of
+populations that is consistent with the data. Extending the concept of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+statistics even further, <em>qpAdm</em> allows to find the proportions
+of ancestry from a set of ancestral populations that contributed
+ancestry to our population of interest.</p>
 <p>Unfortunately, both methods represent a rather advanced topic that
 still lacks proper documentation and beginner-friendly tutorials, and
 explaining them in detail is beyond the scope of this vignette. If you
@@ -882,12 +936,19 @@ running them from R.</p>
 above). The aim of the method is to get an idea about the number of
 migration waves from <em>right</em> to <em>left</em> (with no
 back-migration from <em>left</em> to <em>right</em>!). This is done by
-estimating the rank of a matrix of all possible <span class="math inline">\(f_4\)</span> statistics</p>
-<p><span class="math display">\[f_4(\textrm{left}_1, \textrm{left}_i;
-\textrm{right}_1, \textrm{right}_i),\]</span></p>
-<p>where <span class="math inline">\(\textrm{left}_1\)</span> and <span class="math inline">\(\textrm{right}_1\)</span> are some fixed
-populations and the <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> indices run over all other possible
-choices of populations.</p>
+estimating the rank of a matrix of all possible
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+statistics</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mtext mathvariant="normal">left</mtext><mn>1</mn></msub><mo>,</mo><msub><mtext mathvariant="normal">left</mtext><mi>i</mi></msub><mo>;</mo><msub><mtext mathvariant="normal">right</mtext><mn>1</mn></msub><mo>,</mo><msub><mtext mathvariant="normal">right</mtext><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">f_4(\textrm{left}_1, \textrm{left}_i; \textrm{right}_1, \textrm{right}_i),</annotation></semantics></math></p>
+<p>where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mtext mathvariant="normal">left</mtext><mn>1</mn></msub><annotation encoding="application/x-tex">\textrm{left}_1</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mtext mathvariant="normal">right</mtext><mn>1</mn></msub><annotation encoding="application/x-tex">\textrm{right}_1</annotation></semantics></math>
+are some fixed populations and the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
+indices run over all other possible choices of populations.</p>
 <p>As an example, let’s try to find the number of admixture waves from
 <em>right</em> = {Yoruba, Mbuti, Alta} into <em>left</em> = {French,
 Sardinian, Han} populations. We can do this using the function
@@ -901,10 +962,14 @@ Sardinian, Han} populations. We can do this using the function
 <p>The <code><a href="../reference/qpWave.html">qpWave()</a></code> function returns a data frame which shows
 the results of a series of matrix rank tests. The <code>rank</code>
 column is the matrix rank tested, <code>df</code>, <code>chisq</code>
-and <code>tail</code> give the degrees of freedom, <span class="math inline">\(\chi^2\)</span> value and <span class="math inline">\(p\)</span>-value for the comparison with the
-saturated model (the <span class="math inline">\(p\)</span>-value then
-indicates which matrix rank is consistent with the data - see example
-below), and <code>dfdiff</code>, <code>chisqdiff</code> and
+and <code>tail</code> give the degrees of freedom,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\chi^2</annotation></semantics></math>
+value and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value
+for the comparison with the saturated model (the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value
+then indicates which matrix rank is consistent with the data - see
+example below), and <code>dfdiff</code>, <code>chisqdiff</code> and
 <code>taildiff</code> give the same, but always comparing a model to the
 model with one rank less.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
@@ -949,14 +1014,20 @@ model with one rank less.</p>
 </tr>
 </tbody>
 </table>
-<p>In this example, we see that matrix <span class="math inline">\(r =
-0\)</span> cannot be rejected (<code>tail</code> <span class="math inline">\(p\)</span>-value = 0.78). Because Reich et
-al. 2012 showed that <span class="math inline">\(r + 1 \le n\)</span>,
-where <span class="math inline">\(n\)</span> is the number of admixture
-waves, we can interpret this as <em>left</em> populations having at
-least <span class="math inline">\(n = 1\)</span> streams of ancestry
-from the set of <em>right</em> populations. In this case, the most
-likely explanation is Neandertal admixture into non-Africans today.</p>
+<p>In this example, we see that matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">r = 0</annotation></semantics></math>
+cannot be rejected (<code>tail</code>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value
+= 0.78). Because Reich et al. 2012 showed that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>+</mo><mn>1</mn><mo>≤</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">r + 1 \le n</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+is the number of admixture waves, we can interpret this as <em>left</em>
+populations having at least
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">n = 1</annotation></semantics></math>
+streams of ancestry from the set of <em>right</em> populations. In this
+case, the most likely explanation is Neandertal admixture into
+non-Africans today.</p>
 <p>Now, what happens if we add Papuans to the <em>left</em> group?</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qpWave.html">qpWave</a></span><span class="op">(</span></span>
@@ -1006,14 +1077,19 @@ likely explanation is Neandertal admixture into non-Africans today.</p>
 </tr>
 </tbody>
 </table>
-<p>We can now clearly reject rank <span class="math inline">\(r =
-0\)</span>, but we see that the data is consistent with rank <span class="math inline">\(r = 1\)</span>, meaning that there must have been
-at least <span class="math inline">\(n = 2\)</span> streams of ancestry
-from <em>right</em> to <em>left</em> populations (<span class="math inline">\(r + 1 \le n\)</span>). Because this happened after
-we introduced Papuans to the <em>left</em> set, this could indicate a
-separate pulse of archaic introgression into Papuans, which is not
-surprising given what we know about significantly more archaic ancestry
-in Papuans than in any other present-day population.</p>
+<p>We can now clearly reject rank
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">r = 0</annotation></semantics></math>,
+but we see that the data is consistent with rank
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">r = 1</annotation></semantics></math>,
+meaning that there must have been at least
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n = 2</annotation></semantics></math>
+streams of ancestry from <em>right</em> to <em>left</em> populations
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>+</mo><mn>1</mn><mo>≤</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">r + 1 \le n</annotation></semantics></math>).
+Because this happened after we introduced Papuans to the <em>left</em>
+set, this could indicate a separate pulse of archaic introgression into
+Papuans, which is not surprising given what we know about significantly
+more archaic ancestry in Papuans than in any other present-day
+population.</p>
 </div>
 <div class="section level3">
 <h3 id="qpadm">
@@ -1143,28 +1219,38 @@ for more details.</li>
 </tbody>
 </table>
 <p>The row with rank = 1 represents a <em>qpWave</em> test with all
-<span class="math inline">\(n\)</span> <em>source</em> populations set
-as the <em>left</em> set and all <em>outgroups</em> as the
-<em>right</em> set. This test evaluates whether the ancestral
-populations are descended from <span class="math inline">\(n\)</span>
-independent streams of ancestry. In our case, <span class="math inline">\(n = 2\)</span> (Mbuti and Vindija), which means
-that the data would have to be consistent with rank <span class="math inline">\(r = 1\)</span> to satisfy the inequality <span class="math inline">\(r + 1 \le n\)</span> proved by Reich et al., 2012.
-We see that this is true for all three target populations (<span class="math inline">\(p\)</span>-value &gt; 0.05 for all targets), and
-the simple model of Neandertal admixture thus seems to be reasonably
-consistent with the data.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math><em>source</em> populations set as the <em>left</em> set and all
+<em>outgroups</em> as the <em>right</em> set. This test evaluates
+whether the ancestral populations are descended from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+independent streams of ancestry. In our case,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n = 2</annotation></semantics></math>
+(Mbuti and Vindija), which means that the data would have to be
+consistent with rank
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">r = 1</annotation></semantics></math>
+to satisfy the inequality
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>+</mo><mn>1</mn><mo>≤</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">r + 1 \le n</annotation></semantics></math>
+proved by Reich et al., 2012. We see that this is true for all three
+target populations
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-value
+&gt; 0.05 for all targets), and the simple model of Neandertal admixture
+thus seems to be reasonably consistent with the data.</p>
 <p>The rank = 2 row represents a <em>qpWave</em> test after adding a
 target population to the <em>left</em> group together with the
 <em>sources</em>. This test makes sure that including the target
-population does not increase the rank of the <span class="math inline">\(f_4\)</span> matrix, meaning that the target can
-be really modelled as a mixture of ancestries from the <em>sources</em>.
-If the <span class="math inline">\(p\)</span>-values turn out to be very
-low, this indicates that the assumed model does not fit the data and
-that a part of the ancestry in a <em>target</em> possibly cannot be
-traced to any of the <em>sources</em>. In our case, however, all rank =
-2 test <span class="math inline">\(p\)</span>-values are not
-significant, and we can be reasonably sure that the <em>target</em>
-samples can be fully modelled as a mixtures of all specified
-<em>references</em>.</p>
+population does not increase the rank of the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+matrix, meaning that the target can be really modelled as a mixture of
+ancestries from the <em>sources</em>. If the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-values
+turn out to be very low, this indicates that the assumed model does not
+fit the data and that a part of the ancestry in a <em>target</em>
+possibly cannot be traced to any of the <em>sources</em>. In our case,
+however, all rank = 2 test
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-values
+are not significant, and we can be reasonably sure that the
+<em>target</em> samples can be fully modelled as a mixtures of all
+specified <em>references</em>.</p>
 <p>The most important element of a <em>qpAdm</em> output is in the
 <code>$proportions</code> component. This contains admixture proportion
 estimates from all specified sources, the p-values of each model
@@ -1227,9 +1313,10 @@ jackknife:</p>
 </tr>
 </tbody>
 </table>
-<p>If we compare this result to the <span class="math inline">\(f_4\)</span>-ratio values calculated above, we see
-that the <em>qpAdm</em> estimates are very close to what we got
-earlier.</p>
+<p>If we compare this result to the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>-ratio
+values calculated above, we see that the <em>qpAdm</em> estimates are
+very close to what we got earlier.</p>
 <p>The third element in the list of results shows the outcome of an “all
 subsets” analysis, which involves testing all subsets of potential
 source populations. Each 1 in the “pattern” column means that the
@@ -1355,7 +1442,8 @@ individual samples. However, it is often useful to treat multiple
 samples as a single group or population. <em>admixr</em> provides a
 function called <code><a href="../reference/relabel.html">relabel()</a></code> that does just that.</p>
 <p>Here is an example: let’s say we want to run a similar analysis to
-the one described in the <span class="math inline">\(D\)</span>
+the one described in the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>
 statistic section, but we want to treat Europeans, Africans and archaics
 as combined populations, and not as separate individuals. But the
 <code>ind</code> file that we have does not contain grouped labels -
@@ -1388,12 +1476,12 @@ call <code><a href="../reference/relabel.html">relabel()</a></code> like this:</
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.geno</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; modifiers:</span></span>
-<span><span class="co">#&gt;   groups:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/file5cb6473bb754.ind</span></span></code></pre></div>
+<span><span class="co">#&gt;   groups:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/file167e596c2388.ind</span></span></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified
 <code>EIGENSTRAT</code> object, which contains a new item in the
 “modifiers” section - the path to a new ind file. Let’s look at its
@@ -1466,8 +1554,10 @@ modifier” <code>ind</code> file from the provided
 <h2 id="counting-presentmissing-snps">Counting present/missing SNPs<a class="anchor" aria-label="anchor" href="#counting-presentmissing-snps"></a>
 </h2>
 <p>The <code>count_snps</code> function can be useful for quality
-control, weighting of admixture statistics (<span class="math inline">\(D\)</span>, <span class="math inline">\(f_4\)</span>, etc.) in regression analyses etc.
-There are two optional arguments:</p>
+control, weighting of admixture statistics
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>,
+etc.) in regression analyses etc. There are two optional arguments:</p>
 <ul>
 <li>
 <code>prop</code> - changes whether to report SNP counts or
@@ -1590,12 +1680,12 @@ analyses.</p>
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.geno</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; modifiers:</span></span>
-<span><span class="co">#&gt;   excluded sites:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/file5cb6227326a3.snp </span></span>
+<span><span class="co">#&gt;   excluded sites:  /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/file167e42cfe645.snp </span></span>
 <span><span class="co">#&gt;       (SNPs excluded: 100000, SNPs remaining: 400000)</span></span></code></pre></div>
 <p>If we want to run the whole analysis in a single pipeline, we can use
 the <code>%&gt;%</code> pipe operator and do the following:</p>
@@ -1672,13 +1762,15 @@ achieves this by doing all the dirty work of parsing the output files
 generated by ADMIXTOOLS, presenting the user with convenient R data
 structures.</p>
 <p>Nevertheless, admixr cannot (yet) parse <em>all</em> the information
-generated by ADMIXTOOLS utilities. For calculating D statistics, <span class="math inline">\(f_4\)</span> statistics and doing other simple
-analyses, a single data frame is usually all the user needs. However,
-sometimes things go wrong - it turns out data was in a wrong format, or
-ADMIXTOOLS crashes with an error or the results simply look suspicious.
-Furthermore, some complex commands (such as <em>qpAdm</em>) are not yet
-completely implemented in admixr. In any of these cases, it is still
-useful (and important!) to examine the log outputs.</p>
+generated by ADMIXTOOLS utilities. For calculating D statistics,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mn>4</mn></msub><annotation encoding="application/x-tex">f_4</annotation></semantics></math>
+statistics and doing other simple analyses, a single data frame is
+usually all the user needs. However, sometimes things go wrong - it
+turns out data was in a wrong format, or ADMIXTOOLS crashes with an
+error or the results simply look suspicious. Furthermore, some complex
+commands (such as <em>qpAdm</em>) are not yet completely implemented in
+admixr. In any of these cases, it is still useful (and important!) to
+examine the log outputs.</p>
 <p>Each admixr result, such as the data frame object below, contains a
 (hidden!) attribute which carries the complete log file associate with
 that particular analysis:</p>
@@ -1703,13 +1795,13 @@ hidden as most of the time it’s not useful):</p>
 <span><span class="co">#&gt; Full output log of qpDstat:</span></span>
 <span><span class="co">#&gt; ===================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; qpDstat: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpDstat__335645284.par</span></span>
+<span><span class="co">#&gt; qpDstat: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/qpDstat__1878190616.par</span></span>
 <span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
 <span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
-<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span>
-<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
-<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
-<span><span class="co">#&gt; popfilename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpDstat__335645284.pop</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popfilename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/qpDstat__1878190616.pop</span></span>
 <span><span class="co">#&gt; printsd: YES</span></span>
 <span><span class="co">#&gt; ## qpDstat version: 980</span></span>
 <span><span class="co">#&gt; inbreed set NO</span></span>
@@ -1727,7 +1819,7 @@ hidden as most of the time it’s not useful):</p>
 <span><span class="co">#&gt; result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 </span></span>
 <span><span class="co">#&gt; result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 </span></span>
 <span><span class="co">#&gt; result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 </span></span>
-<span><span class="co">#&gt; ##end of qpDstat:        1.685 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
+<span><span class="co">#&gt; ##end of qpDstat:        1.638 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 <p>The situation is a bit more complex for <em>qpAdm</em> which can be
 evaluated for multiple target populations/samples which are then
 analyzed separately, with each analysis having its own log file:</p>
@@ -1777,17 +1869,17 @@ which target’s log file we want to examine:</p>
 <span><span class="co">#&gt; Full output log of qpAdm for target 'Han':</span></span>
 <span><span class="co">#&gt; ===================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpAdm__1789631171.par</span></span>
+<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/qpAdm__73532701.par</span></span>
 <span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
 <span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
-<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.geno</span></span>
-<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.snp</span></span>
-<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/snps/snps.ind</span></span>
-<span><span class="co">#&gt; popleft: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpAdm__1789631171.popleft</span></span>
-<span><span class="co">#&gt; popright: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpzHxCwT/qpAdm__1789631171.popright</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popleft: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/qpAdm__73532701.popleft</span></span>
+<span><span class="co">#&gt; popright: /var/folders/70/b_q2zdh116b9pfg29p03sx600000gn/T//RtmpyHHfyz/qpAdm__73532701.popright</span></span>
 <span><span class="co">#&gt; inbreed: YES</span></span>
 <span><span class="co">#&gt; ## qpAdm version: 1520</span></span>
-<span><span class="co">#&gt; seed: -1064939153</span></span>
+<span><span class="co">#&gt; seed: -1911690286</span></span>
 <span><span class="co">#&gt; inbreed set YES</span></span>
 <span><span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span></span>
 <span><span class="co">#&gt; inbreed set YES</span></span>
@@ -1881,7 +1973,7 @@ which target’s log file we want to examine:</p>
 <span><span class="co">#&gt; gendstat:                Chimp                Altai    -0.264</span></span>
 <span><span class="co">#&gt; gendstat:             Denisova                Altai     1.131</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ##end of qpAdm:        1.674 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
+<span><span class="co">#&gt; ##end of qpAdm:        1.546 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 <p>Finally, we might want to keep some of the log files around for
 future reference, further debugging or sharing with others. For these
 purposes, we can run the <code>loginfo</code> function with the argument
@@ -1909,9 +2001,7 @@ Commons Attribution 4.0 International License</a>.</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -1924,16 +2014,16 @@ Commons Attribution 4.0 International License</a>.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>

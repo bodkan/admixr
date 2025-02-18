@@ -1,8 +1,7 @@
-pandoc: 3.1.12.1
-pkgdown: 2.0.7
+pandoc: '3.2'
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  01-tutorial: 01-tutorial.html
-  02-qpAdm: 02-qpAdm.html
-last_built: 2024-05-08T17:50Z
-
+  vignette-01-tutorial: vignette-01-tutorial.html
+  vignette-02-qpAdm: vignette-02-qpAdm.html
+last_built: 2025-02-18T11:56Z

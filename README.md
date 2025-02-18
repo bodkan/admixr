@@ -62,7 +62,7 @@ CRAN](https://cran.r-project.org/package=admixr). You can install it
 simply by running
 
 
-```r
+``` r
 install.packages("admixr")
 ```
 
@@ -75,7 +75,7 @@ slightly ahead in terms of new features and bugfixes compared to the
 stable release on CRAN), you need the R package _devtools_. You can run:
 
 
-```r
+``` r
 install.packages("devtools")
 devtools::install_github("bodkan/admixr")
 ```
@@ -100,7 +100,7 @@ The only thing you need is a working ADMIXTOOLS installation and a path to
 EIGENSTRAT data (a trio of ind/snp/geno files), which we call `prefix` here.
 
 
-```r
+``` r
 library(admixr)
 
 # download a small testing dataset to a temporary directory and process it for use in R
