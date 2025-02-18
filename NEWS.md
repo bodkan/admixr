@@ -1,4 +1,4 @@
-# admixr (development version)
+# admixr 0.10.0
 
 * Fixed problem with `qpAdm_rotation` when `nsources >= 3`. ([issue](https://github.com/bodkan/admixr/issues/77))
 * Input data type `EIGENSTRAT` is checked in all user-facing functions that
