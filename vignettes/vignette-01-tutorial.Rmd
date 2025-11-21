@@ -78,7 +78,7 @@ install.packages("admixr")
 ```
 
 Furthermore, if you want to follow the examples in this vignette, you will need
-the a few [tidyverse](https://www.tidyverse.org) packages for
+the a few [tidyverse](https://tidyverse.org) packages for
 data manipulation and plotting, which you can install with:
 
 ```{r, eval = FALSE}
@@ -385,7 +385,7 @@ Now we know that non-Africans today carry _some_ Neanderthal ancestry. But what 
 we want to know _how much_ Neanderthal ancestry they have? What proportion of their
 genomes is of Neanderthal origin? To answer questions like this, we can use the
 $f_4$-ratio statistic, which can be formulated in the following way (using
-a notation of [Patterson et al., 2012](http://www.genetics.org/content/192/3/1065), who formally described
+a notation of [Patterson et al., 2012](https://academic.oup.com/genetics/article/192/3/1065/5935193), who formally described
 its properties).
 
 $$f_4\textrm{-ratio} = \frac{f_4(A, O; X, C)}{f_4(A, O; B, C)}.$$
@@ -517,10 +517,10 @@ overview of the _qpWave_ method than S6 of Reich et al. 2012, and also introduce
 _qpAdm_ methodology for estimating admixture proportions.
 
 - A phenomenal description of _qpAdm_ methodology and best practices
-  by [Harney _et al._
-  2020](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1)
-  (see also PDF with [practical
-  guidelines](https://www.biorxiv.org/content/biorxiv/early/2020/04/10/2020.04.09.032664/DC1/embed/media-1.pdf?download=true). Both
+  by Harney _et al._
+  2020
+  (see also PDF with practical
+  guidelines they made available as a supplementary document. Both
   documents should really be a mandatory reading before doing any
   _qpAdm_ analysis.
 
