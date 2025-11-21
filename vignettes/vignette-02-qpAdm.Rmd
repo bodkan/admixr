@@ -18,8 +18,6 @@ knitr::opts_chunk$set(
   eval = evaluate
 )
 
-devtools::load_all()
-
 set.seed(42)
 ```
 
