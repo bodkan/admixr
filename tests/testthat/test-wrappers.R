@@ -3,12 +3,12 @@
 # admixr's wrapper functions. The results of both tests (i.e. contents of
 # output log files) are then compared to each other.
 
+skip_if(Sys.which("qpDstat") == "")
+
 if (admixtools_present()) {
   path <- admixtools_path()
   data_dir <- file.path(path, "data")
   examples_dir <- file.path(path, "examples")
-
-  setwd(examples_dir)
 }
 
 # f3 ----------------------------------------------------------------------
