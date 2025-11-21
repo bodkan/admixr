@@ -31,9 +31,9 @@ jobs:
           cd ~/deps
 
           # download and unpack the ADMIXTOOLS source code
-          curl -LO https://github.com/DReichLab/AdmixTools/archive/v7.0.2.tar.gz
-          tar xf v7.0.2.tar.gz
-          cd AdmixTools-7.0.2
+          curl -LO https://github.com/DReichLab/AdmixTools/archive/v8.0.2.tar.gz
+          tar xf v8.0.2.tar.gz
+          cd AdmixTools-8.0.2
 
           # set compiler flags (compilation on macOS was failing unable to find
           # openblas library files)
@@ -71,7 +71,7 @@ jobs:
 
       - name: Populate PATH with compiled binaries
         run: |
-          export PATH="$HOME/deps/AdmixTools-7.0.2/bin:$PATH"
+          export PATH="$HOME/deps/AdmixTools-8.0.2/bin:$PATH"
           echo "PATH=$PATH" > ~/.Renviron
 
       - uses: r-lib/actions/setup-r-dependencies@v2

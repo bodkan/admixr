@@ -30,7 +30,7 @@ jobs:
           - {os: ubuntu-latest,  r: 'devel'}
           - {os: ubuntu-latest,  r: 'release'}
           - {os: ubuntu-latest,  r: 'oldrel-1'}
-        admixtools: ["7.0.2"] #, "6.0", "5.1"]
+        admixtools: ["8.0.2"]
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
