@@ -1,5 +1,5 @@
 ---
-title: "Tutorial and basic overview of the admixr R package"
+title: "Basic overview of the admixr package"
 author: "Martin Petr"
 date: "`r Sys.Date()`"
 output: html_document
@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
   comment = "",
   eval = evaluate
 )
+
+devtools::load_all()
 ```
 
 
@@ -575,31 +577,38 @@ least $n = 1$ streams of ancestry from the set of _right_ populations. In this
 case, the most likely explanation is Neandertal admixture into non-Africans
 today.
 
-Now, what happens if we add Papuans to the _left_ group?
+<!-- For whatever reason, Nick et al. no longer allow this: -->
+<!-- https://github.com/DReichLab/AdmixTools/blame/ce60d0e808c60c5dc774cd04be7b533873c5439c/src/qpWave.c#L321 -->
 
-```{r}
-result <- qpWave(
- left = c("Papuan", "French", "Sardinian", "Han"),
- right = c("Altai", "Yoruba", "Mbuti"),
- data = snps
-)
-```
+<!-- It caused crashes while working on 2025-11-21 updates: -->
+<!-- fatalx: -->
+<!-- nleft not less than or equal to nright -->
 
-```{r, eval = FALSE}
-result
-```
+<!-- Now, what happens if we add Papuans to the _left_ group? -->
 
-```{r, echo = FALSE}
-knitr::kable(result)
-```
+<!-- ```{r} -->
+<!-- result <- qpWave( -->
+<!--  left = c("Papuan", "French", "Sardinian", "Han"), -->
+<!--  right = c("Altai", "Yoruba", "Mbuti"), -->
+<!--  data = snps -->
+<!-- ) -->
+<!-- ``` -->
 
-We can now clearly reject rank $r = 0$, but we see that the data is consistent
-with rank $r = 1$, meaning that there must have been at least $n = 2$ streams of
-ancestry from _right_ to _left_ populations ($r + 1 \le n$). Because
-this happened after we introduced Papuans to the _left_ set, this could indicate
-a separate pulse of archaic introgression into Papuans, which is not
-surprising given what we know about significantly more archaic ancestry
-in Papuans than in any other present-day population.
+<!-- ```{r, eval = FALSE} -->
+<!-- result -->
+<!-- ``` -->
+
+<!-- ```{r, echo = FALSE} -->
+<!-- knitr::kable(result) -->
+<!-- ``` -->
+
+<!-- We can now clearly reject rank $r = 0$, but we see that the data is consistent -->
+<!-- with rank $r = 1$, meaning that there must have been at least $n = 2$ streams of -->
+<!-- ancestry from _right_ to _left_ populations ($r + 1 \le n$). Because -->
+<!-- this happened after we introduced Papuans to the _left_ set, this could indicate -->
+<!-- a separate pulse of archaic introgression into Papuans, which is not -->
+<!-- surprising given what we know about significantly more archaic ancestry -->
+<!-- in Papuans than in any other present-day population. -->
 
 
 
