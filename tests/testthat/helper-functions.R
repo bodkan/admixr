@@ -27,5 +27,5 @@ admixtools_path <- function() {
   path <- Sys.which("qpDstat")
   is_symlink <- base::isTRUE(base::nzchar(base::Sys.readlink(path), keepNA = TRUE))
   if (is_symlink) path <- Sys.readlink(path)
-  stringr::str_replace(path, "/bin.*", "")
+  stringr::str_replace(path, "/src.*", "")
 }
