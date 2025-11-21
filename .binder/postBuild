@@ -4,10 +4,12 @@
 mkdir -p ~/deps
 cd ~/deps
 
+VERSION=8.0.2
+
 # download and unpack the ADMIXTOOLS source code
-curl -LO https://github.com/DReichLab/AdmixTools/archive/v7.0.2.tar.gz
-tar xf v7.0.2.tar.gz
-cd AdmixTools-7.0.2
+curl -LO https://github.com/DReichLab/AdmixTools/archive/v${VERSION}.tar.gz
+tar xf v${VERSION}.tar.gz
+cd AdmixTools-${VERSION}
 
 # set compiler flags (compilation on macOS was failing unable to find
 # openblas library files)
@@ -20,7 +22,7 @@ make clobber
 make LDLIBS="-llapack" all
 make install
 
-export PATH="$HOME/deps/AdmixTools-7.0.2/bin:$PATH"
+export PATH="$HOME/deps/AdmixTools-${VERSION}/bin:$PATH"
 echo "PATH=$PATH" > ~/.Renviron
 
 echo 'cat("-------------------------\nPlease be aware that Binder cloud has extremely limited resources.\nVery large analyses might get killed by the system.\n-------------------------\n")' > .Rprofile
