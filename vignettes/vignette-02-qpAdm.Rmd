@@ -38,14 +38,12 @@ _admixr_. We also talked about the most important resources for
 learning more about this powerful method pioneered by Iosif Lazaridis
 in [2015](https://www.nature.com/articles/nature14317).
 
-Recently, Harney _et al._ published an exciting new preprint called
+Recently, Harney _et al._ published an exciting paper called
 ["Assessing the Performance of qpAdm: A Statistical Tool for Studying
 Population
-Admixture"](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1). Before
+Admixture"](https://academic.oup.com/genetics/article/217/4/iyaa045/6070149). Before
 we go any further, I encourage everyone to read it and the superb
-tutorial/guide available as its [supplementary
-pdf](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1.supplementary-material)
-on bioRxiv. There really isn't a better source of information on how
+tutorial/guide available as its supplementary PDF. There really isn't a better source of information on how
 to run and interpret qpAdm analyses.
 
 Please, only attempt to run qpAdm if you have familiarized yoursef
@@ -67,8 +65,8 @@ carefully choose a number of so called 'outgroup' populations (also
 called 'references' or 'right' populations, depending on whom you talk
 to).
 
-The preprint by [Harney _et
-al._](https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1)
+The above mentioned paper by Harney _et
+al._
 described an interesting idea to find a set of the most appropriate
 models (i.e. combinations of source and outgroup populations) which
 has been sucessfully used in the past. They call the method a
