@@ -111,13 +111,13 @@ a very basic overview of the qpAdm-related functionality implemented in
 <em>admixr</em>. We also talked about the most important resources for
 learning more about this powerful method pioneered by Iosif Lazaridis in
 <a href="https://www.nature.com/articles/nature14317" class="external-link">2015</a>.</p>
-<p>Recently, Harney <em>et al.</em> published an exciting new preprint
-called <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1" class="external-link">“Assessing
+<p>Recently, Harney <em>et al.</em> published an exciting paper called
+<a href="https://academic.oup.com/genetics/article/217/4/iyaa045/6070149" class="external-link">“Assessing
 the Performance of qpAdm: A Statistical Tool for Studying Population
 Admixture”</a>. Before we go any further, I encourage everyone to read
-it and the superb tutorial/guide available as its <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1.supplementary-material" class="external-link">supplementary
-pdf</a> on bioRxiv. There really isn’t a better source of information on
-how to run and interpret qpAdm analyses.</p>
+it and the superb tutorial/guide available as its supplementary PDF.
+There really isn’t a better source of information on how to run and
+interpret qpAdm analyses.</p>
 <p>Please, only attempt to run qpAdm if you have familiarized yoursef
 with all of the above-mentioned resources. I have had many people ask
 questions via email (not only about qpAdm but also other topics) to
@@ -137,11 +137,11 @@ appropriate surrogates for those source populations (because only rarely
 we have sampled them directly). Furthermore, we need to carefully choose
 a number of so called ‘outgroup’ populations (also called ‘references’
 or ‘right’ populations, depending on whom you talk to).</p>
-<p>The preprint by <a href="https://www.biorxiv.org/content/10.1101/2020.04.09.032664v1" class="external-link">Harney
-<em>et al.</em></a> described an interesting idea to find a set of the
-most appropriate models (i.e. combinations of source and outgroup
-populations) which has been sucessfully used in the past. They call the
-method a “rotating population” strategy.</p>
+<p>The above mentioned paper by Harney <em>et al.</em> described an
+interesting idea to find a set of the most appropriate models
+(i.e. combinations of source and outgroup populations) which has been
+sucessfully used in the past. They call the method a “rotating
+population” strategy.</p>
 <p>This approach starts by defining a set of “candidate” populations
 from which we iteratively sample a defined number of “sources” of
 ancestry for our “target” population of interest (most commonly two or
@@ -526,17 +526,17 @@ which is not currently parsed by <em>admixr</em>:</p></li>
 <span><span class="co">#&gt; Full output log of qpAdm rotation for model 'm40':</span></span>
 <span><span class="co">#&gt; ===================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmp1mjLE9/qpAdm__462905463.par</span></span>
+<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpiEppX2/qpAdm__1670431280.par</span></span>
 <span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
 <span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
-<span><span class="co">#&gt; genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmp1mjLE9/snps/snps.geno</span></span>
-<span><span class="co">#&gt; snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmp1mjLE9/snps/snps.snp</span></span>
-<span><span class="co">#&gt; indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmp1mjLE9/snps/snps.ind</span></span>
-<span><span class="co">#&gt; popleft: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmp1mjLE9/qpAdm__462905463.popleft</span></span>
-<span><span class="co">#&gt; popright: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmp1mjLE9/qpAdm__462905463.popright</span></span>
-<span><span class="co">#&gt; ##  qpAdm -p /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmp1mjLE9/qpAdm__462905463.par</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpiEppX2/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpiEppX2/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpiEppX2/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popleft: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpiEppX2/qpAdm__1670431280.popleft</span></span>
+<span><span class="co">#&gt; popright: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpiEppX2/qpAdm__1670431280.popright</span></span>
+<span><span class="co">#&gt; ##  qpAdm -p /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpiEppX2/qpAdm__1670431280.par</span></span>
 <span><span class="co">#&gt; ## qpAdm version: 2050</span></span>
-<span><span class="co">#&gt; seed: 1133213227</span></span>
+<span><span class="co">#&gt; seed: 1729726827</span></span>
 <span><span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span></span>
 <span><span class="co">#&gt;  *** recommended that inbreed be explicitly set ***</span></span>
 <span><span class="co">#&gt; inbreed set NO</span></span>
@@ -630,7 +630,7 @@ which is not currently parsed by <em>admixr</em>:</p></li>
 <span><span class="co">#&gt;                          Chimp     3.544</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; oldmode set: terminating</span></span>
-<span><span class="co">#&gt; ##end of qpAdm:        1.481 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
+<span><span class="co">#&gt; ##end of qpAdm:        1.495 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 </div>
   </div>
 

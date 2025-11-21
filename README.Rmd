@@ -90,6 +90,10 @@ binaries on the `$PATH`. You can achieve this by specifying
 `.Renviron` file in your home directory. If R cannot find ADMIXTOOLS utilities,
 you will get a warning upon loading `library(admixr)` in your R session.
 
+**In terms of the version of ADMIXTOOLS required by _admixr_, there is no
+formal requirement. However, please note that the package is generally developed
+and tested against the latest ADMIXTOOLS release (which is currently version 8.0.2).**
+
 ## Example analysis
 
 This is all the code that you need to perform ADMIXTOOLS analyses using this

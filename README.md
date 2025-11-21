@@ -2,11 +2,8 @@
 
 # _admixr_&mdash;interactive R interface for ADMIXTOOLS
 
-<!-- badges: start -->
-[![](https://cranlogs.r-pkg.org/badges/admixr)](https://cran.r-project.org/package=admixr)
-[![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions)
-[![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/main/graph/badge.svg)]https://app.codecov.io/github/bodkan/admixr?branch=main)
-[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
+[![CRAN-version](https://www.r-pkg.org/badges/version/admixr)](https://cran.r-project.org/package=admixr) [![CRAN-downloads](https://cranlogs.r-pkg.org/badges/grand-total/admixr)](https://cran.r-project.org/package=admixr) [![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions) [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio) [![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/main/graph/badge.svg)](https://app.codecov.io/github/bodkan/admixr?branch=main)
+
 <!-- badges: end -->
 
 ## What is _admixr_?
@@ -91,6 +88,10 @@ binaries on the `$PATH`. You can achieve this by specifying
 `PATH=<path to the location of ADMIXTOOLS programs>` in the
 `.Renviron` file in your home directory. If R cannot find ADMIXTOOLS utilities,
 you will get a warning upon loading `library(admixr)` in your R session.
+
+**In terms of the version of ADMIXTOOLS required by _admixr_, there is no
+formal requirement. However, please note that the package is generally developed
+and tested against the latest ADMIXTOOLS release (which is currently version 8.0.2).**
 
 ## Example analysis
 
