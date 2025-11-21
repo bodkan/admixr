@@ -202,7 +202,7 @@ read_qpWave <- function(log_lines, details = FALSE) {
 
 
 
-# Read output log file from a qp3Pop run.
+# Read output log file from a qpAdm run.
 read_qpAdm <- function(log_lines) {
   # parse the admixture proportions and standard errors
   stats <- stringr::str_subset(log_lines, "(best coefficients|std. errors):") %>%
@@ -214,10 +214,10 @@ read_qpAdm <- function(log_lines) {
     stats::setNames(c("proportion", "stderr"))
 
   # parse the population names
-  leftpops <- stringr::str_locate(log_lines, "(left|right) pops:") %>%
+  leftpops <- stringr::str_locate(log_lines, "^(left|right) pops:$") %>%
     .[, 1] %>%  { !is.na(.) } %>% which
-  target <- log_lines[leftpops[1] + 1]
-  source <- log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)]
+  target <- log_lines[leftpops[1] + 1] %>% stringr::str_replace("^ +", "") %>% stringr::str_replace(" +\\d+$", "")
+  source <- log_lines[(leftpops[1] + 2) : (leftpops[2] - 2)] %>% stringr::str_replace("^ +", "") %>% stringr::str_replace(" +\\d+$", "")
 
   # parse the SNP count
   nsnps_target <- stringr::str_subset(log_lines, paste0("coverage: +", target, " ")) %>%
