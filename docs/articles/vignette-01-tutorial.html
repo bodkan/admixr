@@ -84,7 +84,7 @@
                         <h4 data-toc-skip class="author">Martin
 Petr</h4>
             
-            <h4 data-toc-skip class="date">2025-11-21</h4>
+            <h4 data-toc-skip class="date">2025-11-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bodkan/admixr/blob/HEAD/vignettes/vignette-01-tutorial.Rmd" class="external-link"><code>vignettes/vignette-01-tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>vignette-01-tutorial.Rmd</code></div>
@@ -189,12 +189,12 @@ destination using its <code>dirname</code> argument, in case you want to
 place it elsewhere). In addition to this, the function returns a shared
 path/prefix of the whole dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>(prefix <span class="ot">&lt;-</span> <span class="fu">download_data</span>(<span class="at">dirname =</span> <span class="fu">tempdir</span>()))</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps"</span></span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps"</span></span></code></pre></div>
 <p>We can verify that there are indeed three files with this prefix:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">path =</span> <span class="fu">dirname</span>(prefix), <span class="at">pattern =</span> <span class="fu">basename</span>(prefix), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.geno"</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.ind"</span> </span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.snp"</span> </span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.geno"</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>[<span class="dv">2</span>] <span class="st">"/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.ind"</span> </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.snp"</span> </span></code></pre></div>
 <p>Let’s look at their contents:</p>
 <div class="section level4">
 <h4 id="ind-file">
@@ -289,9 +289,9 @@ EIGENSTRAT snp/ind/geno files and returns an R object of the class
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.geno</span></span></code></pre></div>
+<span><span class="co">#&gt;   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.geno</span></span></code></pre></div>
 <p>This object encapsulates the paths to all three EIGENSTRAT components
 and makes it easy to pass the data to different <em>admixr</em>
 functions.</p>
@@ -1439,12 +1439,12 @@ call <code><a href="../reference/relabel.html">relabel()</a></code> like this:</
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.geno</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.geno</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; modifiers:</span></span>
-<span><span class="co">#&gt;   groups:  /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/file128bb685427ce.ind</span></span></code></pre></div>
+<span><span class="co">#&gt;   groups:  /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/file2a1e59ece962.ind</span></span></code></pre></div>
 <p>We can see that the function <code>relabel</code> returned a modified
 <code>EIGENSTRAT</code> object, which contains a new item in the
 “modifiers” section - the path to a new ind file. Let’s look at its
@@ -1643,12 +1643,12 @@ analyses.</p>
 <span><span class="co">#&gt; EIGENSTRAT object</span></span>
 <span><span class="co">#&gt; =================</span></span>
 <span><span class="co">#&gt; components:</span></span>
-<span><span class="co">#&gt;   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.ind</span></span>
-<span><span class="co">#&gt;   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.snp</span></span>
-<span><span class="co">#&gt;   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.geno</span></span>
+<span><span class="co">#&gt;   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.ind</span></span>
+<span><span class="co">#&gt;   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.snp</span></span>
+<span><span class="co">#&gt;   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.geno</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; modifiers:</span></span>
-<span><span class="co">#&gt;   excluded sites:  /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/file128bb6c9cad5e.snp </span></span>
+<span><span class="co">#&gt;   excluded sites:  /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/file2a1e508117cb.snp </span></span>
 <span><span class="co">#&gt;       (SNPs excluded: 100000, SNPs remaining: 400000)</span></span></code></pre></div>
 <p>If we want to run the whole analysis in a single pipeline, we can use
 the <code>%&gt;%</code> pipe operator and do the following:</p>
@@ -1758,13 +1758,13 @@ hidden as most of the time it’s not useful):</p>
 <span><span class="co">#&gt; Full output log of qpDstat:</span></span>
 <span><span class="co">#&gt; ===================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; qpDstat: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/qpDstat__1658977312.par</span></span>
+<span><span class="co">#&gt; qpDstat: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/qpDstat__1658977312.par</span></span>
 <span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
 <span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
-<span><span class="co">#&gt; genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.geno</span></span>
-<span><span class="co">#&gt; snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.snp</span></span>
-<span><span class="co">#&gt; indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.ind</span></span>
-<span><span class="co">#&gt; popfilename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/qpDstat__1658977312.pop</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popfilename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/qpDstat__1658977312.pop</span></span>
 <span><span class="co">#&gt; printsd: YES</span></span>
 <span><span class="co">#&gt; ## qpDstat version: 1152</span></span>
 <span><span class="co">#&gt; inbreed set NO</span></span>
@@ -1782,7 +1782,7 @@ hidden as most of the time it’s not useful):</p>
 <span><span class="co">#&gt; result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 </span></span>
 <span><span class="co">#&gt; result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 </span></span>
 <span><span class="co">#&gt; result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 </span></span>
-<span><span class="co">#&gt; ##end of qpDstat:        1.544 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
+<span><span class="co">#&gt; ##end of qpDstat:        1.516 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 <p>The situation is a bit more complex for <em>qpAdm</em> which can be
 evaluated for multiple target populations/samples which are then
 analyzed separately, with each analysis having its own log file:</p>
@@ -1832,18 +1832,18 @@ which target’s log file we want to examine:</p>
 <span><span class="co">#&gt; Full output log of qpAdm for target 'Han':</span></span>
 <span><span class="co">#&gt; ===================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/qpAdm__375682135.par</span></span>
+<span><span class="co">#&gt; qpAdm: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/qpAdm__375682135.par</span></span>
 <span><span class="co">#&gt; ### THE INPUT PARAMETERS</span></span>
 <span><span class="co">#&gt; ##PARAMETER NAME: VALUE</span></span>
-<span><span class="co">#&gt; genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.geno</span></span>
-<span><span class="co">#&gt; snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.snp</span></span>
-<span><span class="co">#&gt; indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/snps/snps.ind</span></span>
-<span><span class="co">#&gt; popleft: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/qpAdm__375682135.popleft</span></span>
-<span><span class="co">#&gt; popright: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/qpAdm__375682135.popright</span></span>
+<span><span class="co">#&gt; genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.geno</span></span>
+<span><span class="co">#&gt; snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.snp</span></span>
+<span><span class="co">#&gt; indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/snps/snps.ind</span></span>
+<span><span class="co">#&gt; popleft: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/qpAdm__375682135.popleft</span></span>
+<span><span class="co">#&gt; popright: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/qpAdm__375682135.popright</span></span>
 <span><span class="co">#&gt; inbreed: YES</span></span>
-<span><span class="co">#&gt; ##  qpAdm -p /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpi0xyxw/qpAdm__375682135.par</span></span>
+<span><span class="co">#&gt; ##  qpAdm -p /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpbt6sty/qpAdm__375682135.par</span></span>
 <span><span class="co">#&gt; ## qpAdm version: 2050</span></span>
-<span><span class="co">#&gt; seed: -2055340923</span></span>
+<span><span class="co">#&gt; seed: 124240767</span></span>
 <span><span class="co">#&gt; allsnps set NO.  It is recommended that allsnps be set explicitly</span></span>
 <span><span class="co">#&gt; inbreed set YES</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -1936,7 +1936,7 @@ which target’s log file we want to examine:</p>
 <span><span class="co">#&gt;                          Altai    -0.580</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; oldmode set: terminating</span></span>
-<span><span class="co">#&gt; ##end of qpAdm:        1.434 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
+<span><span class="co">#&gt; ##end of qpAdm:        1.413 seconds cpu        0.000 Mbytes in use</span></span></code></pre></div>
 <p>Finally, we might want to keep some of the log files around for
 future reference, further debugging or sharing with others. For these
 purposes, we can run the <code>loginfo</code> function with the argument

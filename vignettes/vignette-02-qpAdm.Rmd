@@ -32,7 +32,7 @@ qpAdm model fitting is a complex topic. To navigate it successfuly
 requires solid knowledge of the $f$-statistics theory first introduced
 by Nick Patterson and colleagues [in
 2012](https://academic.oup.com/genetics/article/192/3/1065/5935193). As part of our
-[tutorial](tutorial.html#qpwave-and-qpadm-1), we have looked at a very
+[tutorial](vignette-01-tutorial.html), we have looked at a very
 basic overview of the qpAdm-related functionality implemented in
 _admixr_. We also talked about the most important resources for
 learning more about this powerful method pioneered by Iosif Lazaridis
