@@ -1,5 +1,3 @@
-skip_if(Sys.which("qpDstat") == "")
-
 if (admixtools_present()) {
   path <- admixtools_path()
   data_dir <- file.path(path, "data")
