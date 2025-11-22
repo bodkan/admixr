@@ -27,5 +27,8 @@ admixtools_path <- function() {
   path <- Sys.which("qpDstat")
   is_symlink <- base::isTRUE(base::nzchar(base::Sys.readlink(path), keepNA = TRUE))
   if (is_symlink) path <- Sys.readlink(path)
-  stringr::str_replace(path, "/src.*", "")
+  # if ADMIXTOOLS was set up with `make install`, the binary will be under
+  # ./bin, otherwise it will be under ./src -- either way, remove those prefixes
+  # to get the root of the ADMIXTOOLS source directory
+  stringr::str_replace(path, "(/src\\/qpDstat|/bin\\/qpDstat)", "")
 }
