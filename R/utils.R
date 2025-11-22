@@ -47,8 +47,10 @@ count_snps <- function(data, missing = FALSE, prop = FALSE) {
 
 
 # Run a specified ADMIXTOOLS command.
-run_cmd <- function(cmd, par_file, log_file) {
-  system(paste(cmd, "-p", par_file, ">", log_file))
+run_cmd <- function(cmd, par_file, log_file, directory = NULL) {
+  # if needed, change into the required directory first
+  cd_cmd <- if (!is.null(directory)) paste("cd", directory, ";") else ""
+  system(paste(cd_cmd, cmd, "-p", par_file, ">", log_file))
 }
 
 
