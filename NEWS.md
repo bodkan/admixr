@@ -2,13 +2,12 @@
 
 # admixr 0.9.2
 
-- Fixed problem with `qpAdm_rotation` when `nsources >= 3`. ([issue](https://github.com/bodkan/admixr/issues/77))
+- Fixed problem with `qpAdm_rotation` when `nsources >= 3`.
 - Input data type `EIGENSTRAT` is checked in all user-facing functions that
-  operate on this data. ([issue](https://github.com/bodkan/admixr/issues/61))
-- Implemented R CMD checks with Github Actions.
-- Made necessary changes to upgrade to the latest ADMIXTOOLS 7.0.2
-  throughout the unit tests (users are encouraged to upgrade their
-  ADMIXTOOLS installation).
+  operate on this data.
+- Made necessary changes to upgrade to the latest ADMIXTOOLS 8.0.2 (users are
+encouraged to upgrade their ADMIXTOOLS installation, because ADMIXTOOLS
+does not always maintain backwards compatibility with its earlier releases).
 - The presence of `mergeit` and `qpfstats` in the `$PATH` is now checked
   when `library(admixr)` is called.
 
