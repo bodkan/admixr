@@ -9,12 +9,13 @@ Authors@R:
            comment = c(ORCID = "0000-0003-4879-8421"))
 Description: An interface for various command-line tools provided by the
     software package 'ADMIXTOOLS' (<https://github.com/DReichLab/AdmixTools>).
-    Wrapper functions completely automate the generation of the required
-    intermediate configuration files, run 'ADMIXTOOLS' programs on the
-    command-line in the background and extract statistics of interest. This
-    allows users to avoid worrying about low-level technical details and focus
-    on the research problem at hand. A set of complementary functions for
-    processing and filtering of data in the 'EIGENSTRAT' format is also provided.
+    Wrapper functions completely automate the generation of intermediate
+    configuration files, run 'ADMIXTOOLS' programs on the command-line in
+    the background, and extract statistics of interest. This allows users
+    to avoid worrying about low-level technical details of scripting in
+    the shell, and focus on the research problem at hand. A set of complementary
+    functions for processing and filtering of data in the 'EIGENSTRAT' format
+    is also provided.
 License: MIT + file LICENSE
 URL: https://github.com/bodkan/admixr
 BugReports: https://github.com/bodkan/admixr/issues
