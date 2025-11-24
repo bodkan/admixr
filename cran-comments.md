@@ -1,3 +1,7 @@
+An emergency update to fix problems with deprecations in the upcoming release of
+the R package readr and with backwards incompatible changes in the underlying
+software ADMIXTOOLS introduced since the last CRAN release a couple of years ago.
+
 # R CMD check results
 
 There were no ERRORs, no WARNINGs, no NOTEs.
