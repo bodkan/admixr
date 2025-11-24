@@ -1,4 +1,0 @@
-# License
-
-    YEAR: 2018
-    COPYRIGHT HOLDER: Martin Petr
