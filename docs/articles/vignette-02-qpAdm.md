@@ -467,17 +467,17 @@ loginfo(fits, "m40")
 #> Full output log of qpAdm rotation for model 'm40':
 #> ===================================================
 #> 
-#> qpAdm: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpQWUXRk/qpAdm__441215052.par
+#> qpAdm: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpyqFBtx/qpAdm__1344192651.par
 #> ### THE INPUT PARAMETERS
 #> ##PARAMETER NAME: VALUE
-#> genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpQWUXRk/snps/snps.geno
-#> snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpQWUXRk/snps/snps.snp
-#> indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpQWUXRk/snps/snps.ind
-#> popleft: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpQWUXRk/qpAdm__441215052.popleft
-#> popright: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpQWUXRk/qpAdm__441215052.popright
-#> ##  qpAdm -p /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpQWUXRk/qpAdm__441215052.par
+#> genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpyqFBtx/snps/snps.geno
+#> snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpyqFBtx/snps/snps.snp
+#> indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpyqFBtx/snps/snps.ind
+#> popleft: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpyqFBtx/qpAdm__1344192651.popleft
+#> popright: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpyqFBtx/qpAdm__1344192651.popright
+#> ##  qpAdm -p /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpyqFBtx/qpAdm__1344192651.par
 #> ## qpAdm version: 2050
-#> seed: -1141008442
+#> seed: -1604951325
 #> allsnps set NO.  It is recommended that allsnps be set explicitly
 #>  *** recommended that inbreed be explicitly set ***
 #> inbreed set NO
@@ -571,5 +571,5 @@ loginfo(fits, "m40")
 #>                          Chimp     3.544
 #> 
 #> oldmode set: terminating
-#> ##end of qpAdm:        1.517 seconds cpu        0.000 Mbytes in use
+#> ##end of qpAdm:        1.480 seconds cpu        0.000 Mbytes in use
 ```

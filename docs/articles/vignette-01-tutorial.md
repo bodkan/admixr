@@ -106,16 +106,16 @@ shared path/prefix of the whole dataset.
 
 ``` r
 (prefix <- download_data(dirname = tempdir()))
-[1] "/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps"
+[1] "/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps"
 ```
 
 We can verify that there are indeed three files with this prefix:
 
 ``` r
 list.files(path = dirname(prefix), pattern = basename(prefix), full.names = TRUE)
-[1] "/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.geno"
-[2] "/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.ind" 
-[3] "/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.snp" 
+[1] "/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.geno"
+[2] "/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.ind" 
+[3] "/var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.snp" 
 ```
 
 Let’s look at their contents:
@@ -210,9 +210,9 @@ snps
 #> EIGENSTRAT object
 #> =================
 #> components:
-#>   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.ind
-#>   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.snp
-#>   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.geno
+#>   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.ind
+#>   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.snp
+#>   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.geno
 ```
 
 This object encapsulates the paths to all three EIGENSTRAT components
@@ -775,12 +775,12 @@ modif_snps
 #> EIGENSTRAT object
 #> =================
 #> components:
-#>   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.ind
-#>   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.snp
-#>   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.geno
+#>   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.ind
+#>   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.snp
+#>   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.geno
 #> 
 #> modifiers:
-#>   groups:  /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/file14c79521f756e.ind
+#>   groups:  /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/file16056178cc881.ind
 ```
 
 We can see that the function `relabel` returned a modified `EIGENSTRAT`
@@ -893,12 +893,12 @@ new_snps
 #> EIGENSTRAT object
 #> =================
 #> components:
-#>   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.ind
-#>   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.snp
-#>   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.geno
+#>   ind file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.ind
+#>   snp file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.snp
+#>   geno file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.geno
 #> 
 #> modifiers:
-#>   excluded sites:  /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/file14c7942e69cc5.snp 
+#>   excluded sites:  /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/file16056521b62f0.snp 
 #>       (SNPs excluded: 100000, SNPs remaining: 400000)
 ```
 
@@ -1029,13 +1029,13 @@ loginfo(dres)
 #> Full output log of qpDstat:
 #> ===================================================
 #> 
-#> qpDstat: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/qpDstat__1658977312.par
+#> qpDstat: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/qpDstat__1658977312.par
 #> ### THE INPUT PARAMETERS
 #> ##PARAMETER NAME: VALUE
-#> genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.geno
-#> snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.snp
-#> indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.ind
-#> popfilename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/qpDstat__1658977312.pop
+#> genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.geno
+#> snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.snp
+#> indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.ind
+#> popfilename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/qpDstat__1658977312.pop
 #> printsd: YES
 #> ## qpDstat version: 1152
 #> inbreed set NO
@@ -1053,7 +1053,7 @@ loginfo(dres)
 #> result:     French     Yoruba    Vindija      Chimp      0.0313      0.006933     4.510   15802  14844 487753 
 #> result:        Han     Yoruba    Vindija      Chimp      0.0278      0.006609     4.199   15780  14928 487925 
 #> result:      Dinka     Yoruba    Vindija      Chimp     -0.0009      0.006124    -0.151   15131  15159 487667 
-#> ##end of qpDstat:        1.627 seconds cpu        0.000 Mbytes in use
+#> ##end of qpDstat:        1.564 seconds cpu        0.000 Mbytes in use
 ```
 
 The situation is a bit more complex for *qpAdm* which can be evaluated
@@ -1111,18 +1111,18 @@ loginfo(qpadm_res, target = "Han")
 #> Full output log of qpAdm for target 'Han':
 #> ===================================================
 #> 
-#> qpAdm: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/qpAdm__375682135.par
+#> qpAdm: parameter file: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/qpAdm__375682135.par
 #> ### THE INPUT PARAMETERS
 #> ##PARAMETER NAME: VALUE
-#> genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.geno
-#> snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.snp
-#> indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/snps/snps.ind
-#> popleft: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/qpAdm__375682135.popleft
-#> popright: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/qpAdm__375682135.popright
+#> genotypename: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.geno
+#> snpname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.snp
+#> indivname: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/snps/snps.ind
+#> popleft: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/qpAdm__375682135.popleft
+#> popright: /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/qpAdm__375682135.popright
 #> inbreed: YES
-#> ##  qpAdm -p /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//RtmpVxL9WG/qpAdm__375682135.par
+#> ##  qpAdm -p /var/folders/lq/bl36db_s6w908hnjkntdp4140000gn/T//Rtmpzizsll/qpAdm__375682135.par
 #> ## qpAdm version: 2050
-#> seed: -1169160677
+#> seed: -1548758807
 #> allsnps set NO.  It is recommended that allsnps be set explicitly
 #> inbreed set YES
 #> 
@@ -1215,7 +1215,7 @@ loginfo(qpadm_res, target = "Han")
 #>                          Altai    -0.580
 #> 
 #> oldmode set: terminating
-#> ##end of qpAdm:        1.502 seconds cpu        0.000 Mbytes in use
+#> ##end of qpAdm:        1.439 seconds cpu        0.000 Mbytes in use
 ```
 
 Finally, we might want to keep some of the log files around for future

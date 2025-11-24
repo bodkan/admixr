@@ -1,12 +1,5 @@
 # *admixr*: an R interface for the ADMIXTOOLS software
 
-[![CRAN-version](https://www.r-pkg.org/badges/version/admixr)](https://cran.r-project.org/package=admixr)
-[![CRAN-downloads](https://cranlogs.r-pkg.org/badges/grand-total/admixr)](https://cran.r-project.org/package=admixr)
-[![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions)
-[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
-[![Coverage
-status](https://codecov.io/gh/bodkan/admixr/branch/main/graph/badge.svg)](https://app.codecov.io/github/bodkan/admixr?branch=main)
-
 ## What is *admixr*?
 
 The *admixr* package provides a convenient R interface to
