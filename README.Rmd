@@ -38,13 +38,17 @@ from R. It provides a [set of convenient functions](https://bodkan.net/admixr/re
 that completely remove the need for "low-level" configuration of individual ADMIXTOOLS
 programs, allowing users to focus on the analysis itself.
 
-## How to cite
+## Citing _admixr_
 
 _admixr_ is now published
 as an [_Application Note_](https://doi.org/10.1093/bioinformatics/btz030) in the
 journal Bioinformatics. If you use it in your work, please cite the paper! You
-will join an [excellent company](https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13286994334855947290)
-of papers who have used it to do amazing research. 🙂
+will join an [excellent company](https://scholar.google.com/scholar?cites=13286994334855947290)
+of papers which have used it to do amazing research. 🙂
+
+> Petr Martin, Vernot Benjamin, Kelso Janet. admixr&mdash;R package for reproducible analyses using ADMIXTOOLS. Bioinformatics, Volume 35, Issue 17 (2019), pages 3194–3195. doi: 10.1093/bioinformatics/btz030.
+
+Citations help me justify further development and fixing bugs! Thank you! 🖤
 
 ## Installation instructions
 
