@@ -46,20 +46,11 @@ journal Bioinformatics. If you use it in your work, please cite the paper! You
 will join an [excellent company](https://scholar.google.com/scholar?cites=13286994334855947290)
 of papers which have used it to do amazing research. 🙂
 
-> Petr Martin, Vernot Benjamin, Kelso Janet. admixr&mdash;R package for reproducible analyses using ADMIXTOOLS. Bioinformatics, Volume 35, Issue 17 (2019), pages 3194–3195. doi: 10.1093/bioinformatics/btz030.
+> Petr Martin; Vernot Benjamin; Kelso Janet. _admixr_&mdash;R package for reproducible analyses using ADMIXTOOLS. Bioinformatics, Volume 35, Issue 17 (2019), pages 3194–3195. doi: 10.1093/bioinformatics/btz030.
 
 Citations help me justify further development and fixing bugs! Thank you! 🖤
 
 ## Installation instructions
-
-#### Browser-based RStudio session
-
-You can try out _admixr_ without installation directly in your browser! Simply
-click on [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
-and after a short moment you will get a Binder RStudio could session running
-in your web browser. However, please note that Binder's computational resources
-are extremely limited so you might run into issues if you try to run extremely
-resource-intensive computations.
 
 #### Latest stable version
 
@@ -100,10 +91,20 @@ you will get a warning upon loading `library(admixr)` in your R session.
 formal requirement. However, please note that the package is generally developed
 and tested against the latest ADMIXTOOLS release (which is currently version 8.0.2).**
 
-## Example analysis
 
-This is all the code that you need to perform ADMIXTOOLS analyses using this
-package! No shell scripting, no copy-pasting and manual editing of text files.
+#### Browser-based RStudio session
+
+You can try out _admixr_ without installation directly in your browser! Simply
+click on [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
+and after a short moment you will get a Binder RStudio could session running
+in your web browser. However, please note that Binder's computational resources
+are extremely limited so you might run into issues if you try to run extremely
+resource-intensive computations.
+
+## Example workflow
+
+This is all the code that you need to compute a $D$ statistic using ADMIXTOOLS
+and the _admixr_ package! No shell scripting, no copy-pasting and manual editing of text files.
 The only thing you need is a working ADMIXTOOLS installation and a path to
 EIGENSTRAT data (a trio of ind/snp/geno files), which we call `prefix` here.
 
