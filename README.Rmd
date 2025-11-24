@@ -3,7 +3,7 @@
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.path = "README-", eval = FALSE)
 ```
 
-# _admixr_&mdash;interactive R interface for ADMIXTOOLS
+# _admixr_: an R interface for the ADMIXTOOLS software
 
 [![CRAN-version](https://www.r-pkg.org/badges/version/admixr)](https://cran.r-project.org/package=admixr) [![CRAN-downloads](https://cranlogs.r-pkg.org/badges/grand-total/admixr)](https://cran.r-project.org/package=admixr) [![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions) [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio) [![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/main/graph/badge.svg)](https://app.codecov.io/github/bodkan/admixr?branch=main)
 
@@ -124,7 +124,7 @@ details.
 ## More information
 
 To see many more examples of admixr in action, please check out the
-[tutorial vignette](https://bodkan.net/admixr/reference/index.html).
+[tutorial vignette](https://bodkan.net/admixr/articles/vignette-01-tutorial.html).
 
 ## Is _admixr_ related to ADMIXTOOLS 2?
 

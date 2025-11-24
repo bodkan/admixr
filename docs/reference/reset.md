@@ -1,0 +1,43 @@
+# Reset modifications to an EIGENSTRAT object
+
+Set 'exclude' and 'group' modifications of snp and ind files,
+effectively resetting the dataset into its original state.
+
+## Usage
+
+``` r
+reset(data)
+```
+
+## Arguments
+
+- data:
+
+  EIGENSTRAT data object.
+
+## Value
+
+EIGENSTRAT data S3 object.
+
+## Examples
+
+``` r
+if (FALSE) # download an example genomic data set and prepare it for analysis
+snps <- eigenstrat(download_data(dirname = tempdir()))
+
+# group individual samples into larger populations, creating a new
+# EIGENSTRAT R object
+new_snps <- relabel(
+    snps,
+    European = c("French", "Sardinian"),
+    African = c("Dinka", "Yoruba", "Mbuti", "Khomani_San"),
+    Archaic = c("Vindija", "Altai", "Denisova")
+)
+#> Error: object 'snps' not found
+
+# remove the population grouping in the previous step - this
+# results in the same EIGENSTRAT object tht we started with
+original_snps <- reset(new_snps)
+#> Error: object 'new_snps' not found
+ # \dontrun{}
+```
