@@ -1,8 +1,33 @@
-home:
-  strip_header: true
-  links:
-  - text: Learn more
-    href: http://bodkan.net/admixr/articles/tutorial.html
+title: slendr
+url: https://bodkan.net/slendr
+
+template:
+  bootstrap: 5
+  params:
+
+news:
+  one_page: true
+
+navbar:
+  structure:
+    left:  [home, reference, articles, news]
+    right: [github]
+  components:
+    home:
+      icon: fa-home
+      href: index.html
+    reference:
+      icon: fa-question-circle
+      text: Reference
+      href: reference/index.html
+    articles:
+      icon: fa-book
+      text: Articles
+      menu:
+        - text: Basic overview of the admixr package
+          href: articles/vignette-01-tutorial.html
+        - text: Running qpAdm models with the 'rotation' strategy
+          href: articles/vignette-02-qpAdm.html
 
 reference:
   - title: Admixture statistics

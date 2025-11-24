@@ -4,7 +4,7 @@ author: "Martin Petr"
 date: "`r Sys.Date()`"
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{Tutorial and basic overview of the admixr R package}
+  %\VignetteIndexEntry{Basic overview of the admixr package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

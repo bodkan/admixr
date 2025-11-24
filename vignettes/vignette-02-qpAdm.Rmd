@@ -1,10 +1,10 @@
 ---
-title: "Fitting qpAdm models with a 'rotation' strategy"
+title: "Running qpAdm models with the 'rotation' strategy"
 author: "Martin Petr"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Fitting qpAdm models with a 'rotation' strategy}
+  %\VignetteIndexEntry{Running qpAdm models with the 'rotation' strategy}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
