@@ -1,5 +1,5 @@
 Package: admixr
-Title: An Interface for Running 'ADMIXTOOLS' Analyses
+Title: An Interface for the Software Package 'ADMIXTOOLS'
 Version: 0.9.2
 Authors@R: 
     person(given = "Martin",
@@ -7,14 +7,14 @@ Authors@R:
            role = c("aut", "cre"),
            email = "contact@bodkan.net",
            comment = c(ORCID = "0000-0003-4879-8421"))
-Description: An interface for performing all stages of 'ADMIXTOOLS' analyses
-    (<https://github.com/dreichlab/admixtools>) entirely from R. Wrapper functions
-    (D, f4, f3, etc.) completely automate the generation of intermediate
-    configuration files, run 'ADMIXTOOLS' programs on the command-line, and
-    parse output files to extract values of interest. This allows users to focus
-    on the analysis itself instead of worrying about low-level technical details.
-    A set of complementary functions for processing and filtering of data in
-    the 'EIGENSTRAT' format is also provided.
+Description: An interface for various command-line tools provided by the
+    software package 'ADMIXTOOLS' (<https://github.com/DReichLab/AdmixTools>).
+    Wrapper functions completely automate the generation of the required
+    intermediate configuration files, run 'ADMIXTOOLS' programs on the
+    command-line in the background and extract statistics of interest. This
+    allows users to avoid worrying about low-level technical details and focus
+    on the research problem at hand. A set of complementary functions for
+    processing and filtering of data in the 'EIGENSTRAT' format is also provided.
 License: MIT + file LICENSE
 URL: https://github.com/bodkan/admixr
 BugReports: https://github.com/bodkan/admixr/issues
@@ -37,7 +37,7 @@ Suggests:
     tidyr,
     knitr,
     rmarkdown
-SystemRequirements: ADMIXTOOLS suite of command-line utilities for population genetics. See <https://github.com/dreichlab/admixtools> for the most recent installation instructions and further information.
+SystemRequirements: ADMIXTOOLS suite of command-line utilities for population genetics. See <https://github.com/DReichLab/AdmixTools> for the most recent installation instructions and further information.
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 VignetteBuilder: knitr
