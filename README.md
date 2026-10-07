@@ -4,7 +4,7 @@
 
 <!-- badges: start -->
 
-[![CRAN-version](https://www.r-pkg.org/badges/version/admixr)](https://cran.r-project.org/package=admixr) [![CRAN-downloads](https://cranlogs.r-pkg.org/badges/grand-total/admixr)](https://cran.r-project.org/package=admixr) [![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions) [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio) [![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/main/graph/badge.svg)](https://app.codecov.io/github/bodkan/admixr?branch=main)
+[![CRAN-version](https://www.r-pkg.org/badges/version/admixr)](https://cran.r-project.org/package=admixr) [![CRAN-downloads](https://cranlogs.r-pkg.org/badges/grand-total/admixr)](https://cran.r-project.org/package=admixr) [![R-CMD-check](https://github.com/bodkan/admixr/workflows/R-CMD-check/badge.svg)](https://github.com/bodkan/admixr/actions) [![Coverage status](https://codecov.io/gh/bodkan/admixr/branch/main/graph/badge.svg)](https://app.codecov.io/github/bodkan/admixr?branch=main)
 
 <!-- badges: end -->
 
@@ -90,15 +90,6 @@ you will get a warning upon loading `library(admixr)` in your R session.
 formal requirement. However, please note that the package is generally developed
 and tested against the latest ADMIXTOOLS release (which is currently version 8.0.2).**
 
-
-#### Browser-based RStudio session
-
-You can try out _admixr_ without installation directly in your browser! Simply
-click on [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/bodkan/admixr/main?urlpath=rstudio)
-and after a short moment you will get a Binder RStudio could session running
-in your web browser. However, please note that Binder's computational resources
-are extremely limited so you might run into issues if you try to run extremely
-resource-intensive computations.
 
 ## Example workflow
 

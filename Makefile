@@ -36,7 +36,7 @@ $(pkg): README.md
 	mkdir -p build; cd build; R CMD build --log ../../admixr
 
 README.md: README.Rmd $(logo)
-	R -e 'devtools::install(upgrade = "never")'
+	R -e 'devtools::install(upgrade = FALSE)'
 	R -e 'knitr::knit("README.Rmd", output = "README.md")'
 
 clean:
